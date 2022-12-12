@@ -5,19 +5,21 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vjean <vjean@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/08 11:22:54 by vjean             #+#    #+#              #
-#    Updated: 2022/12/08 11:27:05 by vjean            ###   ########.fr        #
+#    Created: 2022/12/12 15:03:44 by vjean             #+#    #+#              #
+#    Updated: 2022/12/12 15:08:45 by vjean            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-#NAME_BONUS = minishell_bonus
+#NAME_BONUS = 
 
 SRCS = srcs/main.c \
 
-#BONUS =  \
+#BONUS =
 
 LIBFT =	libft/libft.a
+RL_LIB = lib/lib/libreadline.a
+RL_HST = lib/lib/libhistory.a
 
 OBJS = $(SRCS:.c=.o)
 
@@ -25,7 +27,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-#BONUS_OBJS = $(BONUS:.c=.o)
+BONUS_OBJS = $(BONUS:.c=.o)
 
 #*****INTRO*****
 define intro
@@ -45,7 +47,7 @@ $(NAME): $(OBJS)
 		@$(CC) $(CFLAGS) -I includes $(OBJS) $(LIBFT)  -o $(NAME)
 		
 exec: re $(NAME)
-	valgrind --leak-check=yes --trace-children=yes --track-fds=yes ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --suppression=file.txt ./minishell
 
 clean:
 	$(RM) $(OBJS)

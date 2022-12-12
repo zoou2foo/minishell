@@ -6,7 +6,7 @@
 #    By: vjean <vjean@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/12 15:03:44 by vjean             #+#    #+#              #
-#    Updated: 2022/12/12 15:08:45 by vjean            ###   ########.fr        #
+#    Updated: 2022/12/12 15:34:07 by vjean            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ SRCS = srcs/main.c \
 #BONUS =
 
 LIBFT =	libft/libft.a
-RL_LIB = lib/lib/libreadline.a
-RL_HST = lib/lib/libhistory.a
+# RL_LIB = lib/lib/libreadline.a
+# RL_HST = lib/lib/libhistory.a
 
 OBJS = $(SRCS:.c=.o)
 
@@ -44,7 +44,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(call intro)
 	cd libft && make
-		@$(CC) $(CFLAGS) -I includes $(OBJS) $(LIBFT)  -o $(NAME)
+		@$(CC) $(CFLAGS) -lreadline -lcurses -I includes $(OBJS) $(LIBFT)  -o $(NAME)
 		
 exec: re $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --suppression=file.txt ./minishell

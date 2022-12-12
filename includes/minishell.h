@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/12 15:13:54 by vjean            ###   ########.fr       */
+/*   Updated: 2022/12/12 15:34:31 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <curses.h>
 
 typedef struct s_data{
 	int		ac;

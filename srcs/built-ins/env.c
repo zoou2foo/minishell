@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/17 15:16:48 by vjean            ###   ########.fr       */
+/*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
+/*   Updated: 2022/12/17 15:18:41 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <curses.h>
+void	get_env(t_data *data)
+{
+	int	i;
 
-typedef struct s_data{
-	char	**envp;
-	char	**copy_envp;
+	i = 0;
+	while (data->copy_envp[i])
+	{
+		printf("%s\n", data->copy_envp[i]);
+		i++;
+	}
+}
 
-}	t_data;
-
-/* section one */
-
-/* section two */
-
-/* section three */
-
-/* section four */
-
-#endif
+// COMMENT need to create a copy of env. It's the copy that we will use
+// COMMENT throughout the program as it will be modified. You don't want 
+// COMMENT your env to be modified when you quit.

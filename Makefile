@@ -6,7 +6,7 @@
 #    By: vjean <vjean@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/12 15:03:44 by vjean             #+#    #+#              #
-#    Updated: 2022/12/17 10:03:55 by vjean            ###   ########.fr        #
+#    Updated: 2022/12/17 15:51:03 by vjean            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ $(NAME): $(OBJS)
 	$(call intro)
 	cd libft && make
 		@$(CC) $(CFLAGS) -I includes $(OBJS) $(LIBFT) -o $(NAME) $(RL_LIB) -lcurses
-# quand tu utilises une librairie statique préférablement, il faut compiler à la fin		
+# quand tu utilises une librairie statique préférablement, il faut compiler à la fin. C'est la norme.		
 exec: re $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --suppression=file.txt ./minishell
 

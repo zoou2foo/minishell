@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/17 15:23:11 by vjean            ###   ########.fr       */
+/*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
+/*   Updated: 2022/12/17 15:58:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	main()
-// {
-// 	char	*buf;
-
-// 	buf = readline("bash-Pew Pew> "); //readline will malloc it
-// 	while (buf)
-// 	{
-// 		if (buf[0])
-// 			add_history(buf);
-// 		printf("%s\n", buf);
-// 		free(buf); //but readline does not free it for us!
-// 		buf = readline("bash-Pew Pew> ");
-// 	}
-// 	clear_history();
-// 	return (0);
-// }
-
-int	main(int ac, char **av, char **envp)
+void	do_exit(t_data *data)
 {
-
+	
 }
 
-// COMMENT if ac is not 1, error; void argv.
+// COMMENT if exit has an argument, it has to be a digit/number
+// COMMENT after exit is done, do echo $? in the terminal to check the
+// COMMENT argument passed; the digit sent.
+// COMMENT need to keep a variable in the struct with the last exit status and
+// COMMENT $? is a variable that represents the exit status
+// COMMENT expansion est changer les variables d'env en leur valeur

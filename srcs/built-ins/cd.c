@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/17 13:23:33 by vjean            ###   ########.fr       */
+/*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
+/*   Updated: 2022/12/17 13:17:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <curses.h>
+void	change_dir(t_data *data)
+{
+	if (chdir(argument) != 0)
+	{
+		write(2, "Error: no such file or directory: argument", 42);
+		exit (1);
+	}
+}
 
-typedef struct s_data{
-	char	**envp;
-	char	
-
-}	t_data;
-
-/* section one */
-
-/* section two */
-
-/* section three */
-
-/* section four */
-
-#endif
+// TODO need info from prompt
+// TODO avant de chdir -> getcwd qui devient oldpwd dans env
+// TODO je fais chdir et gestion d'erreur
+// TODO refait getcwd qui devient mon actuel pwd dans env

@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/17 13:23:33 by vjean            ###   ########.fr       */
+/*   Created: 2022/12/17 11:25:49 by vjean             #+#    #+#             */
+/*   Updated: 2022/12/17 12:49:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <curses.h>
+void	get_pwd(t_data *data)
+{
+	char	cwd[1000];
 
-typedef struct s_data{
-	char	**envp;
-	char	
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		write(2, "getcwd error", 12);
+		exit (1);
+	}
+	else
+		printf("%s\n", cwd);
+}
 
-}	t_data;
-
-/* section one */
-
-/* section two */
-
-/* section three */
-
-/* section four */
-
-#endif
+//TODO need to add error message if the getcwd didn't work 

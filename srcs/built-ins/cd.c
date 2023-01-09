@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/20 12:09:45 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/09 12:48:54 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	change_dir(t_data *data)
 
 // TODO need info from prompt
 // TODO avant de chdir -> getcwd qui devient oldpwd dans env
-// TODO je fais chdir et gestion d'erreur
+// TODO je fais chdir et gestion d'erreur(file or directory does not exist)
 // TODO refait getcwd qui devient mon actuel pwd dans env

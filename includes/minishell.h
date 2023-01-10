@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/21 15:32:34 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/10 14:52:15 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,19 @@
 # include <readline/history.h>
 # include <curses.h>
 
-typedef struct s_data{
+typedef struct s_meta{
 	char	**envp;
 	char	**copy_envp;
 	char	*buf; //variable pour garder ce qui est mis dans readline
 
-}	t_data;
+}	t_meta;
+
+typedef struct s_cmd{
+	char	**cmd_args; //init struct on met à NULL; puis ça sera rempli en fonction de ce que ça obtient
+	char	*input; // init struct on met à NULL; mais plus tard si à NULL, interpréter à zéro.
+	char	*output;
+	
+}
 
 /* section one - all about our struct */
 void	init_struct(t_data *data, char **envp);

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/10 14:52:15 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/11 14:02:05 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,29 @@
 typedef struct s_meta{
 	char	**envp;
 	char	**copy_envp;
-	char	*buf; //variable pour garder ce qui est mis dans readline
+	char	*buf;
 
 }	t_meta;
 
 typedef struct s_cmd{
-	char	**cmd_args; //init struct on met à NULL; puis ça sera rempli en fonction de ce que ça obtient
-	char	*input; // init struct on met à NULL; mais plus tard si à NULL, interpréter à zéro.
+	char	**cmd_args;
+	char	*input;
 	char	*output;
-	
-}
+	char	*meta_char;
+
+}	t_cmd;
 
 /* section one - all about our struct */
-void	init_struct(t_data *data, char **envp);
+void	init_struct(t_meta *meta, char **envp);
 
-/* section two */
+/* section lexer and parser */
+void	tokenizer_prompt(t_meta *meta, t_cmd *cmd);
 
-/* section three */
+/* section built-ins */
 
 /* section four */
 
 /* section five - trying stuff */
-void	try_something(t_data *data);
+
 
 #endif

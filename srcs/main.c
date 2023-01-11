@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/10 13:53:21 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/11 14:18:28 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,42 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	//char	*buf;
-	t_data	*data;
+	t_meta	*meta;
+	t_cmd	*cmd;
 
 	(void)av;
-    (void)envp;
+	(void)envp;
 	if (ac == 1)
 	{
-		data = ft_calloc(sizeof(t_data), 1);
-		//init_struct(data, envp);
-		data->buf = readline("bash-Pew Pew> ");
-		while (data->buf)
+		printf("minihell\n");
+		meta = ft_calloc(sizeof(t_meta), 1);
+		cmd = ft_calloc(sizeof(t_cmd), 1);
+		init_struct(meta, envp);
+		meta->buf = readline("bash-Pew Pew> ");
+		while (meta->buf)
 		{
-			if (data->buf[0])
-				add_history(data->buf);
-			try_something(data);
-			free(data->buf);
-			data->buf = readline("bash-Pew Pew> ");
+			if (meta->buf[0])
+				add_history(meta->buf);
+			tokenizer_prompt(meta, cmd);
+			printf("%s\n", cmd->meta_char);
+			free(meta->buf);
+			meta->buf = readline("bash-Pew Pew> ");
 		}
 		clear_history();
 	}
 	return (0);
 }
 
-// void	init_struct(t_data *data, char **envp)
-// {
-// 	data->envp = envp;
-// 	data->copy_envp = envp;
-// }
-
-void	try_something(t_data *data)
+void	init_struct(t_meta *meta, char **envp)
 {
-	printf("trying some stuff\n");
-	printf("%s\n", data->buf);
-	printf("and??\n");
+	meta->envp = envp;
+	meta->copy_envp = envp;
 }
+
+// COMMENT if ac is not 1, error; void argv.
+// COMMENT readline will malloc the char *buf, but it does NOT free it at the
+// COMMENT end.
+
 
 // int	main()
 // {
@@ -59,11 +60,3 @@ void	try_something(t_data *data)
 // 	printf("%s\n", getcwd(s, 100));
 // 	return (0);
 // }
-
-// int	main()
-// {
-// }
-
-// COMMENT if ac is not 1, error; void argv.
-// COMMENT readline will malloc the char *buf, but it does NOT free it at the
-// COMMENT end.

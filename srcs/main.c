@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/11 14:18:28 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/11 16:38:07 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int ac, char **av, char **envp)
 	(void)envp;
 	if (ac == 1)
 	{
-		printf("minihell\n");
 		meta = ft_calloc(sizeof(t_meta), 1);
 		cmd = ft_calloc(sizeof(t_cmd), 1);
 		init_struct(meta, envp);

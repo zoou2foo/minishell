@@ -6,13 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/17 15:58:23 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/11 09:45:26 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_exit(t_data *data)
+void	do_exit(t_meta *meta)
 {
 	
 }

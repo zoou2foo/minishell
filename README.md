@@ -12,9 +12,9 @@ Pour le fichier .json
     "editor.rulers": [
     80
     ],
- 
+
     "todo-tree.highlights.customHighlight": {
-    
+
 
         "TODO": {
             "icon": "checklist",
@@ -66,5 +66,5 @@ Pour le fichier .json
     "gitlens.defaultDateLocale": null,
     "explorer.confirmDragAndDrop": false,
     "todo-tree.general.tagGroups": {
-    
+
     },

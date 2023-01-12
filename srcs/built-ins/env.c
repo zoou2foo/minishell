@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/17 15:18:41 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/12 10:32:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_env(t_data *data)
+void	get_env(t_meta *metadata)
 {
 	int	i;
 
@@ -25,5 +25,5 @@ void	get_env(t_data *data)
 }
 
 // COMMENT need to create a copy of env. It's the copy that we will use
-// COMMENT throughout the program as it will be modified. You don't want 
+// COMMENT throughout the program as it will be modified. You don't want
 // COMMENT your env to be modified when you quit.

@@ -3,31 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/11 13:43:46 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/12 11:07:16 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_meta	*metadata;	//our global var
+
 int	main(int ac, char **av, char **envp)
 {
-	t_meta	*meta;
 
 	(void)av;
 	if (ac == 1)
 	{
-		meta = ft_calloc(sizeof(t_meta), 1);
-		init_struct(meta, envp);
-		meta->buf = readline("bash-Pew Pew> ");
-		while (meta->buf)
+		metadata = ft_calloc(sizeof(t_meta), 1);
+		init_struct(metadata, envp);
+		metadata->buf = readline("bash-Pew Pew> ");
+		while (metadata->buf)
 		{
-			if (meta->buf[0])
-				add_history(meta->buf);
-			free(meta->buf);
-			meta->buf = readline("bash-Pew Pew> ");
+			if (metadata->buf[0])
+				add_history(metadata->buf);
+			free(metadata->buf);
+			metadata->buf = readline("bash-Pew Pew> ");
 		}
 		clear_history();
 	}

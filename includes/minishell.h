@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 10:28:10 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/12 11:06:30 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <readline/history.h>
 # include <curses.h>
 
+extern	char	**environ;
+extern	t_meta	*metadata;
+
 typedef struct s_meta{
 	char	**envp;
 	char	**copy_envp;
@@ -30,9 +33,9 @@ typedef struct s_meta{
 // COMMENT: *buf: variable pour garder ce qui est mis dans readline
 
 typedef struct s_cmd{
-	char	**cmd_args;
-	char	*input;
-	char	*output;
+	char	**cmd_args;		//cmd name and following arguments
+	char	*input;			//all the < redirection
+	char	*output;		//all the >/>> redirection
 
 }	t_cmd;
 // COMMENT: **cmd_args; on initie strut à NULL; puis cela sera changé plus tard

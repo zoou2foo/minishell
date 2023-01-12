@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 15:23:45 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/12 15:33:42 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ void	init_meta(void)
 {
 	metadata = ft_calloc(sizeof(t_meta), 1);
 	metadata->env = environ;			//I need to do a proper copy with malloc and strdup
+	int	i;
+	i = 0;
+	while (environ[i])
+		i++;
+	metadata->env = ft_calloc(sizeof(char *), i);
+	i = 0;
+	while (environ[i])
+	{
+		metadata->env[i] = ft_strdup(environ[i]);
+		i++;
+	}
 }
 
 // COMMENT if ac is not 1, error; void argv.

@@ -60,20 +60,4 @@ cmd1 | cmd2
 <<in1 cmd1 | cmd2
 cmd1 | <<in1 cmd2
 
-
-struct t_cmd
-	char	**cmd_args
-	int		argcount		//number of function arguments (0 == no args, <0 == no cmd)
-
-	char	*input
-	bool	has_input		//if true: use input fd
-	bool	has_inpipe		//else if true: use pipe fd
-							//else: use STDIN
-
-	char	*output
-	bool	has_output		//if true: use output fd
-	bool	has_outpipe		//else if true: use pipe fd
-							//else: use STDOUT
-
-	bool	is_herdoc		//call herdoc cmd and pipe out
 */

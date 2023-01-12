@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 11:06:30 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/12 12:43:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_struct(t_meta *meta, char **envp);
 
 /* section built-ins */
 void	do_exit(t_meta *meta);
+void	change_dir(t_cmd *cmd);
 
 /* section lexer and parser */
 

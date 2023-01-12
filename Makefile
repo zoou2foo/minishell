@@ -6,14 +6,14 @@
 #    By: vjean <vjean@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/12 15:03:44 by vjean             #+#    #+#              #
-#    Updated: 2022/12/17 15:51:03 by vjean            ###   ########.fr        #
+#    Updated: 2023/01/11 13:44:11 by vjean            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 #NAME_BONUS = 
 
-SRCS = srcs/main.c \
+SRCS = srcs/main.c\
 
 #BONUS =
 

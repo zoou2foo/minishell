@@ -1,69 +1,121 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: vjean <vjean@student.42.fr>                +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/12 15:03:44 by vjean             #+#    #+#              #
-#    Updated: 2023/01/11 13:44:11 by vjean            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#------------------------------------------------------------------------------#
+#                                   COLOURS                                    #
+#------------------------------------------------------------------------------#
 
-NAME = minishell
-#NAME_BONUS = 
+DEF_COLOR = \033[0;39m
+NC		= \e[0;39m
+MAGENTA	= \033[0;95m
+LMAGENTA = \e[95m
+RED		= \033[0;91m
+LRED	= \e[91m
+YELLOW	= \033[0;93m
+LYELLOW	= \e[93
+GREEN	= \033[0;92m
+LGREEN	= \e[92m
+CYAN	= \033[0;96m
+LCYAN	= \e[96m
+BLUE	= \033[0;94m
+GRAY	= \033[0;90m
+WHITE	= \033[0;97m
+#------------------------------------------------------------------------------#
+#                                   GENERICS                                   #
+#------------------------------------------------------------------------------#
 
-SRCS = srcs/main.c\
+# Special variables
+DEFAULT_GOAL: all
+.DELETE_ON_ERROR: $(NAME)
+.PHONY: all bonus clean fclean re run debug leaks tests
 
-#BONUS =
+# Hide calls
+export VERBOSE = FALSE
+ifeq ($(VERBOSE),TRUE)
+	HIDE =
+else
+	HIDE = @
+endif
 
-LIBFT =	libft/libft.a
-RL_LIB = -L ./includes/readline -lreadline ## comme ça qu'on link une lib static
-# RL_HST = lib/lib/libhistory.a
+# Debug mode
+export DEBUG = FALSE
+ifeq ($(DEBUG),TRUE)
+	MODE = -g
+else
+	MODE =
+endif
 
-OBJS = $(SRCS:.c=.o)
+#------------------------------------------------------------------------------#
+#                                  VARIABLES                                   #
+#------------------------------------------------------------------------------#
 
-CC = gcc 
+# Compiler and flags
+CC		=	gcc
+CFLAGS	=	-Wall -Werror -Wextra
+RM		=	rm -rf
+INCLUDE =	-I includes
 
-CFLAGS = -Wall -Wextra -Werror
+# Program and directory names
+NAME	=	minishell
+SRCDIR	=	src/
+OBJDIR	=	bin/
+TSTDIR	=	tests/
 
-BONUS_OBJS = $(BONUS:.c=.o)
+# File names
+FILES	=	main \
+			built-ins/cd \
+			built-ins/env \
+			built-ins/exit \
+			built-ins/export \
+			built-ins/pwd \
+			built-ins/unset
 
-#*****INTRO*****
-define intro
-@bash pew_pew.sh
-endef
+LIBFT	=	./libft/libft.a
+LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
 
-.c.o:
-		@$(CC) $(CFLAGS) -I includes -c $< -o $(<:.c=.o)
+SRCS	=	$(addprefix $(SRCDIR), $(addsuffix .c, $(FILES)))
+OBJS	=	$(addprefix $(OBJDIR), $(addsuffix .o, $(FILES)))
 
-RM = rm -fr
+CMD		=	./minishell
+
+#------------------------------------------------------------------------------#
+#                                   TARGETS                                    #
+#------------------------------------------------------------------------------#
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(call intro)
-	cd libft && make
-		@$(CC) $(CFLAGS) -I includes $(OBJS) $(LIBFT) -o $(NAME) $(RL_LIB) -lcurses
-# quand tu utilises une librairie statique préférablement, il faut compiler à la fin. C'est la norme.		
-exec: re $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --suppression=file.txt ./minishell
+	$(HIDE) bash pew_pew2.sh
+	$(HIDE) cd libft && make && cd ..
+	$(HIDE) $(CC) $(MODE) $(CFLAGS) $(INCLUDE) $(LIBFT) -o $@ $^ $(LIBRL)
+	@echo "$(GREEN)Files compiled$(DEF_COLOR)"
 
+
+$(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c
+	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	$(HIDE) $(CC) $(MODE) $(CFLAGS) -c $< -o $@ $(INCLUDE)
+
+$(OBJDIR):
+	$(HIDE) mkdir -p $(OBJDIR)
+
+# Removes objects
 clean:
-	$(RM) $(OBJS)
-#	$(RM) $(BONUS_OBJS)
-	make clean -C libft
+	$(HIDE) $(RM) $(OBJS)
+	@echo "$(MAGENTA)Object files cleaned$(DEF_COLOR)"
 
+# Removes objects and executables
 fclean: clean
-	$(RM) $(NAME)
-#	$(RM) $(NAME_BONUS)
-	$(RM) $(LIBFT)
-	
+	$(HIDE) $(RM) $(NAME)
+	@echo "$(RED)Executable files cleaned$(DEF_COLOR)"
+
+# Removes objects and executables and remakes
 re: fclean all
+	@echo "$(CYAN)Cleaned and rebuilt everything!$(DEF_COLOR)"
 
-#bonus: $(BONUS_OBJS)
-#	$(call intro)
-#	cd libft && make
-#		@$(CC) -I includes $(BONUS_OBJS) $(LIBFT) -o $(NAME_BONUS)
+pewpew:
+	$(HIDE) bash pew_pew2.sh
 
-.PHONY: all clean fclean re
+# Runs the resulting file
+run: all
+	$(HIDE) $(CMD)
+
+leaks: all
+	@echo "$(RED)Checking leaks...$(DEF_COLOR)"
+	$(HIDE) valgrind --leak-check=full --show-leak-kinds=all --suppression=file.txt --trace-children=yes -s $(CMD)

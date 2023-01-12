@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 12:43:51 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/12 14:58:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,43 @@
 # include <curses.h>
 
 extern	char	**environ;
-extern	t_meta	*metadata;
 
 typedef struct s_meta{
-	char	**envp;
-	char	**copy_envp;
-	char	*buf;
+	char	**env;
+	char	*buf;		//variable pour garder ce qui est mis dans readline
 
 }	t_meta;
-// COMMENT: *buf: variable pour garder ce qui est mis dans readline
+
+extern	t_meta	*metadata;
 
 typedef struct s_cmd{
-	char	**cmd_args;		//cmd name and following arguments
-	char	*input;			//all the < redirection
-	char	*output;		//all the >/>> redirection
+	char	**cmd_args;	//cmd name and its following arguments
+	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
+	bool	is_herdoc;		//call herdoc cmd and pipe out, ignore the rest
 
+	char	*input;		//all the < redirection
+	bool	has_input;		//if true: use input fd
+	bool	has_inpipe;		//else if true: use pipe fd
+								//else: use STDIN
+
+	char	*output;	//all the >/>> redirection
+	bool	has_output;		//if true: use output fd
+	bool	has_outpipe;	//else if true: use pipe fd
+								//else: use STDOUT
 }	t_cmd;
-// COMMENT: **cmd_args; on initie strut à NULL; puis cela sera changé plus tard
-// COMMENT: en fonction de ce qu'on obtient.
-// COMMENT: *input ET *output; on initie struct à NULL aussi; mais plus tard, si
-// COMMENT: à NULL, interpréter comme zéro.
+// COMMENT: on initie toutes les variables a NULL puis on change par la suite
 
 /* section one - all about our struct */
-void	init_struct(t_meta *meta, char **envp);
+void	init_meta(void);
 
-/* section built-ins */
-void	do_exit(t_meta *meta);
+/* section two - built-ins */
+void	do_exit(void);
 void	change_dir(t_cmd *cmd);
+void	get_env(void);
 
-/* section lexer and parser */
+/* section three - lexer and parser */
 
-/* section four */
+/* section four - */
 
 /* section five - trying stuff */
 

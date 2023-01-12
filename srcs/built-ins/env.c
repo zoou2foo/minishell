@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 10:32:38 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/12 10:35:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	get_env(t_meta *metadata)
 	int	i;
 
 	i = 0;
-	while (data->copy_envp[i])
+	while (metadata->copy_envp[i])
 	{
-		printf("%s\n", data->copy_envp[i]);
+		printf("%s\n", metadata->copy_envp[i]);
 		i++;
 	}
 }

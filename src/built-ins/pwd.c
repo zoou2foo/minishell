@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 11:25:49 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/17 12:49:17 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/12 14:24:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_pwd(t_data *data)
+void	get_pwd(void)
 {
 	char	cwd[1000];
 
@@ -25,4 +25,6 @@ void	get_pwd(t_data *data)
 		printf("%s\n", cwd);
 }
 
-//TODO need to add error message if the getcwd didn't work 
+//TODO need to add error message if the getcwd didn't work
+//COMMENT peut-être qu'on a pas besoin; peut-être via export... Might need to
+//COMMENT ask Cole again

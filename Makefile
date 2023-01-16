@@ -65,7 +65,8 @@ FILES	=	main \
 			built-ins/exit \
 			built-ins/export \
 			built-ins/pwd \
-			built-ins/unset
+			built-ins/unset \
+			parsing/parser \
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
@@ -118,4 +119,4 @@ run: all
 
 leaks: all
 	@echo "$(RED)Checking leaks...$(DEF_COLOR)"
-	$(HIDE) valgrind --leak-check=full --show-leak-kinds=all --suppression=file.txt --trace-children=yes -s $(CMD)
+	$(HIDE) valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes -s $(CMD)

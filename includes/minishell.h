@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 12:21:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:16:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_cmd
 typedef struct s_cmd_block
 {
 	t_cmd	**cmds;
+	int		cmd_count;
 	bool	is_empty;
 	bool	is_valid;
 
@@ -67,6 +68,8 @@ void	change_dir(t_cmd *cmd);
 void	get_env(void);
 
 /* section three - lexer and parser */
+t_cmd_block	*parse_line(char *line);
+
 
 /* section four - */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:21:21 by vjean             #+#    #+#             */
-/*   Updated: 2022/12/05 13:17:22 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/16 12:40:56 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 long	ft_atol(const char *str);
-void	freetab(void **tab);
+void	ft_free_tab(void **tab);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_strtrim_free(char *s1, char const *set);
+
+//added by loïc
+void	ft_free_null(void *ptr);
+int		ft_count_char(char *str, char c);
 
 typedef struct s_list
 {

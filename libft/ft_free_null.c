@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freetab.c                                       :+:      :+:    :+:   */
+/*   ft_free_null.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 08:51:11 by vjean             #+#    #+#             */
-/*   Updated: 2022/11/02 08:53:29 by vjean            ###   ########.fr       */
+/*   Created: 2022/04/11 16:19:16 by vjean             #+#    #+#             */
+/*   Updated: 2023/01/16 12:19:45 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	freetab(void **tab)
+int	ft_free_null(void *ptr)
 {
-	int	i;
-
-	if (*tab && tab)
-	{
-		i = 0;
-		while (tab[i])
-		{
-			if (tab[i])
-				free (tab[i]);
-			i++;
-		}
-		free (tab);
-	}
+	free(ptr);
+	ptr = NULL;
 }

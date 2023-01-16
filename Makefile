@@ -75,6 +75,7 @@ LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
 SRCS	=	$(addprefix $(SRCDIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJDIR), $(addsuffix .o, $(FILES)))
 
+
 CMD		=	./minishell
 
 #------------------------------------------------------------------------------#

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 13:13:31 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:23:24 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef struct s_meta
 
 extern	t_meta	*metadata;
 
-								//else: use STDIN
+	char	**cmd_args;	//cmd name and its following arguments
+	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)								//else: use STDIN
 
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd

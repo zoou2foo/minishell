@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 10:32:08 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:02:35 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 extern	char	**environ;
 
-typedef struct s_meta{
+typedef struct s_meta
+{
 	char	**env;
 	char	*buf;		//variable pour garder ce qui est mis dans readline
 
@@ -31,19 +32,19 @@ typedef struct s_meta{
 
 extern	t_meta	*metadata;
 
-typedef struct s_cmd{
-	char	**cmd_args;
-	char	*input;
-	char	*output; //all the >/>> redirection
-	char	*meta_char;
-
-	bool	has_inpipe;		//else if true: use pipe fd
 								//else: use STDIN
 
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
 								//else: use STDOUT
-}	t_cmd;
+
+typedef struct s_cmd_block
+{
+	t_cmd	**cmds;
+	bool	is_empty;
+	bool	is_valid;
+
+}			t_cmd_block;
 // COMMENT: on initie toutes les variables a NULL puis on change par la suite
 
 /* section one - all about our struct */

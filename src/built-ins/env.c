@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 14:24:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 15:16:14 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,4 @@ void	get_env(void)
 	}
 }
 
-// COMMENT need to create a copy of env. It's the copy that we will use
-// COMMENT throughout the program as it will be modified. You don't want
-// COMMENT your env to be modified when you quit.
+// COMMENT It works! TESTED.

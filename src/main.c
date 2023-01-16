@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 15:03:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 15:17:25 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	main(int ac, char **av)		//use char **environ instead
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "env", 4) == 0)
-				get_env();
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}

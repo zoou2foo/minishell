@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vjean <vjean@student.42.fr>                +#+  +:+       +#+         #
+#    By: llord <llord@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 08:45:10 by vjean             #+#    #+#              #
-#    Updated: 2022/11/14 11:46:05 by vjean            ###   ########.fr        #
+#    Updated: 2023/01/16 13:09:31 by llord            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ SRCS = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalnum.c ft_isalpha.c ft_isascii.c\
 	ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c\
 	ft_putnbr_fd.c ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c\
 	ft_lstdelone.c ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c\
-	ft_lstsize.c get_next_line.c get_next_line_utils.c ft_atol.c ft_freetab.c\
-	ft_strjoin_free.c ft_strtrim_free.c\
+	ft_lstsize.c get_next_line.c get_next_line_utils.c ft_atol.c ft_free_tab.c\
+	ft_strjoin_free.c ft_strtrim_free.c ft_count_char.c ft_free_null.c\
 
 CC = gcc
 
@@ -44,9 +44,9 @@ $(NAME): $(OBJS)
 		@ar rcs $(NAME) $(OBJS)
 
 clean:
-	$(RM) $(OBJS) 
+	$(RM) $(OBJS)
 
-fclean: clean 
+fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all

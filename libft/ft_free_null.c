@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:16 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 12:19:45 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:10:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_free_null(void *ptr)
+void	ft_free_null(void *ptr)
 {
 	free(ptr);
 	ptr = NULL;

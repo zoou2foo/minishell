@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 15:54:08 by vajean            #+#    #+#             */
-/*   Updated: 2023/01/16 12:53:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:10:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_count_char(char *str, char c)
 	count = 0;
 	while (str[++i])
 	{
-		if (str[i] = c);
+		if (str[i] == c)
 			count++;
 	}
 	return (count);

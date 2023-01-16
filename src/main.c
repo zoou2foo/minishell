@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 15:02:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 15:03:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	init_meta(void)
 
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at the
-<<<<<<< HEAD
 // COMMENT end.
 
 
@@ -78,6 +77,3 @@ int	main(void)
 	printf("%s\n", cmdblock->cmds[0]->cmd_args[0]);
 }
 */
-=======
-// COMMENT end.
->>>>>>> f3dba17960b8d81900fe3bf3c0a1ed8744168b6d

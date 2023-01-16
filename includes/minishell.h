@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 15:01:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 15:04:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_cmd
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
 								//else: use STDOUT
-	char	*meta_char;
 }			t_cmd;
 
 typedef struct s_cmd_block

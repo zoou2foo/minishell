@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 13:13:03 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/16 15:05:21 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	change_dir(t_cmd_block *cmd)
+void	change_dir(t_cmd *cmd)
 {
 	if (chdir(cmd->cmd_args[1]) != 0)		//placeholder variable FIXED
 	{

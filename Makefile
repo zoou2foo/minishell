@@ -24,7 +24,7 @@ WHITE	= \033[0;97m
 # Special variables
 DEFAULT_GOAL: all
 .DELETE_ON_ERROR: $(NAME)
-.PHONY: all bonus clean fclean re run debug leaks tests
+.PHONY: all bonus clean fclean re run leaks ldirs
 
 # Hide calls
 export VERBOSE = FALSE
@@ -50,6 +50,7 @@ endif
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
 RM		=	rm -rf
+MD		=	mkdir -p
 INCLUDE =	-I includes
 
 # Program and directory names
@@ -80,7 +81,12 @@ CMD		=	./minishell
 #                                   TARGETS                                    #
 #------------------------------------------------------------------------------#
 
-all: $(NAME)
+all: ldirs $(NAME)
+
+ldirs:
+	$(HIDE) $(MD) $(OBJDIR)
+	$(HIDE) $(MD) $(OBJDIR)/built-ins
+	$(HIDE) $(MD) $(OBJDIR)/parsing
 
 $(NAME): $(OBJS)
 	$(HIDE) bash pew_pew2.sh
@@ -88,35 +94,35 @@ $(NAME): $(OBJS)
 	$(HIDE) $(CC) $(MODE) $(CFLAGS) $(INCLUDE) $(LIBFT) -o $@ $^ $(LIBRL)
 	@echo "$(GREEN)Files compiled$(DEF_COLOR)"
 
-
 $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c
 	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
 	$(HIDE) $(CC) $(MODE) $(CFLAGS) -c $< -o $@ $(INCLUDE)
-
-$(OBJDIR):
-	$(HIDE) mkdir -p $(OBJDIR)
 
 # Removes objects
 clean:
 	$(HIDE) $(RM) $(OBJS)
 	@echo "$(MAGENTA)Object files cleaned$(DEF_COLOR)"
 
-# Removes objects and executables
-fclean: clean
+# Removes object dir and executable
+fclean:
+	$(HIDE) $(RM) $(OBJDIR)
+	@echo "$(MAGENTA)Object directory cleaned$(DEF_COLOR)"
 	$(HIDE) $(RM) $(NAME)
-	@echo "$(RED)Executable files cleaned$(DEF_COLOR)"
+	@echo "$(RED)Executable cleaned$(DEF_COLOR)"
 
-# Removes objects and executables and remakes
+# Removes object dir and executable and remakes everything
 re: fclean all
 	@echo "$(CYAN)Cleaned and rebuilt everything!$(DEF_COLOR)"
 
+# Display start scrren
 pewpew:
 	$(HIDE) bash pew_pew2.sh
 
-# Runs the resulting file
+# Runs the program
 run: all
 	$(HIDE) $(CMD)
 
+# Runs the program with valgrind
 leaks: all
 	@echo "$(RED)Checking leaks...$(DEF_COLOR)"
 	$(HIDE) valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes -s $(CMD)

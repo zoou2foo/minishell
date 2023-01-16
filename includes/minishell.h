@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 10:29:49 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/16 10:32:08 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ extern	t_meta	*metadata;
 typedef struct s_cmd{
 	char	**cmd_args;
 	char	*input;
-	char	*output;
+	char	*output; //all the >/>> redirection
 	char	*meta_char;
 
 	bool	has_inpipe;		//else if true: use pipe fd
 								//else: use STDIN
 
-	char	*output;	//all the >/>> redirection
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
 								//else: use STDOUT

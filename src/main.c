@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 15:33:42 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 10:05:27 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	main(int ac, char **av)		//use char **environ instead
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			get_env();
+			if (ft_strncmp(metadata->buf, "env", 4) == 0)
+				get_env();
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}
@@ -44,9 +45,10 @@ int	main(int ac, char **av)		//use char **environ instead
 //allocates memory for and fills the global metadata var with default values
 void	init_meta(void)
 {
-	metadata = ft_calloc(sizeof(t_meta), 1);
-	metadata->env = environ;			//I need to do a proper copy with malloc and strdup
 	int	i;
+
+	metadata = ft_calloc(sizeof(t_meta), 1);
+	metadata->env = environ;
 	i = 0;
 	while (environ[i])
 		i++;

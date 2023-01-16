@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 14:58:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 08:50:21 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ extern	t_meta	*metadata;
 typedef struct s_cmd{
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
-	bool	is_herdoc;		//call herdoc cmd and pipe out, ignore the rest
+	bool	is_heredoc;		//call herdoc cmd and pipe out, ignore the rest
 
 	char	*input;		//all the < redirection
 	bool	has_input;		//if true: use input fd

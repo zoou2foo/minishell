@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 13:23:59 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:31:16 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)		//use char **environ instead
 	(void)av;
 	if (ac == 1)
 	{
-		t_meta *cmd = ft_calloc(sizeof(t_cmd_block), 1);
+		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
 		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
 		cmd->cmd_args[0] = "cd";
 		cmd->cmd_args[1] = "";
@@ -64,4 +64,3 @@ void	init_meta(void)
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at the
 // COMMENT end.
-

@@ -83,6 +83,7 @@ CMD		=	./minishell
 
 all: ldirs $(NAME)
 
+# Creates the object directories
 ldirs:
 	$(HIDE) $(MD) $(OBJDIR)
 	$(HIDE) $(MD) $(OBJDIR)/built-ins

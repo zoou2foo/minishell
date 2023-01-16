@@ -6,14 +6,14 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 14:44:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 15:20:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_meta	*metadata;	//our global var
-
+/*
 int	main(int ac, char **av)		//use char **environ instead
 {
 
@@ -60,20 +60,21 @@ void	init_meta(void)
 		i++;
 	}
 }
-
+*/
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at the
 // COMMENT end.
 
 
 //Loyc's main (DEBUG)
-/*
+
 int	main(void)
 {
-	char	*line = "hellow world! | sup?";
+	char	*line = "hellow world! | Wassup? | Not much how bout you?";
+	int		i = -1;
+
 	t_cmd_block	*cmdblock;
 	cmdblock = parse_line(line);
-	printf("%s\n", cmdblock->cmds[0]->cmd_args[0]);
-	printf("%s\n", cmdblock->cmds[0]->cmd_args[0]);
+	while (++i < cmdblock->cmd_count)
+		printf("%s\n", cmdblock->cmds[i]->cmd_args[0]);
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/16 13:21:57 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 15:19:44 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@ t_cmd	*parse_cmd(char *cmdstr)
 	if (!cmd)
 		return (NULL);
 
+	cmd->cmd_args = ft_calloc(1, sizeof(char *));
 	if (cmdstr && cmdstr[0])
 	{
+		//somehow get the redirections out first
+
 		cmd->cmd_args[0] = ft_strdup(cmdstr);	//DEBUG ONLY
+
+		//split remaining args along spaces (safe for ""/'')
 	}
 	return (cmd);
 }
@@ -43,8 +48,11 @@ t_cmd_block	*parse_line(char *line)
 	if (line && line[0])
 	{
 		cmdstrs = ft_split(line, '|');
+
+		//FALSE, thsi doesn't acount for heredocs being commands
 		cmdblock->cmd_count = ft_count_char(line, '|') + 1;
-		cmdblock->cmds = ft_calloc(sizeof(t_cmd *), cmdblock->cmd_count + 1);
+
+		cmdblock->cmds = ft_calloc(cmdblock->cmd_count + 1, sizeof(t_cmd *));
 		i = -1;
 		while (cmdstrs[++i])
 		{

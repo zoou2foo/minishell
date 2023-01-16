@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 13:02:35 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:13:31 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ extern	t_meta	*metadata;
 
 typedef struct s_cmd_block
 {
-	t_cmd	**cmds;
-	bool	is_empty;
-	bool	is_valid;
+	t_cmd_block	**cmds;
+	bool		is_empty;
+	bool		is_valid;
 
 }			t_cmd_block;
 // COMMENT: on initie toutes les variables a NULL puis on change par la suite
@@ -52,7 +52,7 @@ void	init_meta(void);
 
 /* section two - built-ins */
 void	do_exit(void);
-void	change_dir(t_cmd *cmd);
+//void	change_dir(t_cmd_block *cmd);
 void	get_env(void);
 
 /* section three - lexer and parser */

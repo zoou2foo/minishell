@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 13:16:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/17 16:11:16 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@
 
 extern	char	**environ;
 
+enum e_token
+{
+	TOKEN_EMPTY	= 0,
+	TOKEN_STR	= 1,
+	TOKEN_SSTR	= 2,
+	TOKEN_REDIR = 3,
+	TOKEN_PIPE	= 4
+};
+
 typedef struct s_meta
 {
 	char	**env;
@@ -31,6 +40,7 @@ typedef struct s_meta
 }	t_meta;
 
 extern	t_meta	*metadata;
+
 
 typedef struct s_cmd
 {
@@ -41,23 +51,44 @@ typedef struct s_cmd
 	char	*input;		//all the < redirection
 	bool	has_input;		//if true: use input fd
 	bool	has_inpipe;		//else if true: use pipe fd
-								//else: use STDIN
+	int		fdin;				//either pie of file fd
+							//else: use STDIN
 
 	char	*output;	//all the >/>> redirection
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
-								//else: use STDOUT
+	int		fdout;				//either pie of file fd
+							//else: use STDOUT
 }			t_cmd;
+
+typedef struct s_cmd_node
+{
+	t_cmd				*cmd;
+	struct s__cmd_node	*next_node;
+	struct s__cmd_node	*previous_node;	//superfluous(?)
+	bool				is_empty;
+	bool				is_valid;
+}						t_cmd_node;
 
 typedef struct s_cmd_block
 {
-	t_cmd	**cmds;
-	int		cmd_count;
-	bool	is_empty;
-	bool	is_valid;
+	t_cmd_node	*head_node;
+	t_cmd_node	*tail_node;		//superfluous(?)
+	t_cmd		**cmds;			//superfluous(?)
+	int			cmd_count;
+	bool		is_empty;
+	bool		is_valid;
 
 }			t_cmd_block;
-// COMMENT: on initie toutes les variables a NULL puis on change par la suite
+
+typedef struct s_token
+{
+	char			*string;
+	struct s_token	*next;
+	struct s_token	*prev;
+	int				type;
+
+}					t_token;
 
 /* section one - all about our struct */
 void	init_meta(void);

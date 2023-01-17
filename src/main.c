@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 15:20:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/17 12:22:36 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void	init_meta(void)
 }
 */
 // COMMENT if ac is not 1, error; void argv.
-// COMMENT readline will malloc the char *buf, but it does NOT free it at the
-// COMMENT end.
+// COMMENT readline will malloc the char *buf, but it does NOT free it at the end.
 
 
 //Loyc's main (DEBUG)

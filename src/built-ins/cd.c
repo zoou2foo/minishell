@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 15:05:21 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/17 13:00:48 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,5 @@ void	change_dir(t_cmd *cmd)
 
 // TODO call export to have pwd change in env.
 // COMMENT relatif: ../Desktop. absolu: /usr/vjean/Desktop/
+// COMMENT cd pas obliger de ramener à user (home). Juste besoin de gérer
+// COMMENT ".." et "chemin relatif(../Desktop) et chemin absolu (/usr/vjean/Desktop)

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/17 11:19:08 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/17 13:11:29 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ void	do_exit(t_cmd *cmd); //Need to change back to void.
 void	change_dir(t_cmd *cmd);
 void	get_env(void);
 void	get_pwd(void);
+void	do_unset(void);
 
 /* section three - lexer and parser */
 t_cmd_block	*parse_line(char *line);
-
 
 /* section four - */
 

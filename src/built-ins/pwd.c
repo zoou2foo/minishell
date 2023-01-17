@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 11:25:49 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/12 14:24:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/17 11:24:20 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ void	get_pwd(void)
 		printf("%s\n", cwd);
 }
 
-//TODO need to add error message if the getcwd didn't work
-//COMMENT peut-être qu'on a pas besoin; peut-être via export... Might need to
-//COMMENT ask Cole again
+// COMMENT It works! TESTED. **Still have a question: not sure if we really need
+// COMMENT the error message. Might be manage by export?? Need to talk to Cole
+
+/*
+It was tested with this:
+if (ft_strncmp(metadata->buf, "pwd", 3) == 0)
+				get_pwd();
+
+*/

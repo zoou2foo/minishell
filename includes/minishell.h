@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 15:04:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/17 11:19:08 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ typedef struct s_cmd_block
 void	init_meta(void);
 
 /* section two - built-ins */
-void	do_exit(void);
+void	do_exit(t_cmd *cmd); //Need to change back to void.
 void	change_dir(t_cmd *cmd);
 void	get_env(void);
+void	get_pwd(void);
 
 /* section three - lexer and parser */
 t_cmd_block	*parse_line(char *line);

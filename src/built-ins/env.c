@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 15:16:14 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/17 08:18:22 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,8 @@ void	get_env(void)
 }
 
 // COMMENT It works! TESTED.
+
+/* What I used to test it in the main:
+if (ft_strncmp(metadata->buf, "env", 3) == 0)
+				get_env();
+*/

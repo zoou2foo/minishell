@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/16 13:10:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/16 13:21:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_cmd	*parse_cmd(char *cmdstr)
 
 	if (cmdstr && cmdstr[0])
 	{
-
+		cmd->cmd_args[0] = ft_strdup(cmdstr);	//DEBUG ONLY
 	}
 	return (cmd);
 }
@@ -43,7 +43,8 @@ t_cmd_block	*parse_line(char *line)
 	if (line && line[0])
 	{
 		cmdstrs = ft_split(line, '|');
-		cmdblock->cmds = ft_calloc(sizeof(t_cmd *), ft_count_char(line, '|') + 2);
+		cmdblock->cmd_count = ft_count_char(line, '|') + 1;
+		cmdblock->cmds = ft_calloc(sizeof(t_cmd *), cmdblock->cmd_count + 1);
 		i = -1;
 		while (cmdstrs[++i])
 		{

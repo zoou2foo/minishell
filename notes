@@ -5,12 +5,13 @@
 0========(  VALERIE  )========0
 
 Next day: continue to work on built-ins:
-1. unset
-2. cd;
+1. env
+2. unset
 3. export
-4. echo
+4. cd
+5. echo
 
-DONE: env
+DONE: env I BROKE IT... snif snif
 DONE: exit **need to review the way that I check for numeric arguments.
 DONE: pwd **just need to double check for the error message. Might not need
 

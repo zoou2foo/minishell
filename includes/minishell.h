@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/17 13:11:29 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/18 11:15:07 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 # include <readline/history.h>
 # include <curses.h>
 
-extern	char	**environ;
+extern	char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
 
 typedef struct s_meta
 {
-	char	**env;
+	char	**env; //elle pourrait devenir notre globale
 	char	*buf;		//variable pour garder ce qui est mis dans readline
 
 }	t_meta;
@@ -67,7 +67,8 @@ void	do_exit(t_cmd *cmd); //Need to change back to void.
 void	change_dir(t_cmd *cmd);
 void	get_env(void);
 void	get_pwd(void);
-void	do_unset(void);
+void	do_unset(t_cmd *cmd);
+int		check_arg_4_unset(t_cmd *cmd);
 
 /* section three - lexer and parser */
 t_cmd_block	*parse_line(char *line);
@@ -75,5 +76,6 @@ t_cmd_block	*parse_line(char *line);
 /* section four - */
 
 /* section five - trying stuff */
+
 
 #endif

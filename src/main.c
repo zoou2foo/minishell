@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/17 13:16:19 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/18 11:31:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,21 @@ t_meta	*metadata;	//our global var
 
 int	main(int ac, char **av)		//use char **environ instead
 {
-
+	//extern	char	**environ; //pas de variable globale
 	(void)av;
 	if (ac == 1)
 	{
 		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
 		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[0] = "cd";
-		cmd->cmd_args[1] = "..";
+		cmd->cmd_args[1] = "PATH";
 		init_meta();
 		metadata->buf = readline("bash-Pew Pew> ");
 		while (metadata->buf)
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "cd", 2) == 0)
-				change_dir(cmd);
-			if (ft_strncmp(metadata->buf, "pwd", 3) == 0)
-				get_pwd();
+			if (ft_strncmp(metadata->buf, "env", 3) == 0)
+				geclet_env();
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}
@@ -48,7 +45,7 @@ void	init_meta(void)
 	int	i;
 
 	metadata = ft_calloc(sizeof(t_meta), 1);
-	metadata->env = environ;
+	//metadata->env = environ; //je refais exactement ça avec strdup;
 	i = 0;
 	while (environ[i])
 		i++;

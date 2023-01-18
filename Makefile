@@ -67,7 +67,7 @@ FILES	=	main \
 			built-ins/export \
 			built-ins/pwd \
 			built-ins/unset \
-			parsing/parser \
+			parsing/tokenizer \
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses

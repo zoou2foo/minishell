@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/17 16:11:16 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/18 15:23:39 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,6 @@
 # include <curses.h>
 
 extern	char	**environ;
-
-enum e_token
-{
-	TOKEN_EMPTY	= 0,
-	TOKEN_STR	= 1,
-	TOKEN_SSTR	= 2,
-	TOKEN_REDIR = 3,
-	TOKEN_PIPE	= 4
-};
 
 typedef struct s_meta
 {
@@ -87,6 +78,7 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 	int				type;
+	bool			is_after_space;	//this mf
 
 }					t_token;
 
@@ -99,7 +91,7 @@ void	change_dir(t_cmd *cmd);
 void	get_env(void);
 
 /* section three - lexer and parser */
-t_cmd_block	*parse_line(char *line);
+t_token	*tokenize_input(char *line);
 
 
 /* section four - */

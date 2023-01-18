@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/17 12:22:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/18 16:07:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,35 @@ void	init_meta(void)
 
 int	main(void)
 {
-	char	*line = "hellow world! | Wassup? | Not much how bout you?";
-	int		i = -1;
+	char	*line = "<<END <$HOMEinfile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | split\"";
+	//char	*line = "lol \"L O L\"lol\'L O L\'lol";
+	t_token	*node;
 
-	t_cmd_block	*cmdblock;
-	cmdblock = parse_line(line);
-	while (++i < cmdblock->cmd_count)
-		printf("%s\n", cmdblock->cmds[i]->cmd_args[0]);
+	printf("Tokenizing Line...\n");
+	node = tokenize_input(line);
+	printf("Printing Tokens...\n");
+	while (node)
+	{
+		if (3 < node->type)
+			printf("T%i", node->type);
+		/*
+		if (node->type == 4)
+			printf("<");
+		else if (node->type == 5)
+			printf("<<");
+		else if (node->type == 6)
+			printf(">");
+		else if (node->type == 7)
+			printf(">>");
+		else if (node->type == 8)
+			printf("|");
+		*/
+		else
+			printf("%s", node->string);
+		node = node->next;
+		printf(" : ");
+		if (node && node->is_after_space)
+			printf("__");
+	}
+	printf("\n");
 }

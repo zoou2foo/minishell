@@ -1,15 +1,20 @@
 /*
 
 
+0========(  VALERIE  )========0
+
+Next day: continue to work on built-ins:
+1. unset
+2. cd;
+3. export
+4. echo
+
+DONE: env
+DONE: exit **need to review the way that I check for numeric arguments.
+DONE: pwd **just need to double check for the error message. Might not need
 
 
-
-
-
-
-
-
-
+PARSING: je pourrais aider avec here_doc
 
 
 

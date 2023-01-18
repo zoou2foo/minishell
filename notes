@@ -16,6 +16,8 @@
 
 0========(  LOYC  )========0
 
+"eat" throught the command line and tokenize gradually
+
 split along |
 look for < / <<
 	make < the infile

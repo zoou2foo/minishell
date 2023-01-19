@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 13:16:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/19 12:19:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_meta
 
 extern	t_meta	*metadata;
 
+
 typedef struct s_cmd
 {
 	char	**cmd_args;	//cmd name and its following arguments
@@ -41,23 +42,45 @@ typedef struct s_cmd
 	char	*input;		//all the < redirection
 	bool	has_input;		//if true: use input fd
 	bool	has_inpipe;		//else if true: use pipe fd
-								//else: use STDIN
+	int		fdin;				//either pie of file fd
+							//else: use STDIN
 
 	char	*output;	//all the >/>> redirection
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
-								//else: use STDOUT
+	int		fdout;				//either pie of file fd
+							//else: use STDOUT
 }			t_cmd;
+
+typedef struct s_cmd_node
+{
+	t_cmd				*cmd;
+	struct s__cmd_node	*next_node;
+	struct s__cmd_node	*previous_node;	//superfluous(?)
+	bool				is_empty;
+	bool				is_valid;
+}						t_cmd_node;
 
 typedef struct s_cmd_block
 {
-	t_cmd	**cmds;
-	int		cmd_count;
-	bool	is_empty;
-	bool	is_valid;
+	t_cmd_node	*head_node;
+	t_cmd_node	*tail_node;		//superfluous(?)
+	t_cmd		**cmds;			//superfluous(?)
+	int			cmd_count;
+	bool		is_empty;
+	bool		is_valid;
 
 }			t_cmd_block;
-// COMMENT: on initie toutes les variables a NULL puis on change par la suite
+
+typedef struct s_token
+{
+	char			*string;
+	struct s_token	*next;
+	struct s_token	*prev;
+	int				type;
+	bool			is_joined;	//wheter it touches the previous token (no spaces)
+
+}					t_token;
 
 /* section one - all about our struct */
 void	init_meta(void);
@@ -68,7 +91,7 @@ void	change_dir(t_cmd *cmd);
 void	get_env(void);
 
 /* section three - lexer and parser */
-t_cmd_block	*parse_line(char *line);
+t_token	*tokenize_input(char *line);
 
 
 /* section four - */

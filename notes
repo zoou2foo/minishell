@@ -21,6 +21,8 @@ PARSING: je pourrais aider avec here_doc
 
 0========(  LOYC  )========0
 
+"eat" throught the command line and tokenize gradually
+
 split along |
 look for < / <<
 	make < the infile
@@ -30,7 +32,7 @@ look for > / >>
 
 
 
-TEST CASES
+0====( TEST CASES )====0
 
 cmd
 cmd arg1

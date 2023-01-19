@@ -26,6 +26,10 @@ DEFAULT_GOAL: all
 .DELETE_ON_ERROR: $(NAME)
 .PHONY: all bonus clean fclean re run leaks ldirs
 
+#------------------------------------------------------------------------------#
+#                                    FLAGS                                     #
+#------------------------------------------------------------------------------#
+
 # Hide calls
 export VERBOSE = FALSE
 ifeq ($(VERBOSE),TRUE)
@@ -40,6 +44,14 @@ ifeq ($(DEBUG),TRUE)
 	MODE = -g
 else
 	MODE =
+endif
+
+# Start screen mode
+export GRAPHIC = FALSE
+ifeq ($(GRAPHIC),TRUE)
+	START = bash pew_pew2.sh
+else
+	START =
 endif
 
 #------------------------------------------------------------------------------#
@@ -67,7 +79,7 @@ FILES	=	main \
 			built-ins/export \
 			built-ins/pwd \
 			built-ins/unset \
-			parsing/parser \
+			parsing/tokenizer \
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
@@ -84,13 +96,14 @@ CMD		=	./minishell
 
 all: ldirs $(NAME)
 
+# Creates the object directories
 ldirs:
 	$(HIDE) $(MD) $(OBJDIR)
 	$(HIDE) $(MD) $(OBJDIR)/built-ins
 	$(HIDE) $(MD) $(OBJDIR)/parsing
 
 $(NAME): $(OBJS)
-	$(HIDE) bash pew_pew2.sh
+	$(HIDE) $(START)
 	$(HIDE) cd libft && make && cd ..
 	$(HIDE) $(CC) $(MODE) $(CFLAGS) $(INCLUDE) $(LIBFT) -o $@ $^ $(LIBRL)
 	@echo "$(GREEN)Files compiled$(DEF_COLOR)"
@@ -102,10 +115,11 @@ $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c
 # Removes objects
 clean:
 	$(HIDE) $(RM) $(OBJS)
+	$(HIDE) cd libft && make clean && cd ..
 	@echo "$(MAGENTA)Object files cleaned$(DEF_COLOR)"
 
 # Removes object dir and executable
-fclean:
+fclean: clean
 	$(HIDE) $(RM) $(OBJDIR)
 	@echo "$(MAGENTA)Object directory cleaned$(DEF_COLOR)"
 	$(HIDE) $(RM) $(NAME)

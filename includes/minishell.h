@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/18 11:15:07 by vjean            ###   ########.fr       */
+/*   Created: 2023/01/19 13:13:50 by vjean             #+#    #+#             */
+/*   Updated: 2023/01/19 13:14:03 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_meta
 
 extern t_meta	*metadata;
 
+
 typedef struct s_cmd
 {
 
@@ -42,22 +43,41 @@ typedef struct s_cmd
 	char	*input;		//all the < redirection
 	bool	has_input;		//if true: use input fd
 	bool	has_inpipe;		//else if true: use pipe fd
-								//else: use STDIN
 	char	*output;	//all the >/>> redirection
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
-								//else: use STDOUT
+							//else: use STDOUT
 }			t_cmd;
+
+typedef struct s_cmd_node
+{
+	t_cmd				*cmd;
+	struct s__cmd_node	*next_node;
+	struct s__cmd_node	*previous_node;	//superfluous(?)
+	bool				is_empty;
+	bool				is_valid;
+}						t_cmd_node;
 
 typedef struct s_cmd_block
 {
-	t_cmd	**cmds;
-	int		cmd_count;
-	bool	is_empty;
-	bool	is_valid;
+	t_cmd_node	*head_node;
+	t_cmd_node	*tail_node;		//superfluous(?)
+	t_cmd		**cmds;			//superfluous(?)
+	int			cmd_count;
+	bool		is_empty;
+	bool		is_valid;
 
 }			t_cmd_block;
-// COMMENT: on initie toutes les variables a NULL puis on change par la suite
+
+typedef struct s_token
+{
+	char			*string;
+	struct s_token	*next;
+	struct s_token	*prev;
+	int				type;
+	bool			is_joined;	//wheter it touches the previous token (no spaces)
+
+}					t_token;
 
 /* section one - all about our struct */
 void	init_meta(void);
@@ -71,7 +91,7 @@ void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 
 /* section three - lexer and parser */
-t_cmd_block	*parse_line(char *line);
+t_token	*tokenize_input(char *line);
 
 /* section four - */
 

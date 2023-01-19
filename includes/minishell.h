@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/18 15:23:39 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/19 12:19:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 	int				type;
-	bool			is_after_space;	//this mf
+	bool			is_joined;	//wheter it touches the previous token (no spaces)
 
 }					t_token;
 

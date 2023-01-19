@@ -6,7 +6,7 @@
 #    By: llord <llord@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 08:45:10 by vjean             #+#    #+#              #
-#    Updated: 2023/01/16 13:09:31 by llord            ###   ########.fr        #
+#    Updated: 2023/01/19 12:24:13 by llord            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,10 @@ $(NAME): $(OBJS)
 		@ar rcs $(NAME) $(OBJS)
 
 clean:
-	$(RM) $(OBJS)
+		@$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+		@$(RM) $(NAME)
 
 re: fclean all
 

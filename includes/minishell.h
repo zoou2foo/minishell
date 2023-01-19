@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:13:50 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/19 13:14:03 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/19 13:20:39 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		check_arg_4_unset(t_cmd *cmd);
 
 /* section three - lexer and parser */
 t_token	*tokenize_input(char *line);
+char	*do_expansion(char *str);
 
 /* section four - */
 

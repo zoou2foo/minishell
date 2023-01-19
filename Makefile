@@ -80,6 +80,7 @@ FILES	=	main \
 			built-ins/pwd \
 			built-ins/unset \
 			parsing/tokenizer \
+			parsing/expander
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses

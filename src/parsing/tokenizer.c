@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/18 16:07:07 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/19 11:29:22 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_token	*tokenize_input(char *line)
 			}
 		}
 
-		//deals with single quotes
+		//deals with single quotes *if 'p''w''d'(when no space between the quotes) need to be ONE token
 		else if (line[i] == '\'')
 		{
 			len++;
@@ -140,7 +140,7 @@ t_token	*tokenize_input(char *line)
 			add_token(new_token(&line[i], len, TTYPE_S_QUOTE), &head);
 		}
 
-		//deals with double quotes
+		//deals with double quotes *if "p""w""d"(when no space between the quotes) need to be ONE token
 		else if (line[i] == '\"')
 		{
 			len++;
@@ -151,7 +151,7 @@ t_token	*tokenize_input(char *line)
 			add_token(new_token(&line[i], len, TTYPE_D_QUOTE), &head);
 		}
 
-		//deals with normal cmds/args input
+		//deals with normal cmds/args input ***NEED to split $USER$USER here; maybe add a small function is_dollarsign?
 		else
 		{
 			while (line[i + len] && !is_space(line[i + len]) && !is_special(line[i + len]))

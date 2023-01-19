@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/19 12:48:41 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/19 15:12:56 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,36 @@ void	init_meta(void)
 
 int	main(void)
 {
+	bool	show_joined = true;
+	bool	show_newline = true;
+	bool	show_content = true;
+	bool	show_types = false;
+
 	char	*line = "<<END <$HOMEinfile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | split\"";
 	//char	*line = "lol \"L O L\"\"lol\"lol\'L O L\'lol";
-	//char	*line = "\"sa\"pa\'la\'";
+	//char	*line = "\"s\"p\'l\'";
 	//char	*line = "$USER$USER";
+
 	t_token	*node;
 
 	printf("Tokenizing Line...\n");
 	node = tokenize_input(line);
 	printf("Printing Tokens...\n\n");
 
-	bool	full_display = false;
 	while (node)
 	{
-		if (full_display)
-		{
-			if (node && node->is_joined)
-				printf("");
-			else
-				printf(" ");
+		if (node && show_joined && node->is_joined)
+				printf("__");
+		else if (show_newline)
+			printf("\n");
+		else
+			printf(" ");
 
-			if (node->type == 1)
+		if (node->type < 5)
+		{
+			if (show_content)
+				printf("%s", node->string);
+			else if (node->type == 1)
 				printf("string");
 			else if (node->type == 2)
 				printf("\'string\'");
@@ -97,26 +106,11 @@ int	main(void)
 				printf("\"string\"");
 			else if (node->type == 4)
 				printf("$EXPAND");
-			else if (node->type == 5)
-				printf("<");
-			else if (node->type == 6)
-				printf("<<");
-			else if (node->type == 7)
-				printf(">");
-			else if (node->type == 8)
-				printf(">>");
-			else if (node->type == 9)
-				printf("|");
 		}
 		else
 		{
-			if (node && node->is_joined)
-				printf("__");
-			else
-				printf("\n");
-
-			if (node->type < 5)
-				printf("%s", node->string);
+			if (show_types)
+				printf("_T%i_", node->type);
 			else if (node->type == 5)
 				printf("<");
 			else if (node->type == 6)

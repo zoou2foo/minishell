@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 13:01:38 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/20 13:15:18 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*do_expansion(char *str1)
 		i++;
 	}
 	//we need to free the old string from node
-	//ft_free_null(str1);											//frees old string
+	//ft_free_null(str1);										//frees old string
 	return (str2);
 }
 
@@ -86,7 +86,7 @@ char	*do_expand_in_dbl_quotes(char *str1)
 			tmp = ft_calloc(2, sizeof(char));
 			tmp[0] = str1[i];
 		}
-		if (tmp)										//prevent returning null strings
+		if (tmp)											//prevent returning null strings
 			str2 = ft_strjoin_free(str2, tmp);
 		i++;
 	}

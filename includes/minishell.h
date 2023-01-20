@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 10:57:43 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:42:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 	int				type;
-	bool			is_joined;	//wheter it touches the previous token (no spaces)
+	bool			is_joined;	//whether it touches the previous token (no spaces)
 
 }					t_token;
 
@@ -106,19 +106,23 @@ void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 
 /*		section expander		*/
-char	*do_expansion(char *str);
-char	*do_expand_in_dbl_quotes(char *str);
+char	*expand(char *str1);
+char	*expand_quote(char *str1);
 
 //from tokenizer
-t_token	*tokenize_input(char *line);
+bool	is_space(char c);	//à mettre dans libft
+bool	is_capital(char c);	//à mettre dans libft (USE ANOTHER FUNCTION)
+t_token	*create_token_list(char *line);
+void	expand_token_list(t_token *head);
+t_token	*merge_token_list(t_token *head);
 
-/*		token_handler		 */
+//from token_handler
 void	free_token(t_token *node);
 t_token *new_token(char *str, int len, int type);
 void	add_token(t_token *token, t_token **head);
 t_token	*find_head(t_token *tail);
 t_token	*find_tail(t_token *head);
-t_token	*merge_token(t_token *prev, t_token *next);
+t_token	*merge_tokens(t_token *prev, t_token *next);
 t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
 t_token	*replace_token(t_token *new, t_token *old);
 void	cut_token(t_token *node);

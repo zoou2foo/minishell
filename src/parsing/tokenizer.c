@@ -6,36 +6,45 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/20 13:04:28 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:49:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-bool	is_space(char c) //à mettre dans libft
+bool	is_space(char c)
 {
 	if ((9 <= c && c <= 13) || c == ' ')
 		return (true);
 	return (false);
 }
 
-bool	is_capital(char c) //à mettre dans libft
+bool	is_capital(char c)
 {
 	if ('A' <= c && c <= 'Z')
 		return (true);
 	return (false);
 }
 
-t_token	*tokenize_input(char *line)
+bool	is_mergeable(int type)
+{
+	if (TTYPE_NORMAL <= type && type <= TTYPE_EXPAND)
+		return (true);
+	return (false);
+}
+
+t_token	*create_token_list(char *line)
 {
 	t_token	*head;
 	int		len;
 	int		i;
 
+	printf(" - \"%s\"\n", line);				//DEBUG
+
 	head = NULL;
 	i = -1;
-	while (line[++i])		//when making functions with this, make sure they return len
+	while (line[++i])				//when making functions with these, make sure they return len
 	{
 		len = 0;
 		while (is_space(line[i]))
@@ -95,7 +104,7 @@ t_token	*tokenize_input(char *line)
 		else if (line[i] == '$')
 		{
 			len++;
-			while (line[i + len] && is_capital(line[i + len]))
+			while (line[i + len] && is_capital(line[i + len]))				//USE ANOTHER FUNCTION
 				len++;
 			len--;
 			add_token(new_token(&line[i + 1], len - 1, TTYPE_EXPAND), &head);
@@ -122,12 +131,48 @@ t_token	*tokenize_input(char *line)
 	return (head);
 }
 
-t_token	*expand_tokens(t_token *head)
+void	expand_token_list(t_token *head)
+{
+	t_token	*node;
+
+	node = head;
+	while (node)
+	{
+		//handles standalone expansions
+		if (node->type == TTYPE_EXPAND)
+		{
+			printf(" - $%s", node->string);					//DEBUG
+			node->string = expand(node->string);
+			printf(" > %s\n", node->string);				//DEBUG
+		}
+		//handles expansions inside double quotes
+		else if (node->type == TTYPE_D_QUOTE)
+		{
+			printf(" - \"%s\"", node->string);				//DEBUG
+			node->string = expand_quote(node->string);
+			printf(" > \"%s\"\n", node->string);			//DEBUG
+		}
+		node = node->next;
+	}
+}
+
+t_token	*merge_token_list(t_token *head)
 {
 	t_token	*node;
 
 	node = head;
 	while (node->next)
+	{
+		if (node->next && node->next->is_joined)
+		{
+			if (is_mergeable(node->type) && is_mergeable(node->next->type))
+			{
+				printf(" - %s + %s\n", node->string, node->next->string);				//DEBUG
+				node = merge_tokens(node, node->next);
+				continue ;
+			}
+		}
 		node = node->next;
-	return (node);
+	}
+	return (find_head(node));
 }

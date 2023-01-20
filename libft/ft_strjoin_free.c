@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:54:16 by vjean             #+#    #+#             */
-/*   Updated: 2022/11/10 11:54:31 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/20 12:26:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	size_t	s1len;
 	size_t	s2len;
 
+	if (!s1 || !s2)
+		return (NULL);
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
 	nstr = (char *)malloc((s1len + s2len + 1) * (sizeof(char)));
@@ -33,5 +35,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	while (s2[i])
 		nstr[j++] = s2[i++];
 	nstr[j] = '\0';
+	ft_free_null(s1);
+	ft_free_null(s2);
 	return (nstr);
 }

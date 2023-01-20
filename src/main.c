@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 14:50:40 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:53:37 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ void	init_meta(void)
 */
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at the end.
+
+
+
+
+
 /*
 //VAL's main (DEBUG)
 int	main(void)
@@ -70,6 +75,9 @@ int	main(void)
 	return (0);
 }
 */
+
+
+
 
 
 //Loyc's main (DEBUG)
@@ -138,17 +146,17 @@ int	main(void)
 
 	t_token	*head;
 
- 	printf("\nTokenizing Line...\n\n");
+ 	printf("\n\nTokenizing Line...\n\n");
  	head = create_token_list(line);
 	print_token_list(head);
 
- 	printf("\nExpanding Tokens...\n\n");
+ 	printf("\n\nExpanding Tokens...\n\n");
  	expand_token_list(head);
 	print_token_list(head);
 
- 	printf("\nMerging Tokens...\n\n");
+ 	printf("\n\nMerging Tokens...\n\n");
  	head = merge_token_list(head);
 	print_token_list(head);
 
-	printf("\n");
+	printf("\n\n");
 }

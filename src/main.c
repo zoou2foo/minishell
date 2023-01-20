@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 10:56:18 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/20 12:36:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	init_meta(void)
 //VAL's main (DEBUG)
 int	main(void)
 {
-	char	*str = "\"blabla$LANGblablala\"";
+	char	*str = "bla $LANG bla $USER";
 
 	printf("%s\n", do_expand_in_dbl_quotes(str));
 	return (0);

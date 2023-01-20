@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/19 13:13:50 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/19 13:20:39 by vjean            ###   ########.fr       */
+/*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
+/*   Updated: 2023/01/20 10:29:12 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@
 # include <curses.h>
 
 extern	char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
+
+enum e_ttype
+{
+	TTYPE_ERROR		= -1,
+	TTYPE_EMPTY		= 0,
+	TTYPE_NORMAL	= 1,	// _	(cmds/args)
+	TTYPE_S_QUOTE	= 2,	//'_'	(string without expansion)
+	TTYPE_D_QUOTE	= 3,	//"_"	(string with expansion)
+	TTYPE_EXPAND	= 4,	//$_	(expansion)
+	TTYPE_REDIR_IN	= 5,	// <	(input path)
+	TTYPE_HEREDOC	= 6,	//<<	(heredoc EOF word)
+	TTYPE_S_RDR_OUT	= 7,	// >	(output path (replace))
+	TTYPE_D_RDR_OUT	= 8,	//>>	(output path (append))
+	TTYPE_PIPE		= 9		// |	(pipe)
+};
 
 typedef struct s_meta
 {
@@ -91,8 +106,20 @@ void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 
 /* section three - lexer and parser */
+
+//from tokenizer
 t_token	*tokenize_input(char *line);
-char	*do_expansion(char *str);
+
+//from token_handler
+void	free_token(t_token *node);
+t_token *new_token(char *str, int len, int type);
+void	add_token(t_token *token, t_token **head);
+t_token	*find_head(t_token *tail);
+t_token	*find_tail(t_token *head);
+t_token	*merge_token(t_token *prev, t_token *next);
+t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
+t_token	*replace_token(t_token *new, t_token *old);
+void	cut_token(t_token *node);
 
 /* section four - */
 

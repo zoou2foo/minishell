@@ -6,73 +6,12 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/19 12:58:56 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/19 13:23:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-
-enum e_ttype
-{
-	TTYPE_ERROR		= -1,
-	TTYPE_EMPTY		= 0,
-	TTYPE_NORMAL	= 1,	// _	(cmds/args)
-	TTYPE_S_QUOTE	= 2,	//'_'	(string without expansion)
-	TTYPE_D_QUOTE	= 3,	//"_"	(string with expansion)
-	TTYPE_EXPAND	= 4,	//$_	(expansion)
-	TTYPE_REDIR_IN	= 5,	// <	(input path)
-	TTYPE_HEREDOC	= 6,	//<<	(heredoc EOF word)
-	TTYPE_S_RDR_OUT	= 7,	// >	(output path (replace))
-	TTYPE_D_RDR_OUT	= 8,	//>>	(output path (append))
-	TTYPE_PIPE		= 9		// |	(pipe)
-};
-
-t_token	*find_tail(t_token *head)
-{
-	t_token	*node;
-
-	node = head;
-	while (node->next)
-		node = node->next;
-	return (node);
-}
-
-//creates/extends the token list
-void	add_token(t_token *token, t_token **head)
-{
-	t_token *node;
-
-	if (*head)
-	{
-		node = find_tail(*head);
-		node->next = token;
-		node->next->prev = node;
-	}
-	else
-		*head = token;
-}
-
-//creates a new token
-t_token *new_token(char *str, int len, int type)
-{
-	t_token	*token;
-	int		i;
-
-	token = ft_calloc(1, sizeof(t_token));
-	if (len)
-	{
-		token->string = ft_calloc(len + 2, sizeof(char));
-		i = -1;
-		while (++i < len + 1)
-		{
-			token->string[i] = str[i];
-		}
-		token->string[i] = '\0';
-	}
-	token->type = type;
-	return (token);
-}
 
 bool	is_space(char c) //à mettre dans libft
 {
@@ -104,17 +43,17 @@ t_token	*tokenize_input(char *line)
 
 		//deals with pipes
 		if (line[i] == '|')
-			add_token(new_token(NULL, 0, TTYPE_PIPE), &head);
+			add_token(new_token(NULL, -1, TTYPE_PIPE), &head);
 
 		//deals with output redirection
 		else if (line[i] == '>')
 		{
 			if (line[i + 1] != '>')
-				add_token(new_token(NULL, 0, TTYPE_S_RDR_OUT), &head);
+				add_token(new_token(NULL, -1, TTYPE_S_RDR_OUT), &head);
 			else
 			{
 				len++;
-				add_token(new_token(NULL, 0, TTYPE_D_RDR_OUT), &head);
+				add_token(new_token(NULL, -1, TTYPE_D_RDR_OUT), &head);
 			}
 		}
 
@@ -122,11 +61,11 @@ t_token	*tokenize_input(char *line)
 		else if (line[i] == '<')
 		{
 			if (line[i + 1] != '<')
-				add_token(new_token(NULL, 0, TTYPE_REDIR_IN), &head);
+				add_token(new_token(NULL, -1, TTYPE_REDIR_IN), &head);
 			else
 			{
 				len++;
-				add_token(new_token(NULL, 0, TTYPE_HEREDOC), &head);	//================( HERE IS HEREDOC )================
+				add_token(new_token(NULL, -1, TTYPE_HEREDOC), &head);	//================( HERE IS HEREDOC )================
 			}
 		}
 

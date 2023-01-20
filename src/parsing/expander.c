@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/19 14:35:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/20 11:09:35 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,22 @@ char	*do_expansion(char *str)
 	}
 	//we need to free the old string from node
 	return (tmp);
+}
+
+char	*do_expand_in_dbl_quotes(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			i += 1;
+			do_expansion(str + i);
+			return (str);
+		}
+		i++;
+	}
+	return (str);
 }

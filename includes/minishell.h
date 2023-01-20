@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 14:42:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 16:01:18 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,10 @@ typedef struct s_cmd
 							//else: use STDOUT
 }			t_cmd;
 
-typedef struct s_cmd_node
-{
-	t_cmd				*cmd;
-	struct s__cmd_node	*next_node;
-	struct s__cmd_node	*previous_node;	//superfluous(?)
-	bool				is_empty;
-	bool				is_valid;
-}						t_cmd_node;
-
 typedef struct s_cmd_block
 {
-	t_cmd_node	*head_node;
-	t_cmd_node	*tail_node;		//superfluous(?)
+	//t_cmd_node	*head_node;
+	//t_cmd_node	*tail_node;		//superfluous(?)
 	t_cmd		**cmds;			//superfluous(?)
 	int			cmd_count;
 	bool		is_empty;

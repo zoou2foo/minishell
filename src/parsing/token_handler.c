@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/19 14:30:14 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 13:50:18 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_token	*find_head(t_token *tail)
 }
 
 //merges two token's strings into a new one
-t_token	*merge_token(t_token *prev, t_token *next)
+t_token	*merge_tokens(t_token *prev, t_token *next)
 {
 	t_token	*node;
 	char	*str;
@@ -90,7 +90,9 @@ t_token	*merge_token(t_token *prev, t_token *next)
 	node = new_token(str, ft_strlen(str), TTYPE_NORMAL);
 
 	node->prev = prev->prev;
+	node->prev->next = node;
 	node->next = next->next;
+	node->next->prev = node;
 
 	if (prev->type == next->type)
 		node->type = prev->type;
@@ -142,6 +144,19 @@ void	cut_token(t_token *node)
 			node->prev->next = node->next;
 		if (node->next)
 			node->next->prev = node->prev;
+		free_token(node);
+	}
+}
+
+//deletes a token without relinking
+void	destroy_token(t_token *node)
+{
+	if (node)
+	{
+		if (node->prev)
+			node->prev->next = NULL;
+		if (node->next)
+			node->next->prev = NULL;
 		free_token(node);
 	}
 }

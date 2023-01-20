@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 12:58:50 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:02:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,28 @@ int	main(void)
 {
 	bool	show_joined = true;
 	bool	show_newline = true;
-	bool	show_content = true;
+	bool	show_content = false;
 	bool	show_types = false;
 
-	char	*line = "<<END <$HOMEinfile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | split\"";
+	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
 	//char	*line = "lol \"L O L\"\"lol\"lol\'L O L\'lol";
 	//char	*line = "\"s\"p\'l\'";
 	//char	*line = "$USER$USER";
 
+	t_token	*head;
 	t_token	*node;
 
- 	printf("Tokenizing Line...\n");
- 	node = tokenize_input(line);
- 	printf("Printing Tokens...\n\n");
+ 	printf("\nTokenizing Line...\n");
+ 	head = tokenize_input(line);
+ 	printf("\nExpanding Tokens...\n");
+ 	expand_token_list(head);
+ 	printf("\nMerging Tokens...\n");
+ 	merge_token_list(head);
+ 	printf("\nPrinting Tokens...\n");
 
+	node = head;
+	if (!show_newline)
+		printf("\n");
 	while (node)
 	{
 		if (node && show_joined && node->is_joined)

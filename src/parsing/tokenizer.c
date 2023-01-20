@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/19 13:23:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 13:04:28 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,14 @@ t_token	*tokenize_input(char *line)
 		i += len;
 	}
 	return (head);
+}
+
+t_token	*expand_tokens(t_token *head)
+{
+	t_token	*node;
+
+	node = head;
+	while (node->next)
+		node = node->next;
+	return (node);
 }

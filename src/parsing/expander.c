@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 12:38:21 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 12:53:28 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*do_expansion(char *str1)
 		i++;
 	}
 	//we need to free the old string from node
+	ft_free_null(str1);											//frees old string
 	return (str2);
 }
 
@@ -50,7 +51,7 @@ char	*trimstr(char *str1, int len)
 	char	*str2;
 	int		i;
 
-	str2 = ft_calloc(len, sizeof(char));
+	str2 = ft_calloc(len + 1, sizeof(char));
 	i = 0;
 	while (i < len)
 	{
@@ -75,21 +76,20 @@ char	*do_expand_in_dbl_quotes(char *str1)
 		if (str1[i] == '$')
 		{
 			i += 1;
-			while (str1[i + len] && str1[i + len] != ' ')		//is_capital?
+			while (str1[i + len] && str1[i + len] != ' '&& str1[i + len] != '$')		//is_capital?
 				len += 1;
-			len -= 1;
 			tmp = do_expansion(trimstr(&str1[i], len));
-			printf("%s\n", tmp);
-			i += len;
+			i += len - 1;
 		}
 		else
 		{
 			tmp = ft_calloc(2, sizeof(char));
 			tmp[0] = str1[i];
 		}
-		str2 = ft_strjoin_free(str2, tmp);
-		//printf("%s\n", str2);
+		if (tmp)										//prevent returning null strings
+			str2 = ft_strjoin_free(str2, tmp);
 		i++;
 	}
+	ft_free_null(str1);									//frees old string
 	return (str2);
 }

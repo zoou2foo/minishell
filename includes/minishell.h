@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 16:01:18 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 16:57:44 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ typedef struct s_meta
 
 extern t_meta	*metadata;
 
+typedef struct s_token
+{
+	char			*string;
+	struct s_token	*next;
+	struct s_token	*prev;
+	int				type;
+	bool			is_joined;	//whether it touches the previous token (no spaces)
+
+}					t_token;
 
 typedef struct s_cmd
 {
@@ -66,24 +75,13 @@ typedef struct s_cmd
 
 typedef struct s_cmd_block
 {
-	//t_cmd_node	*head_node;
-	//t_cmd_node	*tail_node;		//superfluous(?)
-	t_cmd		**cmds;			//superfluous(?)
+	t_token		**token_array;
+	t_cmd		**cmds;
 	int			cmd_count;
 	bool		is_empty;
 	bool		is_valid;
 
 }			t_cmd_block;
-
-typedef struct s_token
-{
-	char			*string;
-	struct s_token	*next;
-	struct s_token	*prev;
-	int				type;
-	bool			is_joined;	//whether it touches the previous token (no spaces)
-
-}					t_token;
 
 /* section one - all about our struct */
 void	init_meta(void);
@@ -99,6 +97,9 @@ int		check_arg_4_unset(t_cmd *cmd);
 /*		section expander		*/
 char	*expand(char *str1);
 char	*expand_quote(char *str1);
+
+//from parser
+t_token	**parse_line(char *line);
 
 //from tokenizer
 bool	is_space(char c);	//à mettre dans libft
@@ -117,6 +118,7 @@ t_token	*merge_tokens(t_token *prev, t_token *next);
 t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
 t_token	*replace_token(t_token *new, t_token *old);
 void	cut_token(t_token *node);
+void	destroy_token(t_token *node);
 
 /* section four - */
 

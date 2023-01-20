@@ -6,74 +6,52 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/17 16:12:16 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 16:34:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-t_meta	*metadata;	//our global var
-/*
-
-//=========( CMDER )=========//
-
-//=========( NODER )=========//
-
-t_cmd	*parse_cmd(char *cmdstr)
-{
-
-}
-*/
-
-//========( BLOCKER )========//
-
-//appends cmdnode(s) to the given cmdblock (normally one except if heredoc)
-void	add_cmds(void)//t_cmd_block *cmdblock, char *cmdstr)
-{
-	//TOKENIZE FIRST ARGGGG
-
-	/*
-	<< < << < cmd args >> > >>
-
-	look for heredocs and append them as cmds, then discard them
-	(empty cmd with is_heredoc and has_outpipe set to true)
-	also remove redirections before heredocs
-	( << | << | ) < cmd args >> > >>
-
-	set input and output to last encountered values and discard them
-	cmd args
-
-	set remainder as cmd_args (keep ""/'' intact and aply changes in "${}")
-		(use parse cmd)
-	*/
-
-}
-
 
 //splits the cmd line along pipes and
-t_cmd_block	*parse_line(char *line)
+t_token	**parse_line(char *line)				//check validity of token list beforehand
 {
-	t_cmd_block	*cmdblock;
-	char		**cmdstrs;
-	int			i;
+	t_token	**token_array;
+	t_token	*head;
+	t_token	*node;
+	int	i;
 
-	cmdblock = ft_calloc(sizeof(t_cmd_block), 1);
+ 	head = create_token_list(line);
+ 	expand_token_list(head);
+ 	head = merge_token_list(head);
 
-	if (line && line[0])
+	i = 1;		//1 because at least one cmd to execute
+
+	node = head;
+	while (node)
 	{
-		cmdstrs = ft_split(line, '|');
-		cmdblock->cmd_count = ft_count_char(line, '|') + 1;
-		//remember to update cmd_count when dealing with heredocs later
-
-		i = -1;
-		while (cmdstrs[++i])
-		{
-			add_cmds();//cmdblock, cmdstrs[i]);
-		}
-		cmdblock->cmds = ft_calloc(cmdblock->cmd_count + 1, sizeof(t_cmd *));
-
-		//fill cmds with the cmds in the cmdnode list
+		if (node->type == TTYPE_PIPE)
+			i++;
+		node = node->next;
 	}
-	return (cmdblock);
+
+	token_array = ft_calloc(i + 1, sizeof(t_token *));
+	node = head;
+	token_array[0] = head;
+	i = 0;
+	while (node)
+	{
+		if (node->type == TTYPE_PIPE)
+		{
+			if (node->next)
+			{
+				node = node->next;
+				token_array[++i] = node;
+				destroy_token(node->prev);
+			}
+		}
+		node = node->next;
+	}
+	return(token_array);
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 13:55:42 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:42:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ char	*expand_quote(char *str1);
 //from tokenizer
 bool	is_space(char c);	//à mettre dans libft
 bool	is_capital(char c);	//à mettre dans libft (USE ANOTHER FUNCTION)
-t_token	*tokenize_input(char *line);
+t_token	*create_token_list(char *line);
 void	expand_token_list(t_token *head);
-void	merge_token_list(t_token *head);
+t_token	*merge_token_list(t_token *head);
 
-/*		token_handler		 */
+//from token_handler
 void	free_token(t_token *node);
 t_token *new_token(char *str, int len, int type);
 void	add_token(t_token *token, t_token **head);

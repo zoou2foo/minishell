@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/20 14:01:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:49:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,24 @@ bool	is_capital(char c)
 	return (false);
 }
 
-bool	is_mergable(int	type)
+bool	is_mergeable(int type)
 {
-	if (TTYPE_NORMAL >= type && type <= TTYPE_EXPAND)
+	if (TTYPE_NORMAL <= type && type <= TTYPE_EXPAND)
 		return (true);
 	return (false);
 }
 
-t_token	*tokenize_input(char *line)
+t_token	*create_token_list(char *line)
 {
 	t_token	*head;
 	int		len;
 	int		i;
 
+	printf(" - \"%s\"\n", line);				//DEBUG
+
 	head = NULL;
 	i = -1;
-	while (line[++i])		//when making functions with this, make sure they return len
+	while (line[++i])				//when making functions with these, make sure they return len
 	{
 		len = 0;
 		while (is_space(line[i]))
@@ -136,30 +138,41 @@ void	expand_token_list(t_token *head)
 	node = head;
 	while (node)
 	{
+		//handles standalone expansions
 		if (node->type == TTYPE_EXPAND)
+		{
+			printf(" - $%s", node->string);					//DEBUG
 			node->string = expand(node->string);
+			printf(" > %s\n", node->string);				//DEBUG
+		}
+		//handles expansions inside double quotes
 		else if (node->type == TTYPE_D_QUOTE)
+		{
+			printf(" - \"%s\"", node->string);				//DEBUG
 			node->string = expand_quote(node->string);
+			printf(" > \"%s\"\n", node->string);			//DEBUG
+		}
 		node = node->next;
 	}
 }
 
-void	merge_token_list(t_token *head)
+t_token	*merge_token_list(t_token *head)
 {
 	t_token	*node;
 
 	node = head;
-	while (node)
+	while (node->next)
 	{
-		if (node->next && is_mergable(node->type) && is_mergable(node->next->type))
+		if (node->next && node->next->is_joined)
 		{
-			printf("%s + %s\n", node->string, node->next->string);
-			if (node->next->is_joined)
+			if (is_mergeable(node->type) && is_mergeable(node->next->type))
 			{
+				printf(" - %s + %s\n", node->string, node->next->string);				//DEBUG
 				node = merge_tokens(node, node->next);
 				continue ;
 			}
 		}
 		node = node->next;
 	}
+	return (find_head(node));
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 14:02:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:50:40 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,28 +74,14 @@ int	main(void)
 
 //Loyc's main (DEBUG)
 
-int	main(void)
+void	print_token_list(t_token *head)
 {
 	bool	show_joined = true;
-	bool	show_newline = true;
-	bool	show_content = false;
+	bool	show_newline = false;
+	bool	show_content = true;
 	bool	show_types = false;
 
-	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-	//char	*line = "lol \"L O L\"\"lol\"lol\'L O L\'lol";
-	//char	*line = "\"s\"p\'l\'";
-	//char	*line = "$USER$USER";
-
-	t_token	*head;
 	t_token	*node;
-
- 	printf("\nTokenizing Line...\n");
- 	head = tokenize_input(line);
- 	printf("\nExpanding Tokens...\n");
- 	expand_token_list(head);
- 	printf("\nMerging Tokens...\n");
- 	merge_token_list(head);
- 	printf("\nPrinting Tokens...\n");
 
 	node = head;
 	if (!show_newline)
@@ -139,5 +125,30 @@ int	main(void)
 		}
 		node = node->next;
 	}
-	printf("\n\n");
+	printf("\n");
+}
+
+int	main(void)
+{
+
+	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+	//char	*line = "lol\"lol\"\'lol\'";
+	//har	*line = "$USER$USER";
+
+	t_token	*head;
+
+ 	printf("\nTokenizing Line...\n\n");
+ 	head = create_token_list(line);
+	print_token_list(head);
+
+ 	printf("\nExpanding Tokens...\n\n");
+ 	expand_token_list(head);
+	print_token_list(head);
+
+ 	printf("\nMerging Tokens...\n\n");
+ 	head = merge_token_list(head);
+	print_token_list(head);
+
+	printf("\n");
 }

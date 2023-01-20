@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/20 13:50:18 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 14:35:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,12 @@ t_token	*merge_tokens(t_token *prev, t_token *next)
 	node = new_token(str, ft_strlen(str), TTYPE_NORMAL);
 
 	node->prev = prev->prev;
-	node->prev->next = node;
+	if (node->prev)
+		node->prev->next = node;
+
 	node->next = next->next;
-	node->next->prev = node;
+	if (node->next)
+		node->next->prev = node;
 
 	if (prev->type == next->type)
 		node->type = prev->type;

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 08:48:14 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/23 15:01:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,37 @@ void	init_meta(void)
 
 
 
-/*
+
 //VAL's main (DEBUG)
+
 int	main(void)
 {
-	char	*str = "$USER$LANG$USER";
+	fill_path_tab();
+	printf("%s\n", metadata->path[1]);
+}
 
-	printf("%s\n", do_expand_in_dbl_quotes(str));
+/*
+int	main(void)
+{
+	char	*line = "cat file1";
+
+	t_token	**token_array;
+	t_cmd	*cmd;
+	token_array = parse_line(line);
+
+	t_token	*head;
+	int		i;
+
+	i = -1;
+	printf("\n");
+	while(token_array[++i])
+	{
+		head = token_array[i];
+		print_token_list(head);
+	}
+	printf("\n");
+	fill_path_tab();
+	find_cmd(cmd);
 	return (0);
 }
 */
@@ -162,25 +186,29 @@ int	main(void)
 }
 */
 
-int	main(void)
-{
-	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
-	//char	*line = "lol\"lol\"\'lol\'";
-	//har	*line = "$USER$USER";
 
-	t_token	**token_array;
-	token_array = parse_line(line);
+// int	main(void)
+// {
+// 	//char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+// 	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+// 	//char	*line = "lol\"lol\"\'lol\'";
+// 	//har	*line = "$USER$USER";
+// 	char	*line = "cat file1";
 
-	t_token	*head;
-	int		i;
+// 	t_token	**token_array;
+// 	token_array = parse_line(line);
 
-	i = -1;
-	printf("\n");
-	while(token_array[++i])
-	{
-		head = token_array[i];
-		print_token_list(head);
-	}
-	printf("\n");
-}
+// 	t_token	*head;
+// 	int		i;
+
+// 	i = -1;
+// 	printf("\n");
+// 	while(token_array[++i])
+// 	{
+// 		head = token_array[i];
+// 		print_token_list(head);
+// 	}
+// 	fill_path_tab();
+// 	//find_cmd(token_array);
+// 	printf("\n");
+// }

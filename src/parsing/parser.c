@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/23 08:47:53 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/23 13:15:25 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_token	**parse_line(char *line)				//check validity of token list beforehand
 	head = merge_token_list(head);
 
 	i = 1;		//1 because at least one cmd to execute
-
 	node = head;
 	while (node)
 	{

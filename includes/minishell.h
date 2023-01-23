@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 16:57:44 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/23 14:18:45 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_meta
 {
 	char	**env; //elle pourrait devenir notre globale
 	char	*buf;		//variable pour garder ce qui est mis dans readline
+	char	**path; //contient la ligne PATH pour être en mesure de trouver les system cmds
 
 }	t_meta;
 
@@ -86,7 +87,7 @@ typedef struct s_cmd_block
 /* section one - all about our struct */
 void	init_meta(void);
 
-/* section two - built-ins */
+/* 		BUILT-INS		*/
 void	do_exit(t_cmd *cmd); //Need to change back to void.
 void	change_dir(t_cmd *cmd);
 void	get_env(void);
@@ -94,7 +95,7 @@ void	get_pwd(void);
 void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 
-/*		section expander		*/
+/*		 EXPANDER		*/
 char	*expand(char *str1);
 char	*expand_quote(char *str1);
 
@@ -110,7 +111,7 @@ t_token	*merge_token_list(t_token *head);
 
 //from token_handler
 void	free_token(t_token *node);
-t_token *new_token(char *str, int len, int type);
+t_token	*new_token(char *str, int len, int type);
 void	add_token(t_token *token, t_token **head);
 t_token	*find_head(t_token *tail);
 t_token	*find_tail(t_token *head);
@@ -120,7 +121,10 @@ t_token	*replace_token(t_token *new, t_token *old);
 void	cut_token(t_token *node);
 void	destroy_token(t_token *node);
 
-/* section four - */
+/*		SYSTEM_CMDS		*/
+void	fill_path_tab(void);
+void	error_fill_path(void);
+char	*find_cmd(t_token **token_array);
 
 /* section five - trying stuff */
 

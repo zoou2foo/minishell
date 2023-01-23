@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/20 14:49:51 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 16:43:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,16 @@ void	expand_token_list(t_token *head)
 		//handles standalone expansions
 		if (node->type == TTYPE_EXPAND)
 		{
-			printf(" - $%s", node->string);					//DEBUG
+			//printf(" - $%s", node->string);				//DEBUG
 			node->string = expand(node->string);
-			printf(" > %s\n", node->string);				//DEBUG
+			//printf(" > %s\n", node->string);				//DEBUG
 		}
 		//handles expansions inside double quotes
 		else if (node->type == TTYPE_D_QUOTE)
 		{
-			printf(" - \"%s\"", node->string);				//DEBUG
+			//printf(" - \"%s\"", node->string);			//DEBUG
 			node->string = expand_quote(node->string);
-			printf(" > \"%s\"\n", node->string);			//DEBUG
+			//printf(" > \"%s\"\n", node->string);			//DEBUG
 		}
 		node = node->next;
 	}
@@ -167,7 +167,7 @@ t_token	*merge_token_list(t_token *head)
 		{
 			if (is_mergeable(node->type) && is_mergeable(node->next->type))
 			{
-				printf(" - %s + %s\n", node->string, node->next->string);				//DEBUG
+				//printf(" - %s + %s\n", node->string, node->next->string);				//DEBUG
 				node = merge_tokens(node, node->next);
 				continue ;
 			}

@@ -81,7 +81,8 @@ FILES	=	main \
 			built-ins/unset \
 			parsing/tokenizer \
 			parsing/token_handler \
-			parsing/expander
+			parsing/expander \
+			parsing/parser \
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses

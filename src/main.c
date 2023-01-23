@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 08:36:28 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/23 08:48:14 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	print_token_list(t_token *head)
 	}
 	printf("\n");
 }
-
+/*
 int	main(void)
 {
 
@@ -159,4 +159,28 @@ int	main(void)
 	print_token_list(head);
 
 	printf("\n\n");
+}
+*/
+
+int	main(void)
+{
+	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+	//char	*line = "lol\"lol\"\'lol\'";
+	//har	*line = "$USER$USER";
+
+	t_token	**token_array;
+	token_array = parse_line(line);
+
+	t_token	*head;
+	int		i;
+
+	i = -1;
+	printf("\n");
+	while(token_array[++i])
+	{
+		head = token_array[i];
+		print_token_list(head);
+	}
+	printf("\n");
 }

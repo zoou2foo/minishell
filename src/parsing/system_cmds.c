@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 14:58:12 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/23 15:06:07 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	fill_path_tab(void)
 				i++;
 			}
 			metadata->path[0] = ft_strtrim(metadata->path[0], "PATH=");
-			//*metadata->path[0] += 5;
+			*metadata->path[0] += 5;
 			return ;
 		}
 		i++;

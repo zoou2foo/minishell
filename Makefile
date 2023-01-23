@@ -39,7 +39,7 @@ else
 endif
 
 # Debug mode
-export DEBUG = FALSE
+export DEBUG = TRUE
 ifeq ($(DEBUG),TRUE)
 	MODE = -g
 else
@@ -81,12 +81,15 @@ FILES	=	main \
 			built-ins/unset \
 			parsing/tokenizer \
 			parsing/token_handler \
+			parsing/expander \
+			parsing/parser \
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
 
 SRCS	=	$(addprefix $(SRCDIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJDIR), $(addsuffix .o, $(FILES)))
+
 
 CMD		=	./minishell
 

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/19 15:12:56 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/20 16:36:50 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,21 @@ t_meta	*metadata;	//our global var
 /*
 int	main(int ac, char **av)		//use char **environ instead
 {
-
+	//extern	char	**environ; //pas de variable globale
 	(void)av;
 	if (ac == 1)
 	{
 		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
 		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[0] = "cd";
-		cmd->cmd_args[1] = "";
-
+		cmd->cmd_args[1] = "PATH";
 		init_meta();
 		metadata->buf = readline("bash-Pew Pew> ");
-
 		while (metadata->buf)
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "env", 4) == 0)
-				get_env();
+			if (ft_strncmp(metadata->buf, "env", 3) == 0)
+				geclet_env();
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}
@@ -48,7 +45,7 @@ void	init_meta(void)
 	int	i;
 
 	metadata = ft_calloc(sizeof(t_meta), 1);
-	metadata->env = environ;
+	//metadata->env = environ; //je refais exactement ça avec strdup;
 	i = 0;
 	while (environ[i])
 		i++;
@@ -65,26 +62,38 @@ void	init_meta(void)
 // COMMENT readline will malloc the char *buf, but it does NOT free it at the end.
 
 
-//Loyc's main (DEBUG)
 
+
+
+/*
+//VAL's main (DEBUG)
 int	main(void)
 {
+	char	*str = "$USER$LANG$USER";
+
+	printf("%s\n", do_expand_in_dbl_quotes(str));
+	return (0);
+}
+*/
+
+
+
+
+
+//Loyc's main (DEBUG)
+
+void	print_token_list(t_token *head)
+{
 	bool	show_joined = true;
-	bool	show_newline = true;
+	bool	show_newline = false;
 	bool	show_content = true;
 	bool	show_types = false;
 
-	char	*line = "<<END <$HOMEinfile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | split\"";
-	//char	*line = "lol \"L O L\"\"lol\"lol\'L O L\'lol";
-	//char	*line = "\"s\"p\'l\'";
-	//char	*line = "$USER$USER";
-
 	t_token	*node;
 
-	printf("Tokenizing Line...\n");
-	node = tokenize_input(line);
-	printf("Printing Tokens...\n\n");
-
+	node = head;
+	if (!show_newline)
+		printf("\n");
 	while (node)
 	{
 		if (node && show_joined && node->is_joined)
@@ -124,5 +133,54 @@ int	main(void)
 		}
 		node = node->next;
 	}
+	printf("\n");
+}
+/*
+int	main(void)
+{
+
+	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+	//char	*line = "lol\"lol\"\'lol\'";
+	//har	*line = "$USER$USER";
+
+	t_token	*head;
+
+ 	printf("\n\nTokenizing Line...\n\n");
+ 	head = create_token_list(line);
+	print_token_list(head);
+
+ 	printf("\n\nExpanding Tokens...\n\n");
+ 	expand_token_list(head);
+	print_token_list(head);
+
+ 	printf("\n\nMerging Tokens...\n\n");
+ 	head = merge_token_list(head);
+	print_token_list(head);
+
 	printf("\n\n");
+}
+*/
+
+int	main(void)
+{
+	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+	//char	*line = "lol\"lol\"\'lol\'";
+	//har	*line = "$USER$USER";
+
+	t_token	**token_array;
+	token_array = parse_line(line);
+
+	t_token	*head;
+	int		i;
+
+	i = -1;
+	printf("\n");
+	while(token_array[++i])
+	{
+		head = token_array[i];
+		print_token_list(head);
+	}
+	printf("\n");
 }

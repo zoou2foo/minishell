@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 14:18:45 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/23 19:19:09 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ typedef struct s_cmd_block
 
 }			t_cmd_block;
 
-/* section one - all about our struct */
+/* 		MAIN			*/
 void	init_meta(void);
+void	print_token_list(t_token *head);
 
 /* 		BUILT-INS		*/
 void	do_exit(t_cmd *cmd); //Need to change back to void.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 15:06:07 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/23 19:14:17 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,22 @@ void	fill_path_tab(void)
 	char	*tmp;
 
 	i = 0;
-	while (metadata->env[i])
+	while (environ[i])
 	{
-		if (ft_strncmp(metadata->env[i], "PATH=", 5) == 0)
+		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
 		{
-			metadata->path = ft_split(metadata->env[i], ':');
+			metadata->path = ft_split(environ[i], ':');
 			i = 0;
 			while (metadata->path[i])
 			{
 				tmp = ft_strjoin(metadata->path[i], "/");
 				ft_free_null(metadata->path[i]);
 				metadata->path[i] = tmp;
+				printf("%s\n", metadata->path[i]);
 				i++;
 			}
 			metadata->path[0] = ft_strtrim(metadata->path[0], "PATH=");
-			*metadata->path[0] += 5;
+			//*metadata->path[0] += 5;
 			return ;
 		}
 		i++;
@@ -46,7 +47,7 @@ void	error_fill_path(void)
 	free(metadata);
 }
 
-/*
+
 char	*find_cmd(t_token **token_array)
 {
 	int		i;
@@ -67,4 +68,4 @@ char	*find_cmd(t_token **token_array)
 		i++;
 	}
 	return (NULL);
-} */
+}

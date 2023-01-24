@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 15:01:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/23 19:19:44 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int ac, char **av)		//use char **environ instead
 	}
 	return (0);
 }
-
+*/
 //allocates memory for and fills the global metadata var with default values
 void	init_meta(void)
 {
@@ -57,7 +57,7 @@ void	init_meta(void)
 		i++;
 	}
 }
-*/
+
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at the end.
 
@@ -68,19 +68,20 @@ void	init_meta(void)
 
 //VAL's main (DEBUG)
 
-int	main(void)
-{
-	fill_path_tab();
-	printf("%s\n", metadata->path[1]);
-}
+// int	main(void)
+// {
+// 	init_meta();
+// 	fill_path_tab();
+	
+// }
 
-/*
+
 int	main(void)
 {
 	char	*line = "cat file1";
 
 	t_token	**token_array;
-	t_cmd	*cmd;
+	//t_cmd	*cmd;
 	token_array = parse_line(line);
 
 	t_token	*head;
@@ -95,10 +96,9 @@ int	main(void)
 	}
 	printf("\n");
 	fill_path_tab();
-	find_cmd(cmd);
+	find_cmd(token_array);
 	return (0);
 }
-*/
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 19:19:09 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/01/24 08:09:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	destroy_token(t_token *node);
 /*		SYSTEM_CMDS		*/
 void	fill_path_tab(void);
 void	error_fill_path(void);
-char	*find_cmd(t_token **token_array);
+char	*find_cmd(t_cmd *cmd);
 
 /* section five - trying stuff */
 

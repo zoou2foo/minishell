@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 19:14:17 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/01/24 08:18:27 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ void	fill_path_tab(void)
 	{
 		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
 		{
-			metadata->path = ft_split(environ[i], ':');
+			metadata->path = ft_split(&environ[i][5], ':');
 			i = 0;
 			while (metadata->path[i])
 			{
 				tmp = ft_strjoin(metadata->path[i], "/");
 				ft_free_null(metadata->path[i]);
 				metadata->path[i] = tmp;
-				printf("%s\n", metadata->path[i]);
 				i++;
 			}
-			metadata->path[0] = ft_strtrim(metadata->path[0], "PATH=");
+			//metadata->path[0] = ft_strtrim(metadata->path[0], "PATH=");
 			//*metadata->path[0] += 5;
 			return ;
 		}
@@ -47,24 +46,26 @@ void	error_fill_path(void)
 	free(metadata);
 }
 
-
-char	*find_cmd(t_token **token_array)
+char	*find_cmd(t_cmd *cmd)
 {
 	int		i;
-	char	*cmds;
+	char	*cmd_found;
 
 	i = 0;
-	if (ft_strncmp(token_array[0], "/", 1) == 0)
+	if (ft_strncmp(cmd->cmd_args[0], "/", 1) == 0)
 	{
-		if (access(token_array, X_OK) == 0)
-			return (token_array);
+		if (access(*cmd->cmd_args, X_OK) == 0)
+			return (*cmd->cmd_args);
 	}
 	while (metadata->path[i])
 	{
-		cmds = ft_strjoin(metadata->path[i], *token_array);
-		if (access(cmds, F_OK | X_OK) == 0)
-			return (cmds);
-		free(cmds);
+		cmd_found = ft_strjoin(metadata->path[i], *cmd->cmd_args);
+		if (access(cmd_found, F_OK | X_OK) == 0)
+		{
+			printf("found");
+			return (cmd_found);
+		}
+		free(cmd_found);
 		i++;
 	}
 	return (NULL);

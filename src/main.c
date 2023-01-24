@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/23 19:19:44 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/01/24 08:17:40 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	init_meta(void)
 // {
 // 	init_meta();
 // 	fill_path_tab();
-	
+
 // }
 
 
@@ -81,7 +81,7 @@ int	main(void)
 	char	*line = "cat file1";
 
 	t_token	**token_array;
-	//t_cmd	*cmd;
+	t_cmd	*cmd;
 	token_array = parse_line(line);
 
 	t_token	*head;
@@ -89,14 +89,24 @@ int	main(void)
 
 	i = -1;
 	printf("\n");
-	while(token_array[++i])
+	while (token_array[++i])
 	{
 		head = token_array[i];
 		print_token_list(head);
 	}
 	printf("\n");
+	init_meta();
 	fill_path_tab();
-	find_cmd(token_array);
+	i = 0;
+	while (metadata->path[i])
+	{
+		printf("%s\n", metadata->path[i]);
+		i++;
+	}
+	cmd = ft_calloc(sizeof(t_cmd), 1);
+	cmd->cmd_args = ft_calloc(sizeof(char *), 3);
+	cmd->cmd_args[0] = "/ls";
+	find_cmd(cmd);
 	return (0);
 }
 

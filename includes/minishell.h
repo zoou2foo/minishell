@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 08:09:17 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 11:31:32 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_meta
 	char	**env; //elle pourrait devenir notre globale
 	char	*buf;		//variable pour garder ce qui est mis dans readline
 	char	**path; //contient la ligne PATH pour être en mesure de trouver les system cmds
+	int		exit_status;
 
 }	t_meta;
 

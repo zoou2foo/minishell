@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 11:08:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 12:39:50 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,18 @@ int	main(int ac, char **av)		//use char **environ instead
 	{
 		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
 		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[0] = "exit";
-		cmd->cmd_args[1] = "45";
+		cmd->cmd_args[0] = "unset";
+		cmd->cmd_args[1] = "PATH";
 		init_meta();
+		printf("%s\n", metadata->env[4]);
 		metadata->buf = readline("bash-Pew Pew> ");
 		while (metadata->buf)
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "exit", 4) == 0)
-				do_exit(cmd);
+			if (ft_strncmp(metadata->buf, "unset", 5) == 0)
+				do_unset(cmd);
+			printf("%s\n", metadata->env[4]);
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}
@@ -57,6 +59,7 @@ void	init_meta(void)
 		metadata->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
+	metadata->env[i] = NULL;
 }
 
 // COMMENT if ac is not 1, error; void argv.

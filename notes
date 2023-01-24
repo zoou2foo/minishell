@@ -8,14 +8,14 @@ FRIDAY, JAN 20th: look in my notebook for the plan. Start working on this.
 
 
 work on built-ins:
-1. export
-2. cd
-3. echo
+1. echo
 
 DONE: env
 DONE: exit *ALL GOOD. For any arguments.
 DONE: pwd **just need to double check for the error message. Might not need
 DONE: unset BUT we will need to check if it works properly with the rest...
+DONE (almost): export. Just need to verify about export "empty"...
+DONE: cd. All good.
 
 
 

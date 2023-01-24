@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 12:39:50 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 14:45:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ int	main(int ac, char **av)		//use char **environ instead
 	{
 		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
 		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[0] = "unset";
-		cmd->cmd_args[1] = "PATH";
+		cmd->cmd_args[0] = "cd";
+		cmd->cmd_args[1] = "/Users/vjean/Desktop/pipex/srcs";
 		init_meta();
-		printf("%s\n", metadata->env[4]);
 		metadata->buf = readline("bash-Pew Pew> ");
 		while (metadata->buf)
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "unset", 5) == 0)
-				do_unset(cmd);
-			printf("%s\n", metadata->env[4]);
+			if (ft_strncmp(metadata->buf, "cd", 2) == 0)
+				change_dir(cmd);
+			if (ft_strncmp(metadata->buf, "pwd", 2) == 0)
+				get_pwd();
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}

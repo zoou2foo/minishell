@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 08:18:27 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 11:04:37 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	fill_path_tab(void)
 void	error_fill_path(void)
 {
 	write(2, "Environment variables not found\n", 32);
-	free(metadata);
+	free(metadata); // should add exit status 127
 }
 
 char	*find_cmd(t_cmd *cmd)
@@ -68,5 +68,5 @@ char	*find_cmd(t_cmd *cmd)
 		free(cmd_found);
 		i++;
 	}
-	return (NULL);
+	return (NULL); // should add exit 127 as cmd not found
 }

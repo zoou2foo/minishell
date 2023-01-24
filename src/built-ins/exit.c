@@ -6,40 +6,37 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 10:40:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 11:10:07 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_exit(t_cmd *cmd) //Need to put back in void
+void	do_exit(t_cmd *cmd)
 {
 	long	arg;
 	int		i;
 
 	i = 0;
-	while (cmd->cmd_args[1][i]) // FIXME need to debug this part.
+	while (cmd->cmd_args[1][i])
 	{
 		if (cmd->cmd_args[1][i] >= 48 && cmd->cmd_args[1][i] <= 57) 
 			i++;
-		else
-			exit (0);
+		else if (!(cmd->cmd_args[1][i] >= 48 && cmd->cmd_args[1][i] <= 57))
+			exit (255);
 	}
 	arg = ft_atol(cmd->cmd_args[1]);
 	exit (arg);
 }
 
-// COMMENT It works! And TESTED. *** HOWEVER *** need to check if it got an
-// COMMENT numeric argument like 42 or 32 or 1. Probably will need to add the
-// COMMENT following to do the code:
-
-/*
-	need to do a function atol to check the following argument on exit. Do a loop
-	to check if what is following is numeric. Then, pass the argument in atol
-	That's what you will send in exit. --> exit (result_of_atol);
-*/
+// COMMENT It works! And TESTED.
 
 /* What I put in the main to test it:
+with adding specific stuff in the array:
+		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
+		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
+		cmd->cmd_args[0] = "exit";
+		cmd->cmd_args[1] = "45";
 if (ft_strncmp(metadata->buf, "exit", 4) == 0)
 				do_exit();
 

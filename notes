@@ -14,7 +14,7 @@ work on built-ins:
 4. echo
 
 DONE: env
-DONE: exit **need to review the way that I check for numeric arguments.
+DONE: exit *ALL GOOD. For any arguments.
 DONE: pwd **just need to double check for the error message. Might not need
 
 

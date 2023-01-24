@@ -6,14 +6,14 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 10:43:17 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 11:08:39 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_meta	*metadata;	//our global var
-/*
+
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
@@ -22,15 +22,16 @@ int	main(int ac, char **av)		//use char **environ instead
 	{
 		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
 		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[1] = "PATH";
+		cmd->cmd_args[0] = "exit";
+		cmd->cmd_args[1] = "45";
 		init_meta();
 		metadata->buf = readline("bash-Pew Pew> ");
 		while (metadata->buf)
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "env", 3) == 0)
-				geclet_env();
+			if (ft_strncmp(metadata->buf, "exit", 4) == 0)
+				do_exit(cmd);
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}
@@ -38,7 +39,7 @@ int	main(int ac, char **av)		//use char **environ instead
 	}
 	return (0);
 }
-*/
+
 //allocates memory for and fills the global metadata var with default values
 void	init_meta(void)
 {
@@ -59,8 +60,8 @@ void	init_meta(void)
 }
 
 // COMMENT if ac is not 1, error; void argv.
-// COMMENT readline will malloc the char *buf, but it does NOT free it at the end.
-
+// COMMENT readline will malloc the char *buf, but it does NOT free it at
+// COMMENT the end.
 //VAL's main (DEBUG)
 
 // int	main(void)
@@ -70,43 +71,41 @@ void	init_meta(void)
 
 // }
 
+// int	main(void)
+// {
+// 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
 
-int	main(void)
-{
-	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+// 	t_token	**token_array;
+// 	t_cmd	*cmd;
+// 	token_array = parse_line(line);
 
-	t_token	**token_array;
-	t_cmd	*cmd;
-	token_array = parse_line(line);
+// 	t_token	*head;
+// 	int		i;
 
-	t_token	*head;
-	int		i;
-
-	i = -1;
-	printf("\n");
-	while (token_array[++i])
-	{
-		head = token_array[i];
-		print_token_list(head);
-	}
-	printf("\n");
-	init_meta();
-	fill_path_tab();
-	i = 0;
-	while (metadata->path[i])
-	{
-		printf("%s\n", metadata->path[i]);
-		i++;
-	}
-	cmd = ft_calloc(sizeof(t_cmd), 1);
-	cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-	cmd->cmd_args[0] = "/ls";
-	find_cmd(cmd);
-	return (0);
-}
-
-
-
+// 	i = -1;
+// 	printf("\n");
+// 	while (token_array[++i])
+// 	{
+// 		head = token_array[i];
+// 		print_token_list(head);
+// 	}
+// 	printf("\n");
+// 	init_meta();
+// 	// fill_path_tab();
+// 	// i = 0;
+// 	// while (metadata->path[i])
+// 	// {
+// 	// 	printf("%s\n", metadata->path[i]);
+// 	// 	i++;
+// 	// }
+// 	cmd = ft_calloc(sizeof(t_cmd), 1);
+// 	cmd->cmd_args = ft_calloc(sizeof(char *), 3);
+// 	cmd->cmd_args[0] = "exit";
+// 	cmd->cmd_args[1] = "42";
+// 	do_exit(cmd);
+// 	//find_cmd(cmd);
+// 	return (0);
+// }
 
 
 //Loyc's main (DEBUG)

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 08:17:40 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 10:43:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ void	init_meta(void)
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at the end.
 
-
-
-
-
-
 //VAL's main (DEBUG)
 
 // int	main(void)
@@ -78,7 +73,7 @@ void	init_meta(void)
 
 int	main(void)
 {
-	char	*line = "cat file1";
+	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
 
 	t_token	**token_array;
 	t_cmd	*cmd;

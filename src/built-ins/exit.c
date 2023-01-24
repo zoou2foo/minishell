@@ -6,12 +6,11 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/17 11:16:12 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/24 10:40:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	do_exit(t_cmd *cmd) //Need to put back in void
 {

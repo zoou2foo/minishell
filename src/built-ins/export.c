@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/25 16:32:08 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/25 16:35:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**sort_env(void)
 	new_env = ft_calloc(sizeof(char *), size + 1);
 	while (i < size)
 	{
-		if (metadata->env[i] > metadata->env[j])
+		if (metadata->env[i] > metadata->env[j]) // il faut coder un strcmp
 			j++;
 		else
 		{

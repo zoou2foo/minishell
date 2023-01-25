@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 14:00:25 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/25 16:15:55 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,121 @@ int	check_arg_4_export(t_cmd *cmd)
 	return (-1);
 }
 
-void	sort_env(void)
+char	**sort_env(void)
 {
-	int		i;
+	char	**new_env;
 	char	*tmp;
+	int		i;
+	int		j;
+	int		size;
 
 	i = 0;
-	while (metadata->env[i] != NULL)
+	j = i + 1;
+	size = array_len();
+	new_env = ft_calloc(sizeof(char *), size + 1);
+	while (i < size)
 	{
-		if (metadata->env[i] > metadata->env[i + 1])
+		if (metadata->env[i] > metadata->env[j])
+			j++;
+		else
 		{
-			tmp = metadata->env[i];
-			metadata->env[i] = metadata->env[i + 1];
-			metadata->env[i + 1] = tmp;
+			tmp = ft_strdup(metadata->env[i]);
+			array_sorted(new_env, tmp, size);
+			i = j;
+			j++;
 		}
+	}
+	return (new_env);
+}
+
+int	array_len(void)
+{
+	int	i;
+
+	i = 0;
+	while (metadata->env[i])
 		i++;
+	return (i);
+}
+
+void	array_sorted(char **new_env, char *tmp, int size)
+{
+	int	index;
+	int	j;
+
+	index = 1;
+	j = 0;
+	while (size > 0)
+	{
+		if (new_env[size] == NULL)
+		{
+			new_env[size] = ft_strdup(tmp);
+			printf("new_env[%i] = %s\n", size, new_env[size]);
+		}
+		else if (check_double(new_env, tmp) == 1)
+		{
+			new_env[size - index] = ft_strdup(tmp);
+			index++;
+			size--;
+		}
+		else
+			j++;
 	}
 }
+
+int	check_double(char **new_env, char *tmp)
+{
+	int	i;
+
+	i = 0;
+	while (new_env[i])
+	{
+		if (ft_strncmp(new_env[i], tmp, ft_strlen(new_env[i])) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+// char	**sort_env(void)
+// {
+// 	char	**new_env;
+// 	int		i;
+// 	int		j;
+// 	int		size;
+// 	int		flag;
+
+// 	size = 0;
+// 	while (metadata->env[size])
+// 		size++;
+// 	new_env = ft_calloc(sizeof(char *), size + 1);
+// 	i = 0;
+// 	while (i < size)
+// 	{
+// 		flag = i;
+// 		j = i + 1;
+// 		while (j < size)
+// 		{
+// 			while ()
+// 			{
+// 				if (metadata->env[flag], metadata->env[j], ft_strlen(metadata->env[flag])) == 0)
+// 					flag = j;
+// 			}
+// 			j++;
+// 		}
+// 		if (flag != i)
+// 		{
+// 			new_env[i] = ft_strdup(metadata->env[i]);
+// 			metadata->env[i] = ft_strdup(metadata->env[flag]);
+// 			metadata->env[flag] = ft_strdup(new_env[i]);
+// 			//ft_strlcpy(new_env[i], metadata->env[i], ft_strlen(metadata->env[i]));
+// 			//ft_strlcpy(metadata->env[i], metadata->env[flag], ft_strlen(metadata->env[flag]));
+// 			//ft_strlcpy(metadata->env[flag], new_env[i], ft_strlen(new_env[i]));
+// 		}
+// 		i++;
+// 	}
+// }
+
 
 // COMMENT export seul: printf d'env en ajoutant "declare -x" avant chaque
 // COMMENT variable de env. Puis, chaque variable a été mis en ordre alpha

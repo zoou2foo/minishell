@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 14:40:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/25 16:01:16 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,11 @@ void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 void	do_export(t_cmd *cmd);
 int		check_arg_4_export(t_cmd *cmd);
-void	sort_env(void);
+char	**sort_env(void);
+void	do_echo(t_cmd *cmd);
+int		array_len(void);
+int		check_double(char **new_env, char *tmp);
+void	array_sorted(char **new_env, char *tmp, int size);
 
 /*		 EXPANDER		*/
 char	*expand(char *str1);
@@ -132,6 +136,6 @@ void	error_fill_path(void);
 char	*find_cmd(t_cmd *cmd);
 
 /* section five - trying stuff */
-
+void	print_tab_env(void);
 
 #endif

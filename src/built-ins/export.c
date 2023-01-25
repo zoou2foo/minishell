@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/25 16:15:55 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/25 16:32:08 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ void	array_sorted(char **new_env, char *tmp, int size)
 	while (size > 0)
 	{
 		if (new_env[size] == NULL)
-		{
 			new_env[size] = ft_strdup(tmp);
-			printf("new_env[%i] = %s\n", size, new_env[size]);
-		}
 		else if (check_double(new_env, tmp) == 1)
 		{
 			new_env[size - index] = ft_strdup(tmp);

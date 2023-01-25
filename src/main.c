@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/25 16:01:22 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/25 16:32:16 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	main(int ac, char **av)
 	{
 		i = 0;
 		init_meta();
-		print_tab_env();
 		len = array_len();
 		copy_env = ft_calloc(sizeof(char *), len + 1);
 		copy_env = sort_env();

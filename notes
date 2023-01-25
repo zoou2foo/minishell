@@ -25,12 +25,10 @@ DONE: pwd **just need to double check for the error message. Might not need
 
 "eat" throught the command line and tokenize gradually
 
-split along |
-look for < / <<
-	make < the infile
-	make << their own command and reset the infile
-look for > / >>
-	make them the outfile (>> sets flag for replacement)
+t_cmd :
+	char**	cmd_args
+	token*	head (list des tokens sans les redirs)
+	token*	head (list des tokens redir AVEC un stand in pour quand call la cmd(?))
 
 
 

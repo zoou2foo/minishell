@@ -138,7 +138,7 @@ pewpew:
 	$(HIDE) bash pew_pew2.sh
 
 # Runs the program
-run: all
+run: re
 	$(HIDE) $(CMD)
 
 # Runs the program with valgrind

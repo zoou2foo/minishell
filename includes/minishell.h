@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/25 16:01:16 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/26 13:56:14 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,7 @@ void	get_pwd(void);
 void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 void	do_export(t_cmd *cmd);
-int		check_arg_4_export(t_cmd *cmd);
-char	**sort_env(void);
 void	do_echo(t_cmd *cmd);
-int		array_len(void);
-int		check_double(char **new_env, char *tmp);
-void	array_sorted(char **new_env, char *tmp, int size);
 
 /*		 EXPANDER		*/
 char	*expand(char *str1);

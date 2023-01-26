@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 12:38:45 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/26 15:34:15 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	do_unset(t_cmd *cmd)
 		j = 0;
 		while (metadata->env[i])
 			i++;
-		new_env = ft_calloc(sizeof(char *), i);
+		new_env = ft_calloc(i, sizeof(char *));
 		i = 0;
 		while (metadata->env[i])
 		{
-			if (ft_strncmp(cmd->cmd_args[1], metadata->env[i],
-					ft_strlen(cmd->cmd_args[1]) == 0))
+			if (ft_strncmp(cmd->cmd_args[2], metadata->env[i],
+				ft_strlen(cmd->cmd_args[2])) == 0) //besoin de mettre à 1
 			{
-				free(metadata->env[i]);
+				ft_free_null(metadata->env[i]);
 				i++;
 			}
 			else
@@ -41,6 +41,8 @@ void	do_unset(t_cmd *cmd)
 				i++;
 			}
 		}
+		ft_free_null(metadata->env);
+		metadata->env = new_env;
 	}
 	else if (check_arg_4_unset(cmd) != 1)
 	{
@@ -56,8 +58,8 @@ int	check_arg_4_unset(t_cmd *cmd)
 	i = 0;
 	while (metadata->env[i] != NULL)
 	{
-		if (ft_strncmp(cmd->cmd_args[1], metadata->env[i],
-				ft_strlen(cmd->cmd_args[1])) == 0)
+		if (ft_strncmp(cmd->cmd_args[2], metadata->env[i],
+				ft_strlen(cmd->cmd_args[2])) == 0)
 			return (1);
 		i++;
 	}

@@ -6,37 +6,11 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/25 16:35:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/26 15:01:36 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	do_export(t_cmd *cmd)
-{
-	//char	**new_env;
-	int		i;
-	//int		j;
-
-	i = 0;
-	if (check_arg_4_export(cmd) == 1)
-	{
-		// printf declare -x et place in order
-		while (metadata->env[i] != NULL)
-		{
-			printf("declare -x ");
-			sort_env();
-			printf("%s\n", metadata->env[i]);
-		}
-	}
-	else if (check_arg_4_export(cmd) != 1)
-	{
-		// ajoute la variable à la fin de metadata->env avec l'arg.
-		while (metadata->env[i] != NULL)
-			i++;
-		metadata->env[i] = cmd->cmd_args[1];
-	}
-}
 
 int	check_arg_4_export(t_cmd *cmd)
 {
@@ -48,34 +22,45 @@ int	check_arg_4_export(t_cmd *cmd)
 	return (-1);
 }
 
-char	**sort_env(void)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	**new_env;
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+void	sort_env(void)
+{
 	char	*tmp;
 	int		i;
 	int		j;
-	int		size;
+	int		j_min;
 
 	i = 0;
-	j = i + 1;
-	size = array_len();
-	new_env = ft_calloc(sizeof(char *), size + 1);
-	while (i < size)
+	while (metadata->env[i])
 	{
-		if (metadata->env[i] > metadata->env[j]) // il faut coder un strcmp
-			j++;
-		else
+		j = i + 1;
+		j_min = i;
+		while (metadata->env[j])
 		{
-			tmp = ft_strdup(metadata->env[i]);
-			array_sorted(new_env, tmp, size);
-			i = j;
+			if (ft_strcmp(metadata->env[j], metadata->env[j_min]) < 0)
+				j_min = j;
 			j++;
 		}
+		if (j_min != i)
+		{
+			tmp = metadata->env[i];
+			metadata->env[i] = metadata->env[j_min];
+			metadata->env[j_min] = tmp;
+		}
+		i++;
 	}
-	return (new_env);
 }
 
-int	array_len(void)
+int	env_length()
 {
 	int	i;
 
@@ -85,81 +70,30 @@ int	array_len(void)
 	return (i);
 }
 
-void	array_sorted(char **new_env, char *tmp, int size)
+void	do_export(t_cmd *cmd)
 {
-	int	index;
-	int	j;
-
-	index = 1;
-	j = 0;
-	while (size > 0)
-	{
-		if (new_env[size] == NULL)
-			new_env[size] = ft_strdup(tmp);
-		else if (check_double(new_env, tmp) == 1)
-		{
-			new_env[size - index] = ft_strdup(tmp);
-			index++;
-			size--;
-		}
-		else
-			j++;
-	}
-}
-
-int	check_double(char **new_env, char *tmp)
-{
-	int	i;
+	int		i;
 
 	i = 0;
-	while (new_env[i])
+	if (check_arg_4_export(cmd) == 1)
 	{
-		if (ft_strncmp(new_env[i], tmp, ft_strlen(new_env[i])) == 0)
-			return (0);
-		i++;
+		sort_env();
+		while (metadata->env[i] != NULL)
+		{
+			printf("declare -x ");
+			printf("%s\n", metadata->env[i]);
+			i++;
+		}
 	}
-	return (1);
+	else if (check_arg_4_export(cmd) != 1)
+	{
+		// ajoute la variable à la fin de metadata->env avec l'arg.
+		metadata->env = ft_recalloc(metadata->env, env_length() + 2, env_length() + 1, sizeof(char *));
+		while (metadata->env[i] != NULL)
+			i++;
+		metadata->env[i] = ft_strdup(cmd->cmd_args[1]);
+	}
 }
-
-// char	**sort_env(void)
-// {
-// 	char	**new_env;
-// 	int		i;
-// 	int		j;
-// 	int		size;
-// 	int		flag;
-
-// 	size = 0;
-// 	while (metadata->env[size])
-// 		size++;
-// 	new_env = ft_calloc(sizeof(char *), size + 1);
-// 	i = 0;
-// 	while (i < size)
-// 	{
-// 		flag = i;
-// 		j = i + 1;
-// 		while (j < size)
-// 		{
-// 			while ()
-// 			{
-// 				if (metadata->env[flag], metadata->env[j], ft_strlen(metadata->env[flag])) == 0)
-// 					flag = j;
-// 			}
-// 			j++;
-// 		}
-// 		if (flag != i)
-// 		{
-// 			new_env[i] = ft_strdup(metadata->env[i]);
-// 			metadata->env[i] = ft_strdup(metadata->env[flag]);
-// 			metadata->env[flag] = ft_strdup(new_env[i]);
-// 			//ft_strlcpy(new_env[i], metadata->env[i], ft_strlen(metadata->env[i]));
-// 			//ft_strlcpy(metadata->env[i], metadata->env[flag], ft_strlen(metadata->env[flag]));
-// 			//ft_strlcpy(metadata->env[flag], new_env[i], ft_strlen(new_env[i]));
-// 		}
-// 		i++;
-// 	}
-// }
-
 
 // COMMENT export seul: printf d'env en ajoutant "declare -x" avant chaque
 // COMMENT variable de env. Puis, chaque variable a été mis en ordre alpha

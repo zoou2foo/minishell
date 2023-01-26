@@ -23,14 +23,13 @@ DONE: pwd **just need to double check for the error message. Might not need
 
 0========(  LOYC  )========0
 
-"eat" throught the command line and tokenize gradually
+
+
+token*	head (list des tokens sans les redirs)
+
 
 t_cmd :
 	char**	cmd_args
-	token*	head (list des tokens sans les redirs)
-	token*	head (list des tokens redir AVEC un stand in pour quand call la cmd(?))
-
-
 
 0====( TEST CASES )====0
 

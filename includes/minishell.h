@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 16:57:44 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/26 15:52:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_cmd
 
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
-	bool	is_heredoc;		//call herdoc cmd and pipe out, ignore the rest
 
 	char	*input;		//all the < redirection
 	bool	has_input;		//if true: use input fd

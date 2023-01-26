@@ -13,8 +13,8 @@ work on built-ins:
 DONE: env
 DONE: exit *ALL GOOD. For any arguments.
 DONE: pwd **just need to double check for the error message. Might not need
-DONE: unset BUT we will need to check if it works properly with the rest...
-DONE (almost): export. Just need to verify about export "empty"...
+DONE: unset
+DONE export
 DONE: cd. All good.
 
 

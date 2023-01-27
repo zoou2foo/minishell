@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 15:34:41 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/27 16:00:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_cmd	*tokens_to_cmd(t_token **head)			//TODO : set the "has_pipes"
 			{
 				ft_free_null(cmd->input);
 				//heredoc function to insert here
+				//cmd->fdin = execute_hd(node->string);
 				cmd->has_input = true;
 			}
 			node = cut_token(node);

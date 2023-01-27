@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 16:36:50 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/27 11:52:34 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,12 @@ void	print_token_list(t_token *head)
 	printf("\n");
 }
 
-void	print_cmd(t_cmd cmd)
+void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
 	i = -1;
-	printf("\ncmd_args :\n")
+	printf("\ncmd_args :\n");
 	while (cmd->cmd_args[++i])
 		printf("%i) %s\n",i, cmd->cmd_args[i]);
 }
@@ -180,7 +180,7 @@ int	main(void)
 	//har	*line = "$USER$USER";
 
 	t_token	**token_array = parse_line(line);
-	t_cmd	*cmd = tokens_to_cmd(token[0]);	//creates a t_cmd instance from the first tokens
+	t_cmd	*cmd = tokens_to_cmd(token_array[0]);	//creates a t_cmd instance from the first tokens
 
 	print_cmd(cmd);
 	/*

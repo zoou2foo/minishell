@@ -67,6 +67,7 @@ typedef struct s_cmd
 	bool	has_input;		//if true: use input fd
 	bool	has_inpipe;		//else if true: use pipe fd
 	char	*output;	//all the >/>> redirection
+	bool	append_output;
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
 							//else: use STDOUT
@@ -99,6 +100,9 @@ char	*expand_quote(char *str1);
 
 //from parser
 t_token	**parse_line(char *line);
+
+//from converter
+t_cmd	*tokens_to_cmd(t_token *head);
 
 //from tokenizer
 bool	is_space(char c);	//à mettre dans libft

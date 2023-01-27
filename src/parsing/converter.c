@@ -31,7 +31,7 @@
 
 */
 
-t_cmd	*convert(t_token *head)
+t_cmd	*tokens_to_cmd(t_token *head)			//TODO : set the "has_pipes"
 {
 	t_cmd	*cmd;
 	t_token	*node;
@@ -49,18 +49,45 @@ t_cmd	*convert(t_token *head)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 
 	node = head;
-	while (node)	//fill the t_cmd with the redir (and call here*
+	while (node)	//fill the t_cmd with the redir (and call heredocs)
 	{
 		if (TTYPE_EXPAND < node->type);
 		{
-			//put redir in t_cmd (and call heredocs)								!!! TODO !!!
+
+			if (node->type == TTYPE_S_RDR_OUT)
+			{
+				ft_free_null(cmd->output);
+				cmd->output = ft_strdup(node->string);
+				cmd->append_output = false;
+				cmd->has_output = true;
+			}
+			else if (node->type == TTYPE_D_RDR_OUT)
+			{
+				ft_free_null(cmd->output);
+				cmd->output = ft_strdup(node->string);
+				cmd->append_output = true;					//did I swap them??
+				cmd->has_output = true;
+			}
+			else if (node->type == TTYPE_REDIR_IN)
+			{
+				ft_free_null(cmd->input);
+				cmd->input = ft_strdup(node->string);
+				cmd->has_input = true;
+			}
+			else if (node->type == TTYPE_HEREDOC)
+			{
+				ft_free_null(cmd->input);
+				//heredoc function
+				cmd->has_input = true;
+			}
 			cut_token(node);
 		}
 		node = node->next;
 	}
 
 	i = 0;
-	cmd->cmd_args = ft_calloc(find_lenght(head) + 1, sizeof(char *));
+	cmd->argcount = find_lenght(head);
+	cmd->cmd_args = ft_calloc(cmd->argcount + 1, sizeof(char *));
 
 	node = head;
 	while (node)	//convert remaining tokens into cmd_args

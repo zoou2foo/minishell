@@ -135,6 +135,16 @@ void	print_token_list(t_token *head)
 	}
 	printf("\n");
 }
+
+void	print_cmd(t_cmd cmd)
+{
+	int	i;
+
+	i = -1;
+	printf("\ncmd_args :\n")
+	while (cmd->cmd_args[++i])
+		printf("%i) %s\n",i, cmd->cmd_args[i]);
+}
 /*
 int	main(void)
 {
@@ -169,9 +179,11 @@ int	main(void)
 	//char	*line = "lol\"lol\"\'lol\'";
 	//har	*line = "$USER$USER";
 
-	t_token	**token_array;
-	token_array = parse_line(line);
+	t_token	**token_array = parse_line(line);
+	t_cmd	*cmd = tokens_to_cmd(token[0]);	//creates a t_cmd instance from the first tokens
 
+	print_cmd(cmd);
+	/*
 	t_token	*head;
 	int		i;
 
@@ -183,4 +195,5 @@ int	main(void)
 		print_token_list(head);
 	}
 	printf("\n");
+	*/
 }

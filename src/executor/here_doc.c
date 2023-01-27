@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 10:23:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 16:01:49 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*gnl_minihell(void)
 	return (ft_strdup(buffer));
 }
 
-int	create_hd(t_cmd *cmd)
+int	execute_hd(char *str) //à modifier.
 {
 	char	*gnl_return;
 	char	*tmp;

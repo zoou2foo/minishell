@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 11:10:07 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 15:39:14 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	do_exit(t_cmd *cmd)
 	i = 0;
 	while (cmd->cmd_args[1][i])
 	{
-		if (cmd->cmd_args[1][i] >= 48 && cmd->cmd_args[1][i] <= 57) 
+		if (cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9') 
 			i++;
-		else if (!(cmd->cmd_args[1][i] >= 48 && cmd->cmd_args[1][i] <= 57))
+		else if (!(cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9'))
 			exit (255);
 	}
 	arg = ft_atol(cmd->cmd_args[1]);

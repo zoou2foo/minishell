@@ -83,6 +83,7 @@ FILES	=	main \
 			parsing/token_handler \
 			parsing/expander \
 			parsing/parser \
+			parsing/converter \
 			executor/here_doc \
 			executor/system_cmds \
 			signals/ctrl_c \

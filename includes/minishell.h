@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 09:06:35 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 16:04:58 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ enum e_ttype
 
 typedef struct s_meta
 {
-	char	**env; //elle pourrait devenir notre globale
+	char	**env;		//elle pourrait devenir notre globale
 	char	*buf;		//variable pour garder ce qui est mis dans readline
 	char	**path; //contient la ligne PATH pour être en mesure de trouver les system cmds
 	int		exit_status;
+	int		***pipes;	//all the pipes for the current command line
+	int		***hd;		//all the heredoc pipes used			(??????)
 
 }	t_meta;
 
@@ -64,12 +66,15 @@ typedef struct s_cmd
 
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
-	bool	is_heredoc;		//call herdoc cmd and pipe out, ignore the rest
-	int		pipe_hd[2];
-	char	*input;		//all the < redirection
+
+	char	*input;		//the last < redirection
+	int		fdin;			//the fd for the piping
 	bool	has_input;		//if true: use input fd
 	bool	has_inpipe;		//else if true: use pipe fd
-	char	*output;	//all the >/>> redirection
+
+	char	*output;	//the last >/>> redirection
+	int		fdout;			//the fd for the piping
+	bool	append_output;	//if the output needs extend the file or overwrite it
 	bool	has_output;		//if true: use output fd
 	bool	has_outpipe;	//else if true: use pipe fd
 							//else: use STDOUT
@@ -99,12 +104,15 @@ int		check_arg_4_unset(t_cmd *cmd);
 void	do_export(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
 
-/*		 EXPANDER		*/
+//from expander
 char	*expand(char *str1);
 char	*expand_quote(char *str1);
 
 //from parser
 t_token	**parse_line(char *line);
+
+//from converter
+t_cmd	*tokens_to_cmd(t_token **head);
 
 //from tokenizer
 bool	is_space(char c);	//à mettre dans libft
@@ -117,12 +125,13 @@ t_token	*merge_token_list(t_token *head);
 void	free_token(t_token *node);
 t_token	*new_token(char *str, int len, int type);
 void	add_token(t_token *token, t_token **head);
+int		find_length(t_token *head);
 t_token	*find_head(t_token *tail);
 t_token	*find_tail(t_token *head);
 t_token	*merge_tokens(t_token *prev, t_token *next);
 t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
 t_token	*replace_token(t_token *new, t_token *old);
-void	cut_token(t_token *node);
+t_token	*cut_token(t_token *node);
 void	destroy_token(t_token *node);
 
 /*		SYSTEM_CMDS		*/

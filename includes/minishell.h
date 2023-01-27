@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/26 15:52:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/27 12:26:38 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,8 @@ t_token	*replace_token(t_token *new, t_token *old);
 void	cut_token(t_token *node);
 void	destroy_token(t_token *node);
 
-/* section four - */
+/*		Converter		- */
+t_cmd	*tokens_to_cmd(t_token *head);
 
 /* section five - trying stuff */
 

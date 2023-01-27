@@ -83,6 +83,7 @@ FILES	=	main \
 			parsing/token_handler \
 			parsing/expander \
 			parsing/parser \
+			parsing/converter
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses

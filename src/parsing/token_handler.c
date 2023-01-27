@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/20 14:35:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/27 12:29:49 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_token	*merge_tokens(t_token *prev, t_token *next)
 	else if (next->string)
 		str = ft_strdup(next->string);
 	else
-		str = ft_calloc(len + 1, sizeof(char));
+		str = ft_calloc(1, sizeof(char));
 
 	node = new_token(str, ft_strlen(str), TTYPE_NORMAL);
 

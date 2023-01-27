@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/26 16:11:42 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/27 12:27:47 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_cmd	*tokens_to_cmd(t_token *head)			//TODO : set the "has_pipes"
 	node = head;
 	while (node)	//fill the t_cmd with the redir (and call heredocs)
 	{
-		if (TTYPE_EXPAND < node->type);
+		if (TTYPE_EXPAND < node->type)
 		{
 
 			if (node->type == TTYPE_S_RDR_OUT)

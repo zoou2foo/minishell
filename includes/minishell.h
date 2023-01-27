@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/26 13:56:14 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 09:06:35 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_cmd
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
 	bool	is_heredoc;		//call herdoc cmd and pipe out, ignore the rest
-
+	int		pipe_hd[2];
 	char	*input;		//all the < redirection
 	bool	has_input;		//if true: use input fd
 	bool	has_inpipe;		//else if true: use pipe fd
@@ -130,7 +130,10 @@ void	fill_path_tab(void);
 void	error_fill_path(void);
 char	*find_cmd(t_cmd *cmd);
 
+/*		HERE_DOCUMENT	*/
+int	create_hd(t_cmd *cmd);
+
 /* section five - trying stuff */
-void	print_tab_env(void);
+void	print_tab_env(void); //à enlever
 
 #endif

@@ -6,13 +6,17 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/26 15:31:33 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 09:20:19 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_meta	*metadata;	//our global var
+
+// COMMENT if ac is not 1, error; void argv.
+// COMMENT readline will malloc the char *buf, but it does NOT free it at
+// COMMENT the end.
 
 int	main(int ac, char **av)		//use char **environ instead
 {
@@ -22,9 +26,9 @@ int	main(int ac, char **av)		//use char **environ instead
 	{
 		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
 		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[0] = "export";
-		cmd->cmd_args[1] = "lol=";
-		cmd->cmd_args[2] = "LANG=";
+		cmd->cmd_args[0] = "wc";
+		cmd->cmd_args[1] = "pew";
+		//cmd->cmd_args[2] = "LANG=";
 
 		init_meta();
 		metadata->buf = readline("bash-Pew Pew> ");
@@ -32,12 +36,8 @@ int	main(int ac, char **av)		//use char **environ instead
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "export", 6) == 0)
-				do_export(cmd);
-			if (ft_strncmp(metadata->buf, "env", 3) == 0)
-				get_env();
-			if (ft_strncmp(metadata->buf, "unset", 5) == 0)
-				do_unset(cmd);
+			if (ft_strncmp(metadata->buf, "<<", 2) == 0)
+				create_hd(cmd);
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}
@@ -45,18 +45,6 @@ int	main(int ac, char **av)		//use char **environ instead
 	}
 	return (0);
 }
-
-// int	main(int ac, char **av)
-// {
-
-// 	(void)av;
-// 	if (ac == 1)
-// 	{
-// 		init_meta();
-// 		sort_env();
-// 	}
-// 	return (0);
-// }
 
 void	print_tab_env(void)
 {
@@ -89,9 +77,6 @@ void	init_meta(void)
 	}
 }
 
-// COMMENT if ac is not 1, error; void argv.
-// COMMENT readline will malloc the char *buf, but it does NOT free it at
-// COMMENT the end.
 //VAL's main (DEBUG)
 
 // int	main(void)

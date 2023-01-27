@@ -17,6 +17,11 @@ DONE: unset
 DONE export
 DONE: cd. All good.
 
+SIGNALS:
+signals.h --> to add in library
+SIGINT --> ctrl-c
+SIGQUIT --> ctrl-d
+SIGQUIT --> ctrl-\ 
 
 
 

@@ -84,7 +84,10 @@ FILES	=	main \
 			parsing/expander \
 			parsing/parser \
 			executor/here_doc \
-			executor/system_cmds
+			executor/system_cmds \
+			signals/ctrl_c \
+			signals/ctrl_d \
+			signals/ctrl_backslash
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses

@@ -111,6 +111,7 @@ t_token	*merge_token_list(t_token *head);
 void	free_token(t_token *node);
 t_token *new_token(char *str, int len, int type);
 void	add_token(t_token *token, t_token **head);
+int	find_lenght(t_token *head);
 t_token	*find_head(t_token *tail);
 t_token	*find_tail(t_token *head);
 t_token	*merge_tokens(t_token *prev, t_token *next);

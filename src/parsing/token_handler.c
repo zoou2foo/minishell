@@ -58,6 +58,22 @@ void	add_token(t_token *node, t_token **head)
 		*head = node;
 }
 
+//finds lenght of a token list (may loop if list is circular)
+int	find_lenght(t_token *head)
+{
+	t_token	*node;
+	int		i;
+
+	i = 1;
+	node = head;
+	while (node->next)
+	{
+		i++;
+		node = node->next;
+	}
+	return (i);
+}
+
 //finds the tail end of a token list (may loop if list is circular)
 t_token	*find_tail(t_token *head)
 {
@@ -86,19 +102,28 @@ t_token	*merge_tokens(t_token *prev, t_token *next)
 	t_token	*node;
 	char	*str;
 
-	str = ft_strjoin(prev->string, next->string);
+	if (prev->string && next->string)
+		str = ft_strjoin(prev->string, next->string);
+	else if (prev->string)
+		str = ft_strdup(prev->string);
+	else if (next->string)
+		str = ft_strdup(next->string);
+	else
+		str = ft_calloc(len + 1, sizeof(char));
+
 	node = new_token(str, ft_strlen(str), TTYPE_NORMAL);
 
 	node->prev = prev->prev;
 	if (node->prev)
 		node->prev->next = node;
-
 	node->next = next->next;
 	if (node->next)
 		node->next->prev = node;
 
-	if (prev->type == next->type)
+	if (prev->type)
 		node->type = prev->type;
+	else if (next->type)
+		node->type = next->type;
 	if (prev->is_joined)
 		node->is_joined = true;
 

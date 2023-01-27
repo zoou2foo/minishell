@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/27 12:29:49 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 15:24:04 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 //frees a token entirely
 void	free_token(t_token *node)
 {
-	if (node->string)
-		ft_free_null(node->string);
-	ft_free_null(node);
+	if (node)
+	{
+		if (node->string)
+			ft_free_null(node->string);
+		ft_free_null(node);
+	}
 }
 
 //creates a new token
@@ -59,14 +62,14 @@ void	add_token(t_token *node, t_token **head)
 }
 
 //finds lenght of a token list (may loop if list is circular)
-int	find_lenght(t_token *head)
+int	find_length(t_token *head)
 {
 	t_token	*node;
 	int		i;
 
-	i = 1;
 	node = head;
-	while (node->next)
+	i = 0;
+	while (node)
 	{
 		i++;
 		node = node->next;
@@ -96,38 +99,27 @@ t_token	*find_head(t_token *tail)
 	return (node);
 }
 
-//merges two token's strings into a new one
-t_token	*merge_tokens(t_token *prev, t_token *next)
+//merges two token's strings into one (reusing the first node)
+t_token	*merge_tokens(t_token *node, t_token *next)
 {
-	t_token	*node;
 	char	*str;
 
-	if (prev->string && next->string)
-		str = ft_strjoin(prev->string, next->string);
-	else if (prev->string)
-		str = ft_strdup(prev->string);
+	if (node->string && next->string)
+		str = ft_strjoin(node->string, next->string);
+	else if (node->string)
+		str = ft_strdup(node->string);
 	else if (next->string)
 		str = ft_strdup(next->string);
 	else
 		str = ft_calloc(1, sizeof(char));
 
-	node = new_token(str, ft_strlen(str), TTYPE_NORMAL);
+	ft_free_null(node->string);
+	node->string = str;
 
-	node->prev = prev->prev;
-	if (node->prev)
-		node->prev->next = node;
 	node->next = next->next;
 	if (node->next)
 		node->next->prev = node;
 
-	if (prev->type)
-		node->type = prev->type;
-	else if (next->type)
-		node->type = next->type;
-	if (prev->is_joined)
-		node->is_joined = true;
-
-	free_token(prev);
 	free_token(next);
 	return (node);
 }
@@ -164,16 +156,26 @@ t_token	*replace_token(t_token *new, t_token *old)
 }
 
 //deletes a token and links its next and prev together
-void	cut_token(t_token *node)
+//tries to return the next, then the prev, then NULL
+t_token	*cut_token(t_token *node)
 {
+	t_token	*ret;
+
+	ret = node;
 	if (node)
 	{
 		if (node->prev)
 			node->prev->next = node->next;
 		if (node->next)
+		{
 			node->next->prev = node->prev;
+			ret = node->next;
+		}
+		else if (node->prev)
+			ret = node->prev;
 		free_token(node);
 	}
+	return (ret);
 }
 
 //deletes a token without relinking

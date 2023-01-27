@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 11:52:34 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 15:32:37 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,11 @@ void	print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = -1;
-	printf("\ncmd_args :\n");
+	printf("\n cmd_args :\n");
 	while (cmd->cmd_args[++i])
-		printf("%i) %s\n",i, cmd->cmd_args[i]);
+		printf(" %i) %s\n",i, cmd->cmd_args[i]);
+	printf("\n input : %s\n", cmd->input);
+	printf(" output : %s\n\n\n", cmd->output);
 }
 /*
 int	main(void)
@@ -177,23 +179,19 @@ int	main(void)
 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
 	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
 	//char	*line = "lol\"lol\"\'lol\'";
-	//har	*line = "$USER$USER";
+	//char	*line = "$USER$USER";
 
 	t_token	**token_array = parse_line(line);
-	t_cmd	*cmd = tokens_to_cmd(token_array[0]);	//creates a t_cmd instance from the first tokens
 
-	print_cmd(cmd);
-	/*
 	t_token	*head;
 	int		i;
-
 	i = -1;
 	printf("\n");
 	while(token_array[++i])
 	{
 		head = token_array[i];
 		print_token_list(head);
+		print_cmd(tokens_to_cmd(&token_array[i]));
 	}
 	printf("\n");
-	*/
 }

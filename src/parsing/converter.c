@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 12:27:47 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/27 15:34:41 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,27 @@
 
 */
 
-t_cmd	*tokens_to_cmd(t_token *head)			//TODO : set the "has_pipes"
+t_cmd	*tokens_to_cmd(t_token **head)			//TODO : set the "has_pipes"
 {
 	t_cmd	*cmd;
 	t_token	*node;
 	int		i;
 
-
-	node = head;
-	while (node)	//merge tokens (ex > type + string = string w/ type >)
+	node = *head;
+	while (node->next)	//merge tokens (ex > type + string = string w/ type >)
 	{
-		if (node->next && node->next->type <= TTYPE_EXPAND && TTYPE_EXPAND < node->type)
+		if (node->next->type <= TTYPE_EXPAND && TTYPE_EXPAND < node->type)
 			node = merge_tokens(node, node->next);
-		node = node->next;
+		if (node->next)
+			node = node->next;
+		else
+			break;
 	}
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 
-	node = head;
-	while (node)	//fill the t_cmd with the redir (and call heredocs)
+	node = *head;
+	while (node)	//MAKE THE INPUT OVERRIDE WORK PROPERLY WITH HEREDOCS
 	{
 		if (TTYPE_EXPAND < node->type)
 		{
@@ -58,7 +60,7 @@ t_cmd	*tokens_to_cmd(t_token *head)			//TODO : set the "has_pipes"
 			{
 				ft_free_null(cmd->output);
 				cmd->output = ft_strdup(node->string);
-				cmd->append_output = false;
+				cmd->append_output = false;					//did I swap them??
 				cmd->has_output = true;
 			}
 			else if (node->type == TTYPE_D_RDR_OUT)
@@ -77,19 +79,23 @@ t_cmd	*tokens_to_cmd(t_token *head)			//TODO : set the "has_pipes"
 			else if (node->type == TTYPE_HEREDOC)
 			{
 				ft_free_null(cmd->input);
-				//heredoc function
+				//heredoc function to insert here
 				cmd->has_input = true;
 			}
-			cut_token(node);
+			node = cut_token(node);
 		}
-		node = node->next;
+		if (node->next)
+			node = node->next;
+		else
+			break;
 	}
+	*head = find_head(node);	//update head if cut destroys it
 
-	i = 0;
-	cmd->argcount = find_lenght(head);
+	cmd->argcount = find_length(*head);
 	cmd->cmd_args = ft_calloc(cmd->argcount + 1, sizeof(char *));
 
-	node = head;
+	i = 0;
+	node = *head;
 	while (node)	//convert remaining tokens into cmd_args
 	{
 		cmd->cmd_args[i++] = ft_strdup(node->string);

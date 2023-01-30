@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/20 16:43:32 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:48:15 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ t_token	*create_token_list(char *line)
 	t_token	*head;
 	int		len;
 	int		i;
-
-	printf(" - \"%s\"\n", line);				//DEBUG
 
 	head = NULL;
 	i = -1;

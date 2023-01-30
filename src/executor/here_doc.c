@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 11:44:54 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 16:07:56 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 1. Checker dans l'ensemble de la ligne de commande reçu si on a un
-here_doc. Même si plus loin, il faut qu'il soit exécuté en premier. 
+here_doc. Même si plus loin, il faut qu'il soit exécuté en premier.
 2. Checker si on a bien un délimiteur; car besoin d'y faire référence durant gnl
 3.
 

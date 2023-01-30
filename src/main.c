@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 16:05:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 11:40:56 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	main(int ac, char **av)		//use char **environ instead
 	(void)av;
 	if (ac == 1)
 	{
-		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
-		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[0] = "wc";
-		cmd->cmd_args[1] = "pew";
+		// t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
+		// cmd->cmd_args = ft_calloc(sizeof(char *), 3);
+		// cmd->cmd_args[0] = "wc";
+		// cmd->cmd_args[1] = "pew";
 		//cmd->cmd_args[2] = "LANG=";
 
 		init_meta();

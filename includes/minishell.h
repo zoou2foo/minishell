@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 10:53:50 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 11:42:49 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_cmd
 	int		fdin;			//the fd for the piping
 	bool	has_input;		//if true: use input fd
 	bool	has_inpipe;		//else if true: use pipe fd
-	int		pipe_hd[2]; //pipe for here_doc
 	char	*output;	//the last >/>> redirection
 	int		fdout;			//the fd for the piping
 	bool	append_output;	//if the output needs extend the file or overwrite it

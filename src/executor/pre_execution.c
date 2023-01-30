@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 09:47:36 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 12:52:29 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void	minishell(void)
 	t_token	**head;
 
 	head = parse_line(metadata->buf);
-	tokens_to_cmd(head);
+
 	fill_path_tab();
 	/*
-	while (index < nombre_de_cmds)
+	while (index < nombre_de_cmds) utiliser t_cmd cmd_block (meta)
 	{
 		pipe_n_fork();
 		if (pid > 0)
 		{
-			dup2(fdout[0], STDIN);
+			dup2(fdout[0], STDIN); //dup2(pipes[id - 1][1], STDIN) 
 			close(fdout[0]);
 			close(fdout[1]);
 		}
@@ -49,7 +49,7 @@ void	child_process()
 
 	t_cmd *cmd_path;
 	cmd_path = find_cmd;
-	execute_child();
+	execute_child(); --> now, real execution. Create a file for it.
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 10:52:22 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 11:44:54 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute_hd(t_cmd *cmd) //à modifier.
 	char	*gnl_return;
 	char	*tmp;
 
-	if (pipe(cmd->pipe_hd) == -1)
+	if (pipe(metadata->pipes) == -1)
 	{
 		write(2, "Error: invalid pipe fd\n", 24);
 		free(cmd); //called ft_free_null

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/27 15:24:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 15:19:03 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,14 @@ t_token	*find_tail(t_token *head)
 {
 	t_token	*node;
 
-	node = head;
-	while (node->next)
-		node = node->next;
+	if (!head)
+		node = new_token("", 0, TTYPE_ERROR);
+	else
+	{
+		node = head;
+		while (node->next)
+			node = node->next;
+	}
 	return (node);
 }
 
@@ -93,9 +98,14 @@ t_token	*find_head(t_token *tail)
 {
 	t_token	*node;
 
-	node = tail;
-	while (node->prev)
-		node = node->prev;
+	if (!tail)
+		node = new_token("", 0, TTYPE_ERROR);
+	else
+	{
+		node = tail;
+		while (node->prev)
+			node = node->prev;
+	}
 	return (node);
 }
 
@@ -176,6 +186,20 @@ t_token	*cut_token(t_token *node)
 		free_token(node);
 	}
 	return (ret);
+}
+
+//deletes the info inside a token
+void	empty_token(t_token *node)
+{
+	if (node)
+	{
+		node->prev= NULL;
+		node->next = NULL;
+		if (node->string)
+			ft_free_null(node->string);
+		node->string = ft_calloc(1, sizeof(char *));
+		node->type = TTYPE_EMPTY;
+	}
 }
 
 //deletes a token without relinking

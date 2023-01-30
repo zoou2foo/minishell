@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 14:06:11 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 15:17:08 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ t_token	*merge_tokens(t_token *prev, t_token *next);
 t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
 t_token	*replace_token(t_token *new, t_token *old);
 t_token	*cut_token(t_token *node);
+void	empty_token(t_token *node);
 void	destroy_token(t_token *node);
 
 /*		SYSTEM_CMDS		*/

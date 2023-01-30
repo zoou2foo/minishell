@@ -84,9 +84,9 @@ FILES	=	main \
 			parsing/expander \
 			parsing/parser \
 			parsing/converter \
-#			\
+			executor/system_cmds \
+
 #			executor/here_doc \
-#			executor/system_cmds \
 #			signals/ctrl_c \
 #			signals/ctrl_d \
 #			signals/ctrl_backslash
@@ -111,6 +111,7 @@ ldirs:
 	$(HIDE) $(MD) $(OBJDIR)
 	$(HIDE) $(MD) $(OBJDIR)/built-ins
 	$(HIDE) $(MD) $(OBJDIR)/parsing
+	$(HIDE) $(MD) $(OBJDIR)/executor
 
 $(NAME): $(OBJS)
 	$(HIDE) $(START)

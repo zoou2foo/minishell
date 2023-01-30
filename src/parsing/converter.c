@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 14:29:53 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 15:17:16 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
 				//close previous heredoc if necessary
 				//cmd->fdin = execute_hd(node->string);
 			}
-			node = cut_token(node);
+			if (node->next || node->prev)
+				node = cut_token(node);
+			else
+				empty_token(node);
 		}
 		if (node->next)
 			node = node->next;

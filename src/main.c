@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 11:40:56 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:17:06 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ int	main(int ac, char **av)		//use char **environ instead
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			minishell();
+			//minishell();
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}
 		clear_history();
+		ft_free_null(metadata->buf);
+		free(metadata);
 	}
 	return (0);
 }
@@ -74,6 +76,7 @@ void	init_meta(void)
 		metadata->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
+	init_signals();
 }
 
 //VAL's main (DEBUG)

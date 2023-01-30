@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 11:42:49 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:07:01 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <curses.h>
+# include <signal.h>
 
 extern	char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
 
@@ -143,6 +144,9 @@ int		execute_hd(t_cmd *cmd);
 
 /*		PRE_EXECUTION	*/
 void	minishell(void);
+
+/*		SIGNALS			*/
+void	init_signals(void);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

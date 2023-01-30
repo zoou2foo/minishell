@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 12:52:29 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:14:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	minishell(void)
 	t_token	**head;
 
 	head = parse_line(metadata->buf);
-
+	sigac
 	fill_path_tab();
 	/*
 	while (index < nombre_de_cmds) utiliser t_cmd cmd_block (meta)

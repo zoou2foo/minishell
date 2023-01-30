@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 16:04:58 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 11:45:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,16 @@ enum e_ttype
 typedef struct s_meta
 {
 	char	**env;		//elle pourrait devenir notre globale
+	char	**path; 	//contient la ligne PATH pour être en mesure de trouver les system cmds
+
 	char	*buf;		//variable pour garder ce qui est mis dans readline
-	char	**path; //contient la ligne PATH pour être en mesure de trouver les system cmds
-	int		exit_status;
+	t_cmd	**cmd_block;
+	int		cmd_nb;
+
 	int		***pipes;	//all the pipes for the current command line
 	int		***hd;		//all the heredoc pipes used			(??????)
+
+	int		exit_status;
 
 }	t_meta;
 
@@ -66,6 +71,7 @@ typedef struct s_cmd
 
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
+	int		cmd_id;
 
 	char	*input;		//the last < redirection
 	int		fdin;			//the fd for the piping
@@ -79,16 +85,6 @@ typedef struct s_cmd
 	bool	has_outpipe;	//else if true: use pipe fd
 							//else: use STDOUT
 }			t_cmd;
-
-typedef struct s_cmd_block
-{
-	t_token		**token_array;
-	t_cmd		**cmds;
-	int			cmd_count;
-	bool		is_empty;
-	bool		is_valid;
-
-}			t_cmd_block;
 
 /* 		MAIN			*/
 void	init_meta(void);

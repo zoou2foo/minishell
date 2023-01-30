@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 16:00:38 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 11:42:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@
 	//AFTER WE SHOULD TEST/INTEGRATE THE BUILT-INS
 
 */
+void	**initialize_cmds(t_token **head)
+{
+	int	i;
+
+	i = -1;
+	while(head[++i])
+	{
+
+	}
+
+}
+
 
 t_cmd	*tokens_to_cmd(t_token **head)			//TODO : set the "has_pipes"
 {

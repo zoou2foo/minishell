@@ -36,8 +36,7 @@ int	main(int ac, char **av)		//use char **environ instead
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "<<", 2) == 0)
-				create_hd(cmd);
+			minishell();
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}

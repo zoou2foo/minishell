@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 16:11:34 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/30 16:42:58 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_meta
 	int		cmd_nb;			//nb of commands to be called this cycle
 
 	int		**pipes;	//all the pipes fd for the current command line
-	int		**hd;		//all the heredoc pipe fd used			(??????)
+	int		**pipe_hd;		//all the heredoc pipe fd used			(??????)
 
 	int		exit_status;
 
@@ -132,7 +132,7 @@ void	error_fill_path(void);
 char	*find_cmd(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/
-int		execute_hd(char *cmd);
+int		execute_hd(char *string);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

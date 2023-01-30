@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*expand(char *str1)			//CHECK IF EQUAL IS RIGHT AFTER (to avoid homebrew == home)
+char	*expand(char *str1)
 {
 	char	*str2;
 	int		i;

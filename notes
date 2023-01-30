@@ -27,16 +27,13 @@ SIGQUIT --> ctrl-\
 
 0========(  LOYC  )========0
 
-"eat" throught the command line and tokenize gradually
-
-split along |
-look for < / <<
-	make < the infile
-	make << their own command and reset the infile
-look for > / >>
-	make them the outfile (>> sets flag for replacement)
 
 
+token*	head (list des tokens sans les redirs)
+
+
+t_cmd :
+	char**	cmd_args
 
 0====( TEST CASES )====0
 

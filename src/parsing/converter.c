@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 11:42:57 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 12:58:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,8 @@
 	//AFTER WE SHOULD TEST/INTEGRATE THE BUILT-INS
 
 */
-void	**initialize_cmds(t_token **head)
-{
-	int	i;
 
-	i = -1;
-	while(head[++i])
-	{
-
-	}
-
-}
-
-
-t_cmd	*tokens_to_cmd(t_token **head)			//TODO : set the "has_pipes"
+t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
 {
 	t_cmd	*cmd;
 	t_token	*node;
@@ -61,6 +49,9 @@ t_cmd	*tokens_to_cmd(t_token **head)			//TODO : set the "has_pipes"
 	}
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
+	cmd->id = id;
+	cmd->fdin = 0;	//set default fd to use later
+	cmd->fdout = 1;	//set default fd to use later
 
 	node = *head;
 	while (node)	//MAKE THE INPUT OVERRIDE WORK PROPERLY WITH HEREDOCS
@@ -116,4 +107,20 @@ t_cmd	*tokens_to_cmd(t_token **head)			//TODO : set the "has_pipes"
 	}
 
 	return (cmd);
+}
+
+void	load_cmd_block(t_token **head)
+{
+	int	i;
+
+
+	i = 0;
+	while(head[i])
+		i++;
+	metadata->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));	//MUST FREE CMD_BLOCK BEFOREHAND
+	metadata->cmd_nb = i;
+
+	i = -1;
+	while(head[++i])
+		metadata->cmd_block[i] = tokens_to_cmd(&head[i], i);
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 11:45:57 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 12:47:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,6 @@ enum e_ttype
 	TTYPE_PIPE		= 9		// |	(pipe)
 };
 
-typedef struct s_meta
-{
-	char	**env;		//elle pourrait devenir notre globale
-	char	**path; 	//contient la ligne PATH pour être en mesure de trouver les system cmds
-
-	char	*buf;		//variable pour garder ce qui est mis dans readline
-	t_cmd	**cmd_block;
-	int		cmd_nb;
-
-	int		***pipes;	//all the pipes for the current command line
-	int		***hd;		//all the heredoc pipes used			(??????)
-
-	int		exit_status;
-
-}	t_meta;
-
-extern t_meta	*metadata;
-
 typedef struct s_token
 {
 	char			*string;
@@ -71,7 +53,7 @@ typedef struct s_cmd
 
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
-	int		cmd_id;
+	int		id;				//id of this cmd (in relation to others in this cycle)
 
 	char	*input;		//the last < redirection
 	int		fdin;			//the fd for the piping
@@ -85,6 +67,24 @@ typedef struct s_cmd
 	bool	has_outpipe;	//else if true: use pipe fd
 							//else: use STDOUT
 }			t_cmd;
+
+typedef struct s_meta
+{
+	char	**env;		//elle pourrait devenir notre globale
+	char	**path; 	//contient la ligne PATH pour être en mesure de trouver les system cmds
+
+	char	*buf;			//variable pour garder ce qui est mis dans readline
+	t_cmd	**cmd_block;	//all commands to be called this cycle
+	int		cmd_nb;			//nb of commands to be called this cycle
+
+	int		***pipes;	//all the pipes for the current command line
+	int		***hd;		//all the heredoc pipes used			(??????)
+
+	int		exit_status;
+
+}	t_meta;
+
+extern t_meta	*metadata;
 
 /* 		MAIN			*/
 void	init_meta(void);
@@ -108,7 +108,7 @@ char	*expand_quote(char *str1);
 t_token	**parse_line(char *line);
 
 //from converter
-t_cmd	*tokens_to_cmd(t_token **head);
+void	load_cmd_block(t_token **head);
 
 //from tokenizer
 bool	is_space(char c);	//à mettre dans libft
@@ -136,7 +136,7 @@ void	error_fill_path(void);
 char	*find_cmd(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/
-int	create_hd(t_cmd *cmd);
+int		create_hd(t_cmd *cmd);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

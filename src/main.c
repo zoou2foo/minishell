@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 16:05:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 12:48:02 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_meta	*metadata;	//our global var
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at
 // COMMENT the end.
-
+/*
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
@@ -57,6 +57,7 @@ void	print_tab_env(void)
 		i++;
 	}
 }
+*/
 
 //allocates memory for and fills the global metadata var with default values
 void	init_meta(void)
@@ -76,6 +77,7 @@ void	init_meta(void)
 		i++;
 	}
 }
+
 
 //VAL's main (DEBUG)
 
@@ -187,7 +189,9 @@ void	print_cmd(t_cmd *cmd)
 	printf("\n cmd_args :\n");
 	while (cmd->cmd_args[++i])
 		printf(" %i) %s\n",i, cmd->cmd_args[i]);
-	printf("\n input : %s\n", cmd->input);
+
+	printf("\n id : %i\n", cmd->id);
+	printf(" input : %s\n", cmd->input);
 	printf(" output : %s\n\n\n", cmd->output);
 }
 /*
@@ -216,7 +220,7 @@ int	main(void)
 	printf("\n\n");
 }
 */
-/*
+
 int	main(void)
 {
 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
@@ -224,18 +228,16 @@ int	main(void)
 	//char	*line = "lol\"lol\"\'lol\'";
 	//char	*line = "$USER$USER";
 
-	t_token	**token_array = parse_line(line);
+	init_meta();
+	load_cmd_block(parse_line(line));
 
-	t_token	*head;
 	int		i;
 	i = -1;
 	printf("\n");
-	while(token_array[++i])
+	while(metadata->cmd_block[++i])
 	{
-		head = token_array[i];
-		print_token_list(head);
-		print_cmd(tokens_to_cmd(&token_array[i]));
+		print_cmd(metadata->cmd_block[i]);
 	}
 	printf("\n");
+
 }
-*/

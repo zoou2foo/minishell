@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 15:17:16 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 16:09:37 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
 			{
 				ft_free_null(cmd->input);
 				//close previous heredoc if necessary
-				//cmd->fdin = execute_hd(node->string);
+				cmd->fdin = execute_hd(node->string);
 			}
 			if (node->next || node->prev)
 				node = cut_token(node);

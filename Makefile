@@ -85,8 +85,8 @@ FILES	=	main \
 			parsing/parser \
 			parsing/converter \
 			executor/system_cmds \
+			executor/here_doc \
 
-#			executor/here_doc \
 #			signals/ctrl_c \
 #			signals/ctrl_d \
 #			signals/ctrl_backslash

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 12:47:11 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:06:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,10 @@ typedef struct s_cmd
 
 	char	*input;		//the last < redirection
 	int		fdin;			//the fd for the piping
-	bool	has_input;		//if true: use input fd
-	bool	has_inpipe;		//else if true: use pipe fd
 
 	char	*output;	//the last >/>> redirection
 	int		fdout;			//the fd for the piping
 	bool	append_output;	//if the output needs extend the file or overwrite it
-	bool	has_output;		//if true: use output fd
-	bool	has_outpipe;	//else if true: use pipe fd
-							//else: use STDOUT
 }			t_cmd;
 
 typedef struct s_meta
@@ -77,8 +72,8 @@ typedef struct s_meta
 	t_cmd	**cmd_block;	//all commands to be called this cycle
 	int		cmd_nb;			//nb of commands to be called this cycle
 
-	int		***pipes;	//all the pipes for the current command line
-	int		***hd;		//all the heredoc pipes used			(??????)
+	int		**pipes;	//all the pipes fd for the current command line
+	int		**hd;		//all the heredoc fd used			(??????)
 
 	int		exit_status;
 

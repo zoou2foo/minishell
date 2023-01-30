@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 12:58:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:29:53 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,23 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
 				ft_free_null(cmd->output);
 				cmd->output = ft_strdup(node->string);
 				cmd->append_output = false;					//did I swap them??
-				cmd->has_output = true;
 			}
 			else if (node->type == TTYPE_D_RDR_OUT)
 			{
 				ft_free_null(cmd->output);
 				cmd->output = ft_strdup(node->string);
 				cmd->append_output = true;					//did I swap them??
-				cmd->has_output = true;
 			}
 			else if (node->type == TTYPE_REDIR_IN)
 			{
 				ft_free_null(cmd->input);
 				cmd->input = ft_strdup(node->string);
-				cmd->has_input = true;
 			}
 			else if (node->type == TTYPE_HEREDOC)
 			{
 				ft_free_null(cmd->input);
-				//heredoc function to insert here
+				//close previous heredoc if necessary
 				//cmd->fdin = execute_hd(node->string);
-				cmd->has_input = true;
 			}
 			node = cut_token(node);
 		}
@@ -94,6 +90,22 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
 			break;
 	}
 	*head = find_head(node);	//update head if cut destroys it
+
+	//open input and output file if they exist			(PROTECT ME)
+	if (cmd->input)
+		cmd->fdin = open(cmd->input, O_RDONLY);
+	else if (!cmd->fdin && 0 < id)
+		cmd->fdin = metadata->pipes[id - 1][1];
+
+	if (cmd->output)
+	{
+		if (cmd->append_output)
+			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0666);
+		else
+			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_TRUNC, 0666);	//effectively 0644 because of umask);
+	}
+	else if (id < metadata->cmd_nb - 1)
+		cmd->fdout = metadata->pipes[id][0];
 
 	cmd->argcount = find_length(*head);
 	cmd->cmd_args = ft_calloc(cmd->argcount + 1, sizeof(char *));
@@ -118,7 +130,15 @@ void	load_cmd_block(t_token **head)
 	while(head[i])
 		i++;
 	metadata->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));	//MUST FREE CMD_BLOCK BEFOREHAND
+	metadata->pipes = ft_calloc(i, sizeof(int *));
 	metadata->cmd_nb = i;
+
+	i = -1;
+	while(++i < metadata->cmd_nb - 1)
+	{
+		metadata->pipes[i] = ft_calloc(2, sizeof(int));
+		pipe(metadata->pipes[i]);
+	}
 
 	i = -1;
 	while(head[++i])

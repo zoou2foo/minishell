@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 12:48:02 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:30:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,14 +185,18 @@ void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
-	i = -1;
-	printf("\n cmd_args :\n");
-	while (cmd->cmd_args[++i])
-		printf(" %i) %s\n",i, cmd->cmd_args[i]);
+	printf("\n _COMMAND_%i_\n|\n", cmd->id);
 
-	printf("\n id : %i\n", cmd->id);
-	printf(" input : %s\n", cmd->input);
-	printf(" output : %s\n\n\n", cmd->output);
+	printf("| fdin  : %i\n", cmd->fdin);
+	printf("| fdout : %i\n|\n", cmd->fdout);
+
+	printf("| input  : %s\n", cmd->input);
+	printf("| output : %s\n", cmd->output);
+
+	printf("|\n|  _cmd_args_\n| |\n");
+	i = -1;
+	while (cmd->cmd_args[++i])
+		printf("| | %i : '%s'\n",i, cmd->cmd_args[i]);
 }
 /*
 int	main(void)

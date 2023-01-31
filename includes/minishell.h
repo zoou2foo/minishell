@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 16:42:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 10:38:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_meta
 	int		cmd_nb;			//nb of commands to be called this cycle
 
 	int		**pipes;	//all the pipes fd for the current command line
-	int		**pipe_hd;		//all the heredoc pipe fd used			(??????)
+//	int		*pipe_hd[2];		// JB dit mieux de les faire dans here_doc que dans struct.
 
 	int		exit_status;
 

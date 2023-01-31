@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 16:44:08 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 10:38:29 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,17 @@ char	*gnl_minihell(void)
 
 int	execute_hd(char *string)
 {
+	int		pipe_hd[2];
 	char	*gnl_return;
 	char	*tmp;
 
-	if (pipe(*metadata->pipe_hd) == -1)
+	if (pipe(pipe_hd) == -1)
 	{
 		write(2, "Error: invalid pipe fd\n", 24);
 		ft_free_null(string);
 		exit (1);
 	}
+	printf("pew pew madafakas!\n");
 	while (1)
 	{
 		gnl_return = gnl_minihell();
@@ -50,13 +52,13 @@ int	execute_hd(char *string)
 			free(tmp);
 			break ;
 		}
-		write(*metadata->pipe_hd[1], gnl_return, ft_strlen(gnl_return));
+		write(pipe_hd[1], gnl_return, ft_strlen(gnl_return));
 		free(tmp);
 		free (gnl_return);
 	}
-	dup2(*metadata->pipe_hd[0], STDIN_FILENO); //Je veux return(pipe_hd[0])
-	close(*metadata->pipe_hd[0]); //pas sûr que je dois le fermer si c'est ça que je renvoie
-	close(*metadata->pipe_hd[1]);
+	//dup2(*metadata->pipe_hd[0], STDIN_FILENO); parce que la redirection doit se passer dans le child
+	//close(*metadata->pipe_hd[0]); // doit rester ouvert, sinon, je le perds.
+	close(pipe_hd[1]); //il peut être fermé, car on n'écrit plus dedans
 	free (gnl_return);
-	return (*metadata->pipe_hd[0]);
+	return (pipe_hd[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 10:38:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 11:12:00 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,9 @@ char	*find_cmd(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/
 int		execute_hd(char *string);
+
+/*		SIGNALS			*/
+void	init_signals(int flag);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

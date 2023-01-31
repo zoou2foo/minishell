@@ -86,10 +86,7 @@ FILES	=	main \
 			parsing/converter \
 			executor/system_cmds \
 			executor/here_doc \
-
-#			signals/ctrl_c \
-#			signals/ctrl_d \
-#			signals/ctrl_backslash
+			signals/signals
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
@@ -112,6 +109,7 @@ ldirs:
 	$(HIDE) $(MD) $(OBJDIR)/built-ins
 	$(HIDE) $(MD) $(OBJDIR)/parsing
 	$(HIDE) $(MD) $(OBJDIR)/executor
+	$(HIDE) $(MD) $(OBJDIR)/signals
 
 $(NAME): $(OBJS)
 	$(HIDE) $(START)

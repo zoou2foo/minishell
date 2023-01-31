@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 16:55:44 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 11:15:30 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_meta	*metadata;	//our global var
 // COMMENT if ac is not 1, error; void argv.
 // COMMENT readline will malloc the char *buf, but it does NOT free it at
 // COMMENT the end.
-/*
+
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
@@ -46,11 +46,11 @@ int	main(int ac, char **av)		//use char **environ instead
 	}
 	return (0);
 }
-*/
+
 
 void	print_tab_env(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	printf("\n");
@@ -79,7 +79,7 @@ void	init_meta(void)
 		metadata->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
-	//init_sign
+	init_signals(1);
 	fill_path_tab();
 }
 
@@ -225,7 +225,7 @@ int	main(void)
 // 		{
 // 			if (metadata->buf[0])
 // 				add_history(metadata->buf);
-			
+//
 // 			free(metadata->buf);
 // 			metadata->buf = readline("bash-Pew Pew> ");
 // 		}
@@ -238,51 +238,49 @@ int	main(void)
 
 
 
+// int	main(void)
+// {
+// 	bool	show_env = false;
+// 	bool	show_tokens = false;
+// 	bool	show_cmds = true;
+
+// 	int		i;
+
+// 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+// 	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+// 	//char	*line = "lol\"lol\"\'lol\'";
+// 	//char	*line = "$USER$USER";
+
+// 	printf("\n INPUT LINE : \"%s\"\n", line);
+
+// 	init_meta();
+
+// 	t_token	**token_block = parse_line(line);
+
+// 	load_cmd_block(token_block);
 
 
-int	main(void)
-{
-	bool	show_env = false;
-	bool	show_tokens = false;
-	bool	show_cmds = true;
+// 	if (show_env)
+// 	{
+// 		print_tab_env();
+// 	}
 
-	int		i;
+// 	if (show_tokens)
+// 	{
+// 		printf("\n");
+// 		i = -1;
+// 		while (token_block[++i])
+// 			print_token_list(token_block[i]);
+// 		printf("\n\n");
+// 	}
 
-	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
-	//char	*line = "lol\"lol\"\'lol\'";
-	//char	*line = "$USER$USER";
-
-	printf("\n INPUT LINE : \"%s\"\n", line);
-
-	init_meta();
-
-	t_token	**token_block = parse_line(line);
-
-	load_cmd_block(token_block);
-
-
-	if (show_env)
-	{
-		print_tab_env();
-	}
-
-	if (show_tokens)
-	{
-		printf("\n");
-		i = -1;
-		while (token_block[++i])
-			print_token_list(token_block[i]);
-		printf("\n\n");
-	}
-
-	if (show_cmds)
-	{
-		i = -1;
-		while(metadata->cmd_block[++i])
-			print_cmd(metadata->cmd_block[i]);
-	}
-}
+// 	if (show_cmds)
+// 	{
+// 		i = -1;
+// 		while(metadata->cmd_block[++i])
+// 			print_cmd(metadata->cmd_block[i]);
+// 	}
+// }
 
 /*
 int	main(void)

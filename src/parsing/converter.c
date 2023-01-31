@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 10:31:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 14:23:07 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@
 
 */
 
-t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
+// : set the "has_pipes"
+t_cmd	*tokens_to_cmd(t_token **head, int id, t_cmd *cmd)
 {
-	t_cmd	*cmd;
 	t_token	*node;
 	int		i;
+	//t_cmd	*cmd;
 
 	node = *head;
-	while (node->next)	//merge tokens (ex > type + string = string w/ type >)
+	while (node->next) //merge tokens (ex > type + string = string w/ type >)
 	{
 		if (node->next->type <= TTYPE_EXPAND && TTYPE_EXPAND < node->type)
 			node = merge_tokens(node, node->next);
@@ -48,7 +49,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
 			break;
 	}
 
-	cmd = ft_calloc(1, sizeof(t_cmd));
+	//cmd = ft_calloc(1, sizeof(t_cmd));
 	cmd->id = id;
 	cmd->fdin = 0;	//set default fd to use later
 	cmd->fdout = 1;	//set default fd to use later
@@ -124,7 +125,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
 	return (cmd);
 }
 
-void	load_cmd_block(t_token **head)
+void	load_cmd_block(t_token **head, t_cmd *cmd)
 {
 	int	i;
 
@@ -145,5 +146,5 @@ void	load_cmd_block(t_token **head)
 
 	i = -1;
 	while(head[++i])
-		metadata->cmd_block[i] = tokens_to_cmd(&head[i], i);
+		metadata->cmd_block[i] = tokens_to_cmd(&head[i], i, cmd);
 }

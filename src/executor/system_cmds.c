@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/24 11:04:37 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 14:36:38 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*find_cmd(t_cmd *cmd)
 		cmd_found = ft_strjoin(metadata->path[i], *cmd->cmd_args);
 		if (access(cmd_found, F_OK | X_OK) == 0)
 		{
-			printf("found");
+			printf("found\n"); // juste pour voir si ça fonctionne
 			return (cmd_found);
 		}
 		free(cmd_found);

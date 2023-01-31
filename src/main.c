@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 11:15:30 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 14:18:59 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)		//use char **environ instead
 	(void)av;
 	if (ac == 1)
 	{
-		// t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
+		t_cmd	*cmd = ft_calloc(1, sizeof(t_cmd));
 		// cmd->cmd_args = ft_calloc(sizeof(char *), 3);
 		// cmd->cmd_args[0] = "wc";
 		// cmd->cmd_args[1] = "pew";
@@ -36,7 +36,7 @@ int	main(int ac, char **av)		//use char **environ instead
 		{
 			if (metadata->buf[0])
 				add_history(metadata->buf);
-			//minishell();
+			minishell(cmd);
 			free(metadata->buf);
 			metadata->buf = readline("bash-Pew Pew> ");
 		}

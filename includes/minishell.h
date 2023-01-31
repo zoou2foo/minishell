@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 11:12:00 by vjean            ###   ########.fr       */
+/*   Updated: 2023/01/31 14:32:38 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ enum e_ttype
 	TTYPE_PIPE		= 9		// |	(pipe)
 };
 
+/*	ERROR MESSAGE	*/
+# define ERROR_PIPE "Error: invalid pipe fd\n"
+
 typedef struct s_token
 {
 	char			*string;
@@ -46,16 +49,13 @@ typedef struct s_token
 	struct s_token	*prev;
 	int				type;
 	bool			is_joined;	//whether it touches the previous token (no spaces)
-
 }					t_token;
 
 typedef struct s_cmd
 {
-
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
 	int		id;				//id of this cmd (in relation to others in this cycle)
-
 	char	*input;		//the last < redirection
 	int		fdin;			//the fd for the piping
 	char	*output;	//the last >/>> redirection
@@ -66,15 +66,14 @@ typedef struct s_cmd
 typedef struct s_meta
 {
 	char	**env;		//elle pourrait devenir notre globale
-	char	**path; 	//contient la ligne PATH pour être en mesure de trouver les system cmds
-
+	char	**path;    //contient la ligne PATH pour être en mesure de trouver les system cmds
+	char	*cmd_path; 	//le path de la commande
 	char	*buf;			//variable pour garder ce qui est mis dans readline
 	t_cmd	**cmd_block;	//all commands to be called this cycle
 	int		cmd_nb;			//nb of commands to be called this cycle
-
 	int		**pipes;	//all the pipes fd for the current command line
+	int		pid;
 //	int		*pipe_hd[2];		// JB dit mieux de les faire dans here_doc que dans struct.
-
 	int		exit_status;
 
 }	t_meta;
@@ -103,7 +102,7 @@ char	*expand_quote(char *str1);
 t_token	**parse_line(char *line);
 
 //from converter
-void	load_cmd_block(t_token **head);
+void	load_cmd_block(t_token **head, t_cmd *cmd);
 
 //from tokenizer
 bool	is_space(char c);	//à mettre dans libft
@@ -136,6 +135,9 @@ int		execute_hd(char *string);
 
 /*		SIGNALS			*/
 void	init_signals(int flag);
+
+/*		PRE_EXECUTION	*/
+void	minishell(t_cmd *cmd);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

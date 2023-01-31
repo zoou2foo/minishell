@@ -86,6 +86,7 @@ FILES	=	main \
 			parsing/converter \
 			executor/system_cmds \
 			executor/here_doc \
+			executor/pre_execution \
 			signals/signals
 
 LIBFT	=	./libft/libft.a

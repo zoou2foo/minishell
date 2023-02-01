@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 15:12:32 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/01 07:14:15 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	pipe_n_fork(void)
 
 void	child_process(t_cmd *cmd)
 {
-	metadata->cmd_path = find_cmd(cmd); //pas besoin de call tout de suite. Ça peut être plus tard
+	metadata->cmd_path = find_cmd(cmd); // peut-être prob ici, car dans la ft, je regarde cmd_args[0], je crois qu'il faut envoyer l'index de la boucle while de minishell pour savoir à quelle cmd on est rendu.
 	write(2, "ready for execution", 19);
 	//execute_child(); //--> now, real execution. Create a file for it.
 }

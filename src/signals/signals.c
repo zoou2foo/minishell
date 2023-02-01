@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 11:13:54 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/01 15:11:52 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	handler_sig(int sig)
 	}
 }
 
-void	init_signals(int flag)
+void	init_signals(int flag)		//call me in child too
 {
 	struct sigaction	sa;
 	sa.sa_mask = SIGINFO; //pour savoir quel signal tu as reçu
@@ -66,9 +66,11 @@ void	init_signals(int flag)
 	if (flag == 1)
 		sa.sa_handler = &handler_sig;
 	else if (flag == 2)
-		sa.sa_handler = &handler_parent_sig;
+		sa.sa_handler = &handler_parent_sig; //superflu
 	else if (flag == 3)
 		sa.sa_handler = &handler_child_sig;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }
+
+// ctrl_d segfault

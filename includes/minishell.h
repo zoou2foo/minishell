@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/01 11:33:15 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/01 15:08:29 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_cmd
 	char	*output;	//the last >/>> redirection
 	int		fdout;			//the fd for the piping
 	bool	append_output;	//if the output needs extend the file or overwrite it
+	bool	is_built_in;	//whether the command is a built in
 }			t_cmd;
 
 typedef struct s_meta
@@ -75,6 +76,7 @@ typedef struct s_meta
 	int		pid;
 //	int		*pipe_hd[2];		// JB dit mieux de les faire dans here_doc que dans struct.
 	int		exit_status;
+	bool	run;		//whether to continue on next cycle or close minishell								//superfluous ????????
 
 }	t_meta;
 
@@ -102,7 +104,7 @@ char	*expand_quote(char *str1);
 t_token	**parse_line(char *line);
 
 //from converter
-void	load_cmd_block(t_token **head, t_cmd *cmd);
+void	load_cmd_block(t_token **head);
 
 //from tokenizer
 bool	is_space(char c);	//à mettre dans libft
@@ -137,7 +139,7 @@ int		execute_hd(char *string);
 void	init_signals(int flag);
 
 /*		PRE_EXECUTION	*/
-void	minishell(t_cmd *cmd);
+void	execute_cmd_block(void);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

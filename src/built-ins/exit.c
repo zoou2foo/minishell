@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/27 15:39:14 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/01 15:00:04 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	do_exit(t_cmd *cmd)
 			exit (255);
 	}
 	arg = ft_atol(cmd->cmd_args[1]);
+	
+	metadata->run = false;				//superfluous????
+
 	exit (arg);
 }
 

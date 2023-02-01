@@ -6,23 +6,14 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/01 11:42:19 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/01 15:04:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe_n_fork(int	index)
+void	cmd_fork(void)
 {
-	metadata->pipes[index] = ft_calloc(index, sizeof(int));
-	printf("madafakas\n");
-	if (pipe(metadata->pipes == -1)) //TOFIX segfault here
-	{
-		write(2, ERROR_PIPE, ft_strlen(ERROR_PIPE));
-		ft_free_null(metadata);
-		exit (1);
-	}
-	write(2, "bob\n", 4);
 	metadata->pid = fork();
 	if (metadata->pid == -1)
 	{
@@ -34,43 +25,55 @@ void	pipe_n_fork(int	index)
 
 void	child_process(t_cmd *cmd)
 {
-	metadata->cmd_path = find_cmd(cmd); // peut-être prob ici, car dans la ft, je regarde cmd_args[0], je crois qu'il faut envoyer l'index de la boucle while de minishell pour savoir à quelle cmd on est rendu.
-	write(2, "ready for execution", 19);
-	//execute_child(); //--> now, real execution. Create a file for it.
+	metadata->cmd_path = find_cmd(cmd);
+	//prêt à execve ici ou non??
+	
 }
 
-void	minishell(t_cmd *cmd)
+void	execute_cmd_block(void)
 {
-	t_token	**head;
-	int		index;
-	int		flag;
+	int		i;
+	t_cmd	*cmd;
 
-	head = parse_line(metadata->buf);
-	load_cmd_block(head, cmd);
-	fill_path_tab();
-	index = 0;
-	//flag = check_cmd_or_builtins(cmd); //to be called again in child process to kill it after if builtins
-	metadata->pipes = ft_calloc(metadata->cmd_nb, sizeof(int));
-	while (index < metadata->cmd_nb) //ajouter moins 1 ou non...
+	i = 0;
+
+	while (i < metadata->cmd_nb) //ajouter moins 1 ou non...
 	{
-		printf("pew pew\n");
-		pipe_n_fork(index);
-		if (metadata->pid > 0)
+		cmd = metadata->cmd_block[i];
+	
+		if (cmd->is_built_in)	//always falst for now : CHECK FOR BUILT IN IN LOAD_CMD_BLOCK
 		{
-			dup2(*metadata->pipes[cmd->id - 1], STDIN_FILENO); //dup2(pipes[id - 1][1], STDIN)
-			printf("prêt pour parent_process");
-			// close(fdout[0]);
-			// close(fdout[1]);
+			dup2(cmd->fdin, STDIN_FILENO);
+			dup2(cmd->fdout, STDOUT_FILENO);
+	
+			//execute the built in
+
+			if (cmd->fdin != 0)
+				close(cmd->fdin);
+			if (cmd->fdout != 1)
+				close(cmd->fdout);
 		}
-		else if (metadata->pid == 0)
-			write(2, "child\n", 6);
-			child_process(cmd);
-		index++;
+		else
+		{	
+			cmd_fork();
+		
+			if (metadata->pid == 0)			//if child
+			{
+				dup2(cmd->fdin, STDIN_FILENO);
+				dup2(cmd->fdout, STDOUT_FILENO);
+				child_process(cmd);
+			}
+			else if (metadata->pid > 0)		//if parent		(close pipes in all cases)
+			{
+				if (cmd->fdin != 0)
+					close(cmd->fdin);
+				if (cmd->fdout != 1)
+					close(cmd->fdout);
+			}
+			waitpid(metadata->pid, NULL, 0);
+		}
+		metadata->pid = 0;
+		i++;
 	}
-	waitpid(metadata->pid, NULL, 0);
+	//close all pipes ? si on a des leaks, soit placer dans le parent ou non
 }
-
-
-
-
-

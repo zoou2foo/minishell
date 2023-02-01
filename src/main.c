@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 14:18:59 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/01 15:25:24 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,39 @@ t_meta	*metadata;	//our global var
 // COMMENT readline will malloc the char *buf, but it does NOT free it at
 // COMMENT the end.
 
+void	minishell(void)
+{
+	init_meta();
+	init_signals(1);
+	while (metadata->run)		//always true?
+	{
+		metadata->buf = readline("bash-Pew Pew> "); 
+
+		if (metadata->buf[0])
+		{
+			add_history(metadata->buf);
+
+			load_cmd_block(parse_line(metadata->buf));
+		
+			execute_cmd_block();
+		}
+
+		ft_free_null(metadata->buf);
+	}
+	clear_history();
+	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
+}
+
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
 	(void)av;
 	if (ac == 1)
 	{
-		t_cmd	*cmd = ft_calloc(1, sizeof(t_cmd));
-		// cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		// cmd->cmd_args[0] = "wc";
-		// cmd->cmd_args[1] = "pew";
-		//cmd->cmd_args[2] = "LANG=";
-
-		init_meta();
-		metadata->buf = readline("bash-Pew Pew> ");
-		while (metadata->buf)
-		{
-			if (metadata->buf[0])
-				add_history(metadata->buf);
-			minishell(cmd);
-			free(metadata->buf);
-			metadata->buf = readline("bash-Pew Pew> ");
-		}
-		clear_history();
-		ft_free_null(metadata->buf);
-		free(metadata);
+		minishell();
 	}
 	return (0);
 }
-
 
 void	print_tab_env(void)
 {
@@ -69,6 +73,8 @@ void	init_meta(void)
 
 	metadata = ft_calloc(sizeof(t_meta), 1);
 
+	metadata->run = true;
+
 	i = 0;
 	while (environ[i])
 		i++;
@@ -79,7 +85,6 @@ void	init_meta(void)
 		metadata->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
-	init_signals(1);
 	fill_path_tab();
 }
 

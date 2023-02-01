@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/01 07:14:15 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/02/01 11:42:19 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe_n_fork(void)
+void	pipe_n_fork(int	index)
 {
-	if (pipe(*metadata->pipes) == -1)
+	metadata->pipes[index] = ft_calloc(index, sizeof(int));
+	printf("madafakas\n");
+	if (pipe(metadata->pipes == -1)) //TOFIX segfault here
 	{
 		write(2, ERROR_PIPE, ft_strlen(ERROR_PIPE));
 		ft_free_null(metadata);
 		exit (1);
 	}
+	write(2, "bob\n", 4);
 	metadata->pid = fork();
 	if (metadata->pid == -1)
 	{
@@ -40,14 +43,18 @@ void	minishell(t_cmd *cmd)
 {
 	t_token	**head;
 	int		index;
+	int		flag;
 
 	head = parse_line(metadata->buf);
 	load_cmd_block(head, cmd);
 	fill_path_tab();
 	index = 0;
+	//flag = check_cmd_or_builtins(cmd); //to be called again in child process to kill it after if builtins
+	metadata->pipes = ft_calloc(metadata->cmd_nb, sizeof(int));
 	while (index < metadata->cmd_nb) //ajouter moins 1 ou non...
 	{
-		pipe_n_fork();
+		printf("pew pew\n");
+		pipe_n_fork(index);
 		if (metadata->pid > 0)
 		{
 			dup2(*metadata->pipes[cmd->id - 1], STDIN_FILENO); //dup2(pipes[id - 1][1], STDIN)
@@ -56,7 +63,7 @@ void	minishell(t_cmd *cmd)
 			// close(fdout[1]);
 		}
 		else if (metadata->pid == 0)
-			printf("prêt pour child_process\n");
+			write(2, "child\n", 6);
 			child_process(cmd);
 		index++;
 	}

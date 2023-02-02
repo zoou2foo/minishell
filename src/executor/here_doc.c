@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/31 10:38:29 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 10:58:02 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	execute_hd(char *string)
 		ft_free_null(string);
 		exit (1);
 	}
-	printf("pew pew madafakas!\n");
 	while (1)
 	{
 		gnl_return = gnl_minihell();

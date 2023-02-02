@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/02 09:14:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 14:43:56 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_meta
 {
 	char	**env;		//elle pourrait devenir notre globale
 	char	**path;    //contient la ligne PATH pour être en mesure de trouver les system cmds
-	char	*cmd_path; 	//le path de la commande
 	char	*buf;			//variable pour garder ce qui est mis dans readline
 	t_cmd	**cmd_block;	//all commands to be called this cycle
 	int		cmd_nb;			//nb of commands to be called this cycle
@@ -130,7 +129,7 @@ void	destroy_token(t_token *node);
 /*		SYSTEM_CMDS		*/
 void	fill_path_tab(void);
 void	error_fill_path(void);
-char	*find_cmd(t_cmd *cmd);
+void	exec_with_paths(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/
 int		execute_hd(char *string);

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/25 11:53:15 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 14:19:19 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	do_echo(t_cmd *cmd)
 {
 	printf("%s\n", cmd->cmd_args[1]);
-
 }
 
 // COMMENT si arg type-> normal: printf arg.

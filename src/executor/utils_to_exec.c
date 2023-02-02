@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/02 09:15:08 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 15:04:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute_builtins(t_cmd *cmd)
 	else if (ft_strncmp(cmd->cmd_args[0], "env", 3) == 0)
 		get_env();
 	else if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)
-		do_exit(cmd);
+		write(STDERR_FILENO, "Builtin Error : How did exit() get here???\n", 43);
 	else if (ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
 		do_export(cmd);
 	else if (ft_strncmp(cmd->cmd_args[0], "pwd", 3) == 0)

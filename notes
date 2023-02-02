@@ -1,39 +1,31 @@
 /*
-
-
-0========(  VALERIE  )========0
-
-FRIDAY, JAN 20th: look in my notebook for the plan. Start working on this.
+0========(   VALERIE   )========0
 
 
 
-work on built-ins:
-1. echo
 
-DONE: env
-DONE: exit *ALL GOOD. For any arguments.
-DONE: pwd **just need to double check for the error message. Might not need
-DONE: unset
-DONE export
-DONE: cd. All good.
+0====( DEBUG TO DO )====0
 
-SIGNALS:
-signals.h --> to add in library
-SIGINT --> ctrl-c
-SIGQUIT --> ctrl-d
-SIGQUIT --> ctrl-\ 
+exit + argument.  char ... voir exit.c (segfault même quand il y a juste un chiffre)
+unset: segfault
+checker built-ins: aouter exit_success; pas ajouter au builtin exit
+
+
+0====( TEST CASES )====0
 
 
 
-0========(  LOYC  )========0
 
 
 
-token*	head (list des tokens sans les redirs)
+
+0========(   LOYC   )========0
 
 
-t_cmd :
-	char**	cmd_args
+
+0====( DEBUG TO DO )====0
+
+expander : make "$", "$garbage" & "&?" work properly
 
 0====( TEST CASES )====0
 

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 15:49:09 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 14:41:56 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ char	*expand(char *str1)
 
 	i = -1;
 	str2 = NULL;
+	/*
+	if (str1[0] == '?' && str1[1] == '\0')		//doesn't work
+	{
+		ft_free_null(str1);
+		printf("lol\n");
+		return (ft_itoa(metadata->exit_status));
+	}
+	*/
 	while (environ[++i])
 	{
 		j = 0;
@@ -41,8 +49,11 @@ char	*expand(char *str1)
 			break ;
 		}
 	}
-	//we need to free the old string from node
-	ft_free_null(str1);										//frees old string
+	/*
+	if (!str2)				//must stop process somehow?
+		return (str1);
+	*/
+	ft_free_null(str1);
 	return (str2);
 }
 

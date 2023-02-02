@@ -6,10 +6,7 @@
 
 0====( DEBUG TO DO )====0
 
-exit + argument.  char ... voir exit.c (segfault même quand il y a juste un chiffre)
-unset: segfault
-checker built-ins: aouter exit_success; pas ajouter au builtin exit
-
+faire la documentation: écrire input, fonction et output pour chaque fonction. (reçoit, qu'est-ce que ça fait et qu'est-ce que ça renvoie)
 
 0====( TEST CASES )====0
 
@@ -26,6 +23,7 @@ checker built-ins: aouter exit_success; pas ajouter au builtin exit
 0====( DEBUG TO DO )====0
 
 expander : make "$", "$garbage" & "&?" work properly
+pipe : "ls | wc" doesn't work
 
 0====( TEST CASES )====0
 

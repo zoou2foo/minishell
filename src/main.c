@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/01 15:25:24 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 10:41:18 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,14 @@ void	minishell(void)
 	while (metadata->run)		//always true?
 	{
 		metadata->buf = readline("bash-Pew Pew> "); 
-
-		if (metadata->buf[0])
+		if (metadata->buf == NULL)
+			exit (0);
+		else
 		{
 			add_history(metadata->buf);
-
 			load_cmd_block(parse_line(metadata->buf));
-		
 			execute_cmd_block();
 		}
-
 		ft_free_null(metadata->buf);
 	}
 	clear_history();

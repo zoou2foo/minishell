@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/01 15:04:23 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 09:20:51 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	execute_cmd_block(void)
 	{
 		cmd = metadata->cmd_block[i];
 	
-		if (cmd->is_built_in)	//always falst for now : CHECK FOR BUILT IN IN LOAD_CMD_BLOCK
+		if (cmd->is_built_in == false)
 		{
 			dup2(cmd->fdin, STDIN_FILENO);
 			dup2(cmd->fdout, STDOUT_FILENO);
 	
-			//execute the built in
+			execute_builtins(cmd);
 
 			if (cmd->fdin != 0)
 				close(cmd->fdin);
@@ -54,7 +54,7 @@ void	execute_cmd_block(void)
 				close(cmd->fdout);
 		}
 		else
-		{	
+		{
 			cmd_fork();
 		
 			if (metadata->pid == 0)			//if child

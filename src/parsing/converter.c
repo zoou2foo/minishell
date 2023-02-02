@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/01 15:10:20 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/02 09:21:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,10 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 		node = node->next;
 	}
 
-	//if (is_built_in(cmd->cmd_args[0]))								//IMPLEMENT ME
-		//cmd->is_built_in = true;
+	if (is_built_in(cmd->cmd_args[0]) == 1)
+		cmd->is_built_in = true;
+	else
+		cmd->is_built_in = false;
 
 	return (cmd);
 }
@@ -134,20 +136,20 @@ void	load_cmd_block(t_token **head)
 
 
 	i = 0;
-	while(head[i])
+	while (head[i])
 		i++;
 	metadata->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));	//MUST FREE CMD_BLOCK BEFOREHAND
 	metadata->pipes = ft_calloc(i, sizeof(int *));
 	metadata->cmd_nb = i;
 
 	i = -1;
-	while(++i < metadata->cmd_nb - 1)
+	while (++i < metadata->cmd_nb - 1)
 	{
 		metadata->pipes[i] = ft_calloc(2, sizeof(int));
 		pipe(metadata->pipes[i]);								//FREE ME AT END OF CYCLE
 	}
 
 	i = -1;
-	while(head[++i])
+	while (head[++i])
 		metadata->cmd_block[i] = tokens_to_cmd(&head[i], i);
 }

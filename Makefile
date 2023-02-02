@@ -79,6 +79,7 @@ FILES	=	main \
 			built-ins/export \
 			built-ins/pwd \
 			built-ins/unset \
+			built-ins/echo \
 			parsing/tokenizer \
 			parsing/token_handler \
 			parsing/expander \
@@ -87,6 +88,7 @@ FILES	=	main \
 			executor/system_cmds \
 			executor/here_doc \
 			executor/pre_execution \
+			executor/utils_to_exec \
 			signals/signals
 
 LIBFT	=	./libft/libft.a

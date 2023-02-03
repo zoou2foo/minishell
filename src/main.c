@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/02 10:48:32 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 09:40:15 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 t_meta	*metadata;	//our global var
 
-// COMMENT if ac is not 1, error; void argv.
-// COMMENT readline will malloc the char *buf, but it does NOT free it at
-// COMMENT the end.
-
+// Receive nothing. Return nothing. Main purpose: init struct and signals.
+// Start readline and call functions to parse the command line
+// Call functions to execut.
 void	minishell(void)
 {
 	init_meta();
@@ -64,7 +63,7 @@ void	print_tab_env(void)
 	printf("\n");
 }
 
-//allocates memory for and fills the global metadata var with default values
+//allocates memory for and fills the global metadata var with default values (for env and path)
 void	init_meta(void)
 {
 	int	i;
@@ -86,6 +85,7 @@ void	init_meta(void)
 	fill_path_tab();
 }
 
+//function to test tokenization (and see our tokens). PURPOSE: debug/testing
 void	print_token_list(t_token *head)
 {
 	bool	show_joined = true;
@@ -147,6 +147,7 @@ void	print_token_list(t_token *head)
 	printf("\n");
 }
 
+// function to test cmd fds and input/output. PURPOSE: debug/testing
 void	print_cmd(t_cmd *cmd)
 {
 	int	i;
@@ -216,31 +217,6 @@ int	main(void)
 
 //VAL's main (DEBUG)
 
-// int	main(int ac, char **av)		//use char **environ instead
-// {
-// 	//extern	char	**environ; //pas de variable globale
-// 	(void)av;
-// 	if (ac == 1)
-// 	{
-// 		init_meta();
-// 		metadata->buf = readline("bash-Pew Pew> ");
-// 		while (metadata->buf)
-// 		{
-// 			if (metadata->buf[0])
-// 				add_history(metadata->buf);
-//
-// 			free(metadata->buf);
-// 			metadata->buf = readline("bash-Pew Pew> ");
-// 		}
-// 		clear_history();
-// 		ft_free_null(metadata->buf);
-// 		free(metadata);
-// 	}
-// 	return (0);
-// }
-
-
-
 // int	main(void)
 // {
 // 	bool	show_env = false;
@@ -286,13 +262,6 @@ int	main(void)
 // }
 
 /*
-int	main(void)
-{
-	init_meta();
-	fill_path_tab();
-
-}
-
 int	main(void)
 {
 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";

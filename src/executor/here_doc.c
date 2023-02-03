@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/02 10:58:02 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 11:19:46 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 1. Checker dans l'ensemble de la ligne de commande reçu si on a un
 here_doc. Même si plus loin, il faut qu'il soit exécuté en premier.
 2. Checker si on a bien un délimiteur; car besoin d'y faire référence durant gnl
-3.
+3. 
 
 */
 
+// Return the line read. Main purpose: READ
 char	*gnl_minihell(void)
 {
 	char	buffer[10000];
@@ -30,6 +31,9 @@ char	*gnl_minihell(void)
 	return (ft_strdup(buffer));
 }
 
+// Return int of the fd[0] (to read); pipe first. Then, infinite loop to start
+// reading what's in char *string (received) from the readline(prompt).
+// then it has to be written in the pipe. And we return fd[0] so it can be read
 int	execute_hd(char *string)
 {
 	int		pipe_hd[2];

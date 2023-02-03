@@ -6,7 +6,25 @@
 
 0====( DEBUG TO DO )====0
 
-faire la documentation: écrire input, fonction et output pour chaque fonction. (reçoit, qu'est-ce que ça fait et qu'est-ce que ça renvoie)
+
+unset: doesn't work. No segfault. But doesn't unset the arg. Prob: il est dans le child.
+Check exit_failure/exit_success dans les built-in. Look in execution of them
+
+bash-Pew Pew> echo $bob
+==4141== Invalid read of size 1
+==4141==    at 0x100002C47: ft_strlen (ft_strlen.c:20)
+==4141==    by 0x10000540C: expand (expander.c:35)
+==4141==    by 0x100004C88: expand_token_list (tokenizer.c:143)
+==4141==    by 0x100005701: parse_line (parser.c:25)
+==4141==    by 0x1000037DB: minishell (main.c:33)
+==4141==    by 0x100003924: main (main.c:48)
+==4141==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+soit que je calloc pas assez; ou free quelque chose qu'on continue d'utiliser.
+
+
+valgrind cmd: 
+valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppressions=supp.txt ./minishell
+
 
 0====( TEST CASES )====0
 

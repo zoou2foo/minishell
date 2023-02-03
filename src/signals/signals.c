@@ -6,28 +6,28 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/01 15:11:52 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 11:48:58 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handler_parent_sig(int sig)
-{
-	if (sig == SIGINT)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		printf("\n");
-		rl_redisplay();
-	}
-	if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-		sigignore(SIGQUIT);
-	}
-}
+// void	handler_parent_sig(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		printf("\n");
+// 		rl_redisplay();
+// 	}
+// 	if (sig == SIGQUIT)
+// 	{
+// 		rl_on_new_line();
+// 		rl_redisplay();
+// 		sigignore(SIGQUIT);
+// 	}
+// }
 
 void	handler_child_sig(int sig)
 {
@@ -58,6 +58,10 @@ void	handler_sig(int sig)
 	}
 }
 
+//Initialize the signals for the minishell.
+// Received an int as a flag to know where it is in the process; parent or child
+// Define the signals struct to know which signal was received.
+// Depending on the flag, each process has it's handler for signals.
 void	init_signals(int flag)		//call me in child too
 {
 	struct sigaction	sa;
@@ -65,12 +69,10 @@ void	init_signals(int flag)		//call me in child too
 	sa.sa_flags = SA_RESTART; //question pour chatGPT
 	if (flag == 1)
 		sa.sa_handler = &handler_sig;
-	else if (flag == 2)
-		sa.sa_handler = &handler_parent_sig; //superflu
+	// else if (flag == 2)
+	// 	sa.sa_handler = &handler_parent_sig; //superflu
 	else if (flag == 3)
 		sa.sa_handler = &handler_child_sig;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }
-
-// ctrl_d segfault

@@ -6,12 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/17 08:18:22 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 09:44:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Take nothing. Return nothing. Use the global var to print ENV
 void	get_env(void)
 {
 	int	i;
@@ -23,10 +24,3 @@ void	get_env(void)
 		i++;
 	}
 }
-
-// COMMENT It works! TESTED.
-
-/* What I used to test it in the main:
-if (ft_strncmp(metadata->buf, "env", 3) == 0)
-				get_env();
-*/

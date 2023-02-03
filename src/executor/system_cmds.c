@@ -6,12 +6,15 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/02 14:43:46 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 11:41:14 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Use global var. Void.
+// Look for "path" in env. Split at ":". Then, join "/" aftet each section
+// added metadata->path. Call a function at the end to deal with errors.
 void	fill_path_tab(void)
 {
 	int		i;
@@ -38,12 +41,17 @@ void	fill_path_tab(void)
 	error_fill_path();
 }
 
+//in case that previous function doesn't find the variable. No need to receive
+// or return anything
 void	error_fill_path(void)
 {
 	write(2, "Environment variables not found\n", 32);
 	free(metadata); // should add exit status 127
 }
 
+// Return nothing. Receive t_cmd to check if the cmd exists and the executable
+// exists.
+// Then, execute through execve.
 void	exec_with_paths(t_cmd *cmd)
 {
 	char	*cmd_path;

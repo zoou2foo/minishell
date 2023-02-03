@@ -6,12 +6,14 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/02 15:04:23 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 11:43:44 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Take the arg (char *) to look if it is a built-in or not. Return an int as
+// a flag
 int	is_built_in(char *cmd_arg)
 {
 	if ((ft_strncmp(cmd_arg, "echo", 4) == 0)
@@ -21,11 +23,13 @@ int	is_built_in(char *cmd_arg)
 		|| (ft_strncmp(cmd_arg, "export", 6) == 0)
 		|| (ft_strncmp(cmd_arg, "pwd", 3) == 0)
 		|| (ft_strncmp(cmd_arg, "unset", 5) == 0))
-		return (0);
+		return (0); //need to double check as in pre_exec is set to false and true
 	else
 		return (1);
 }
 
+// Return nothing. Execute the correct built-in called. Take t_cmd to check
+// the built-in received.
 void	execute_builtins(t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->cmd_args[0], "echo", 4) == 0)

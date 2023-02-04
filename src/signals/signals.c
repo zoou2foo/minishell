@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 11:48:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/04 10:20:14 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	init_signals(int flag)		//call me in child too
 {
 	struct sigaction	sa;
 	sa.sa_mask = SIGINFO; //pour savoir quel signal tu as reçu
-	sa.sa_flags = SA_RESTART; //question pour chatGPT
+	sa.sa_flags = SA_RESTART; //flag pour etre sur qu'il ne soit pas undefine state when interrupted
 	if (flag == 1)
 		sa.sa_handler = &handler_sig;
 	// else if (flag == 2)

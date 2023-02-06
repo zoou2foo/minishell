@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 09:40:15 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 08:29:07 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	minishell(void)
 	init_signals(1);
 	while (metadata->run)		//always true?
 	{
-		metadata->buf = readline("bash-Pew Pew> "); 
+		metadata->buf = readline("bash-Pew Pew> ");
 		if (metadata->buf == NULL)
 			exit (0);
 		else

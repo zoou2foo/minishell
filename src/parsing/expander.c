@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/20 15:49:09 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:19:07 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*expand(char *str1)
 	int		j;
 	int		k;
 
+	if (!str1 || !str1[0])		//superfluous?
+		return (str1);
 	i = -1;
 	str2 = NULL;
 	while (environ[++i])

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 15:31:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:15:08 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,8 @@ int	main(void)
 
 	int		i;
 
-	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+	//char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+	char	*line = "echo \"pew\" pew \"\"";
 	//char	*line = "lol\"lol\"\'lol\'";
 	//char	*line = "$USER$USER";
 

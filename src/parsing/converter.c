@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 15:35:29 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:14:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	*head = find_head(node);	//update head if cut destroys it
 
 	//open input and output file if they exist			(PROTECT ME)
-	if (cmd->input)
+	if (cmd->input)		//close previous fd before opening new one !!!
 		cmd->fdin = open(cmd->input, O_RDONLY);
 	else if (!cmd->fdin && 0 < id)
 		cmd->fdin = metadata->pipes[id - 1][1];
 
-	if (cmd->output)
+	if (cmd->output)	//close previous fd before opening new one !!!
 	{
 		if (cmd->append_output)
 			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0666);
@@ -127,7 +127,6 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 void	load_cmd_block(t_token **head)
 {
 	int	i;
-
 
 	i = 0;
 	while(head[i])

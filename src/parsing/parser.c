@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/30 15:22:11 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:21:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_token	**parse_line(char *line)				//check validity of token list beforehand
 	t_token	*head;
 	t_token	*node;
 	int		i;
+
 
 	head = create_token_list(line);
 	print_token_list(head);				//DEBUG

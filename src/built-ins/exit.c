@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 09:46:42 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:17:56 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,5 @@ void	do_exit(t_cmd *cmd)
 	}
 	else
 		arg = 0;
-
-	metadata->run = false;				//superfluous????
-
 	exit (arg);
 }

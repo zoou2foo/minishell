@@ -6,11 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 14:05:20 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:33:40 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_meta	*metadata;	//our global var
 
 void	print_tab_env(void)
 {
@@ -31,8 +33,6 @@ void	init_meta(void)
 	int	i;
 
 	metadata = ft_calloc(sizeof(t_meta), 1);
-
-	metadata->run = true;
 
 	i = 0;
 	while (environ[i])
@@ -147,14 +147,16 @@ void	minishell(void)
 {
 	init_meta();
 	init_signals(1);
-	while (metadata->run)		//always true? obsolete??
+	while (metadata->state >= 0)
 	{
+		metadata->state = MSTATE_NORMAL;
 		metadata->buf = readline("bash-Pew Pew> ");
 		if (!is_line_empty(metadata->buf))
 		{
 			add_history(metadata->buf);
 			load_cmd_block(parse_line(metadata->buf));
-			execute_cmd_block();
+			if (metadata->state == MSTATE_NORMAL)
+				execute_cmd_block();
 		}
 		ft_free_null(metadata->buf);
 	}

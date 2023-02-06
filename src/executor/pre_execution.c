@@ -6,11 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 14:05:28 by llord            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/*   Updated: 2023/02/02 15:02:27 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:30:12 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +52,7 @@ void	child_process(t_cmd *cmd)
 	{
 		exec_with_paths(cmd);
 		//TODO : handle error
-		write(STDERR_FILENO, "Command Error : Invalid command\n", 33); //need to be moved.
+		write(2, ERROR_CMD, ft_strlen(ERROR_CMD));
 	}
 	close_fds(cmd);
 	exit(EXIT_FAILURE);

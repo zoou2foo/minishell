@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:51:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:32:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,17 @@ enum e_ttype
 	TTYPE_PIPE		= 9		// |	(pipe)
 };
 
+enum e_mstate
+{
+	MSTATE_ERROR	= -1,
+	MSTATE_NORMAL	= 0,
+	MSTATE_CLOSING	= 1,
+	MSTATE_O_BRACK	= 2
+};
+
 /*	ERROR MESSAGE	*/
-# define ERROR_PIPE "Error: invalid pipe fd\n"
+# define ERROR_PIPE	"Pipe Error: Invalid file descriptor\n"
+# define ERROR_CMD	"Command Error : Invalid command call\n"
 
 typedef struct s_token
 {
@@ -73,9 +82,8 @@ typedef struct s_meta
 	int		cmd_nb;			//nb of commands to be called this cycle
 	int		**pipes;	//all the pipes fd for the current command line
 	int		pid;
-//	int		*pipe_hd[2];		// JB dit mieux de les faire dans here_doc que dans struct.
 	int		exit_status;
-	bool	run;		//whether to continue on next cycle or close minishell								//superfluous ????????
+	int		state;			//what to do on next cmd and/or cycle
 
 }	t_meta;
 

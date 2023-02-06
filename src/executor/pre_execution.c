@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:55:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 10:01:26 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	child_process(t_cmd *cmd)
 {
 	metadata->exit_status = 0;	//doesn't change the right exit status (duplicate metadata?) ????
 								//should add exit 127 if cmd not found
-	if (cmd->is_built_in == false)
+	if (cmd->is_built_in == true)
 	{
 		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		//TODO : handle error
@@ -74,32 +74,32 @@ void	execute_cmd_block(void)
 	while (i < metadata->cmd_nb) //ajouter moins 1 ou non...
 	{
 		cmd = metadata->cmd_block[i];
-		if (built_ins_childable(cmd) == 0)	//**handling exit() on its own to avoid childing Fonction pour check if childable
+		if (!built_ins_childable(cmd))	//**handling exit() on its own to avoid childing Fonction pour check if childable
 		{
 			close_fds(cmd);
 			execute_builtins(cmd);
-			i++;
-			continue;
 		}
-
-		cmd_fork();
-		if (metadata->pid < 0)
+		else
 		{
-			write(STDERR_FILENO, "PID Error : Couldn't fork properly\n", 36);
-			//TODO : handle error
+			cmd_fork();
+			if (metadata->pid < 0)
+			{
+				write(STDERR_FILENO, "PID Error : Couldn't fork properly\n", 36);
+				//TODO : handle error
+			}
+			if (metadata->pid == 0)			//if child
+			{
+				dup2(cmd->fdin, STDIN_FILENO);
+				dup2(cmd->fdout, STDOUT_FILENO);
+				child_process(cmd);
+			}
+			else if (metadata->pid > 0)		//if parent		(close pipes in all cases)
+			{
+				close_fds(cmd);
+			}
+			waitpid(metadata->pid, NULL, 0);
+			metadata->pid = 0;
 		}
-		if (metadata->pid == 0)			//if child
-		{
-			dup2(cmd->fdin, STDIN_FILENO);
-			dup2(cmd->fdout, STDOUT_FILENO);
-			child_process(cmd);
-		}
-		else if (metadata->pid > 0)		//if parent		(close pipes in all cases)
-		{
-			close_fds(cmd);
-		}
-		waitpid(metadata->pid, NULL, 0);
-		metadata->pid = 0;
 		i++;
 	}
 	//close all pipes ? si on a des leaks, soit placer dans le parent ou non

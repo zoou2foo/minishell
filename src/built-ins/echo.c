@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 11:11:05 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 10:05:14 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,17 @@
 // Return NOTHING. Take t_cmd; the argument following "echo" to be printed.
 void	do_echo(t_cmd *cmd)
 {
-	printf("%s\n", cmd->cmd_args[1]);
+	int	i;
+
+	i = 1;
+	while (cmd->cmd_args[i])
+	{
+		if (1 < i)
+			printf(" ");
+		printf("%s", cmd->cmd_args[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 

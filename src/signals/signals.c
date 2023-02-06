@@ -3,31 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/04 10:20:14 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/02/06 13:53:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	handler_parent_sig(int sig)
-// {
-// 	if (sig == SIGINT)
-// 	{
-// 		rl_on_new_line();
-// 		rl_replace_line("", 0);
-// 		printf("\n");
-// 		rl_redisplay();
-// 	}
-// 	if (sig == SIGQUIT)
-// 	{
-// 		rl_on_new_line();
-// 		rl_redisplay();
-// 		sigignore(SIGQUIT);
-// 	}
-// }
+void	handler_parent_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+	}
+	if (sig == SIGQUIT)
+	{
+		printf("Quit: 3");
+	}
+}
 
 void	handler_child_sig(int sig)
 {
@@ -69,8 +64,8 @@ void	init_signals(int flag)		//call me in child too
 	sa.sa_flags = SA_RESTART; //flag pour etre sur qu'il ne soit pas undefine state when interrupted
 	if (flag == 1)
 		sa.sa_handler = &handler_sig;
-	// else if (flag == 2)
-	// 	sa.sa_handler = &handler_parent_sig; //superflu
+	else if (flag == 2)
+		sa.sa_handler = &handler_parent_sig; //superflu
 	else if (flag == 3)
 		sa.sa_handler = &handler_child_sig;
 	sigaction(SIGINT, &sa, NULL);

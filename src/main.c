@@ -6,18 +6,15 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 13:51:43 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:05:20 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_meta	*metadata;	//our global var
-
 void	print_tab_env(void)
 {
 	int	i;
-
 	i = 0;
 	printf("\n");
 	while (metadata->env[i])

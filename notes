@@ -29,7 +29,15 @@ valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppress
 
 
 
-
+0====( PROBS TO SOLVE )====0
+1. /bin/ls : ne fonctionne pas
+2. enter ou space -->segfault
+3. cat -e outfile2 ->fonctionne, mais imprime "cat: : No such file or directory"
+4. echo -n besoin de le gérer
+5. unset PATH --> juste après, si on fait ls, il trouve et exécute la cmd
+6. pwd segfault quand répété plusieurs fois
+7. here_doc: si pas de commande, il dit qu'il y a une erreur après avoir fait le <<
+8. echo $? après avoir fait une cmd
 
 
 

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 14:32:17 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:03:39 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ enum e_mstate
 {
 	MSTATE_ERROR	= -1,
 	MSTATE_NORMAL	= 0,
-	MSTATE_CLOSING	= 1,
-	MSTATE_O_BRACK	= 2
+	MSTATE_O_BRACK	= 1,
+	MSTATE_CLOSING	= 2
 };
 
 /*	ERROR MESSAGE	*/
-# define ERROR_PIPE	"Pipe Error: Invalid file descriptor\n"
-# define ERROR_CMD	"Command Error : Invalid command call\n"
+# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
+# define ERR_PIPE	"Pipe Error: Invalid file descriptor\n"
+# define ERR_CMD	"Command Error : Invalid command call\n"
+# define ERR_PID	"Process Error : Couldn't fork properly\n"
 
 typedef struct s_token
 {
@@ -71,6 +73,7 @@ typedef struct s_cmd
 	int		fdout;			//the fd for the piping
 	bool	append_output;	//if the output needs extend the file or overwrite it
 	bool	is_built_in;	//whether the command is a built in
+	bool	has_cmd;					//implement me!!!
 }			t_cmd;
 
 typedef struct s_meta

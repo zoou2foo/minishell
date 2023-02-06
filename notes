@@ -35,7 +35,6 @@ valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppress
 3. unset PATH --> juste après, si on fait ls, il trouve et exécute la cmd (normal?)
 4. pwd segfault quand répété plusieurs fois
 5. commande sans cmd_args dit que la cmd est invalide
-6. crash quand les guillemets sont non-terminés
 
 
 

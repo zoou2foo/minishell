@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/06 14:37:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:05:04 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ t_token	*create_token_list(char *line)
 			len++;
 			while (line[i + len] && line[i + len] != '\'')
 				len++;
-			if (!line[i + len])		//"exits" when unterminated quotes
+			if (!line[i + len])					//makes us ignore the cmd line when unterminated quotes
+			{
+				write(2, ERR_QUOTE, ft_strlen(ERR_QUOTE));
 				metadata->state = MSTATE_O_BRACK;
+			}
 			add_token(new_token(&line[i + 1], len - 2, TTYPE_S_QUOTE), &head);
 		}
 
@@ -92,8 +95,11 @@ t_token	*create_token_list(char *line)
 			len++;
 			while (line[i + len] && line[i + len] != '\"')
 				len++;
-			if (!line[i + len])		//"exits" when unterminated quotes
+			if (!line[i + len])					//makes us ignore the cmd line when unterminated quotes
+			{
+				write(2, ERR_QUOTE, ft_strlen(ERR_QUOTE));
 				metadata->state = MSTATE_O_BRACK;
+			}
 			add_token(new_token(&line[i + 1], len - 2, TTYPE_D_QUOTE), &head);
 		}
 

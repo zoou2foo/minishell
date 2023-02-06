@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:18:04 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:41:27 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	execute_cmd_block(void);
 /*		UTILS_TO_EXEC	*/
 int		is_built_in(char *cmd_arg);
 void	execute_builtins(t_cmd *cmd);
-void	built_ins_childable(t_cmd *cmd);
+int		built_ins_childable(t_cmd *cmd);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

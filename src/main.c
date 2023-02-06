@@ -6,15 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 11:53:45 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 11:55:37 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_meta	*metadata;	//our global var
-
-void	print_cmd(t_cmd *cmd);
 
 // Receive nothing. Return nothing. Main purpose: init struct and signals.
 // Start readline and call functions to parse the command line
@@ -31,7 +29,7 @@ void	minishell(void)
 		else
 		{
 			add_history(metadata->buf);
-			load_cmd_block(parse_line(metadata-);
+			load_cmd_block(parse_line(metadata->buf));
 			execute_cmd_block();
 		}
 		ft_free_null(metadata->buf);

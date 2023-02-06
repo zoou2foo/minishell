@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:38:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 11:47:33 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	if (cmd->input)		//close previous fd before opening new one !!!
 		cmd->fdin = open(cmd->input, O_RDONLY);
 	else if (!cmd->fdin && 0 < id)
-		cmd->fdin = metadata->pipes[id - 1][1];
+		cmd->fdin = metadata->pipes[id - 1][0];
 
 	if (cmd->output)	//close previous fd before opening new one !!!
 	{
@@ -109,7 +109,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_TRUNC, 0666);	//effectively 0644 because of umask);
 	}
 	else if (id < metadata->cmd_nb - 1)
-		cmd->fdout = metadata->pipes[id][0];
+		cmd->fdout = metadata->pipes[id][1];
 
 	cmd->argcount = find_length(*head);
 	cmd->cmd_args = ft_calloc(cmd->argcount + 1, sizeof(char *));

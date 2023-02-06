@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 11:43:44 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:18:36 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,9 @@ void	execute_builtins(t_cmd *cmd)
 		get_pwd();
 	else if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
 		do_unset(cmd);
+}
+
+void	built_ins_childable(t_cmd *cmd) //il mettre exit, unset, cd et export
+{
+	if (ft_s
 }

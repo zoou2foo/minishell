@@ -12,6 +12,7 @@ export newVar= ne fonctionne pas
 cd ne fonctionne plus;
 echo -> si j'envoie: echo pew pew. Il écrit seulement pew, pas l'autre. Si j'envoie echo "pew pew", il écrit pew pew.
 prob avec le message d'erreur pour built-in
+echo "" segfault
 
 Check exit_failure/exit_success dans les built-in. Look in execution of them
 

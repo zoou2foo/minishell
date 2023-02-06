@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 08:54:30 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:14:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	execute_cmd_block(void)
 	while (i < metadata->cmd_nb) //ajouter moins 1 ou non...
 	{
 		cmd = metadata->cmd_block[i];
-		if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)	//handling exit() on its own to avoid childing ->Do we still need it in is_in_builtins????
+		if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)	//handling exit() on its own to avoid childing Fonction pour check if childable
 		{
 			close_fds(cmd);
 			do_exit(cmd);

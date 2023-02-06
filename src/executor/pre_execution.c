@@ -59,7 +59,7 @@ void	child_process(t_cmd *cmd)
 	{
 		exec_with_paths(cmd);
 		//TODO : handle error
-		write(STDERR_FILENO, "Command Error : Invalid command\n", 33); //need to be moved. 
+		write(STDERR_FILENO, "Command Error : Invalid command\n", 33); //need to be moved.
 	}
 	close_fds(cmd);
 	exit(EXIT_FAILURE);
@@ -81,16 +81,11 @@ void	execute_cmd_block(void)
 		if (built_ins_childable(cmd) == 0)	//**handling exit() on its own to avoid childing Fonction pour check if childable
 		{
 			close_fds(cmd);
-<<<<<<< HEAD
-			//excute_builtins(cmd);
-			//continue;
-			do_exit(cmd);
-=======
 			execute_builtins(cmd);
 			i++;
 			continue;
->>>>>>> VJ
 		}
+
 		cmd_fork();
 		if (metadata->pid < 0)
 		{

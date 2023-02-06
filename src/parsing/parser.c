@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/31 12:25:50 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:28:43 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_token	**parse_line(char *line)				//check validity of token list beforehand
 	t_token	*head;
 	t_token	*node;
 	int		i;
+
 
 	head = create_token_list(line);
 //	print_token_list(head);				//DEBUG

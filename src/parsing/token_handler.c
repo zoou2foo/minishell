@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/01/30 15:19:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:21:26 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ t_token *new_token(char *str, int len, int type)
 
 	len++;
 	node = ft_calloc(1, sizeof(t_token));
+	node->string = ft_calloc(len + 1, sizeof(char));
 	if (0 < len)
 	{
-		node->string = ft_calloc(len + 1, sizeof(char));
 		i = -1;
 		while (++i < len)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 08:29:07 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:30:04 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	minishell(void)
 	clear_history();
 	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
 }
-
+/*
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
@@ -48,6 +48,7 @@ int	main(int ac, char **av)		//use char **environ instead
 	}
 	return (0);
 }
+*/
 
 void	print_tab_env(void)
 {
@@ -169,7 +170,7 @@ void	print_cmd(t_cmd *cmd)
 
 //Loyc's main (DEBUG)
 
-/*
+
 int	main(void)
 {
 	bool	show_env = false;
@@ -178,8 +179,8 @@ int	main(void)
 
 	int		i;
 
-	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+	//char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+	char	*line = "echo \"pew\" pew \"\"";
 	//char	*line = "lol\"lol\"\'lol\'";
 	//char	*line = "$USER$USER";
 
@@ -213,7 +214,7 @@ int	main(void)
 			print_cmd(metadata->cmd_block[i]);
 	}
 }
-*/
+
 
 //VAL's main (DEBUG)
 

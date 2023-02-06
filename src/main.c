@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:15:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:29:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,44 @@
 
 t_meta	*metadata;	//our global var
 
-// COMMENT if ac is not 1, error; void argv.
-// COMMENT readline will malloc the char *buf, but it does NOT free it at
-// COMMENT the end.
-/*
+// Receive nothing. Return nothing. Main purpose: init struct and signals.
+// Start readline and call functions to parse the command line
+// Call functions to execut.
+void	minishell(void)
+{
+	init_meta();
+	init_signals(1);
+	while (metadata->run)		//always true?
+	{
+		metadata->buf = readline("bash-Pew Pew> ");
+		if (metadata->buf == NULL)
+			exit (0);
+		else
+		{
+			add_history(metadata->buf);
+			load_cmd_block(parse_line(metadata->buf));
+			execute_cmd_block();
+		}
+		ft_free_null(metadata->buf);
+	}
+	clear_history();
+	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
+}
+
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
 	(void)av;
 	if (ac == 1)
 	{
-		t_cmd	*cmd = ft_calloc(sizeof(t_cmd), 1);
-		cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-		cmd->cmd_args[0] = "wc";
-		cmd->cmd_args[1] = "pew";
-		//cmd->cmd_args[2] = "LANG=";
-
-		init_meta();
-		metadata->buf = readline("bash-Pew Pew> ");
-		while (metadata->buf)
-		{
-			if (metadata->buf[0])
-				add_history(metadata->buf);
-			if (ft_strncmp(metadata->buf, "<<", 2) == 0)
-				create_hd(cmd);
-			free(metadata->buf);
-			metadata->buf = readline("bash-Pew Pew> ");
-		}
-		clear_history();
+		minishell();
 	}
 	return (0);
 }
-*/
 
 void	print_tab_env(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	printf("\n");
@@ -61,12 +63,14 @@ void	print_tab_env(void)
 	printf("\n");
 }
 
-//allocates memory for and fills the global metadata var with default values
+//allocates memory for and fills the global metadata var with default values (for env and path)
 void	init_meta(void)
 {
 	int	i;
 
 	metadata = ft_calloc(sizeof(t_meta), 1);
+
+	metadata->run = true;
 
 	i = 0;
 	while (environ[i])
@@ -78,10 +82,10 @@ void	init_meta(void)
 		metadata->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
-
 	fill_path_tab();
 }
 
+//function to test tokenization (and see our tokens). PURPOSE: debug/testing
 void	print_token_list(t_token *head)
 {
 	bool	show_joined = true;
@@ -143,6 +147,7 @@ void	print_token_list(t_token *head)
 	printf("\n");
 }
 
+// function to test cmd fds and input/output. PURPOSE: debug/testing
 void	print_cmd(t_cmd *cmd)
 {
 	int	i;
@@ -164,6 +169,7 @@ void	print_cmd(t_cmd *cmd)
 
 //Loyc's main (DEBUG)
 
+/*
 int	main(void)
 {
 	bool	show_env = false;
@@ -207,17 +213,55 @@ int	main(void)
 			print_cmd(metadata->cmd_block[i]);
 	}
 }
+*/
 
 //VAL's main (DEBUG)
 
+// int	main(void)
+// {
+// 	bool	show_env = false;
+// 	bool	show_tokens = false;
+// 	bool	show_cmds = true;
+
+// 	int		i;
+
+// 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+// 	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
+// 	//char	*line = "lol\"lol\"\'lol\'";
+// 	//char	*line = "$USER$USER";
+
+// 	printf("\n INPUT LINE : \"%s\"\n", line);
+
+// 	init_meta();
+
+// 	t_token	**token_block = parse_line(line);
+
+// 	load_cmd_block(token_block);
+
+
+// 	if (show_env)
+// 	{
+// 		print_tab_env();
+// 	}
+
+// 	if (show_tokens)
+// 	{
+// 		printf("\n");
+// 		i = -1;
+// 		while (token_block[++i])
+// 			print_token_list(token_block[i]);
+// 		printf("\n\n");
+// 	}
+
+// 	if (show_cmds)
+// 	{
+// 		i = -1;
+// 		while(metadata->cmd_block[++i])
+// 			print_cmd(metadata->cmd_block[i]);
+// 	}
+// }
+
 /*
-int	main(void)
-{
-	init_meta();
-	fill_path_tab();
-
-}
-
 int	main(void)
 {
 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";

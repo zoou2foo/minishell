@@ -79,17 +79,17 @@ FILES	=	main \
 			built-ins/export \
 			built-ins/pwd \
 			built-ins/unset \
+			built-ins/echo \
 			parsing/tokenizer \
 			parsing/token_handler \
 			parsing/expander \
 			parsing/parser \
 			parsing/converter \
 			executor/system_cmds \
-
-#			executor/here_doc \
-#			signals/ctrl_c \
-#			signals/ctrl_d \
-#			signals/ctrl_backslash
+			executor/here_doc \
+			executor/pre_execution \
+			executor/utils_to_exec \
+			signals/signals
 
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
@@ -112,6 +112,7 @@ ldirs:
 	$(HIDE) $(MD) $(OBJDIR)/built-ins
 	$(HIDE) $(MD) $(OBJDIR)/parsing
 	$(HIDE) $(MD) $(OBJDIR)/executor
+	$(HIDE) $(MD) $(OBJDIR)/signals
 
 $(NAME): $(OBJS)
 	$(HIDE) $(START)

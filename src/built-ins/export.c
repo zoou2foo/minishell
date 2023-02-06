@@ -6,12 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/26 15:01:36 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 09:53:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Take t_cmd to look at the arg with export. Return an int as a flag.
 int	check_arg_4_export(t_cmd *cmd)
 {
 	int	i;
@@ -22,6 +23,7 @@ int	check_arg_4_export(t_cmd *cmd)
 	return (-1);
 }
 
+// We could put this one in libft ⬇️
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -32,6 +34,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
+// Take nothing; return nothing. Use global var to sort env in alpha order.
 void	sort_env(void)
 {
 	char	*tmp;
@@ -60,7 +63,8 @@ void	sort_env(void)
 	}
 }
 
-int	env_length()
+// Return the length of env. Take nothing as we use global var
+int	env_length(void)
 {
 	int	i;
 
@@ -70,6 +74,8 @@ int	env_length()
 	return (i);
 }
 
+// Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
+// env. Else if arg -> add the var at metadata->env
 void	do_export(t_cmd *cmd)
 {
 	int		i;
@@ -88,14 +94,9 @@ void	do_export(t_cmd *cmd)
 	else if (check_arg_4_export(cmd) != 1)
 	{
 		// ajoute la variable à la fin de metadata->env avec l'arg.
-		metadata->env = ft_recalloc(metadata->env, env_length() + 2, env_length() + 1, sizeof(char *));
+		metadata->env = ft_recalloc(metadata->env, env_length() + 2, env_length() + 1, sizeof(char *)); //NEED to DEBUG here... maybe a prob of calloc
 		while (metadata->env[i] != NULL)
 			i++;
 		metadata->env[i] = ft_strdup(cmd->cmd_args[1]);
 	}
 }
-
-// COMMENT export seul: printf d'env en ajoutant "declare -x" avant chaque
-// COMMENT variable de env. Puis, chaque variable a été mis en ordre alpha
-// COMMENT si on envoie export lol=haha, il faut qu'il soit ajouter à la liste
-// COMMENT tu peux ajouter à la fin de la liste env.

@@ -6,12 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/26 15:34:15 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/03 11:06:48 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//return nothing. Take t_cmd to check what needs to be unset/free.
 void	do_unset(t_cmd *cmd)
 {
 	char	**new_env;
@@ -28,8 +29,8 @@ void	do_unset(t_cmd *cmd)
 		i = 0;
 		while (metadata->env[i])
 		{
-			if (ft_strncmp(cmd->cmd_args[2], metadata->env[i],
-				ft_strlen(cmd->cmd_args[2])) == 0) //besoin de mettre à 1
+			if (ft_strncmp(cmd->cmd_args[1], metadata->env[i],
+				ft_strlen(cmd->cmd_args[1])) == 0) //besoin de mettre à 1
 			{
 				ft_free_null(metadata->env[i]);
 				i++;
@@ -51,6 +52,7 @@ void	do_unset(t_cmd *cmd)
 	}
 }
 
+// Return int as a flag to know that it found the var in env. Take t_cmd of arg
 int	check_arg_4_unset(t_cmd *cmd)
 {
 	int	i;
@@ -58,8 +60,8 @@ int	check_arg_4_unset(t_cmd *cmd)
 	i = 0;
 	while (metadata->env[i] != NULL)
 	{
-		if (ft_strncmp(cmd->cmd_args[2], metadata->env[i],
-				ft_strlen(cmd->cmd_args[2])) == 0)
+		if (ft_strncmp(cmd->cmd_args[1], metadata->env[i],
+				ft_strlen(cmd->cmd_args[1])) == 0)
 			return (1);
 		i++;
 	}

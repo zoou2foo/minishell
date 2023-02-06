@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 15:17:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:18:04 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <curses.h>
+# include <signal.h>
 
 extern	char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
 
@@ -38,6 +39,9 @@ enum e_ttype
 	TTYPE_PIPE		= 9		// |	(pipe)
 };
 
+/*	ERROR MESSAGE	*/
+# define ERROR_PIPE "Error: invalid pipe fd\n"
+
 typedef struct s_token
 {
 	char			*string;
@@ -45,37 +49,33 @@ typedef struct s_token
 	struct s_token	*prev;
 	int				type;
 	bool			is_joined;	//whether it touches the previous token (no spaces)
-
 }					t_token;
 
 typedef struct s_cmd
 {
-
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
 	int		id;				//id of this cmd (in relation to others in this cycle)
-
 	char	*input;		//the last < redirection
 	int		fdin;			//the fd for the piping
-
 	char	*output;	//the last >/>> redirection
 	int		fdout;			//the fd for the piping
 	bool	append_output;	//if the output needs extend the file or overwrite it
+	bool	is_built_in;	//whether the command is a built in
 }			t_cmd;
 
 typedef struct s_meta
 {
 	char	**env;		//elle pourrait devenir notre globale
-	char	**path; 	//contient la ligne PATH pour être en mesure de trouver les system cmds
-
+	char	**path;    //contient la ligne PATH pour être en mesure de trouver les system cmds
 	char	*buf;			//variable pour garder ce qui est mis dans readline
 	t_cmd	**cmd_block;	//all commands to be called this cycle
 	int		cmd_nb;			//nb of commands to be called this cycle
-
 	int		**pipes;	//all the pipes fd for the current command line
-	int		**hd;		//all the heredoc fd used			(??????)
-
+	int		pid;
+//	int		*pipe_hd[2];		// JB dit mieux de les faire dans here_doc que dans struct.
 	int		exit_status;
+	bool	run;		//whether to continue on next cycle or close minishell								//superfluous ????????
 
 }	t_meta;
 
@@ -129,10 +129,21 @@ void	destroy_token(t_token *node);
 /*		SYSTEM_CMDS		*/
 void	fill_path_tab(void);
 void	error_fill_path(void);
-char	*find_cmd(t_cmd *cmd);
+void	exec_with_paths(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/
-int		create_hd(t_cmd *cmd);
+int		execute_hd(char *string);
+
+/*		SIGNALS			*/
+void	init_signals(int flag);
+
+/*		PRE_EXECUTION	*/
+void	execute_cmd_block(void);
+
+/*		UTILS_TO_EXEC	*/
+int		is_built_in(char *cmd_arg);
+void	execute_builtins(t_cmd *cmd);
+void	built_ins_childable(t_cmd *cmd);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

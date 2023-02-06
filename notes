@@ -1,39 +1,53 @@
 /*
-
-
-0========(  VALERIE  )========0
-
-FRIDAY, JAN 20th: look in my notebook for the plan. Start working on this.
+0========(   VALERIE   )========0
 
 
 
-work on built-ins:
-1. echo
 
-DONE: env
-DONE: exit *ALL GOOD. For any arguments.
-DONE: pwd **just need to double check for the error message. Might not need
-DONE: unset
-DONE export
-DONE: cd. All good.
-
-SIGNALS:
-signals.h --> to add in library
-SIGINT --> ctrl-c
-SIGQUIT --> ctrl-d
-SIGQUIT --> ctrl-\ 
+0====( DEBUG TO DO )====0
 
 
+unset: doesn't work. No segfault. But doesn't unset the arg. Prob: il est dans le child.
+export newVar= ne fonctionne pas
+cd ne fonctionne plus;
+echo -> si j'envoie: echo pew pew. Il écrit seulement pew, pas l'autre. Si j'envoie echo "pew pew", il écrit pew pew.
+prob avec le message d'erreur pour built-in
+echo "" segfault
 
-0========(  LOYC  )========0
+Check exit_failure/exit_success dans les built-in. Look in execution of them
+
+bash-Pew Pew> echo $bob
+==4141== Invalid read of size 1
+==4141==    at 0x100002C47: ft_strlen (ft_strlen.c:20)
+==4141==    by 0x10000540C: expand (expander.c:35)
+==4141==    by 0x100004C88: expand_token_list (tokenizer.c:143)
+==4141==    by 0x100005701: parse_line (parser.c:25)
+==4141==    by 0x1000037DB: minishell (main.c:33)
+==4141==    by 0x100003924: main (main.c:48)
+==4141==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+soit que je calloc pas assez; ou free quelque chose qu'on continue d'utiliser.
+
+
+valgrind cmd: 
+valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppressions=supp.txt ./minishell
+
+
+0====( TEST CASES )====0
 
 
 
-token*	head (list des tokens sans les redirs)
 
 
-t_cmd :
-	char**	cmd_args
+
+
+0========(   LOYC   )========0
+
+
+
+0====( DEBUG TO DO )====0
+
+expander : make "$", "$garbage" & "&?" work properly
+pipe : "ls | wc" doesn't work
 
 0====( TEST CASES )====0
 

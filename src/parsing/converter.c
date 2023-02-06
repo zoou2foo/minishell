@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:14:09 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:29:08 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@
 
 */
 
+// : set the "has_pipes"
 t_cmd	*tokens_to_cmd(t_token **head, int id)
 {
-	t_cmd	*cmd;
 	t_token	*node;
 	int		i;
+	t_cmd	*cmd;
 
 	node = *head;
-	while (node->next)	//merge tokens (ex > type + string = string w/ type >)
+	while (node->next) //merge tokens (ex > type + string = string w/ type >)
 	{
 		if (node->next->type <= TTYPE_EXPAND && TTYPE_EXPAND < node->type)
 			node = merge_tokens(node, node->next);
@@ -80,7 +81,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 			{
 				ft_free_null(cmd->input);
 				//close previous heredoc if necessary
-				//cmd->fdin = execute_hd(node->string);
+				cmd->fdin = execute_hd(node->string); //utilise cmd->fdin pour faire la redirection dans child.
 			}
 			if (node->next || node->prev)
 				node = cut_token(node);
@@ -121,6 +122,11 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 		node = node->next;
 	}
 
+	if (is_built_in(cmd->cmd_args[0]) == 1)
+		cmd->is_built_in = true;
+	else
+		cmd->is_built_in = false;
+
 	return (cmd);
 }
 
@@ -129,20 +135,20 @@ void	load_cmd_block(t_token **head)
 	int	i;
 
 	i = 0;
-	while(head[i])
+	while (head[i])
 		i++;
 	metadata->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));	//MUST FREE CMD_BLOCK BEFOREHAND
 	metadata->pipes = ft_calloc(i, sizeof(int *));
 	metadata->cmd_nb = i;
 
 	i = -1;
-	while(++i < metadata->cmd_nb - 1)
+	while (++i < metadata->cmd_nb - 1)
 	{
 		metadata->pipes[i] = ft_calloc(2, sizeof(int));
-		pipe(metadata->pipes[i]);
+		pipe(metadata->pipes[i]);								//FREE ME AT END OF CYCLE
 	}
 
 	i = -1;
-	while(head[++i])
+	while (head[++i])
 		metadata->cmd_block[i] = tokens_to_cmd(&head[i], i);
 }

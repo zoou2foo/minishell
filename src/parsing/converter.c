@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/30 15:17:16 by llord            ###   ########.fr       */
+/*   Updated: 2023/01/30 15:35:29 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 */
 
-t_cmd	*tokens_to_cmd(t_token **head, int id)		//TODO : set the "has_pipes"
+t_cmd	*tokens_to_cmd(t_token **head, int id)
 {
 	t_cmd	*cmd;
 	t_token	*node;

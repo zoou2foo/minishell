@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:18:36 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:22:20 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,26 @@ void	execute_builtins(t_cmd *cmd)
 
 void	built_ins_childable(t_cmd *cmd) //il mettre exit, unset, cd et export
 {
-	if (ft_s
+	if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)
+	{
+		close_fds(cmd);
+		do_exit(cmd);
+	}
+	if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
+	{
+		close_fds(cmd);
+		do_unset(cmd);
+	}
+	if (ft_strncmp(cmd->cmd_args[0], "cd", 2) == 0)
+	{
+		close_fds(cmd);
+		change_dir(cmd);
+	}
+	if (ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
+	{
+		close_fds(cmd);
+		do_export(cmd);
+	}
+	else
+		
 }

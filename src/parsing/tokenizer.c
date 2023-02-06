@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/06 09:22:24 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 11:36:10 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	is_space(char c)
 	return (false);
 }
 
-bool	is_capital(char c)
+bool	is_capital(char c)		//OBSOLETE
 {
 	if ('A' <= c && c <= 'Z')
 		return (true);
@@ -102,7 +102,7 @@ t_token	*create_token_list(char *line)
 		else if (line[i] == '$')
 		{
 			len++;
-			while (line[i + len] && is_capital(line[i + len]))				//USE ANOTHER FUNCTION
+			while (line[i + len] && !is_space(line[i + len]) && line[i + len] != '$')
 				len++;
 			len--;
 			add_token(new_token(&line[i + 1], len - 1, TTYPE_EXPAND), &head);
@@ -142,6 +142,8 @@ void	expand_token_list(t_token *head)
 			//printf(" - $%s", node->string);				//DEBUG
 			node->string = expand(node->string);
 			//printf(" > %s\n", node->string);				//DEBUG
+			if (!node->string[0])
+				node->type = TTYPE_EMPTY;
 		}
 		//handles expansions inside double quotes
 		else if (node->type == TTYPE_D_QUOTE)

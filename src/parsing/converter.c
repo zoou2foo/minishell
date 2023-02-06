@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:38:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 11:46:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	node = *head;
 	while (node)	//MAKE THE INPUT OVERRIDE WORK PROPERLY WITH HEREDOCS
 	{
+		while (node->type == TTYPE_EMPTY)	//removes empty tokens
+			node = cut_token(node);
 		if (TTYPE_EXPAND < node->type)
 		{
 
@@ -99,7 +101,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	if (cmd->input)		//close previous fd before opening new one !!!
 		cmd->fdin = open(cmd->input, O_RDONLY);
 	else if (!cmd->fdin && 0 < id)
-		cmd->fdin = metadata->pipes[id - 1][1];
+		cmd->fdin = metadata->pipes[id - 1][0];
 
 	if (cmd->output)	//close previous fd before opening new one !!!
 	{
@@ -109,7 +111,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_TRUNC, 0666);	//effectively 0644 because of umask);
 	}
 	else if (id < metadata->cmd_nb - 1)
-		cmd->fdout = metadata->pipes[id][0];
+		cmd->fdout = metadata->pipes[id][1];
 
 	cmd->argcount = find_length(*head);
 	cmd->cmd_args = ft_calloc(cmd->argcount + 1, sizeof(char *));
@@ -122,10 +124,12 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 		node = node->next;
 	}
 
+
 	if (is_built_in(cmd->cmd_args[0]) == 1)
 		cmd->is_built_in = true;
 	else
 		cmd->is_built_in = false;
+
 
 	return (cmd);
 }
@@ -133,6 +137,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 void	load_cmd_block(t_token **head)
 {
 	int	i;
+
 
 	i = 0;
 	while (head[i])

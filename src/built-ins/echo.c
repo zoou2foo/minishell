@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 10:05:14 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 10:07:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Return NOTHING. Take t_cmd; the argument following "echo" to be printed.
+// Return NOTHING. Take t_cmd; the arguments following "echo" to be printed.
 void	do_echo(t_cmd *cmd)
 {
 	int	i;
@@ -27,6 +27,3 @@ void	do_echo(t_cmd *cmd)
 	}
 	printf("\n");
 }
-
-
-// echo helloe motherfuckers --> only print hello

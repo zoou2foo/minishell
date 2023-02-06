@@ -6,49 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:56:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 11:36:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_meta	*metadata;	//our global var
-
-// Receive nothing. Return nothing. Main purpose: init struct and signals.
-// Start readline and call functions to parse the command line
-// Call functions to execut.
-void	minishell(void)
-{
-	init_meta();
-	init_signals(1);
-	while (metadata->run)		//always true?
-	{
-		metadata->buf = readline("bash-Pew Pew> ");
-		if (metadata->buf == NULL)
-			exit (0);
-		else
-		{
-			add_history(metadata->buf);
-			load_cmd_block(parse_line(metadata->buf));
-			execute_cmd_block();
-		}
-		ft_free_null(metadata->buf);
-	}
-	clear_history();
-	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
-}
-
-int	main(int ac, char **av)		//use char **environ instead
-{
-	//extern	char	**environ; //pas de variable globale
-	(void)av;
-	if (ac == 1)
-	{
-		minishell();
-	}
-	return (0);
-}
-
 
 void	print_tab_env(void)
 {
@@ -153,7 +117,7 @@ void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
-	printf(" _COMMAND_%i_\n|\n", cmd->id);
+	printf(" _COMMAND_#%i_\n|\n", cmd->id);
 
 	printf("| fdin  : %i\n", cmd->fdin);
 	printf("| fdout : %i\n|\n", cmd->fdout);
@@ -168,7 +132,44 @@ void	print_cmd(t_cmd *cmd)
 	printf("\n");
 }
 
+// Receive nothing. Return nothing. Main purpose: init struct and signals.
+// Start readline and call functions to parse the command line
+// Call functions to execut.
+void	minishell(void)
+{
+	init_meta();
+	init_signals(1);
+	while (metadata->run)		//always true?
+	{
+		metadata->buf = readline("bash-Pew Pew> ");
+		if (metadata->buf == NULL)
+			exit (0);
+		else
+		{
+			add_history(metadata->buf);
+			load_cmd_block(parse_line(metadata->buf));
+			execute_cmd_block();
+		}
+		ft_free_null(metadata->buf);
+	}
+	clear_history();
+	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
+}
+
+int	main(int ac, char **av)		//use char **environ instead
+{
+	//extern	char	**environ; //pas de variable globale
+	(void)av;
+	if (ac == 1)
+	{
+		minishell();
+	}
+	return (0);
+}
+
+
 //Loyc's main (DEBUG)
+
 
 /*
 int	main(void)
@@ -180,9 +181,9 @@ int	main(void)
 	int		i;
 
 	//char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-	char	*line = "echo \"pew\" pew \"\"";
+	//char	*line = "echo \"pew\" pew \"\"";
 	//char	*line = "lol\"lol\"\'lol\'";
-	//char	*line = "$USER$USER";
+	char	*line = "echo $USER $U $? $";
 
 	printf("\n INPUT LINE : \"%s\"\n", line);
 
@@ -191,7 +192,6 @@ int	main(void)
 	t_token	**token_block = parse_line(line);
 
 	load_cmd_block(token_block);
-
 
 	if (show_env)
 	{
@@ -215,6 +215,7 @@ int	main(void)
 	}
 }
 */
+
 
 
 //VAL's main (DEBUG)

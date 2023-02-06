@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 11:30:06 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 08:54:30 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	child_process(t_cmd *cmd)
 	{
 		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		//TODO : handle error
-		write(STDERR_FILENO, "Command Error : Builtin failure\n", 33); //need to be moved
+		//write(STDERR_FILENO, "Command Error : Builtin failure\n", 33); //need to be moved
 	}
 	else
 	{

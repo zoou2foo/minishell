@@ -6,7 +6,11 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/06 09:35:02 by vjean            ###   ########.fr       */
+=======
+/*   Updated: 2023/02/06 09:47:30 by vjean            ###   ########.fr       */
+>>>>>>> VJ
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +78,18 @@ void	execute_cmd_block(void)
 	while (i < metadata->cmd_nb) //ajouter moins 1 ou non...
 	{
 		cmd = metadata->cmd_block[i];
-		if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)	//handling exit() on its own to avoid childing Fonction pour check if childable
+		if (built_ins_childable(cmd) == 0)	//**handling exit() on its own to avoid childing Fonction pour check if childable
 		{
 			close_fds(cmd);
+<<<<<<< HEAD
 			//excute_builtins(cmd);
 			//continue;
 			do_exit(cmd);
+=======
+			execute_builtins(cmd);
+			i++;
+			continue;
+>>>>>>> VJ
 		}
 		cmd_fork();
 		if (metadata->pid < 0)

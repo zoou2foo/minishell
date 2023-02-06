@@ -28,7 +28,7 @@ bash-Pew Pew> echo $bob
 soit que je calloc pas assez; ou free quelque chose qu'on continue d'utiliser.
 
 
-valgrind cmd: 
+valgrind cmd:
 valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppressions=supp.txt ./minishell
 
 

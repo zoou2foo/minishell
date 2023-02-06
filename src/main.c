@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 13:00:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 13:54:46 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,43 @@
 
 t_meta	*metadata;	//our global var
 
+// Receive nothing. Return nothing. Main purpose: init struct and signals.
+// Start readline and call functions to parse the command line
+{
+	init_meta();
+	init_signals(1);
+	while (metadata->run)		//always true?
+	{
+		metadata->buf = readline("bash-Pew Pew> ");
+		if (metadata->buf == NULL)
+			exit (0);
+		else
+		{
+			add_history(metadata->buf);
+			load_cmd_block(parse_line(metadata->buf));
+			execute_cmd_block();
+		}
+		ft_free_null(metadata->buf);
+	}
+	clear_history();
+	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
+}
+
+int	main(int ac, char **av)		//use char **environ instead
+{
+	//extern	char	**environ; //pas de variable globale
+	(void)av;
+	if (ac == 1)
+	{
+		minishell();
+	}
+	return (0);
+}
+
+
 void	print_tab_env(void)
 {
 	int	i;
-
 	i = 0;
 	printf("\n");
 	while (metadata->env[i])

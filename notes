@@ -36,7 +36,7 @@ valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppress
 4. pwd segfault quand répété plusieurs fois
 5. commande sans cmd_args dit que la cmd est invalide
 
-
+6. weird empty strings
 
 
 0========(   LOYC   )========0

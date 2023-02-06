@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/06 15:05:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:24:01 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_token	*create_token_list(char *line)
 			else
 			{
 				len++;
-				add_token(new_token(NULL, -1, TTYPE_HEREDOC), &head);	//================( HERE IS HEREDOC )================
+				add_token(new_token(NULL, -1, TTYPE_HEREDOC), &head);
 			}
 		}
 

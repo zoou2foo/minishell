@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 14:33:40 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:07:21 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,52 +225,8 @@ int	main(void)
 */
 
 
-
 //VAL's main (DEBUG)
 
-// int	main(void)
-// {
-// 	bool	show_env = false;
-// 	bool	show_tokens = false;
-// 	bool	show_cmds = true;
-
-// 	int		i;
-
-// 	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-// 	//char	*line = "lol\"LOL\"\"lol\"lol\'LOL\'lol";
-// 	//char	*line = "lol\"lol\"\'lol\'";
-// 	//char	*line = "$USER$USER";
-
-// 	printf("\n INPUT LINE : \"%s\"\n", line);
-
-// 	init_meta();
-
-// 	t_token	**token_block = parse_line(line);
-
-// 	load_cmd_block(token_block);
-
-
-// 	if (show_env)
-// 	{
-// 		print_tab_env();
-// 	}
-
-// 	if (show_tokens)
-// 	{
-// 		printf("\n");
-// 		i = -1;
-// 		while (token_block[++i])
-// 			print_token_list(token_block[i]);
-// 		printf("\n\n");
-// 	}
-
-// 	if (show_cmds)
-// 	{
-// 		i = -1;
-// 		while(metadata->cmd_block[++i])
-// 			print_cmd(metadata->cmd_block[i]);
-// 	}
-// }
 
 /*
 int	main(void)

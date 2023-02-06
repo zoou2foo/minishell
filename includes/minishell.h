@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 15:03:39 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:32:46 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_cmd
 typedef struct s_meta
 {
 	char	**env;		//elle pourrait devenir notre globale
-	char	**path;    //contient la ligne PATH pour être en mesure de trouver les system cmds
+	char	**paths;    //contient la ligne PATH pour être en mesure de trouver les system cmds
 	char	*buf;			//variable pour garder ce qui est mis dans readline
 	t_cmd	**cmd_block;	//all commands to be called this cycle
 	int		cmd_nb;			//nb of commands to be called this cycle

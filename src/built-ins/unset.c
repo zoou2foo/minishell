@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 13:17:28 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:42:04 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	empty_path_tab(void)
+{
+	int	i;
+
+	i = 0;
+	while (metadata->paths[i])
+	{
+		ft_free_null(metadata->paths[i]);
+		i++;
+	}
+}
+
 
 //return nothing. Take t_cmd to check what needs to be unset/free.
 void	do_unset(t_cmd *cmd)
@@ -42,6 +55,8 @@ void	do_unset(t_cmd *cmd)
 				i++;
 			}
 		}
+		if (ft_strncmp(cmd->cmd_args[1], "PATH", ft_strlen(cmd->cmd_args[1])) == 0)
+			empty_path_tab();
 		ft_free_null(metadata->env);
 		metadata->env = new_env;
 	}

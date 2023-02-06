@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 13:57:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:06:00 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	fill_path_tab(void)
 	{
 		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
 		{
-			metadata->path = ft_split(&environ[i][5], ':');
+			metadata->paths = ft_split(&environ[i][5], ':');
 			i = 0;
 
-			while (metadata->path[i])
+			while (metadata->paths[i])
 			{
-				tmp = ft_strjoin(metadata->path[i], "/");		//adds final / so we don't have to during excecution
-				ft_free_null(metadata->path[i]);
-				metadata->path[i] = tmp;
+				tmp = ft_strjoin(metadata->paths[i], "/");		//adds final / so we don't have to during excecution
+				ft_free_null(metadata->paths[i]);
+				metadata->paths[i] = tmp;
 				i++;
 			}
 			return ;
@@ -60,11 +60,13 @@ void	exec_with_paths(t_cmd *cmd)
 
 	i = -1;
 
+	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
+		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
 	if (cmd->argcount > 0)
 	{
-		while (metadata->path[++i])
+		while (metadata->paths[++i])
 		{
-			cmd_path = ft_strjoin(metadata->path[i], cmd->cmd_args[0]);
+			cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
 			if (!access(cmd_path, F_OK | X_OK))
 				execve(cmd_path, cmd->cmd_args, metadata->env);
 			ft_free_null(cmd_path);

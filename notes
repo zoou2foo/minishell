@@ -30,12 +30,14 @@ valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppress
 
 
 0====( PROBS TO SOLVE )====0
-1. /bin/ls : ne fonctionne pas
-2. cat -e outfile2 ->fonctionne, mais imprime "cat: : No such file or directory" (argument -e non fonctionel?)
-3. unset PATH --> juste après, si on fait ls, il trouve et exécute la cmd (normal?)
-4. pwd segfault quand répété plusieurs fois
-5. commande sans cmd_args dit que la cmd est invalide
-
+1. export ec=ec export ho=ho unset PATH $ec$ho test -->cmd not found. Sauf qu'il doit imprimer test. Il doit appeler built-in echo quand on gère expand.
+3. unset PATH --> fill_path_tab un autre qui ajoute la ligne dans metadata->env. 
+Quand export, il faut que je check si la ligne est ajouté à metadata->env$
+4. commande sans cmd_args dit que la cmd est invalide
+5. fermer les fds si on a plusieurs redirection dans la même ligne de cmd
+6. Prob avec CTRL-D, segfault again...
+7. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
+8. echo -nnnnnnnnnn allo ->doit fait comme s'il y a juste un -n.
 
 
 

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 11:47:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 13:51:35 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,13 @@ void	execute_cmd_block(void)
 				dup2(cmd->fdout, STDOUT_FILENO);
 				child_process(cmd);
 			}
+			init_signals(2);
 			close_fds(cmd);
 			waitpid(metadata->pid, NULL, 0);
 			metadata->pid = 0;
 		}
 		i++;
 	}
+	init_signals(1);
 	//close all pipes ? si on a des leaks, soit placer dans le parent ou non
 }

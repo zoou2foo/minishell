@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:14:23 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:45:56 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	child_process(t_cmd *cmd)
 {
 	metadata->exit_status = 0;	//doesn't change the right exit status (duplicate metadata?) ????
 								//should add exit 127 if cmd not found
-	if (cmd->is_built_in == false)
+	if (cmd->is_built_in)
 	{
 		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		//TODO : handle error
@@ -55,7 +55,7 @@ void	child_process(t_cmd *cmd)
 	{
 		exec_with_paths(cmd);
 		//TODO : handle error
-		write(STDERR_FILENO, "Command Error : Invalid command\n", 33); //need to be moved. 
+		write(STDERR_FILENO, "Command Error : Invalid command\n", 33); //need to be moved.
 	}
 	close_fds(cmd);
 	exit(EXIT_FAILURE);
@@ -74,12 +74,16 @@ void	execute_cmd_block(void)
 	while (i < metadata->cmd_nb) //ajouter moins 1 ou non...
 	{
 		cmd = metadata->cmd_block[i];
-		if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)	//handling exit() on its own to avoid childing Fonction pour check if childable
+		if (!built_ins_childable(cmd))	//handling exit() on its own to avoid childing Fonction pour check if childable
 		{
 			close_fds(cmd);
-			do_exit(cmd);
+			execute_builtins(cmd);
+			i++;
+			continue ;
 		}
+
 		cmd_fork();
+
 		if (metadata->pid < 0)
 		{
 			write(STDERR_FILENO, "PID Error : Couldn't fork properly\n", 36);

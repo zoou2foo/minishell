@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 11:41:14 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 12:54:54 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	fill_path_tab(void)
 		{
 			metadata->path = ft_split(&environ[i][5], ':');
 			i = 0;
+
 			while (metadata->path[i])
 			{
 				tmp = ft_strjoin(metadata->path[i], "/");		//adds final / so we don't have to during excecution

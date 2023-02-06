@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 10:07:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 13:10:06 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,24 @@
 // Return NOTHING. Take t_cmd; the arguments following "echo" to be printed.
 void	do_echo(t_cmd *cmd)
 {
+	int	newline;
 	int	i;
 
 	i = 1;
+	newline = 1;
+	if (cmd->cmd_args[i][0] == '-' && cmd->cmd_args[i][1] == 'n' && cmd->cmd_args[i][2] == '\0')
+	{
+		printf("%s", &cmd->cmd_args[i][3]);
+		newline = 0;
+		i++;
+	}
 	while (cmd->cmd_args[i])
 	{
-		if (1 < i)
+		if (2 < i || (1 < i && newline))
 			printf(" ");
 		printf("%s", cmd->cmd_args[i]);
 		i++;
 	}
-	printf("\n");
+	if (newline)
+		printf("\n");
 }

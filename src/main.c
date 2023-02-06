@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 12:48:24 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 13:00:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,17 @@ void	print_cmd(t_cmd *cmd)
 	printf("\n");
 }
 
+int	is_line_empty(char *line)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i])
+		if (!is_space(line[i]))
+			return (0);
+	return (1);
+}
+
 // Receive nothing. Return nothing. Main purpose: init struct and signals.
 // Start readline and call functions to parse the command line
 // Call functions to execut.
@@ -139,12 +150,10 @@ void	minishell(void)
 {
 	init_meta();
 	init_signals(1);
-	while (metadata->run)		//always true?
+	while (metadata->run)		//always true? obsolete??
 	{
 		metadata->buf = readline("bash-Pew Pew> ");
-		if (metadata->buf == NULL)
-			exit (0);
-		else
+		if (!is_line_empty(metadata->buf))
 		{
 			add_history(metadata->buf);
 			load_cmd_block(parse_line(metadata->buf));

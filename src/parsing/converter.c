@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 12:48:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:02:48 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,23 +113,21 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	else if (id < metadata->cmd_nb - 1)
 		cmd->fdout = metadata->pipes[id][1];
 
-	cmd->argcount = find_length(*head);
-	cmd->cmd_args = ft_calloc(cmd->argcount + 1, sizeof(char *));
+	cmd->cmd_args = ft_calloc(find_length(*head) + 1, sizeof(char *));
 
 	i = 0;
 	node = *head;
 	while (node)	//convert remaining tokens into cmd_args
 	{
 		cmd->cmd_args[i++] = ft_strdup(node->string);
+		cmd->argcount++;
 		node = node->next;
 	}
-
 
 	if (is_built_in(cmd->cmd_args[0]) == 1)
 		cmd->is_built_in = true;
 	else
 		cmd->is_built_in = false;
-
 
 	return (cmd);
 }

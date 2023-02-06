@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 11:47:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 13:52:20 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	cmd_fork(void)
 	metadata->pid = fork();
 	if (metadata->pid == -1)
 	{
+		//TODO : handle error
 		write(2, ERROR_PIPE, ft_strlen(ERROR_PIPE));
 		ft_free_null(metadata);
 		exit (1);

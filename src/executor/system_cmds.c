@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 12:54:54 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 13:57:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,15 @@ void	exec_with_paths(t_cmd *cmd)
 	int		i;
 
 	i = -1;
-	while (metadata->path[++i])
+
+	if (cmd->argcount > 0)
 	{
-		cmd_path = ft_strjoin(metadata->path[i], cmd->cmd_args[0]);
-		if (!access(cmd_path, F_OK | X_OK))
-			execve(cmd_path, cmd->cmd_args, metadata->env);
-		ft_free_null(cmd_path);
+		while (metadata->path[++i])
+		{
+			cmd_path = ft_strjoin(metadata->path[i], cmd->cmd_args[0]);
+			if (!access(cmd_path, F_OK | X_OK))
+				execve(cmd_path, cmd->cmd_args, metadata->env);
+			ft_free_null(cmd_path);
+		}
 	}
 }

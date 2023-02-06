@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 11:48:47 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/06 11:53:45 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	minishell(void)
 		else
 		{
 			add_history(metadata->buf);
-			load_cmd_block(parse_line(metadata->buf));
+			load_cmd_block(parse_line(metadata-);
 			execute_cmd_block();
 		}
 		ft_free_null(metadata->buf);

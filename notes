@@ -46,8 +46,7 @@ valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppress
 
 0====( DEBUG TO DO )====0
 
-expander : make "$", "$garbage" & "&?" work properly
-pipe : "ls | wc" doesn't work
+handle unclosed "" and ''
 
 0====( TEST CASES )====0
 

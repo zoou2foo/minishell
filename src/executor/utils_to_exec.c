@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 09:51:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 09:55:39 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_built_in(char *cmd_arg)
 void	execute_builtins(t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->cmd_args[0], "echo", 4) == 0)
-		return (1);
+		do_echo(cmd);
 	else if (ft_strncmp(cmd->cmd_args[0], "cd", 2) == 0)
 		change_dir(cmd);
 	else if (ft_strncmp(cmd->cmd_args[0], "env", 3) == 0)

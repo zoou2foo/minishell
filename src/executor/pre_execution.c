@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 10:01:26 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/06 11:47:58 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,7 @@ void	execute_cmd_block(void)
 				dup2(cmd->fdout, STDOUT_FILENO);
 				child_process(cmd);
 			}
-			else if (metadata->pid > 0)		//if parent		(close pipes in all cases)
-			{
-				close_fds(cmd);
-			}
+			close_fds(cmd);
 			waitpid(metadata->pid, NULL, 0);
 			metadata->pid = 0;
 		}

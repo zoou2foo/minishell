@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 15:32:46 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/07 12:38:37 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ bool	is_capital(char c);	//à mettre dans libft (USE ANOTHER FUNCTION)
 t_token	*create_token_list(char *line);
 void	expand_token_list(t_token *head);
 t_token	*merge_token_list(t_token *head);
+t_token	*remove_empty_list(t_token *head);
 
 //from token_handler
 void	free_token(t_token *node);
@@ -134,7 +135,7 @@ t_token	*merge_tokens(t_token *prev, t_token *next);
 t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
 t_token	*replace_token(t_token *new, t_token *old);
 t_token	*cut_token(t_token *node);
-void	empty_token(t_token *node);
+t_token	*empty_token(t_token *node);
 void	destroy_token(t_token *node);
 
 /*		SYSTEM_CMDS		*/

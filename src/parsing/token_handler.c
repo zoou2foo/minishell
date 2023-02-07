@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/06 13:56:18 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 12:42:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ t_token *new_token(char *str, int len, int type)
 		}
 		node->string[i] = '\0';
 	}
-	node->type = type;
+	if (len <= 0 && type < TTYPE_EXPAND)
+		node->type = TTYPE_EMPTY;
+	else
+		node->type = type;
 	return (node);
 }
 
@@ -178,30 +181,36 @@ t_token	*replace_token(t_token *new, t_token *old)
 }
 
 //deletes a token and links its next and prev together
-//tries to return the next, then the prev, then NULL
+//tries to return the prev, then the next
+//if the token has no prev or next, empties and returns it instead
 t_token	*cut_token(t_token *node)
 {
 	t_token	*ret;
 
-	ret = node;
+	ret = NULL;
 	if (node)
 	{
 		if (node->prev)
+		{
 			node->prev->next = node->next;
+			ret = node->prev;
+		}
 		if (node->next)
 		{
 			node->next->prev = node->prev;
 			ret = node->next;
 		}
-		else if (node->prev)
-			ret = node->prev;
+		if (!node->prev && !node->next)
+		{
+			return (empty_token(node));
+		}
 		free_token(node);
 	}
 	return (ret);
 }
 
 //deletes the info inside a token
-void	empty_token(t_token *node)
+t_token	*empty_token(t_token *node)
 {
 	if (node)
 	{
@@ -212,9 +221,10 @@ void	empty_token(t_token *node)
 		node->string = ft_calloc(1, sizeof(char *));
 		node->type = TTYPE_EMPTY;
 	}
+	return (node);
 }
 
-//deletes a token without relinking
+//deletes a token without relinking its prev and next
 void	destroy_token(t_token *node)
 {
 	if (node)

@@ -71,7 +71,7 @@ SRCDIR	=	src/
 OBJDIR	=	bin/
 TSTDIR	=	tests/
 
-# File names
+# File names (including their subdirectory if needed)
 FILES	=	main \
 			built-ins/cd \
 			built-ins/env \
@@ -91,13 +91,14 @@ FILES	=	main \
 			executor/utils_to_exec \
 			signals/signals
 
+# Libraries (.a files) to include for compilation
 LIBFT	=	./libft/libft.a
 LIBRL	=	-L ./includes/readline/ -lreadline -lcurses
 
 SRCS	=	$(addprefix $(SRCDIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJDIR), $(addsuffix .o, $(FILES)))
 
-
+# Default command to call when using make run or make leaks
 CMD		=	./minishell
 
 #------------------------------------------------------------------------------#
@@ -106,7 +107,7 @@ CMD		=	./minishell
 
 all: ldirs $(NAME)
 
-# Creates the object directories
+# Creates the object directories and subdirectories
 ldirs:
 	$(HIDE) $(MD) $(OBJDIR)
 	$(HIDE) $(MD) $(OBJDIR)/built-ins

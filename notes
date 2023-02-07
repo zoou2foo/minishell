@@ -30,15 +30,17 @@ valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppress
 
 
 0====( PROBS TO SOLVE )====0
-1. unset PATH --> fill_path_tab un autre qui ajoute la ligne dans metadata->env.
+1. unset PATH --> fill_path_tab un autre qui ajoute la ligne dans metadata->env. 
 Quand export, il faut que je check si la ligne est ajouté à metadata->env$
-2. Prob avec CTRL-D, segfault again...
-3. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
+6. Prob avec CTRL-D, segfault again...
+7. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
+
 
 
 
 0========(   LOYC   )========0
-
+2. commande sans cmd_args dit que la cmd est invalide
+5. fermer les fds si on a plusieurs redirection dans la même ligne de cmd
 
 
 0====( DEBUG TO DO )====0

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 15:42:04 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/07 11:57:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	do_unset(t_cmd *cmd)
 				i++;
 			}
 		}
-		if (ft_strncmp(cmd->cmd_args[1], "PATH", ft_strlen(cmd->cmd_args[1])) == 0)
+		if (ft_strncmp(cmd->cmd_args[1], "PATH=", ft_strlen(cmd->cmd_args[1])) == 0)
 			empty_path_tab();
 		ft_free_null(metadata->env);
 		metadata->env = new_env;

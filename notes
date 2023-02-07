@@ -1,12 +1,14 @@
 /*
+0========( PROBS TO SOLVE )========0
+1. make sure childs exit with the proper status (and non-child builtins?)
+
+
+
 0========(   VALERIE   )========0
-Check exit_failure/exit_success dans les built-in. Look in execution of them
-
-
 
 0====( DEBUG TO DO )====0
-
-
+1. Prob avec CTRL-D, segfault again...
+2. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
 
 
 bash-Pew Pew> echo $bob
@@ -21,30 +23,18 @@ bash-Pew Pew> echo $bob
 soit que je calloc pas assez; ou free quelque chose qu'on continue d'utiliser.
 
 
-valgrind cmd:
-valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppressions=supp.txt ./minishell
-
 
 0====( TEST CASES )====0
 
 
 
-0====( PROBS TO SOLVE )====0
-6. Prob avec CTRL-D, segfault again...
-7. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
-
-
 
 
 0========(   LOYC   )========0
-2. commande sans cmd_args dit que la cmd est invalide
-5. fermer les fds si on a plusieurs redirection dans la même ligne de cmd
-
 
 0====( DEBUG TO DO )====0
+1. fermer les fds si on a plusieurs redirection dans la même ligne de cmd (done???)
 
-1. commande sans cmd_args dit que la cmd est invalide
-2. fermer les fds si on a plusieurs redirection dans la même ligne de cmd
 
 
 0====( TEST CASES )====0
@@ -55,12 +45,8 @@ cmd arg1 arg2
 
 cmd >out1
 cmd >>out1
-
 cmd >out1 >out2
-cmd >>out1 >>out3
 
-cmd >out1 >>out2
-cmd >>out1 >out2
 
 <in1 cmd
 <<in1 cmd
@@ -74,12 +60,11 @@ cmd >>out1 >out2
 <in1 cmd arg1 >out1
 <<in1 cmd arg1 >>out1
 
-<in1 <in2 cmd arg1 arg2 >out1 >out2
-<<in1 <<in2 cmd arg1 arg2 >>out1 >>out2
+<in1 <<in2 cmd arg1 arg2 >out1 >>out2
 
 cmd1 | cmd2
 
-<<in1 cmd1 | cmd2
+cmd1 <<out1 | cmd2
 cmd1 | <<in1 cmd2
 
 */

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 14:02:48 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:46:42 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,9 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	cmd->fdin = 0;	//set default fd to use later
 	cmd->fdout = 1;	//set default fd to use later
 
-	node = *head;
+	node = remove_empty_list(*head);
 	while (node)	//MAKE THE INPUT OVERRIDE WORK PROPERLY WITH HEREDOCS
 	{
-		while (node->type == TTYPE_EMPTY)	//removes empty tokens
-			node = cut_token(node);
 		if (TTYPE_EXPAND < node->type)
 		{
 
@@ -78,22 +76,23 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 			{
 				ft_free_null(cmd->input);
 				cmd->input = ft_strdup(node->string);
+				if (cmd->fdin != 0)
+					close(cmd->fdin);
+				cmd->fdin = 0;
 			}
 			else if (node->type == TTYPE_HEREDOC)
 			{
 				ft_free_null(cmd->input);
-				//close previous heredoc if necessary
-				cmd->fdin = execute_hd(node->string); //utilise cmd->fdin pour faire la redirection dans child.
+				if (cmd->fdin != 0)
+					close(cmd->fdin);
+				cmd->fdin = execute_hd(node->string);
 			}
-			if (node->next || node->prev)
-				node = cut_token(node);
-			else
-				empty_token(node);
+			node = cut_token(node);
 		}
 		if (node->next)
 			node = node->next;
 		else
-			break;
+			break ;
 	}
 	*head = find_head(node);	//update head if cut destroys it
 
@@ -119,12 +118,15 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	node = *head;
 	while (node)	//convert remaining tokens into cmd_args
 	{
-		cmd->cmd_args[i++] = ft_strdup(node->string);
-		cmd->argcount++;
+		if (node->type != TTYPE_EMPTY)
+		{
+			cmd->cmd_args[i++] = ft_strdup(node->string);
+			cmd->argcount++;
+		}
 		node = node->next;
 	}
 
-	if (is_built_in(cmd->cmd_args[0]) == 1)
+	if (cmd->argcount > 0 && is_built_in(cmd->cmd_args[0]) == 1)
 		cmd->is_built_in = true;
 	else
 		cmd->is_built_in = false;
@@ -153,5 +155,7 @@ void	load_cmd_block(t_token **head)
 
 	i = -1;
 	while (head[++i])
+	{
 		metadata->cmd_block[i] = tokens_to_cmd(&head[i], i);
+	}
 }

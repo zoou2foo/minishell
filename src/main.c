@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 15:07:21 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:35:01 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void	minishell(void)
 	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
 }
 
+
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
@@ -174,6 +175,7 @@ int	main(int ac, char **av)		//use char **environ instead
 	}
 	return (0);
 }
+
 
 
 //Loyc's main (DEBUG)
@@ -189,9 +191,10 @@ int	main(void)
 	int		i;
 
 	//char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
+	char	*line = "<$HOME/infile grep -v 42 "" "" | >> outfile wc -l > outfile2 | ls "" | >outfile3 | echo \"\"";
 	//char	*line = "echo \"pew\" pew \"\"";
 	//char	*line = "lol\"lol\"\'lol\'";
-	char	*line = "echo $USER $U $? $";
+	//char	*line = "echo $USER $U $? $";
 
 	printf("\n INPUT LINE : \"%s\"\n", line);
 
@@ -223,6 +226,7 @@ int	main(void)
 	}
 }
 */
+
 
 
 //VAL's main (DEBUG)

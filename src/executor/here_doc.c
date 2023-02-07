@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 12:34:10 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:45:54 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*gnl_minihell(void)
 // then it has to be written in the pipe. And we return fd[0] so it can be read
 int	execute_hd(char *string)
 {
-	int		pipe_hd[2];							//ADD ME TO METADATA.PIPES
+	int		pipe_hd[2];
 	char	*gnl_return;
 	char	*tmp;
 
@@ -46,9 +46,10 @@ int	execute_hd(char *string)
 		ft_free_null(string);
 		exit (1);
 	}
+	printf("\nWaiting for heredoc input (<<%s) :\n", string);	//UI
 	while (1)
 	{
-		printf("\nWaiting for heredoc input (<<%s) :\n", string);	//UI
+		write(1, "> ", 2);
 		gnl_return = gnl_minihell();
 		tmp = ft_strtrim(gnl_return, "\n");
 		if ((ft_strncmp(tmp, string, ft_strlen(gnl_return))) == 0)

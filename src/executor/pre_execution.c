@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:06:33 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:30:41 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	execute_cmd_block(void)
 				}
 				init_signals(2);
 				close_fds(cmd);
-				waitpid(metadata->pid, NULL, 0);
+				waitpid(metadata->pid, &metadata->exit_status, 0);
 				metadata->pid = 0;
 			}
 		}

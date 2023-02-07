@@ -153,4 +153,4 @@ run: re
 # Runs the program with valgrind
 leaks: all
 	@echo "$(RED)Checking leaks...$(DEF_COLOR)"
-	$(HIDE) valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes -s $(CMD)
+	$(HIDE) valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppressions=supp.txt -s $(CMD)

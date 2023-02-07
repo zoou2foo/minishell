@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:07:58 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:46:42 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,15 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 			{
 				ft_free_null(cmd->input);
 				cmd->input = ft_strdup(node->string);
+				if (cmd->fdin != 0)
+					close(cmd->fdin);
+				cmd->fdin = 0;
 			}
 			else if (node->type == TTYPE_HEREDOC)
 			{
 				ft_free_null(cmd->input);
-				//close previous heredoc if necessary
+				if (cmd->fdin != 0)
+					close(cmd->fdin);
 				cmd->fdin = execute_hd(node->string);
 			}
 			node = cut_token(node);

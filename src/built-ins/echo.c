@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 13:17:26 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 11:41:18 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,20 @@ void	do_echo(t_cmd *cmd)
 {
 	int	newline;
 	int	i;
+	int	j;
 
 	i = 1;
 	newline = 1;
-	if (cmd->cmd_args[i][0] == '-' && cmd->cmd_args[i][1] == 'n' && cmd->cmd_args[i][2] == '\0')
+	if (cmd->cmd_args[i][0] == '-')
 	{
-		printf("%s", &cmd->cmd_args[i][3]);
-		newline = 0;
-		i++;
+		j = 1;
+		while (cmd->cmd_args[i][j] == 'n')
+			j++;
+		if (cmd->cmd_args[i][j] == '\0')
+		{
+			newline = 0;
+			i++;
+		}
 	}
 	while (cmd->cmd_args[i])
 	{

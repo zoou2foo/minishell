@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/06 15:24:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 11:34:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,4 +180,23 @@ t_token	*merge_token_list(t_token *head)
 		node = node->next;
 	}
 	return (find_head(node));
+}
+
+t_token	*cut_empty_token(t_token *head)			//to remove empties (FINISH ME)
+{												//also make cut_token make sense
+	t_token	*node;
+	t_token	*prev;
+
+	node = head;
+	prev = head;
+	while (node)
+	{
+		if (node->type == TTYPE_EMPTY)
+			node = cut_token(node);
+		prev = node;
+		node = node->next;
+	}
+	head = find_head(prev);
+
+	return (head);
 }

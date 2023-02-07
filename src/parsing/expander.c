@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 11:30:22 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 11:29:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ char	*expand(char *str1)
 			ft_free_null(str1);
 			return (ft_itoa(metadata->exit_status));
 		}
-		while (environ[++i])
+		while (metadata->env[++i])
 		{
 			j = 0;
-			if (ft_strncmp(str1, environ[i], ft_strlen(str1)) == 0)
+			if (ft_strncmp(str1, metadata->env[i], ft_strlen(str1)) == 0)
 			{
 				j += ft_strlen(str1);
-				if (environ[i][j] != '=')
+				if (metadata->env[i][j] != '=')
 					continue;
 				j++;
 				ft_free_null(str2);
-				str2 = ft_calloc(ft_strlen(environ[i]), sizeof(char));
+				str2 = ft_calloc(ft_strlen(metadata->env[i]), sizeof(char));
 				k = 0;
-				while (environ[i][j])
+				while (metadata->env[i][j])
 				{
-					str2[k] = environ[i][j];
+					str2[k] = metadata->env[i][j];
 					j++;
 					k++;
 				}

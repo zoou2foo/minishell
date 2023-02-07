@@ -32,11 +32,8 @@ valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --suppress
 0====( PROBS TO SOLVE )====0
 1. unset PATH --> fill_path_tab un autre qui ajoute la ligne dans metadata->env.
 Quand export, il faut que je check si la ligne est ajouté à metadata->env$
-2. commande sans cmd_args dit que la cmd est invalide
-3. fermer les fds si on a plusieurs redirection dans la même ligne de cmd
-4. Prob avec CTRL-D, segfault again...
-5. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
-6. echo -nnnnnnnnnn allo ->doit fait comme s'il y a juste un -n.
+2. Prob avec CTRL-D, segfault again...
+3. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
 
 
 
@@ -46,7 +43,8 @@ Quand export, il faut que je check si la ligne est ajouté à metadata->env$
 
 0====( DEBUG TO DO )====0
 
-handle argless cmds
+1. commande sans cmd_args dit que la cmd est invalide
+2. fermer les fds si on a plusieurs redirection dans la même ligne de cmd
 
 
 0====( TEST CASES )====0

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 12:36:17 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:02:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,8 @@ void	minishell(void)
 	clear_history();
 	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
 }
-/*
+
+
 int	main(int ac, char **av)		//use char **environ instead
 {
 	//extern	char	**environ; //pas de variable globale
@@ -174,13 +175,13 @@ int	main(int ac, char **av)		//use char **environ instead
 	}
 	return (0);
 }
-*/
+
 
 
 //Loyc's main (DEBUG)
 
 
-
+/*
 int	main(void)
 {
 	bool	show_env = false;
@@ -224,6 +225,7 @@ int	main(void)
 			print_cmd(metadata->cmd_block[i]);
 	}
 }
+*/
 
 
 

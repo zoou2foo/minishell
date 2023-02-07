@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 15:04:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:06:33 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,32 @@ void	execute_cmd_block(void)
 	while (i < metadata->cmd_nb) //ajouter moins 1 ou non...
 	{
 		cmd = metadata->cmd_block[i];
-		if (!built_ins_childable(cmd))	//**handling exit() on its own to avoid childing Fonction pour check if childable
+		if (cmd->argcount > 0)
 		{
-			close_fds(cmd);
-			execute_builtins(cmd);
-		}
-		else
-		{
-			cmd_fork();
-			if (metadata->pid < 0)
+			if (!built_ins_childable(cmd))	//**handling exit() on its own to avoid childing Fonction pour check if childable
 			{
-				write(2, ERR_PID, ft_strlen(ERR_PID));;
-				//TODO : handle error
+				close_fds(cmd);
+				execute_builtins(cmd);
 			}
-			if (metadata->pid == 0)			//if child
+			else
 			{
-				dup2(cmd->fdin, STDIN_FILENO);
-				dup2(cmd->fdout, STDOUT_FILENO);
-				child_process(cmd);
+				cmd_fork();
+				if (metadata->pid < 0)
+				{
+					write(2, ERR_PID, ft_strlen(ERR_PID));;
+					//TODO : handle error
+				}
+				if (metadata->pid == 0)			//if child
+				{
+					dup2(cmd->fdin, STDIN_FILENO);
+					dup2(cmd->fdout, STDOUT_FILENO);
+					child_process(cmd);
+				}
+				init_signals(2);
+				close_fds(cmd);
+				waitpid(metadata->pid, NULL, 0);
+				metadata->pid = 0;
 			}
-			init_signals(2);
-			close_fds(cmd);
-			waitpid(metadata->pid, NULL, 0);
-			metadata->pid = 0;
 		}
 		i++;
 	}

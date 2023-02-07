@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 12:39:44 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:07:58 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,15 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	node = *head;
 	while (node)	//convert remaining tokens into cmd_args
 	{
-		cmd->cmd_args[i++] = ft_strdup(node->string);
-		cmd->argcount++;
+		if (node->type != TTYPE_EMPTY)
+		{
+			cmd->cmd_args[i++] = ft_strdup(node->string);
+			cmd->argcount++;
+		}
 		node = node->next;
 	}
 
-	if (is_built_in(cmd->cmd_args[0]) == 1)
+	if (cmd->argcount > 0 && is_built_in(cmd->cmd_args[0]) == 1)
 		cmd->is_built_in = true;
 	else
 		cmd->is_built_in = false;

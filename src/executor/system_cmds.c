@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 16:06:00 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:05:29 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,11 @@ void	exec_with_paths(t_cmd *cmd)
 
 	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
-	if (cmd->argcount > 0)
+	while (metadata->paths[++i])
 	{
-		while (metadata->paths[++i])
-		{
-			cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
-			if (!access(cmd_path, F_OK | X_OK))
-				execve(cmd_path, cmd->cmd_args, metadata->env);
-			ft_free_null(cmd_path);
-		}
+		cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
+		if (!access(cmd_path, F_OK | X_OK))
+			execve(cmd_path, cmd->cmd_args, metadata->env);
+		ft_free_null(cmd_path);
 	}
 }

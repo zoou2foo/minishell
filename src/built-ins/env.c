@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:03:59 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:53:04 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	get_env(void)
 		printf("%s\n", metadata->env[i]);
 		i++;
 	}
-	exit (EXIT_SUCCESS);
+	exit (EXIT_SUCCESS);	//always succeed
 }

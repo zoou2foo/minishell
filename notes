@@ -1,17 +1,13 @@
 /*
 0========( PROBS TO SOLVE )========0
-1. make sure childs exit with the proper status (and non-child builtins?)
-2. make export childable WHEN it has no args (cause it prints stuff out)
-3. checks for behaviour with empty redir / piping
+1. checks for behaviour with empty redir / piping
+2. make > / >> create file (why won't it wtf)
+3. functions output broke wtf
 
 
 0============(   VALERIE   )============0
 
-0========(   VALERIE   )========0
-
-
 0====( DEBUG TO DO )====0
-
 
 
 
@@ -19,12 +15,9 @@
 
 
 
-
-
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-1. fermer les fds si on a plusieurs redirection dans la même ligne de cmd (done???)
 
 
 

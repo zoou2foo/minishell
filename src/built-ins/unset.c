@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:35:50 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:44:48 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	do_unset(t_cmd *cmd)
 	else // si variable n'existe pas
 	{
 		throw_error(ERR_VAR);
+		metadata->exit_status = EXIT_FAILURE;
 	}
 	metadata->exit_status = EXIT_SUCCESS;
 }

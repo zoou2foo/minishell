@@ -6,15 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:55:13 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:12:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Use global var. Void.
-// Look for "path" in env. Split at ":". Then, join "/" aftet each section
-// added metadata->path. Call a function at the end to deal with errors.
+// Looks for "path" in env. Splits at ":". Then, join s"/" after each section
 void	fill_path_tab(void)
 {
 	int		i;
@@ -39,20 +37,18 @@ void	fill_path_tab(void)
 		}
 		i++;
 	}
-	error_fill_path();
+	throw_error(ERR_ENV);
+	ft_free_null(metadata); // should add exit status 127
 }
 
-//in case that previous function doesn't find the variable. No need to receive
-// or return anything
-void	error_fill_path(void)
+//throws out a specified error message
+void	throw_error(char *str)
 {
-	write(2, "Environment variables not found\n", 32);
-	free(metadata); // should add exit status 127
+	write(2, str, ft_strlen(str));
 }
 
-// Return nothing. Receive t_cmd to check if the cmd exists and the executable
-// exists.
-// Then, execute through execve.
+// Checks if a given cmd exists and is executable, then execute it
+// Execve automatically exit() when used
 void	exec_with_paths(t_cmd *cmd)
 {
 	char	*cmd_path;
@@ -69,4 +65,5 @@ void	exec_with_paths(t_cmd *cmd)
 			execve(cmd_path, cmd->cmd_args, metadata->env);
 		ft_free_null(cmd_path);
 	}
+	throw_error(ERR_CMD);
 }

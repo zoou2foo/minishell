@@ -6,12 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 11:29:32 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:23:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//expands an expansion string ($_)
 char	*expand(char *str1)
 {
 	char	*str2;
@@ -20,11 +21,9 @@ char	*expand(char *str1)
 	int		k;
 
 	str2 = ft_calloc(2, sizeof(char));
-
+	i = -1;
 	if (str1[0])
 	{
-		i = -1;
-
 		if (str1[0] == '?' && str1[1] == '\0')
 		{
 			ft_free_null(str1);
@@ -58,6 +57,7 @@ char	*expand(char *str1)
 	return (str2);
 }
 
+//duplicates only the first len chars of a given string
 char	*trimstr(char *str1, int len)
 {
 	char	*str2;
@@ -73,6 +73,7 @@ char	*trimstr(char *str1, int len)
 	return (str2);
 }
 
+//expands inside a quote string ("$_") if needed
 char	*expand_quote(char *str1)
 {
 	char	*str2;
@@ -82,14 +83,14 @@ char	*expand_quote(char *str1)
 
 	str2 = ft_calloc(1, sizeof(char));
 	i = 0;
-	len = 0;
 	while (str1[i])
 	{
+		len = 0;
 		if (str1[i] == '$')
 		{
 			i += 1;
-			while (str1[i + len] && is_capital(str1[i + len]))		//USE ANOTHER FUNCTION
-				len += 1;
+			while (is_in_expansion(str1[i + len]))
+				len++;
 			tmp = expand(trimstr(&str1[i], len));
 			i += len - 1;
 		}

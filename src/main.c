@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 10:51:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:29:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_meta(void)
 	fill_path_tab();
 }
 
-//function to test tokenization (and see our tokens). PURPOSE: debug/testing
+//prints the gien token lists according to internal specifications
 void	print_token_list(t_token *head)
 {
 	bool	show_joined = true;
@@ -109,7 +109,7 @@ void	print_token_list(t_token *head)
 	printf("\n");
 }
 
-// function to test cmd fds and input/output. PURPOSE: debug/testing
+//prints a given command
 void	print_cmd(t_cmd *cmd)
 {
 	int	i;
@@ -129,6 +129,7 @@ void	print_cmd(t_cmd *cmd)
 	printf("\n");
 }
 
+//Checks if a given line contains either nothing or only space-like characters
 int	is_line_empty(char *line)
 {
 	int	i;
@@ -140,9 +141,18 @@ int	is_line_empty(char *line)
 	return (1);
 }
 
-// Receive nothing. Return nothing. Main purpose: init struct and signals.
-// Start readline and call functions to parse the command line
-// Call functions to execut.
+// Main logic loop of minishell. It initialises metadata and signals and every cycle, it:
+// - reads the inputed line
+// - checks if said line empty
+// - add it to the history
+// - converts it into a cmd_block
+// - checks if the global state is still valid
+// - execute said cmd_block
+// - frees the line buffer
+// - repeat
+// Once the loop is over, it;
+// - clears the history
+// - frees all the leftover data
 void	minishell(void)
 {
 	init_meta();
@@ -150,8 +160,8 @@ void	minishell(void)
 	while (metadata->state >= 0)
 	{
 		metadata->state = MSTATE_NORMAL;
-		metadata->buf = readline("bash-Pew Pew> ");
-		if (!metadata->buf)
+		metadata->buf = readline("MNSH > ");
+		if (!metadata->buf)		//to make ctrl+d not segfault (cause it makes the buffer == null)
 			break ;
 		if (!is_line_empty(metadata->buf))
 		{
@@ -163,18 +173,18 @@ void	minishell(void)
 		ft_free_null(metadata->buf);
 	}
 	clear_history();
-	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_meta())
+	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_all()?)
 }
 
 
-int	main(int ac, char **av)		//use char **environ instead
+int	main(int ac, char **av)
 {
 	//extern	char	**environ; //pas de variable globale
 	(void)av;
-	if (ac == 1)
-	{
-		minishell();
-	}
+	if (ac != 1)				//superfluous
+		throw_error(ERR_AC);
+	minishell();
+
 	return (0);
 }
 

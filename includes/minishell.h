@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 12:38:37 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:52:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,16 @@ enum e_mstate
 };
 
 /*	ERROR MESSAGE	*/
-# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
+# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
+# define ERR_PID	"Process Error : Couldn't fork() properly\n"
+# define ERR_ENV	"Environment Error : Variables not found\n"
 # define ERR_PIPE	"Pipe Error: Invalid file descriptor\n"
-# define ERR_CMD	"Command Error : Invalid command call\n"
-# define ERR_PID	"Process Error : Couldn't fork properly\n"
+# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
+# define ERR_CMD	"Input Error : Command not found\n"
+
+# define ERR_AC		"Input Warning : Minishell executable does not take arguments\n"
+# define ERR_VAR	"Variable Warning : Variable does not exit\n"
+# define ERR_DIR	"Directory Warning : Directory not found\n"
 
 typedef struct s_token
 {
@@ -117,8 +123,8 @@ t_token	**parse_line(char *line);
 void	load_cmd_block(t_token **head);
 
 //from tokenizer
-bool	is_space(char c);	//à mettre dans libft
-bool	is_capital(char c);	//à mettre dans libft (USE ANOTHER FUNCTION)
+bool	is_space(char c);					//à mettre dans libft
+bool	is_in_expansion(char c);
 t_token	*create_token_list(char *line);
 void	expand_token_list(t_token *head);
 t_token	*merge_token_list(t_token *head);
@@ -140,7 +146,7 @@ void	destroy_token(t_token *node);
 
 /*		SYSTEM_CMDS		*/
 void	fill_path_tab(void);
-void	error_fill_path(void);
+void	throw_error(char *str);
 void	exec_with_paths(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/

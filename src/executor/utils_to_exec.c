@@ -6,14 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 14:02:20 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:15:16 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Take the arg (char *) to look if it is a built-in or not. Return an int as
-// a flag
+// CHecks if the given cmd_arg is a built-in (1 = true, 0 = false)
 int	is_built_in(char *cmd_arg)
 {
 	if ((ft_strncmp(cmd_arg, "echo", 4) == 0)
@@ -23,13 +22,12 @@ int	is_built_in(char *cmd_arg)
 		|| (ft_strncmp(cmd_arg, "export", 6) == 0)
 		|| (ft_strncmp(cmd_arg, "pwd", 3) == 0)
 		|| (ft_strncmp(cmd_arg, "unset", 5) == 0))
-		return (1); //need to double check as in pre_exec is set to false and true
+		return (1);
 	else
 		return (0);
 }
 
-// Return nothing. Execute the correct built-in called. Take t_cmd to check
-// the built-in received.
+// Executes the built-in called via the first cmd_arg
 void	execute_builtins(t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->cmd_args[0], "echo", 4) == 0)
@@ -48,15 +46,14 @@ void	execute_builtins(t_cmd *cmd)
 		do_unset(cmd);
 }
 
-int	built_ins_childable(t_cmd *cmd) //il mettre exit, unset, cd et export
+// Checks if the built-in should be executed in a child process via the first cmd_arg
+int	built_ins_childable(t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)
 		return (0);
 	if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
 		return (0);
 	if (ft_strncmp(cmd->cmd_args[0], "cd", 2) == 0)
-		return (0);
-	if (ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
 		return (0);
 	else
 		return (1);

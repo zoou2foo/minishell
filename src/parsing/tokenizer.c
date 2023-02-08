@@ -6,26 +6,29 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/07 13:00:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:53:01 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_space(char c)
+//checks if the given char is "space-like"
+bool	is_space(char c)					//MOVE ME TO LIBFT
 {
 	if ((9 <= c && c <= 13) || c == ' ')
 		return (true);
 	return (false);
 }
 
-bool	is_capital(char c)		//OBSOLETE
+//checks if the given char is still inside an expansion
+bool	is_in_expansion(char c)
 {
-	if ('A' <= c && c <= 'Z')
+	if (c && !is_space(c) && c != '$')
 		return (true);
 	return (false);
 }
 
+//checks if a given token type is mergable
 bool	is_mergeable(int type)
 {
 	if (TTYPE_NORMAL <= type && type <= TTYPE_EXPAND)
@@ -33,6 +36,7 @@ bool	is_mergeable(int type)
 	return (false);
 }
 
+//converts the given input line in a raw token list
 t_token	*create_token_list(char *line)
 {
 	t_token	*head;
@@ -41,7 +45,7 @@ t_token	*create_token_list(char *line)
 
 	head = NULL;
 	i = -1;
-	while (line[++i])				//when making functions with these, make sure they return len
+	while (line[++i])
 	{
 		len = 0;
 		while (is_space(line[i]))
@@ -83,7 +87,7 @@ t_token	*create_token_list(char *line)
 				len++;
 			if (!line[i + len])					//makes us ignore the cmd line when unterminated quotes
 			{
-				write(2, ERR_QUOTE, ft_strlen(ERR_QUOTE));
+				throw_error(ERR_QUOTE);
 				metadata->state = MSTATE_O_BRACK;
 			}
 			add_token(new_token(&line[i + 1], len - 2, TTYPE_S_QUOTE), &head);
@@ -97,7 +101,7 @@ t_token	*create_token_list(char *line)
 				len++;
 			if (!line[i + len])					//makes us ignore the cmd line when unterminated quotes
 			{
-				write(2, ERR_QUOTE, ft_strlen(ERR_QUOTE));
+				throw_error(ERR_QUOTE);
 				metadata->state = MSTATE_O_BRACK;
 			}
 			add_token(new_token(&line[i + 1], len - 2, TTYPE_D_QUOTE), &head);
@@ -107,7 +111,7 @@ t_token	*create_token_list(char *line)
 		else if (line[i] == '$')
 		{
 			len++;
-			while (line[i + len] && !is_space(line[i + len]) && line[i + len] != '$')
+			while (is_in_expansion(line[i + len]))
 				len++;
 			len--;
 			add_token(new_token(&line[i + 1], len - 1, TTYPE_EXPAND), &head);
@@ -116,7 +120,6 @@ t_token	*create_token_list(char *line)
 		//deals with normal cmds/args input
 		else
 		{
-			//while (line[i + len] && !is_space(line[i + len]) && !is_special(line[i + len]))
 			while (line[i + len] && !is_space(line[i + len]) && !ft_strchr("|><\'\"$", line[i + len]))
 				len++;
 			len -= 1;
@@ -134,6 +137,7 @@ t_token	*create_token_list(char *line)
 	return (head);
 }
 
+//expands the expandable tokens in a given token list
 void	expand_token_list(t_token *head)
 {
 	t_token	*node;
@@ -161,6 +165,7 @@ void	expand_token_list(t_token *head)
 	}
 }
 
+//merges the mergeable tokens in a given token list
 t_token	*merge_token_list(t_token *head)
 {
 	t_token	*node;
@@ -182,6 +187,7 @@ t_token	*merge_token_list(t_token *head)
 	return (find_head(node));
 }
 
+//removes the empty tokens from a given token list
 t_token	*remove_empty_list(t_token *head)			//to remove empty tokens
 {
 	t_token	*node;

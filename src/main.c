@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:35:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:51:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ void	minishell(void)
 	{
 		metadata->state = MSTATE_NORMAL;
 		metadata->buf = readline("bash-Pew Pew> ");
+		if (!metadata->buf)
+			break ;
 		if (!is_line_empty(metadata->buf))
 		{
 			add_history(metadata->buf);

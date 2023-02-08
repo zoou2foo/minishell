@@ -7,8 +7,7 @@
 0========(   VALERIE   )========0
 
 0====( DEBUG TO DO )====0
-1. Prob avec CTRL-D, segfault again...
-2. export doit updater une valeur si elle existe deja. Puis, segfault quand on unset la var, car il sait pas laquelle choisir.
+
 
 
 bash-Pew Pew> echo $bob

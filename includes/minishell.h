@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 10:52:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 14:05:03 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ extern t_meta	*metadata;
 
 /* 		MAIN			*/
 void	init_meta(void);
-void	print_token_list(t_token *head);
+void	print_token_list(t_token *head, bool start_with_newline);
 
 /* 		BUILT-INS		*/
 void	do_exit(t_cmd *cmd); //Need to change back to void.

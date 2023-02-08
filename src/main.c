@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:29:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 14:09:33 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,8 @@
 
 t_meta	*metadata;	//our global var
 
-void	print_tab_env(void)
-{
-	int	i;
-	i = 0;
-	printf("\n");
-	while (metadata->env[i])
-	{
-		printf("%s\n", metadata->env[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-//allocates memory for and fills the global metadata var with default values (for env and path)
-void	init_meta(void)
-{
-	int	i;
-
-	metadata = ft_calloc(sizeof(t_meta), 1);
-
-	i = 0;
-	while (environ[i])
-		i++;
-	metadata->env = ft_calloc(sizeof(char *), i + 1);
-	i = 0;
-	while (environ[i])
-	{
-		metadata->env[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	fill_path_tab();
-}
-
 //prints the gien token lists according to internal specifications
-void	print_token_list(t_token *head)
+void	print_token_list(t_token *head, bool start_with_newline)
 {
 	bool	show_joined = true;
 	bool	show_newline = false;
@@ -58,8 +25,10 @@ void	print_token_list(t_token *head)
 	t_token	*node;
 
 	node = head;
+	if (start_with_newline)
+		printf("\n");
 	if (!show_newline)
-		printf("\n|");
+		printf("|");
 	while (node)
 	{
 		if (node && show_joined && node->is_joined)
@@ -114,7 +83,7 @@ void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
-	printf(" _COMMAND_#%i_\n|\n", cmd->id);
+	printf("\n _COMMAND_#%i_\n|\n", cmd->id);
 
 	printf("| fdin  : %i\n", cmd->fdin);
 	printf("| fdout : %i\n|\n", cmd->fdout);
@@ -126,10 +95,23 @@ void	print_cmd(t_cmd *cmd)
 	i = -1;
 	while (cmd->cmd_args[++i])
 		printf("| | %i : '%s'\n",i, cmd->cmd_args[i]);
+}
+
+//prints metadata->env
+void	print_tab_env(void)
+{
+	int	i;
+	i = 0;
+	printf("\n");
+	while (metadata->env[i])
+	{
+		printf("%s\n", metadata->env[i]);
+		i++;
+	}
 	printf("\n");
 }
 
-//Checks if a given line contains either nothing or only space-like characters
+//checks if a given line contains either nothing or only space-like characters
 int	is_line_empty(char *line)
 {
 	int	i;
@@ -139,6 +121,26 @@ int	is_line_empty(char *line)
 		if (!is_space(line[i]))
 			return (0);
 	return (1);
+}
+
+//allocates memory for and fills the global metadata var with default values (for env and path)
+void	init_meta(void)
+{
+	int	i;
+
+	metadata = ft_calloc(sizeof(t_meta), 1);
+
+	i = 0;
+	while (environ[i])
+		i++;
+	metadata->env = ft_calloc(sizeof(char *), i + 1);
+	i = 0;
+	while (environ[i])
+	{
+		metadata->env[i] = ft_strdup(environ[i]);
+		i++;
+	}
+	fill_path_tab();
 }
 
 // Main logic loop of minishell. It initialises metadata and signals and every cycle, it:
@@ -190,6 +192,7 @@ int	main(int ac, char **av)
 
 
 
+
 //Loyc's main (DEBUG)
 
 
@@ -202,8 +205,8 @@ int	main(void)
 
 	int		i;
 
-	//char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-	char	*line = "<$HOME/infile grep -v 42 "" "" | >> outfile wc -l > outfile2 | ls "" | >outfile3 | echo \"\"";
+	char	*line = "<<END <\"$HOME\"/infile grep -v 42 \"\" | >> outfile wc -l > outfile2 | ls | \"\" \"\" >outfile3 | echo \"don't | $USER | split\"";
+	//char	*line = "<$HOME/infile grep -v 42 "" "" | >> outfile wc -l > outfile2 | ls "" | >outfile3 | echo \"\"";
 	//char	*line = "echo \"pew\" pew \"\"";
 	//char	*line = "lol\"lol\"\'lol\'";
 	//char	*line = "echo $USER $U $? $";
@@ -226,7 +229,7 @@ int	main(void)
 		printf("\n");
 		i = -1;
 		while (token_block[++i])
-			print_token_list(token_block[i]);
+			print_token_list(token_block[i], false);
 		printf("\n\n");
 	}
 
@@ -236,6 +239,8 @@ int	main(void)
 		while(metadata->cmd_block[++i])
 			print_cmd(metadata->cmd_block[i]);
 	}
+
+	printf("\n");
 }
 */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 11:25:49 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:31:31 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:45:28 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	get_pwd(void)
 		throw_error(ERR_PWD);
 	}
 	else
+	{
 		printf("%s\n", cwd);
-	exit (EXIT_SUCCESS);
+		exit (EXIT_SUCCESS);
+	}
 }

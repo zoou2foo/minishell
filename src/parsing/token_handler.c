@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/07 12:42:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:18:58 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,15 +190,15 @@ t_token	*cut_token(t_token *node)
 	ret = NULL;
 	if (node)
 	{
-		if (node->prev)
-		{
-			node->prev->next = node->next;
-			ret = node->prev;
-		}
 		if (node->next)
 		{
 			node->next->prev = node->prev;
 			ret = node->next;
+		}
+		if (node->prev)
+		{
+			node->prev->next = node->next;
+			ret = node->prev;
 		}
 		if (!node->prev && !node->next)
 		{

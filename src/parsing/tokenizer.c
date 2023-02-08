@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/08 10:53:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:38:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ t_token	*merge_token_list(t_token *head)
 }
 
 //removes the empty tokens from a given token list
-t_token	*remove_empty_list(t_token *head)			//to remove empty tokens
+t_token	*remove_empty_list(t_token *head)
 {
 	t_token	*node;
 
@@ -196,7 +196,14 @@ t_token	*remove_empty_list(t_token *head)			//to remove empty tokens
 	while (node)
 	{
 		if (node->type == TTYPE_EMPTY)
+		{
 			node = cut_token(node);
+			/*
+			if (node->next)				//prevent false joins
+				if (!node->is_joined || !node->next->is_joined)
+					node->next->is_joined = false;
+			*/
+		}
 		if (node->next)
 			node = node->next;
 		else

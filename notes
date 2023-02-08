@@ -1,21 +1,19 @@
 /*
 0========( PROBS TO SOLVE )========0
+1. checks for behaviour with empty redir / piping
+2. "<[bad file path] cmd" hangs
 
 
 0============(   VALERIE   )============0
-1. exit status code. When wrong cmd like las or catt; should the code be 127 or 256??
-Il faut que après waitpid, faire wexitstatus.
-2. quand input/infile n'existe pas; process hang. peut-être tokenizer (LL)
+1. exit status with wexitstatus and wifexited
+2.
 
 
 0====( DEBUG TO DO )====0
 
 
 
-
 0====( TEST CASES )====0
-
-
 
 
 
@@ -25,18 +23,9 @@ Il faut que après waitpid, faire wexitstatus.
 
 
 
-
 0====( TEST CASES )====0
 
 cmd
-cmd arg1
-cmd arg1 arg2
-
-cmd >out1
-cmd >>out1
-cmd >out1 >out2
-
-
 <in1 cmd
 <<in1 cmd
 

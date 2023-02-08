@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:03:25 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:46:04 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ void	do_echo(t_cmd *cmd)
 	}
 	if (newline)
 		printf("\n");
-	exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);	//always succeed
 }

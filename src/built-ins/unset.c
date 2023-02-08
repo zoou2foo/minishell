@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:31:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:44:48 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ void	do_unset(t_cmd *cmd)
 		ft_free_null(metadata->env);
 		metadata->env = new_env;
 	}
-	else if (check_arg_4_unset(cmd) != 1) // Si variable n'existe pas
+	else // si variable n'existe pas
 	{
 		throw_error(ERR_VAR);
+		metadata->exit_status = EXIT_FAILURE;
 	}
 	metadata->exit_status = EXIT_SUCCESS;
 }
 
-// Return int as a flag to know that it found the var in env. Take t_cmd of arg
+// returns 1 if the cmd_arg is in env
 int	check_arg_4_unset(t_cmd *cmd)
 {
 	int	i;
@@ -80,6 +81,6 @@ int	check_arg_4_unset(t_cmd *cmd)
 			return (1);
 		i++;
 	}
-	return (-1);
+	return (0);
 }
 

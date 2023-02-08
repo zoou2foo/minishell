@@ -6,14 +6,14 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/07 11:37:35 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:28:44 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//splits the cmd line along pipes and
-t_token	**parse_line(char *line)				//check validity of token list beforehand
+//converts the given input line into a "true" finalized token list
+t_token	**parse_line(char *line)
 {
 	t_token	**token_array;
 	t_token	*head;
@@ -28,7 +28,7 @@ t_token	**parse_line(char *line)				//check validity of token list beforehand
 	head = merge_token_list(head);
 //	print_token_list(head);				//DEBUG
 
-	i = 1;		//1 because at least one cmd to execute
+	i = 1;		//at least 1 cmd to execute
 	node = head;
 	while (node)
 	{

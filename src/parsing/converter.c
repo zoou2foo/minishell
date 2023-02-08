@@ -6,30 +6,11 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 09:35:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:28:26 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-
-	from token array
-
-	create one t_cmd per line
-
-	loop on all lines multiple times:
-		- once to merge tokens (ex > type + string = string w/ type >)
-		- once to fill the t_cmd with the redir (and call here*
-		10
-		doc funct)
-		- once to convert remaining tokens into cmd_args
-
-	free all tokens
-
-	//AFTER WE SHOULD TEST/INTEGRATE THE BUILT-INS
-
-*/
 
 //convert a single token list into a cmd, setting all info needed for execution
 t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
@@ -141,7 +122,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	return (cmd);
 }
 
-//convert every token list into cmds, setting all info needed for execution
+//converts every token list into cmds, setting all info needed for execution
 void	load_cmd_block(t_token **head)
 {
 	int	i;

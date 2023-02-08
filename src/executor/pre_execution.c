@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 09:53:07 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:18:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Use global var, so void. Fork and then deal with error.
+// Forks and check for fork() failure
 void	cmd_fork(void)
 {
 	metadata->pid = fork();
@@ -21,11 +21,10 @@ void	cmd_fork(void)
 		//TODO : handle error
 		throw_error(ERR_PIPE);
 		ft_free_null(metadata);
-		exit (1);
 	}
 }
 
-// Return nothing. Takes t_cmd to close all the fds.
+// Closes the fdin and fdout of a given cmd
 void	close_fds(t_cmd *cmd)
 {
 	if (cmd->fdin != 0)
@@ -34,14 +33,10 @@ void	close_fds(t_cmd *cmd)
 		close(cmd->fdout);
 }
 
-// Return nothing as in prep of execution of child process. Needs to take t_cmd
-// to know the cmd and args the child takes care of.
-// if is_built_in is false -> execute them; else execute sys_cmds with path
-// then close everything and exit.
+// Choses wheter to execute a given cmd as a built_in or a sys_cmd
+// Exits with an error if the execution failed
 void	child_process(t_cmd *cmd)
 {
-	metadata->exit_status = 0;	//doesn't change the right exit status (duplicate metadata?) ????
-								//should add exit 127 if cmd not found
 	if (cmd->is_built_in == true)
 	{
 		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
@@ -52,23 +47,21 @@ void	child_process(t_cmd *cmd)
 	{
 		exec_with_paths(cmd);
 		//TODO : handle error
-		throw_error(ERR_CMD);
 	}
 	close_fds(cmd);
-	exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);		//this will set the value in the parent's metadata->exit_status
 }
 
-// Main execution. Use global var. Return nothing.
-// Going through the nb of cmds. Looking for exit to avoid doing it in child
-// Then we fork.
+// Goes through the cmd_block and checks if the cmd is a built and if we need to fork()
+// Then either execute the cmd or passes it to a child process
 void	execute_cmd_block(void)
 {
 	int		i;
 	t_cmd	*cmd;
 
-	i = 0;
+	i = -1;
 
-	while (i < metadata->cmd_nb) //ajouter moins 1 ou non...
+	while (++i < metadata->cmd_nb)
 	{
 		cmd = metadata->cmd_block[i];
 		if (cmd->argcount > 0)
@@ -98,8 +91,8 @@ void	execute_cmd_block(void)
 				metadata->pid = 0;
 			}
 		}
-		i++;
 	}
 	init_signals(1);
-	//close all pipes ? si on a des leaks, soit placer dans le parent ou non
+	//free the cmd_block and its t_cmds here
+	//free (and close?) the pipe array here
 }

@@ -6,15 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 09:51:28 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:12:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Use global var. Void.
-// Look for "path" in env. Split at ":". Then, join "/" aftet each section
-// added metadata->path. Call a function at the end to deal with errors.
+// Looks for "path" in env. Splits at ":". Then, join s"/" after each section
 void	fill_path_tab(void)
 {
 	int		i;
@@ -67,4 +65,5 @@ void	exec_with_paths(t_cmd *cmd)
 			execve(cmd_path, cmd->cmd_args, metadata->env);
 		ft_free_null(cmd_path);
 	}
+	throw_error(ERR_CMD);
 }

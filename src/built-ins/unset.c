@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 09:52:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:43:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	do_unset(t_cmd *cmd)
 		ft_free_null(metadata->env);
 		metadata->env = new_env;
 	}
-	else if (check_arg_4_unset(cmd) != 1)
+	else if (check_arg_4_unset(cmd) != 1) // Si variable n'existe pas
 	{
-		throw_error(ERR_VAR); //si variable n'existe pas, fait rien. New prompt. exit status 0
+		throw_error(ERR_VAR);
 	}
 }
 

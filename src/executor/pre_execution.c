@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 16:08:56 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:17:21 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,10 @@ void waitchild()
 	{
 		waitpid(metadata->pid[i], &metadata->exit_status, 0);
 		if (WIFEXITED(metadata->exit_status) == TRUE)
+		{
+			printf("wexitstatus: %d\n", WEXITSTATUS(metadata->exit_status));
 			metadata->exit_status = WEXITSTATUS(metadata->exit_status);
+		}
 		i++;
 	}
 }

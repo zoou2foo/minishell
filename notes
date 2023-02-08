@@ -5,8 +5,8 @@
 
 
 0============(   VALERIE   )============0
-1. exit status with wexitstatus and wifexited
-2.
+1. exit status with wexitstatus and wifexited. Almost there but only gets 0 or 1 still
+
 
 
 0====( DEBUG TO DO )====0

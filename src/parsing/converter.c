@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 12:07:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 14:10:44 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,16 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			break;
 	}
 
+
+	*head = find_head(node);	//reset head in case cut_token() destroys it
+	node = *head;				//reset node
+
+	//print_token_list(*head, true);				//DEBUG
+
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	cmd->fdin = 0;		//set default fd to use later
 	cmd->fdout = 1;		//set default fd to use later
 	cmd->id = id;		//sets the id of the
-
-	node = remove_empty_list(*head);	//remove all the empty tokens (except if its the only one left)
 
 	//finds redirection nodes and uses them
 	while (node)
@@ -70,6 +74,8 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 				cmd->fdin = execute_hd(node->string);
 			}
 			node = cut_token(node);						//remove node once used
+			if (!node->prev)
+				continue;
 		}
 		if (node->next)
 			node = node->next;
@@ -81,6 +87,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	*head = find_head(node);	//reset head in case cut_token() destroys it
 	node = *head;				//reset node
 
+	//print_token_list(*head, false);					//DEBUG
 
 	//open input and output file if they exist		(PROTECT ME WITH ACCESS)
 	if (cmd->input)									//opens the input file if it exists
@@ -97,6 +104,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	}
 	else if (id < metadata->cmd_nb - 1)				//else, uses the pipe if it can
 		cmd->fdout = metadata->pipes[id][1];
+
 
 	cmd->cmd_args = ft_calloc(find_length(node) + 1, sizeof(char *));
 

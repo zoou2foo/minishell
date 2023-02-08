@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:25:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:03:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	child_process(t_cmd *cmd)
 	{
 		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		//TODO : handle error
-		//write(STDERR_FILENO, "Command Error : Builtin failure\n", 33); //need to be moved
 	}
 	else
 	{
@@ -66,13 +65,13 @@ void	execute_cmd_block(void)
 		cmd = metadata->cmd_block[i];
 		if (cmd->argcount > 0)
 		{
-			if (!built_ins_childable(cmd))	//**handling exit() on its own to avoid childing Fonction pour check if childable
+			if (!built_ins_childable(cmd))	//calls non-childable functions directly
 			{
 				close_fds(cmd);
 				execute_builtins(cmd);
 			}
 			else if (cmd->argcount > 1 && ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
-			{
+			{								//calls export directly IF its has args
 				close_fds(cmd);
 				execute_builtins(cmd);
 			}

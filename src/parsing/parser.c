@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/08 10:28:44 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 14:12:22 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,16 @@ t_token	**parse_line(char *line)
 
 
 	head = create_token_list(line);
-//	print_token_list(head);				//DEBUG
+	//print_token_list(head, true);			//DEBUG
+
 	expand_token_list(head);
-//	print_token_list(head);				//DEBUG
+	//print_token_list(head, false);		//DEBUG
+
 	head = merge_token_list(head);
-//	print_token_list(head);				//DEBUG
+	//print_token_list(head, false);		//DEBUG
+
+	head = remove_empty_list(head);
+	//print_token_list(head, false);		//DEBUG
 
 	i = 1;		//at least 1 cmd to execute
 	node = head;

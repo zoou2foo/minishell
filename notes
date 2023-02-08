@@ -1,8 +1,7 @@
 /*
 0========( PROBS TO SOLVE )========0
 1. checks for behaviour with empty redir / piping
-2. make > / >> create file (why won't it wtf)
-3. functions output broke wtf
+2. "<[bad file path] cmd" hangs
 
 
 0============(   VALERIE   )============0

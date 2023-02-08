@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:51:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:06:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,19 @@ void	execute_builtins(t_cmd *cmd)
 		get_pwd();
 	else if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
 		do_unset(cmd);
+
+	//write(STDERR_FILENO, "Command Error : Builtin failure\n", 33);
 }
 
 // Checks if the built-in should be executed in a child process via the first cmd_arg
 int	built_ins_childable(t_cmd *cmd)
 {
-	if (ft_strncmp(cmd->cmd_args[0], "echo", 4) == 0)
-		return (1);
-	if (ft_strncmp(cmd->cmd_args[0], "env", 3) == 0)
-		return (1);
-	if (ft_strncmp(cmd->cmd_args[0], "pwd", 3) == 0)
-		return (1);
-	else
+	if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)
 		return (0);
+	if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
+		return (0);
+	if (ft_strncmp(cmd->cmd_args[0], "cd", 2) == 0)
+		return (0);
+	else
+		return (1);
 }

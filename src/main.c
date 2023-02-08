@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:27:22 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:29:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	minishell(void)
 	while (metadata->state >= 0)
 	{
 		metadata->state = MSTATE_NORMAL;
-		metadata->buf = readline("bash-Pew Pew> ");
+		metadata->buf = readline("MNSH > ");
 		if (!metadata->buf)		//to make ctrl+d not segfault (cause it makes the buffer == null)
 			break ;
 		if (!is_line_empty(metadata->buf))

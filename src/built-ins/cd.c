@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/03 09:42:18 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:52:07 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@
 void	change_dir(t_cmd *cmd)
 {
 	if (chdir(cmd->cmd_args[1]) != 0)
-		write(2, "Error: no such file or directory", 32); //maybe define ERROR_MESS
+		throw_error(ERR_DIR);
 }

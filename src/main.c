@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:56:13 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:59:53 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	minishell(void)
 	while (metadata->state >= 0)
 	{
 		metadata->state = MSTATE_NORMAL;
-		metadata->buf = readline("bash-Pew Pew> ");
+		metadata->buf = readline("MNSH - Pew Pew > ");
 		if (!is_line_empty(metadata->buf))
 		{
 			add_history(metadata->buf);

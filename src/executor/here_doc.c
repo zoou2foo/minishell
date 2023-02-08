@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:45:54 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:54:50 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execute_hd(char *string)
 
 	if (pipe(pipe_hd) == -1)
 	{
-		write(2, "Error: invalid pipe fd\n", 24);
+		throw_error(ERR_PIPE);
 		ft_free_null(string);
 		exit (1);
 	}
@@ -55,7 +55,7 @@ int	execute_hd(char *string)
 		if ((ft_strncmp(tmp, string, ft_strlen(gnl_return))) == 0)
 		{
 			ft_free_null(tmp);
-			printf("\n");							//UI
+			printf("\n");										//UI
 			break ;
 		}
 		write(pipe_hd[1], gnl_return, ft_strlen(gnl_return));

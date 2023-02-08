@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:30:41 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:53:07 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	cmd_fork(void)
 	if (metadata->pid == -1)
 	{
 		//TODO : handle error
-		write(2, ERR_PIPE, ft_strlen(ERR_PIPE));
+		throw_error(ERR_PIPE);
 		ft_free_null(metadata);
 		exit (1);
 	}
@@ -52,7 +52,7 @@ void	child_process(t_cmd *cmd)
 	{
 		exec_with_paths(cmd);
 		//TODO : handle error
-		write(2, ERR_CMD, ft_strlen(ERR_CMD));
+		throw_error(ERR_CMD);
 	}
 	close_fds(cmd);
 	exit(EXIT_FAILURE);
@@ -83,7 +83,7 @@ void	execute_cmd_block(void)
 				cmd_fork();
 				if (metadata->pid < 0)
 				{
-					write(2, ERR_PID, ft_strlen(ERR_PID));;
+					throw_error(ERR_PID);
 					//TODO : handle error
 				}
 				if (metadata->pid == 0)			//if child

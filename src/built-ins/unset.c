@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 11:57:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:52:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	do_unset(t_cmd *cmd)
 	}
 	else if (check_arg_4_unset(cmd) != 1)
 	{
-		printf("error: variable does not exist\n"); //si variable n'existe pas, fait rien. New prompt. exit status 0
+		throw_error(ERR_VAR); //si variable n'existe pas, fait rien. New prompt. exit status 0
 	}
 }
 

@@ -4,7 +4,7 @@
 
 
 
-0========(   VALERIE   )========0
+0============(   VALERIE   )============0
 
 0====( DEBUG TO DO )====0
 1. Prob avec CTRL-D, segfault again...
@@ -30,7 +30,7 @@ soit que je calloc pas assez; ou free quelque chose qu'on continue d'utiliser.
 
 
 
-0========(   LOYC   )========0
+0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
 1. fermer les fds si on a plusieurs redirection dans la même ligne de cmd (done???)

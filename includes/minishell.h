@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 12:38:37 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:56:54 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ enum e_mstate
 # define ERR_QUOTE	"Input Error : Non terminated quotes\n"
 # define ERR_PIPE	"Pipe Error: Invalid file descriptor\n"
 # define ERR_CMD	"Command Error : Invalid command call\n"
-# define ERR_PID	"Process Error : Couldn't fork properly\n"
+# define ERR_PID	"Process Error : Couldn't fork() properly\n"
+# define ERR_PWD	"Process Error : couldn't getcwd() properly\n"
+# define ERR_VAR	"Variable Error : Variable does not exit\n"
+# define ERR_ENV	"Environment Error : Variables not found\n"
+# define ERR_DIR	"Directory Error : Directory not found\n"
 
 typedef struct s_token
 {
@@ -140,7 +144,7 @@ void	destroy_token(t_token *node);
 
 /*		SYSTEM_CMDS		*/
 void	fill_path_tab(void);
-void	error_fill_path(void);
+void	throw_error(char *str);
 void	exec_with_paths(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/

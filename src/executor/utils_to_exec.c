@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 10:11:21 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:15:16 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	built_ins_childable(t_cmd *cmd)
 	if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
 		return (0);
 	if (ft_strncmp(cmd->cmd_args[0], "cd", 2) == 0)
-		return (0);
-	if (ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
 		return (0);
 	else
 		return (1);

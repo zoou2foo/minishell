@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 09:34:23 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:13:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	do_export(t_cmd *cmd)
 			printf("%s\n", metadata->env[i]);
 			i++;
 		}
+		exit(EXIT_SUCCESS);		//set exit_status indirectly because childable when no args
 	}
 	else if (check_arg_4_export(cmd) != 1)
 	{
@@ -152,6 +153,7 @@ void	do_export(t_cmd *cmd)
 			if (ft_strncmp(cmd->cmd_args[1], "PATH=", 5) == 0)
 				refill_path_tab(cmd->cmd_args[1]);
 		}
+		metadata->exit_status = EXIT_SUCCESS;	//set exit_status directly because non-childable when has args
 	}
 }
 

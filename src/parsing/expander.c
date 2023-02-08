@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:07:46 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:23:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ char	*expand(char *str1)
 	int		j;
 	int		k;
 
-	printf("(%s)\n", str1);
-
+	str2 = ft_calloc(2, sizeof(char));
+	i = -1;
 	if (str1[0])
 	{
-		i = -1;
-
 		if (str1[0] == '?' && str1[1] == '\0')
 		{
 			ft_free_null(str1);

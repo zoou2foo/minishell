@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 10:18:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:14:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void	execute_cmd_block(void)
 		if (cmd->argcount > 0)
 		{
 			if (!built_ins_childable(cmd))	//**handling exit() on its own to avoid childing Fonction pour check if childable
+			{
+				close_fds(cmd);
+				execute_builtins(cmd);
+			}
+			else if (cmd->argcount > 1 && ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
 			{
 				close_fds(cmd);
 				execute_builtins(cmd);

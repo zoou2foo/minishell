@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 10:55:06 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:10:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,13 +177,12 @@ void	minishell(void)
 }
 
 
-int	main(int ac, char **av)		//use char **environ instead
+int	main(int ac, char **av)
 {
 	//extern	char	**environ; //pas de variable globale
 	(void)av;
-	if (ac == 1)
+	if (ac != 1)				//superfluous
 		throw_error(ERR_AC);
-
 	minishell();
 
 	return (0);

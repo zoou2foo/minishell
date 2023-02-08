@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:05:29 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/07 13:55:13 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	fill_path_tab(void)
 	char	*tmp;
 
 	i = 0;
-	while (environ[i])
+	while (metadata->env[i])
 	{
-		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
+		if (ft_strncmp(metadata->env[i], "PATH=", 5) == 0)
 		{
-			metadata->paths = ft_split(&environ[i][5], ':');
+			metadata->paths = ft_split(&metadata->env[i][5], ':');
 			i = 0;
 
 			while (metadata->paths[i])

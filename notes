@@ -1,7 +1,7 @@
 /*
 0========( PROBS TO SOLVE )========0
 1. make sure childs exit with the proper status (and non-child builtins?)
-
+2. make export childable WHEN it has no args (cause it prints stuff out)
 
 
 0============(   VALERIE   )============0

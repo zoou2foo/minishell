@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 11:57:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:13:27 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	do_unset(t_cmd *cmd)
 	{
 		printf("error: variable does not exist\n"); //si variable n'existe pas, fait rien. New prompt. exit status 0
 	}
+	metadata->exit_status = EXIT_SUCCESS;
 }
 
 // Return int as a flag to know that it found the var in env. Take t_cmd of arg

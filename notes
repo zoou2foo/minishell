@@ -5,6 +5,8 @@
 
 
 0========(   VALERIE   )========0
+exit_failure/exit_success: exit status. Il faut que les built-ins qui sont childable
+il faut qu'il exit avec success quand ça fonctionne.
 
 0====( DEBUG TO DO )====0
 

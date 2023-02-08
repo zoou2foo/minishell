@@ -1,13 +1,11 @@
 /*
 0========( PROBS TO SOLVE )========0
-1. make sure childs exit with the proper status (and non-child builtins?)
-2. make export childable WHEN it has no args (cause it prints stuff out)
-3. checks for behaviour with empty redir / piping
 
 
 0============(   VALERIE   )============0
-
-0========(   VALERIE   )========0
+1. exit status code. When wrong cmd like las or catt; should the code be 127 or 256??
+Il faut que après waitpid, faire wexitstatus.
+2. quand input/infile n'existe pas; process hang. peut-être tokenizer (LL)
 
 
 0====( DEBUG TO DO )====0
@@ -24,7 +22,7 @@
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-1. fermer les fds si on a plusieurs redirection dans la même ligne de cmd (done???)
+
 
 
 

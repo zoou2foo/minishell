@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:25:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:52:08 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,3 +101,11 @@ void	execute_cmd_block(void)
 	//free the cmd_block and its t_cmds here
 	//free (and close?) the pipe array here
 }
+
+/*
+void waitchild()
+{
+	waitpid(metadata->pid, &metadata->exit_status, 0);
+	do wexitstatus...need to use wifexited...??? need to read more
+}
+*/

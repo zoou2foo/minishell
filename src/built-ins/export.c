@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:48:05 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:34:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,37 @@ void	refill_path_tab(char *str)
 	return ;
 }
 
+//
+int	find_var(t_cmd *cmd)
+{
+	int	len;
+	int	i;
+
+	len = 0;
+	while (cmd->cmd_args[1][len] && cmd->cmd_args[1][len] != '=')
+		len++;
+	i = 0;
+	while (metadata->env[i])
+	{
+		if (ft_strncmp(cmd->cmd_args[1], metadata->env[i], len) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void	reassign_var(int j, t_cmd *cmd)
+{
+	ft_free_null(metadata->env[j]);
+	metadata->env[j] = ft_strdup(cmd->cmd_args[1]);
+}
+
 // Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
 // env. Else if arg -> add the var at metadata->env
 void	do_export(t_cmd *cmd)
 {
 	int		i;
+	int		j;
 
 	i = 0;
 	if (check_arg_4_export(cmd) == 1)
@@ -112,26 +138,21 @@ void	do_export(t_cmd *cmd)
 	else if (check_arg_4_export(cmd) != 1)
 	{
 		// ajoute la variable à la fin de metadata->env avec l'arg.
-		metadata->env = ft_recalloc(metadata->env, env_length() + 2, env_length() + 1, sizeof(char *)); //NEED to DEBUG here... maybe a prob of calloc
-		while (metadata->env[i] != NULL)
-			i++;
-		metadata->env[i] = ft_strdup(cmd->cmd_args[1]);
-		if (ft_strncmp(cmd->cmd_args[1], "PATH=", 5) == 0)
-			refill_path_tab(cmd->cmd_args[1]);
+		j = find_var(cmd);	//if not found, retunr -1
+		if (j >= 0)
+		{
+			reassign_var(j, cmd);
+		}
+		else
+		{
+			metadata->env = ft_recalloc(metadata->env, env_length() + 2, env_length() + 1, sizeof(char *)); //NEED to DEBUG here... maybe a prob of calloc
+			while (metadata->env[i] != NULL)
+				i++;
+			metadata->env[i] = ft_strdup(cmd->cmd_args[1]);
+			if (ft_strncmp(cmd->cmd_args[1], "PATH=", 5) == 0)
+				refill_path_tab(cmd->cmd_args[1]);
+		}
 	}
 }
-// vérifie si l'arg existe déjà dans env; si oui. free et réassigne. sinon, créer une nouvelle variable
 
-void	reassign_var_env(t_cmd *cmd)
-{
-	int	len;
-	int	i;
-	
-	while ()
-}
 
-// ft_strlen jusqu'à =.
-// while (env[i])
-//	ft_strncmp(str, env[i], len)
-//		match -> replace
-//		no match -> create new (normal)

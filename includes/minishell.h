@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 14:05:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:02:50 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_meta
 	t_cmd	**cmd_block;	//all commands to be called this cycle
 	int		cmd_nb;			//nb of commands to be called this cycle
 	int		**pipes;	//all the pipes fd for the current command line
-	int		pid;
+	int		*pid;
 	int		exit_status;
 	int		state;			//what to do on next cmd and/or cycle
 
@@ -157,6 +157,7 @@ void	init_signals(int flag);
 
 /*		PRE_EXECUTION	*/
 void	execute_cmd_block(void);
+void	waitchild();
 
 /*		UTILS_TO_EXEC	*/
 int		is_built_in(char *cmd_arg);

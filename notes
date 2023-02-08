@@ -1,27 +1,14 @@
 /*
 0========( PROBS TO SOLVE )========0
-1. make sure childs exit with the proper status (and non-child builtins?)
+
 
 
 
 0========(   VALERIE   )========0
-exit_failure/exit_success: exit status. Il faut que les built-ins qui sont childable
-il faut qu'il exit avec success quand ça fonctionne.
+
 
 0====( DEBUG TO DO )====0
 
-
-
-bash-Pew Pew> echo $bob
-==4141== Invalid read of size 1
-==4141==    at 0x100002C47: ft_strlen (ft_strlen.c:20)
-==4141==    by 0x10000540C: expand (expander.c:35)
-==4141==    by 0x100004C88: expand_token_list (tokenizer.c:143)
-==4141==    by 0x100005701: parse_line (parser.c:25)
-==4141==    by 0x1000037DB: minishell (main.c:33)
-==4141==    by 0x100003924: main (main.c:48)
-==4141==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-soit que je calloc pas assez; ou free quelque chose qu'on continue d'utiliser.
 
 
 

@@ -6,46 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:29:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:31:33 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_meta	*metadata;	//our global var
-
-void	print_tab_env(void)
-{
-	int	i;
-	i = 0;
-	printf("\n");
-	while (metadata->env[i])
-	{
-		printf("%s\n", metadata->env[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-//allocates memory for and fills the global metadata var with default values (for env and path)
-void	init_meta(void)
-{
-	int	i;
-
-	metadata = ft_calloc(sizeof(t_meta), 1);
-
-	i = 0;
-	while (environ[i])
-		i++;
-	metadata->env = ft_calloc(sizeof(char *), i + 1);
-	i = 0;
-	while (environ[i])
-	{
-		metadata->env[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	fill_path_tab();
-}
 
 //prints the gien token lists according to internal specifications
 void	print_token_list(t_token *head)
@@ -129,7 +96,21 @@ void	print_cmd(t_cmd *cmd)
 	printf("\n");
 }
 
-//Checks if a given line contains either nothing or only space-like characters
+//prints metadata->env
+void	print_tab_env(void)
+{
+	int	i;
+	i = 0;
+	printf("\n");
+	while (metadata->env[i])
+	{
+		printf("%s\n", metadata->env[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+//checks if a given line contains either nothing or only space-like characters
 int	is_line_empty(char *line)
 {
 	int	i;
@@ -139,6 +120,26 @@ int	is_line_empty(char *line)
 		if (!is_space(line[i]))
 			return (0);
 	return (1);
+}
+
+//allocates memory for and fills the global metadata var with default values (for env and path)
+void	init_meta(void)
+{
+	int	i;
+
+	metadata = ft_calloc(sizeof(t_meta), 1);
+
+	i = 0;
+	while (environ[i])
+		i++;
+	metadata->env = ft_calloc(sizeof(char *), i + 1);
+	i = 0;
+	while (environ[i])
+	{
+		metadata->env[i] = ft_strdup(environ[i]);
+		i++;
+	}
+	fill_path_tab();
 }
 
 // Main logic loop of minishell. It initialises metadata and signals and every cycle, it:

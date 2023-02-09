@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 12:11:13 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:28:22 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 // Take t_cmd to look at the arg with export. Return an int as a flag.
 int	check_arg_4_export(t_cmd *cmd)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	if (cmd->cmd_args[1] == NULL)
 		return (1);
 	return (-1);

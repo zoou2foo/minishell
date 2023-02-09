@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 12:22:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:28:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	fill_path_tab(void)
 void	throw_error(char *str)
 {
 	write(2, str, ft_strlen(str));
+	if (ft_strncmp(str, ERR_CMD, ft_strlen(str)) == 0)
+		exit (127);
+	else
+		exit (1);
 }
 
 // Checks if a given cmd exists and is executable, then execute it
@@ -57,7 +61,7 @@ void	exec_with_paths(t_cmd *cmd)
 	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
 
-	fill_path_tab();
+	fill_path_tab();	//call une seule fois fill_path_tab ici au lieu de le mettre partout
 
 	i = -1;
 	while (metadata->paths[++i])
@@ -65,7 +69,7 @@ void	exec_with_paths(t_cmd *cmd)
 		cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
 		if (!access(cmd_path, F_OK | X_OK))
 			execve(cmd_path, cmd->cmd_args, metadata->env);
-		ft_free_null(cmd_path);
+		ft_free_null(cmd_path); //free metadata->paths
 	}
 	throw_error(ERR_CMD);
 	//ft_free_array(metadata->paths)							//IMPLEMENT ME (add fct to libft)

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 10:12:11 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:22:36 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	fill_path_tab(void)
 	char	*tmp;
 
 	i = 0;
+
 	while (metadata->env[i])
 	{
 		if (ft_strncmp(metadata->env[i], "PATH=", 5) == 0)
@@ -37,8 +38,7 @@ void	fill_path_tab(void)
 		}
 		i++;
 	}
-	throw_error(ERR_ENV);
-	ft_free_null(metadata); // should add exit status 127
+	throw_error(ERR_PATH);
 }
 
 //throws out a specified error message
@@ -54,10 +54,12 @@ void	exec_with_paths(t_cmd *cmd)
 	char	*cmd_path;
 	int		i;
 
-	i = -1;
-
 	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
+
+	fill_path_tab();
+
+	i = -1;
 	while (metadata->paths[++i])
 	{
 		cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
@@ -66,4 +68,5 @@ void	exec_with_paths(t_cmd *cmd)
 		ft_free_null(cmd_path);
 	}
 	throw_error(ERR_CMD);
+	//ft_free_array(metadata->paths)							//IMPLEMENT ME (add fct to libft)
 }

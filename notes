@@ -1,6 +1,6 @@
 /*
 0========( PROBS TO SOLVE )========0
-1. checks for behaviour with empty redir / piping
+1. checks for behaviour with empty redir / piping (warning for pipe, error for redir?)
 2. "<[bad file path] cmd" hangs
 
 

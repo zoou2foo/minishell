@@ -24,7 +24,7 @@ WHITE	= \033[0;97m
 # Special variables
 DEFAULT_GOAL: all
 .DELETE_ON_ERROR: $(NAME)
-.PHONY: all bonus clean fclean re run leaks ldirs
+.PHONY: all bonus clean clear fclean fclear re run pewpew leaks ldirs
 
 #------------------------------------------------------------------------------#
 #                                    FLAGS                                     #
@@ -126,12 +126,14 @@ $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c
 	$(HIDE) $(CC) $(MODE) $(CFLAGS) -c $< -o $@ $(INCLUDE)
 
 # Removes objects
+clear: clean
 clean:
 	$(HIDE) $(RM) $(OBJS)
 	$(HIDE) cd libft && make clean && cd ..
 	@echo "$(MAGENTA)Object files cleaned$(DEF_COLOR)"
 
 # Removes object dir and executable
+fclear: fclean
 fclean: clean
 	$(HIDE) $(RM) $(OBJDIR)
 	@echo "$(MAGENTA)Object directory cleaned$(DEF_COLOR)"

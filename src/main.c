@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 14:09:33 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:07:48 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void	init_meta(void)
 		metadata->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
-	fill_path_tab();
 }
 
 // Main logic loop of minishell. It initialises metadata and signals and every cycle, it:

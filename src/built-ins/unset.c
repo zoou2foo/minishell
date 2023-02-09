@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:44:48 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:18:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,32 @@ void	do_unset(t_cmd *cmd)
 				i++;
 			}
 		}
-		if (ft_strncmp(cmd->cmd_args[1], "PATH=", ft_strlen(cmd->cmd_args[1])) == 0)
-			empty_path_tab();
 		ft_free_null(metadata->env);
 		metadata->env = new_env;
 	}
 	else // si variable n'existe pas
 	{
-		throw_error(ERR_VAR);
+		throw_error(ERR_ENV);
 		metadata->exit_status = EXIT_FAILURE;
 	}
 	metadata->exit_status = EXIT_SUCCESS;
 }
 
-// returns 1 if the cmd_arg is in env
+// returns 1 if the env variable exists
 int	check_arg_4_unset(t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	while (metadata->env[i] != NULL)
+	if (cmd->cmd_args)
 	{
-		if (ft_strncmp(cmd->cmd_args[1], metadata->env[i],
-				ft_strlen(cmd->cmd_args[1])) == 0)
-			return (1);
-		i++;
+		while (metadata->env[i] != NULL)
+		{
+			if (ft_strncmp(cmd->cmd_args[1], metadata->env[i],
+					ft_strlen(cmd->cmd_args[1])) == 0)
+				return (1);
+			i++;
+		}
 	}
 	return (0);
 }

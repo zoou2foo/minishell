@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 14:05:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:22:06 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ enum e_mstate
 /*	ERROR MESSAGE	*/
 # define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
 # define ERR_PID	"Process Error : Couldn't fork() properly\n"
-# define ERR_ENV	"Environment Error : Variables not found\n"
 # define ERR_PIPE	"Pipe Error: Invalid file descriptor\n"
 # define ERR_QUOTE	"Input Error : Non terminated quotes\n"
 # define ERR_CMD	"Input Error : Command not found\n"
 
 # define ERR_AC		"Input Warning : Minishell executable does not take arguments\n"
-# define ERR_VAR	"Variable Warning : Variable does not exit\n"
+# define ERR_ENV	"Environment Warning : Variable not found\n"
 # define ERR_DIR	"Directory Warning : Directory not found\n"
+# define ERR_PATH	"Path Warning : PATH variable not found\n"
 
 typedef struct s_token
 {

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 12:07:48 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 14:12:22 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void	minishell(void)
 			load_cmd_block(parse_line(metadata->buf));
 			if (metadata->state == MSTATE_NORMAL)
 				execute_cmd_block();
+			//free cmd_block & pipes
 		}
 		ft_free_null(metadata->buf);
 	}
@@ -180,7 +181,6 @@ void	minishell(void)
 
 int	main(int ac, char **av)
 {
-	//extern	char	**environ; //pas de variable globale
 	(void)av;
 	if (ac != 1)				//superfluous
 		throw_error(ERR_AC);

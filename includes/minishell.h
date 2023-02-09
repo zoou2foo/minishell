@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 12:41:50 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 13:46:42 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ enum e_mstate
 # define ERR_PID	"Process Error : Couldn't fork() properly\n"
 # define ERR_PIPE	"Pipe Error : Invalid file descriptor\n"
 # define ERR_QUOTE	"Input Error : Non terminated quotes\n"
+# define ERR_CD		"Input Error : Invalid path given\n"
 # define ERR_CMD	"Input Error : Command not found\n"
 # define ERR_ARG	"Input Error : No argument given\n"
 
@@ -101,6 +102,7 @@ extern t_meta	*metadata;
 
 /* 		MAIN			*/
 void	init_meta(void);
+void	print_cmd(t_cmd *cmd);
 void	print_token_list(t_token *head, bool start_with_newline);
 
 /* 		BUILT-INS		*/

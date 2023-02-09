@@ -24,7 +24,7 @@ WHITE	= \033[0;97m
 # Special variables
 DEFAULT_GOAL: all
 .DELETE_ON_ERROR: $(NAME)
-.PHONY: all bonus clean clear fclean fclear re run pewpew leaks ldirs
+.PHONY: all bonus clean clear fclean fclear re run rerun pewpew leaks ldirs
 
 #------------------------------------------------------------------------------#
 #                                    FLAGS                                     #
@@ -149,10 +149,11 @@ pewpew:
 	$(HIDE) bash pew_pew2.sh
 
 # Runs the program
-run: re
+rerun: re run
+run: all
 	$(HIDE) $(CMD)
 
 # Runs the program with valgrind
 leaks: all
 	@echo "$(RED)Checking leaks...$(DEF_COLOR)"
-	$(HIDE) valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --track-fds=yes --suppressions=supp.txt -s $(CMD)
+	$(HIDE) valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full --track-fds=yes --suppressions=supp.txt $(CMD)

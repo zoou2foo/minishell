@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 13:30:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/09 14:12:27 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,23 @@ void	close_fds(t_cmd *cmd)
 		close(cmd->fdout);
 }
 
-// Choses wheter to execute a given cmd as a built_in or a sys_cmd
+// Choses whether to execute a given cmd as a built_in or a sys_cmd
 // Exits with an error if the execution failed
 void	child_process(t_cmd *cmd)
 {
-	if (cmd->is_built_in == true)
+	if (cmd->is_built_in)
 	{
 		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		//TODO : handle error
+		close_fds(cmd);
 	}
 	else
 	{
 		exec_with_paths(cmd);
 		//TODO : handle error
+		close_fds(cmd);
+		exit(127);		//this will set the value in the parent's metadata->exit_status
 	}
-	close_fds(cmd);
-	exit(127);		//this will set the value in the parent's metadata->exit_status
 }
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need to fork()
@@ -86,7 +87,7 @@ void	execute_cmd_block(void)
 					throw_error(ERR_PID);
 					//TODO : handle error
 				}
-				if (metadata->pid[i] == 0)			//if child
+				if (metadata->pid[i] == 0) //if is child
 				{
 					dup2(cmd->fdin, STDIN_FILENO);
 					dup2(cmd->fdout, STDOUT_FILENO);
@@ -94,15 +95,12 @@ void	execute_cmd_block(void)
 				}
 				init_signals(2);
 				close_fds(cmd);
-				//waitpid(metadata->pid, &metadata->exit_status, 0);
-				// metadata->pid = 0;
+				waitchild();
 			}
 		}
 	}
-	waitchild();
+	ft_free_null(metadata->pid);
 	init_signals(1);
-	//free the cmd_block and its t_cmds here
-	//free (and close?) the pipe array here
 }
 
 
@@ -115,7 +113,9 @@ void waitchild()
 	{
 		waitpid(metadata->pid[i], &metadata->exit_status, 0);
 		if (WIFEXITED(metadata->exit_status) == TRUE)
+		{
 			metadata->exit_status = WEXITSTATUS(metadata->exit_status);
+		}
 		i++;
 	}
 }

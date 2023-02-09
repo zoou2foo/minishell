@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:46:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 13:55:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	do_echo(t_cmd *cmd)
 
 	i = 1;
 	newline = 1;
-	if (cmd->cmd_args[i][0] == '-')
+	if (cmd->cmd_args[i] && cmd->cmd_args[i][0] == '-')
 	{
 		j = 1;
 		while (cmd->cmd_args[i][j] == 'n')

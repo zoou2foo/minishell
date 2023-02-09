@@ -6,22 +6,11 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 12:28:22 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 14:02:08 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Take t_cmd to look at the arg with export. Return an int as a flag.
-int	check_arg_4_export(t_cmd *cmd)
-{
-	// int	i;
-
-	// i = 0;
-	if (cmd->cmd_args[1] == NULL)
-		return (1);
-	return (-1);
-}
 
 // We could put this one in libft ⬇️
 int	ft_strcmp(char *s1, char *s2)
@@ -125,7 +114,7 @@ void	do_export(t_cmd *cmd)
 	int		j;
 
 	i = 0;
-	if (check_arg_4_export(cmd) == 1)
+	if (cmd->cmd_args[1] == NULL)
 	{
 		sort_env();
 		while (metadata->env[i] != NULL)
@@ -136,7 +125,7 @@ void	do_export(t_cmd *cmd)
 		}
 		exit(EXIT_SUCCESS);		//set exit_status indirectly because childable when no args
 	}
-	else if (check_arg_4_export(cmd) != 1)
+	else
 	{
 		// ajoute la variable à la fin de metadata->env avec l'arg.
 		j = find_var(cmd);	//if not found, retunr -1

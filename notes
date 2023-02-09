@@ -5,14 +5,15 @@
 
 
 0============(   VALERIE   )============0
-1. exit status with wexitstatus and wifexited. Almost there but only gets 0 or 1 still
+I think it's fixed.
 0: Successful completion
 1: General error
 2: Misuse of shell builtins (e.g., missing keyword or command)
 126: Command invoked cannot execute
 127: "command not found"
 128: Invalid argument to exit
-130: Script terminated by Control-C
+130: Script terminated by Control-C -> tested in bash and it sends 1.
+131: Script terminated by Control-\
 As a general guideline, exit codes in the range 0 to 127 are reserved for shell built-ins and commands, 
 while exit codes in the range 128 to 255 are reserved for custom exit codes defined by the script.
 **Check if a non-zero exit status is being sent in the child process when an error occur

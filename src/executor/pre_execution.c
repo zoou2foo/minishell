@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 18:02:05 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/02/09 11:17:50 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,7 @@ void waitchild()
 	{
 		waitpid(metadata->pid[i], &metadata->exit_status, 0);
 		if (WIFEXITED(metadata->exit_status) == TRUE)
-		{
-			printf("wexitstatus: %d\n", WEXITSTATUS(metadata->exit_status));
 			metadata->exit_status = WEXITSTATUS(metadata->exit_status);
-		}
 		i++;
 	}
 }
-

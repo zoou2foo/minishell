@@ -1,29 +1,18 @@
 /*
 0========( PROBS TO SOLVE )========0
 1. checks for behaviour with empty redir / piping (warning for pipe, error for redir?)
-2. "<[bad file path] cmd" hangs
-3. cat << end : cmd ne s'execute pas avec plusieurs pipes et here_doc
-4. echo "'$USER'" devrait imprimer 'vjean' (bonus caché, mais besoin de tester plus '') ex : MNSH > echo "af asf s sf '$USER $PATH' asdas f dg dg d sdd ssd 'allol' asdfsdf " reponse : af asf s sf 'vjean  asdas f dg dg d sdd ssd 'allol' asdfsdf
-5. ls > test > test1 > test2 > test3 : il faut creer tous les fichiers et ls apparait dans le dernier.
-6. ctrl-c avec here_doc: les child reste vivants when they need to DIE!!!
-7. Sans valgrind; si on unset PATH, il trouve pas les cmds. Mais si passe dans valgrind, il effectue les cmds avec invalid read.
-8. Unset crashes if it fails (no/invalid argument)
+2. "<[bad file path] cmd" hangs --> ex: ls <test: il met ls dans le standard output. It should say the file does not exist. end.
+3. echo "'$USER'" devrait imprimer 'vjean' (bonus caché, mais besoin de tester plus '') ex : MNSH > echo "af asf s sf '$USER $PATH' asdas f dg dg d sdd ssd 'allol' asdfsdf " reponse : af asf s sf 'vjean  asdas f dg dg d sdd ssd 'allol' asdfsdf
+4. ls > test > test1 > test2 > test3 : il faut creer tous les fichiers et ls apparait dans le dernier.
+5. ctrl-c avec here_doc: les child reste vivants when they need to DIE!!!
+6. Sans valgrind; si on unset PATH, il trouve pas les cmds. Mais si passe dans valgrind, il effectue les cmds avec invalid read.
+
 
 
 0============(   VALERIE   )============0
-I think it's fixed.
-0: Successful completion
-1: General error
-2: Misuse of shell builtins (e.g., missing keyword or command)
-126: Command invoked cannot execute
-127: "command not found"
-128: Invalid argument to exit
-130: Script terminated by Control-C -> tested in bash and it sends 1.
-131: Script terminated by Control-\
-As a general guideline, exit codes in the range 0 to 127 are reserved for shell built-ins and commands,
-while exit codes in the range 128 to 255 are reserved for custom exit codes defined by the script.
-**Check if a non-zero exit status is being sent in the child process when an error occur
-Wondering if in throw_err after execve, we should work from there to get the correct exit status...
+-> Unset crashes if it fails (no/invalid argument) -> FIXED.
+-> exit code pour ctrl-c as to be set to 1.
+-> ctrl-d send 130 (exit code). Should it be 1??
 
 
 0====( DEBUG TO DO )====0

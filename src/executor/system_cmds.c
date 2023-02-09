@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 12:28:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 13:31:30 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ void	fill_path_tab(void)
 void	throw_error(char *str)
 {
 	write(2, str, ft_strlen(str));
-	if (ft_strncmp(str, ERR_CMD, ft_strlen(str)) == 0)
-		exit (127);
-	else
-		exit (1);
 }
 
 // Checks if a given cmd exists and is executable, then execute it

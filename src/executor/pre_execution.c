@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 11:17:50 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/09 13:30:58 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	child_process(t_cmd *cmd)
 		//TODO : handle error
 	}
 	close_fds(cmd);
-	exit(EXIT_FAILURE);		//this will set the value in the parent's metadata->exit_status
+	exit(127);		//this will set the value in the parent's metadata->exit_status
 }
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need to fork()

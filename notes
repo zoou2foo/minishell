@@ -2,6 +2,11 @@
 0========( PROBS TO SOLVE )========0
 1. checks for behaviour with empty redir / piping
 2. "<[bad file path] cmd" hangs
+3. cat << end : cmd ne s'execute pas avec plusieurs pipes et here_doc
+4. echo "'$USER'" devrait imprimer 'vjean' (bonus caché, mais besoin de tester plus '') ex : MNSH > echo "af asf s sf '$USER $PATH' asdas f dg dg d sdd ssd 'allol' asdfsdf " reponse : af asf s sf 'vjean  asdas f dg dg d sdd ssd 'allol' asdfsdf 
+5. ls > test > test1 > test2 > test3 : il faut creer tous les fichiers et ls apparait dans le dernier.
+6. ctrl-c avec here_doc: les child reste vivants when they need to DIE!!!
+7. Sans valgrind; si on unset PATH, il trouve pas les cmds. Mais si passe dans valgrind, il effectue les cmds avec invalid read. 
 
 
 0============(   VALERIE   )============0

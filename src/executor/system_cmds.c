@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 11:10:32 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:03:45 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ void	exec_with_paths(t_cmd *cmd)
 	int		i;
 
 	i = -1;
-
+//call une seule fois fill_path_tab ici au lieu de le mettre partout
 	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
 	while (metadata->paths[++i])
 	{
-		cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
+		cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]); 
 		if (!access(cmd_path, F_OK | X_OK))
 			execve(cmd_path, cmd->cmd_args, metadata->env);
-		ft_free_null(cmd_path);
+		ft_free_null(cmd_path); //free metadata->paths
 	}
 	throw_error(ERR_CMD);
 }

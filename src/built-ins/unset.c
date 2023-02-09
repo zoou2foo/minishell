@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 12:18:51 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:41:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	empty_path_tab(void)
+void	empty_path_tab(void)		//obsolete
 {
 	int	i;
 
@@ -22,8 +22,26 @@ void	empty_path_tab(void)
 		ft_free_null(metadata->paths[i]);
 		i++;
 	}
+	ft_free_null(metadata->paths);
 }
 
+// returns 1 if the env variable exists
+bool	is_var_in_env(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (var)
+	{
+		while (metadata->env[i] != NULL)
+		{
+			if (ft_strncmp(var, metadata->env[i], ft_strlen(var)) == 0)
+				return (true);
+			i++;
+		}
+	}
+	return (false);
+}
 
 //return nothing. Take t_cmd to check what needs to be unset/free.
 void	do_unset(t_cmd *cmd)
@@ -32,7 +50,12 @@ void	do_unset(t_cmd *cmd)
 	int		i;
 	int		j;
 
-	if (check_arg_4_unset(cmd) == 1)
+	if (!cmd->cmd_args[1])
+	{
+		throw_error(ERR_ARG);
+		metadata->exit_status = EXIT_FAILURE;
+	}
+	else if (is_var_in_env(cmd->cmd_args[1]))
 	{
 		i = 0;
 		j = 0;
@@ -65,23 +88,3 @@ void	do_unset(t_cmd *cmd)
 	}
 	metadata->exit_status = EXIT_SUCCESS;
 }
-
-// returns 1 if the env variable exists
-int	check_arg_4_unset(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (cmd->cmd_args)
-	{
-		while (metadata->env[i] != NULL)
-		{
-			if (ft_strncmp(cmd->cmd_args[1], metadata->env[i],
-					ft_strlen(cmd->cmd_args[1])) == 0)
-				return (1);
-			i++;
-		}
-	}
-	return (0);
-}
-

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/06 14:17:56 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 14:17:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	do_exit(t_cmd *cmd)
 			else if (!(cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9'))
 				exit (255);
 		}
-		arg = ft_atoi(cmd->cmd_args[1]) % 256;
+
+		arg = ft_atoi(cmd->cmd_args[1]);
+		if (arg > 255 || arg < 0)
+			arg = 255;
 	}
 	else
 		arg = 0;

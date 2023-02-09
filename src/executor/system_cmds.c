@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 13:31:30 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/09 14:40:28 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	exec_with_paths(t_cmd *cmd)
 	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
 
-	fill_path_tab();	//call une seule fois fill_path_tab ici au lieu de le mettre partout
+	if (metadata->env)
+		fill_path_tab();	//call une seule fois fill_path_tab ici au lieu de le mettre partout
 
 	i = -1;
 	while (metadata->paths[++i])

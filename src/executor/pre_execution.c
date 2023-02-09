@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 14:12:27 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/09 14:32:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	cmd_fork(void)
 		//TODO : handle error
 		throw_error(ERR_PIPE);
 		ft_free_null(metadata);
+	}
+	if (f_id == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 	}
 	return (f_id);
 }
@@ -51,7 +56,7 @@ void	child_process(t_cmd *cmd)
 		exec_with_paths(cmd);
 		//TODO : handle error
 		close_fds(cmd);
-		exit(127);		//this will set the value in the parent's metadata->exit_status
+		exit(127);				//this will set the value in the parent's metadata->exit_status
 	}
 }
 
@@ -93,7 +98,6 @@ void	execute_cmd_block(void)
 					dup2(cmd->fdout, STDOUT_FILENO);
 					child_process(cmd);
 				}
-				init_signals(2);
 				close_fds(cmd);
 				waitchild();
 			}
@@ -117,5 +121,5 @@ void waitchild()
 			metadata->exit_status = WEXITSTATUS(metadata->exit_status);
 		}
 		i++;
-	}
+	} //wisignals wexitsignals machin truc patante à vérifier
 }

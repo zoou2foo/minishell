@@ -1,12 +1,13 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/07 13:33:37 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/09 14:24:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +15,11 @@
 
 void	handler_parent_sig(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT)	//Ctrl-C
 	{
 		printf("\n");
 	}
-	if (sig == SIGQUIT)
+	if (sig == SIGQUIT)	//Ctrl-backslash
 	{
 		printf("Quit: 3");
 	}
@@ -26,11 +27,11 @@ void	handler_parent_sig(int sig)
 
 void	handler_child_sig(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT)	//Ctrl-C
 	{
 		sigignore(SIGINT);
 	}
-	if (sig == SIGQUIT)
+	if (sig == SIGQUIT)	//Ctrl-backslash
 	{
 		sigignore(SIGQUIT);
 	}
@@ -38,14 +39,14 @@ void	handler_child_sig(int sig)
 
 void	handler_sig(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT)	//Ctrl-C
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		printf("\n");
 		rl_redisplay();
 	}
-	if (sig == SIGQUIT)
+	if (sig == SIGQUIT)	//Ctrl-backslash
 	{
 		rl_on_new_line();
 		rl_redisplay();

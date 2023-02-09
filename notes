@@ -1,18 +1,14 @@
 /*
 0========( PROBS TO SOLVE )========0
 1. checks for behaviour with empty redir / piping (warning for pipe, error for redir?)
-2. "<[bad file path] cmd" hangs --> ex: ls <test: il met ls dans le standard output. It should say the file does not exist. end.
-3. echo "'$USER'" devrait imprimer 'vjean' (bonus caché, mais besoin de tester plus '') ex : MNSH > echo "af asf s sf '$USER $PATH' asdas f dg dg d sdd ssd 'allol' asdfsdf " reponse : af asf s sf 'vjean  asdas f dg dg d sdd ssd 'allol' asdfsdf
-4. ls > test > test1 > test2 > test3 : il faut creer tous les fichiers et ls apparait dans le dernier.
-5. ctrl-c avec here_doc: les child reste vivants when they need to DIE!!!
-6. Sans valgrind; si on unset PATH, il trouve pas les cmds. Mais si passe dans valgrind, il effectue les cmds avec invalid read.
-
+2. if wc or cat has no args (and no good redir) abort (?)
 
 
 0============(   VALERIE   )============0
--> Unset crashes if it fails (no/invalid argument) -> FIXED.
 -> exit code pour ctrl-c as to be set to 1.
 -> ctrl-d send 130 (exit code). Should it be 1??
+ctrl-c avec here_doc: les child reste vivants when they need to DIE!!!
+wisignals wexitsignals machin truc patante à vérifier : pour gérer le code exist
 
 
 0====( DEBUG TO DO )====0
@@ -26,7 +22,10 @@
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-
+1. "$VAR'" thinks ' is included in the var name
+2. "<[bad file path] cmd" hangs (send a warning of invalid file instead)
+3. ls <test: It should say the file does not exist.
+4. ls > test > test1 > test2 > test3 : il faut creer tous les fichiers, pas juste le dernier
 
 
 0====( TEST CASES )====0

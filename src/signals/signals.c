@@ -55,6 +55,57 @@ void	handler_sig(int sig)
 	}
 }
 
+//besoin de me faire expliquer la partie ci-dessous ⬇️ (VJ)
+void	sig_ignore(void) //je peux adapter à partir de notre init_sign
+{
+	struct sigaction	sa_sigint;
+	struct sigaction	sa_sigquit;
+
+	sa_sigint.sa_handler = SIG_IGN;
+	sa_sigquit.sa_handler = SIG_IGN;
+	sigemptyset(&sa_sigint.sa_mask);
+	sigemptyset(&sa_sigquit.sa_mask);
+	sa_sigint.sa_flags = 0;
+	sa_sigquit.sa_flags = 0;
+	sigaction(SIGINT, &sa_sigint, NULL);
+	sigaction(SIGQUIT, &sa_sigquit, NULL);
+}
+
+void	sig_heredoc(void) //initie les signaux pour here_doc
+{
+	struct sigaction	sa_sigint;
+	struct sigaction	sa_sigquit;
+
+	sa_sigint.sa_handler = hd_handler; //fonction qui dit quoi faire avec les signaux dans hd
+	sa_sigquit.sa_handler = SIG_IGN;
+	sigemptyset(&sa_sigint.sa_mask);
+	sigemptyset(&sa_sigquit.sa_mask);
+	sa_sigint.sa_flags = 0;
+	sa_sigquit.sa_flags = 0;
+	sigaction(SIGINT, &sa_sigint, NULL);
+	sigaction(SIGQUIT, &sa_sigquit, NULL);
+}
+
+void	hd_handler(int signum)
+{
+	struct termios	termios_copy;
+	struct termios	termios_repl;
+
+	tcgetattr(0, &termios_copy);
+	termios_repl = termios_copy;
+	termios_repl.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, 0, &termios_repl);
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		exit(0);
+	}
+}
+// partie à revoir ⬆️
+
+
 //Initialize the signals for the minishell.
 // Received an int as a flag to know where it is in the process; parent or child
 // Define the signals struct to know which signal was received.

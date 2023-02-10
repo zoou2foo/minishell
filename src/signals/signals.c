@@ -29,7 +29,8 @@ void	handler_child_sig(int sig)
 {
 	if (sig == SIGINT)	//Ctrl-C
 	{
-		sigignore(SIGINT);
+		signal(SIGINT, SIG_DFL);
+		//sigignore(SIGINT);
 	}
 	if (sig == SIGQUIT)	//Ctrl-backslash
 	{

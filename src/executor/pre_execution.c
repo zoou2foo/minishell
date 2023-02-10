@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 14:32:25 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/10 08:53:20 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	execute_cmd_block(void)
 				}
 				if (metadata->pid[i] == 0) //if is child
 				{
+					signal(SIGINT, SIG_DFL);
 					dup2(cmd->fdin, STDIN_FILENO);
 					dup2(cmd->fdout, STDOUT_FILENO);
 					child_process(cmd);
@@ -120,6 +121,8 @@ void waitchild()
 		{
 			metadata->exit_status = WEXITSTATUS(metadata->exit_status);
 		}
+		if (WIFSIGNALED(metadata->exit_status) == TRUE)
+			metadata->exit_status = WTERMSIG(metadata->exit_status) + 128;
 		i++;
-	} //wisignals wexitsignals machin truc patante à vérifier
+	}
 }

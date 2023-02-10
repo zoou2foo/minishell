@@ -5,10 +5,8 @@
 
 
 0============(   VALERIE   )============0
--> exit code pour ctrl-c as to be set to 1.
--> ctrl-d send 130 (exit code). Should it be 1??
 ctrl-c avec here_doc: les child reste vivants when they need to DIE!!!
-wisignals wexitsignals machin truc patante à vérifier : pour gérer le code exist
+
 
 
 0====( DEBUG TO DO )====0

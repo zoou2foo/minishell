@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 13:55:57 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/11 10:07:04 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//print arg
+void	echo_print(t_cmd *cmd, int i, int newline)
+{
+	while (cmd->cmd_args[i])
+	{
+		if (2 < i || (1 < i && newline))
+			printf(" ");
+		printf("%s", cmd->cmd_args[i]);
+		i++;
+	}
+}
 
 // Return NOTHING. Take t_cmd; the arguments following "echo" to be printed.
 void	do_echo(t_cmd *cmd)
@@ -32,14 +44,9 @@ void	do_echo(t_cmd *cmd)
 			i++;
 		}
 	}
-	while (cmd->cmd_args[i])
-	{
-		if (2 < i || (1 < i && newline))
-			printf(" ");
-		printf("%s", cmd->cmd_args[i]);
-		i++;
-	}
+	echo_print(cmd, i, newline);
 	if (newline)
 		printf("\n");
-	exit(EXIT_SUCCESS);	//always succeed
+	exit(EXIT_SUCCESS);
 }
+//exit(EXIT_SUCCESS);	//always succeed

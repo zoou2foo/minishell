@@ -5,10 +5,9 @@
 
 
 0============(   VALERIE   )============0
--> exit code pour ctrl-c as to be set to 1.
--> ctrl-d send 130 (exit code). Should it be 1??
-ctrl-c avec here_doc: les child reste vivants when they need to DIE!!!
-wisignals wexitsignals machin truc patante à vérifier : pour gérer le code exist
+almost done with signals. I put a lot of comments. I will work with Yannick on Monday
+to figure how I can have a clearer code for my signals. I feel that I might be all
+over the place. Still a bit like black magic
 
 
 0====( DEBUG TO DO )====0

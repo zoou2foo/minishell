@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/10 16:04:46 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/11 09:30:54 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	execute_hd(char *string)
 		exit (1);
 	}
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);	//UI
-	sig_ignore(); //comme pour initier les signaux
+	sig_ignore(); //My understanding: to make sure that SIGINT and SIGQUIT are ignored as we are about to fork and create another process. It has to block specific signals during exec too. Then, it ignores the previous signal returned (to change the behaviour of a process)
 	gnl_return = NULL;
 	pid_hd = fork();
 	if (pid_hd == 0)
 	{
-		sig_heredoc(); //signal pour here_doc
+		sig_heredoc(); //function to handle signals in the specific case of a here_doc.
 		while (1)
 		{
 			write(1, "> ", 2);

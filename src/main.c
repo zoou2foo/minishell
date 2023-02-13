@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 14:12:45 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:07:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,6 @@ void	print_cmd(t_cmd *cmd)
 	printf("| fdin  : %i\n", cmd->fdin);
 	printf("| fdout : %i\n|\n", cmd->fdout);
 
-	printf("| input  : %s\n", cmd->input);
-	printf("| output : %s\n", cmd->output);
-
 	printf("|\n|  _cmd_args_\n| |\n");
 	i = -1;
 	while (cmd->cmd_args[++i])
@@ -142,18 +139,63 @@ void	init_meta(void)
 	}
 }
 
+void	free_cmd(t_cmd *cmd)
+{
+	int	i;
+
+	if (cmd)
+	{
+		if (cmd->cmd_args && cmd->cmd_args[0])
+		{
+			i = -1;
+			while (cmd->cmd_args[++i])
+				ft_free_null(cmd->cmd_args[i]);
+		}
+		if (cmd->fdin > 0)
+			close(cmd->fdin);
+		if (cmd->fdout > 1)
+			close(cmd->fdout);
+	}
+}
+
+//frees a cmd_block, all its cmds, and all the leftover FDs
+void	free_cmd_block(void)
+{
+	int		i;
+
+	if (g_meta->pipes)
+	{
+		i = -1;
+		while (g_meta->pipes[++i])
+		{
+			if (g_meta->pipes[i][0] > 0)
+				close(g_meta->pipes[i][0]);
+			if (g_meta->pipes[i][1] > 0)
+				close(g_meta->pipes[i][1]);
+		}
+		ft_free_null(g_meta->pipes);
+	}
+	if (g_meta->cmd_block)
+	{
+		i = -1;
+		while (++i < g_meta->cmd_nb)
+			free_cmd(g_meta->cmd_block[i]);
+		ft_free_null(g_meta->cmd_block);
+	}
+}
+
 // Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
-// - reads the inputed line
-// - checks if said line empty
-// - add it to the history
-// - converts it into a cmd_block
-// - checks if the global state is still valid
-// - execute said cmd_block
-// - frees the line buffer
-// - repeat
+// |- reads the inputed line
+// |- checks if said line empty
+// |- add it to the history
+// |- converts it into a cmd_block
+// |- checks if the global state is still valid
+// |- execute said cmd_block
+// |- frees the line buffer
+// 0- repeats
 // Once the loop is over, it;
-// - clears the history
-// - frees all the leftover data
+// |- clears the history
+// |- frees all the leftover data
 void	minishell(void)
 {
 	init_meta();
@@ -162,7 +204,7 @@ void	minishell(void)
 	{
 		g_meta->state = MSTATE_NORMAL;
 		g_meta->buf = readline("MNSH :) ");
-		if (!g_meta->buf) //to make ctrl+d not segfault (cause it makes the buffer == null)
+		if (!g_meta->buf) //to make ctrl-D not segfault (if buffer == null)
 			break ;
 		if (!is_line_empty(g_meta->buf))
 		{
@@ -170,7 +212,7 @@ void	minishell(void)
 			load_cmd_block(parse_line(g_meta->buf));
 			if (g_meta->state == MSTATE_NORMAL)
 				execute_cmd_block();
-			//free cmd_block & pipes
+			free_cmd_block();
 		}
 		ft_free_null(g_meta->buf);
 	}
@@ -188,12 +230,6 @@ int	main(int ac, char **av)
 
 	return (0);
 }
-
-
-
-
-//Loyc's main (DEBUG)
-
 
 /*
 int	main(void)
@@ -240,48 +276,5 @@ int	main(void)
 	}
 
 	printf("\n");
-}
-*/
-
-
-
-//VAL's main (DEBUG)
-
-
-/*
-int	main(void)
-{
-	char	*line = "<<END <$HOME/infile grep -v 42 | >> outfile wc -l > outfile2 | ls | >outfile3 | echo \"don't | $USER | split\"";
-
-	t_token	**token_array;
-	t_cmd	*cmd;
-	token_array = parse_line(line);
-
-	t_token	*head;
-	int		i;
-
-	i = -1;
-	printf("\n");
-	while (token_array[++i])
-	{
-		head = token_array[i];
-		print_token_list(head);
-	}
-	printf("\n");
-	init_meta();
-	// fill_path_tab();
-	// i = 0;
-	// while (g_meta->path[i])
-	// {
-	// 	printf("%s\n", g_meta->path[i]);
-	// 	i++;
-	// }
-	cmd = ft_calloc(sizeof(t_cmd), 1);
-	cmd->cmd_args = ft_calloc(sizeof(char *), 3);
-	cmd->cmd_args[0] = "exit";
-	cmd->cmd_args[1] = "42";
-	do_exit(cmd);
-	//find_cmd(cmd);
-	return (0);
 }
 */

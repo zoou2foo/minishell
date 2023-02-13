@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 14:13:20 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:05:08 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ void	close_fds(t_cmd *cmd)
 {
 	if (cmd->fdin != 0)
 		close(cmd->fdin);
+	cmd->fdin = 0;
 	if (cmd->fdout != 1)
 		close(cmd->fdout);
+	cmd->fdout = 1;
 }
 
 // Choses whether to execute a given cmd as a built_in or a sys_cmd

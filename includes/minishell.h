@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 14:11:15 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:47:54 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,9 @@ typedef struct s_cmd
 	char	**cmd_args;	//cmd name and its following arguments
 	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
 	int		id;				//id of this cmd (in relation to others in this cycle)
-	char	*input;		//the last < redirection
-	int		fdin;			//the fd for the piping
-	char	*output;	//the last >/>> redirection
-	int		fdout;			//the fd for the piping
-	bool	append_output;	//if the output needs extend the file or overwrite it
-	bool	is_built_in;	//whether the command is a built in
+	int		fdin;			//the input's fd
+	int		fdout;			//the output's fd
+	bool	is_built_in;	//whether the command is a built-in
 	bool	has_cmd;					//implement me!!!
 }			t_cmd;
 

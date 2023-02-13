@@ -1,7 +1,6 @@
 
 0========( PROBS TO SOLVE )========0
 1. checks for behaviour with empty redir / piping (warning for pipe, error for redir?)
-2. if wc or cat has no args (and no good redir) abort (?)
 
 
 
@@ -21,8 +20,6 @@ fd 4 or 3 or both, still opens when we do system cmds: need to check
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-1. "ls < [bad file path]": It should say the file does not exist.
-2. "<[bad file path] cmd": hangs (send a warning of invalid file instead)
 
 
 

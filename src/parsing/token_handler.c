@@ -6,10 +6,9 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:42 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 16:00:01 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -25,7 +24,7 @@ void	free_token(t_token *node)
 }
 
 //creates a new token
-t_token *new_token(char *str, int len, int type)
+t_token	*new_token(char *str, int len, int type)
 {
 	t_token	*node;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/13 12:38:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 16:01:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_token	*create_token_list(char *line)
 			len++;
 			while (line[i + len] && line[i + len] != '\'')
 				len++;
-			if (!line[i + len])					//makes us ignore the cmd line when unterminated quotes
+			if (!line[i + len]) //makes us ignore the cmd line when unterminated quotes
 			{
 				throw_error(ERR_QUOTE);
 				g_meta->state = MSTATE_O_BRACK;
@@ -91,7 +91,7 @@ t_token	*create_token_list(char *line)
 			len++;
 			while (line[i + len] && line[i + len] != '\"')
 				len++;
-			if (!line[i + len])					//makes us ignore the cmd line when unterminated quotes
+			if (!line[i + len]) //makes us ignore the cmd line when unterminated quotes
 			{
 				throw_error(ERR_QUOTE);
 				g_meta->state = MSTATE_O_BRACK;
@@ -169,7 +169,7 @@ t_token	*merge_token_list(t_token *head)
 		{
 			if (is_mergeable(node->type) && is_mergeable(node->next->type))
 			{
-				//printf(" - %s + %s\n", node->string, node->next->string);				//DEBUG
+				//printf(" - %s + %s\n", node->string, node->next->string); //DEBUG
 				node = merge_tokens(node, node->next);
 				continue ;
 			}

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:07:51 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:57:37 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,6 @@ void	minishell(void)
 	clear_history();
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 }
-
 
 int	main(int ac, char **av)
 {

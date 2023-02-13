@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 14:04:49 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 16:02:10 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 		node = node->next;
 	}
 
-
 	//activates is_built_in if the cmd has at least 1 argument AND it is a built in
 	if (cmd->argcount > 0 && is_built_in(cmd->cmd_args[0]) == 1)
 		cmd->is_built_in = true;
@@ -127,7 +126,6 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 void	load_cmd_block(t_token **head)
 {
 	int	i;
-
 
 	i = 0;
 	while (head[i])
@@ -143,8 +141,9 @@ void	load_cmd_block(t_token **head)
 		pipe(g_meta->pipes[i]);								//FREE ME AT END OF CYCLE
 	}
 
+	//actual token conversion loop conversion
 	i = -1;
-	while (head[++i])					//actual token list conversion
+	while (head[++i])
 	{
 		g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i);
 	}

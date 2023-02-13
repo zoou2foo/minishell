@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 13:07:51 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:04:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	//finds redirection nodes and uses them
 	while (node)
 	{
-		if (TTYPE_EXPAND < node->type)			//PROTECT THE OPEN()s WITH ACCESS
+		if (TTYPE_EXPAND < node->type)
 		{
 			if (node->type == TTYPE_S_RDR_OUT)			// >
 			{
@@ -52,7 +52,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 					close(cmd->fdout);
 				cmd->fdout = open(node->string, O_CREAT | O_RDWR | O_TRUNC, 0666);
 			}
-			else if (node->type == TTYPE_D_RDR_OUT)		// >> (append mode)
+			else if (node->type == TTYPE_D_RDR_OUT)		// >>
 			{
 				if (cmd->fdout != 1)
 					close(cmd->fdout);
@@ -70,7 +70,15 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 					close(cmd->fdin);
 				cmd->fdin = execute_hd(node->string);
 			}
-			node = cut_token(node);						//remove node once used
+			//checks for open() errors (fd = -1)
+			if (cmd->fdin < 0 || cmd->fdout < 0)
+			{
+				throw_error(ERR_FILE);
+				g_meta->state = MSTATE_ERROR;
+				break ;
+			}
+			//removes node once processed
+			node = cut_token(node);
 			if (!node->prev)
 				continue ;
 		}
@@ -80,12 +88,11 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			break ;
 	}
 
-	//uses the pieps if no fdin/fdout set
-	if (cmd->fdout == 1 && id < g_meta->cmd_nb - 1)
-		cmd->fdout = g_meta->pipes[id][1];
+	//uses the piepes if no fdin/fdout set
 	if (cmd->fdin == 0 && 0 < id)
 		cmd->fdin = g_meta->pipes[id - 1][0];
-
+	if (cmd->fdout == 1 && id < g_meta->cmd_nb - 1)
+		cmd->fdout = g_meta->pipes[id][1];
 
 	//reset head in case cut_token() destroys it
 	*head = find_head(node);
@@ -130,14 +137,14 @@ void	load_cmd_block(t_token **head)
 	g_meta->cmd_nb = i;
 
 	i = -1;
-	while (++i < g_meta->cmd_nb - 1)		//creates potentially needed pipes
+	while (++i < g_meta->cmd_nb - 1)	//creates potentially needed pipes
 	{
 		g_meta->pipes[i] = ft_calloc(2, sizeof(int));
 		pipe(g_meta->pipes[i]);								//FREE ME AT END OF CYCLE
 	}
 
 	i = -1;
-	while (head[++i])		//actual token list conversion
+	while (head[++i])					//actual token list conversion
 	{
 		g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i);
 	}

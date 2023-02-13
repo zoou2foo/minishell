@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:40:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:12:45 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	minishell(void)
 	while (g_meta->state >= 0)
 	{
 		g_meta->state = MSTATE_NORMAL;
-		g_meta->buf = readline("MNSH > ");
+		g_meta->buf = readline("MNSH :) ");
 		if (!g_meta->buf) //to make ctrl+d not segfault (cause it makes the buffer == null)
 			break ;
 		if (!is_line_empty(g_meta->buf))

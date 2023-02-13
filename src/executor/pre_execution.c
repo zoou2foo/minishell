@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:40 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:13:20 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	child_process(t_cmd *cmd)
 		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		//TODO : handle error
 		close_fds(cmd);
+		//built_ins should have exited themselves
 	}
 	else
 	{
@@ -58,6 +59,9 @@ void	child_process(t_cmd *cmd)
 		close_fds(cmd);
 		exit(127);				//this will set the value in the parent's g_meta->exit_status
 	}
+	//safety exit (FOR DEBUGGING)
+	throw_error(ERR_EXIT);
+	exit(1);
 }
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need to fork()

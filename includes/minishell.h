@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:38:25 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:11:15 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ enum e_mstate
 };
 
 /*	ERROR MESSAGE	*/
+# define ERR_EXIT	"Process Error : Child did not exit properly\n"
 # define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
 # define ERR_PID	"Process Error : Couldn't fork() properly\n"
 # define ERR_PIPE	"Pipe Error : Invalid file descriptor\n"
@@ -56,6 +57,7 @@ enum e_mstate
 # define ERR_CD		"Input Error : Invalid path given\n"
 # define ERR_CMD	"Input Error : Command not found\n"
 # define ERR_ARG	"Input Error : No argument given\n"
+# define ERR_FILE	"Input Error : Invalid file name\n"
 
 # define ERR_AC		"Input Warning : Minishell executable does not take arguments\n"
 # define ERR_PATH	"Path Warning : Path variable not in environment\n"

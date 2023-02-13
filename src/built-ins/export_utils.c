@@ -6,22 +6,11 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 09:18:24 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 09:21:21 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 10:47:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Return the length of env. Take nothing as we use global var
-int	env_length(void)
-{
-	int	i;
-
-	i = 0;
-	while (metadata->env[i])
-		i++;
-	return (i);
-}
 
 //
 void	refill_path_tab(char *str)

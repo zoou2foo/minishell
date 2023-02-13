@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:56:38 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//obsolete -- Can delete?
-void	empty_path_tab(void)
-{
-	int	i;
-
-	i = 0;
-	while (g_meta->paths[i])
-	{
-		ft_free_null(g_meta->paths[i]);
-		i++;
-	}
-	ft_free_null(g_meta->paths);
-}
 
 // returns 1 if the env variable exists
 bool	is_var_in_env(char *var)

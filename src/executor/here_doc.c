@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 11:30:00 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:53:29 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ int	execute_hd(char *string)
 	}
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);	//UI
 	init_signals(1);
-	//sig_ignore(); //My understanding: to make sure that SIGINT and SIGQUIT are ignored as we are about to fork and create another process. It has to block specific signals during exec too. Then, it ignores the previous signal returned (to change the behaviour of a process)
 	gnl_return = NULL;
 	pid_hd = fork();
 	if (pid_hd == 0)
 	{
-		init_signals(3);
-		//sig_heredoc(); //function to handle signals in the specific case of a here_doc.
+		signal(SIGINT, SIG_DFL);
 		while (1)
 		{
 			write(1, "> ", 2);
@@ -68,5 +66,6 @@ int	execute_hd(char *string)
 	close(pipe_hd[1]); //il peut être fermé, car on n'écrit plus dedans
 	waitpid(pid_hd, NULL, 0);
 	ft_free_null(gnl_return);
+	init_signals(1);
 	return (pipe_hd[0]);
 }

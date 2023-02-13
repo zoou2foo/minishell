@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 10:22:43 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:33 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			break ;
 	}
 
-
-	*head = find_head(node);	//reset head in case cut_token() destroys it
-	node = *head;				//reset node
+	//reset head in case cut_token() destroys it
+	*head = find_head(node);
+	node = *head;
 
 	//print_token_list(*head, true);				//DEBUG
 
@@ -75,7 +75,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			}
 			node = cut_token(node);						//remove node once used
 			if (!node->prev)
-				continue;
+				continue ;
 		}
 		if (node->next)
 			node = node->next;
@@ -83,9 +83,9 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			break ;
 	}
 
-
-	*head = find_head(node);	//reset head in case cut_token() destroys it
-	node = *head;				//reset node
+	//reset head in case cut_token() destroys it
+	*head = find_head(node);
+	node = *head;
 
 	//print_token_list(*head, false);					//DEBUG
 
@@ -93,7 +93,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	if (cmd->input)									//opens the input file if it exists
 		cmd->fdin = open(cmd->input, O_RDONLY);
 	else if (cmd->fdin == 0 && 0 < id)				//else, uses the pipe if it can AND has no heredoc pipe set already
-		cmd->fdin = metadata->pipes[id - 1][0];
+		cmd->fdin = g_meta->pipes[id - 1][0];
 
 	if (cmd->output)								//opens the output file if it exists
 	{
@@ -102,8 +102,8 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 		else
 			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_TRUNC, 0666);	//effectively 0644 because of umask);
 	}
-	else if (id < metadata->cmd_nb - 1)				//else, uses the pipe if it can
-		cmd->fdout = metadata->pipes[id][1];
+	else if (id < g_meta->cmd_nb - 1)				//else, uses the pipe if it can
+		cmd->fdout = g_meta->pipes[id][1];
 
 
 	cmd->cmd_args = ft_calloc(find_length(node) + 1, sizeof(char *));
@@ -138,20 +138,20 @@ void	load_cmd_block(t_token **head)
 	i = 0;
 	while (head[i])
 		i++;
-	metadata->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));	//FREE ME AT END OF CYCLE
-	metadata->pipes = ft_calloc(i, sizeof(int *));
-	metadata->cmd_nb = i;
+	g_meta->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));	//FREE ME AT END OF CYCLE
+	g_meta->pipes = ft_calloc(i, sizeof(int *));
+	g_meta->cmd_nb = i;
 
 	i = -1;
-	while (++i < metadata->cmd_nb - 1)		//creates potentially needed pipes
+	while (++i < g_meta->cmd_nb - 1)		//creates potentially needed pipes
 	{
-		metadata->pipes[i] = ft_calloc(2, sizeof(int));
-		pipe(metadata->pipes[i]);								//FREE ME AT END OF CYCLE
+		g_meta->pipes[i] = ft_calloc(2, sizeof(int));
+		pipe(g_meta->pipes[i]);								//FREE ME AT END OF CYCLE
 	}
 
 	i = -1;
 	while (head[++i])		//actual token list conversion
 	{
-		metadata->cmd_block[i] = tokens_to_cmd(&head[i], i);
+		g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i);
 	}
 }

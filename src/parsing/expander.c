@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/08 11:23:38 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,23 @@ char	*expand(char *str1)
 		if (str1[0] == '?' && str1[1] == '\0')
 		{
 			ft_free_null(str1);
-			return (ft_itoa(metadata->exit_status));
+			return (ft_itoa(g_meta->exit_status));
 		}
-		while (metadata->env[++i])
+		while (g_meta->env[++i])
 		{
 			j = 0;
-			if (ft_strncmp(str1, metadata->env[i], ft_strlen(str1)) == 0)
+			if (ft_strncmp(str1, g_meta->env[i], ft_strlen(str1)) == 0)
 			{
 				j += ft_strlen(str1);
-				if (metadata->env[i][j] != '=')
-					continue;
+				if (g_meta->env[i][j] != '=')
+					continue ;
 				j++;
 				ft_free_null(str2);
-				str2 = ft_calloc(ft_strlen(metadata->env[i]), sizeof(char));
+				str2 = ft_calloc(ft_strlen(g_meta->env[i]), sizeof(char));
 				k = 0;
-				while (metadata->env[i][j])
+				while (g_meta->env[i][j])
 				{
-					str2[k] = metadata->env[i][j];
+					str2[k] = g_meta->env[i][j];
 					j++;
 					k++;
 				}
@@ -99,10 +99,10 @@ char	*expand_quote(char *str1)
 			tmp = ft_calloc(2, sizeof(char));
 			tmp[0] = str1[i];
 		}
-		if (tmp)											//prevent returning null strings
+		if (tmp)
 			str2 = ft_strjoin_free(str2, tmp);
 		i++;
 	}
-	ft_free_null(str1);										//frees old string
+	ft_free_null(str1); //frees old string
 	return (str2);
 }

@@ -62,6 +62,7 @@ void	handler_sig(int sig) //at the very end of execute_cmd_block; out of all the
 void	init_signals(int flag)		//in child, I end up doing: signal(SIGINT, SIG_DFL); now maybe handler_child_sig is superfluous
 {
 	struct sigaction	sa;
+
 	sa.sa_mask = SIGINFO; //pour savoir quel signal tu as reçu
 	sa.sa_flags = SA_RESTART; //flag pour etre sur qu'il ne soit pas undefine state when interrupted
 	if (flag == 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 09:18:24 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 10:47:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	refill_path_tab(char *str)
 	int		i;
 	char	*tmp;
 
-	metadata->paths = ft_split(&str[5], ':');
+	g_meta->paths = ft_split(&str[5], ':');
 	i = 0;
 
-	while (metadata->paths[i])
+	while (g_meta->paths[i])
 	{
-		tmp = ft_strjoin(metadata->paths[i], "/");		//adds final / so we don't have to during excecution
-		ft_free_null(metadata->paths[i]);
-		metadata->paths[i] = tmp;
+		tmp = ft_strjoin(g_meta->paths[i], "/"); //adds final / so we don't have to during excecution
+		ft_free_null(g_meta->paths[i]);
+		g_meta->paths[i] = tmp;
 		i++;
 	}
 	return ;
@@ -33,6 +33,6 @@ void	refill_path_tab(char *str)
 
 void	reassign_var(int j, t_cmd *cmd)
 {
-	ft_free_null(metadata->env[j]);
-	metadata->env[j] = ft_strdup(cmd->cmd_args[1]);
+	ft_free_null(g_meta->env[j]);
+	g_meta->env[j] = ft_strdup(cmd->cmd_args[1]);
 }

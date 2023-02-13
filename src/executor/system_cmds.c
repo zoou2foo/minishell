@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 10:21:21 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ void	fill_path_tab(void)
 
 	i = 0;
 
-	while (metadata->env[i])
+	while (g_meta->env[i])
 	{
-		if (ft_strncmp(metadata->env[i], "PATH=", 5) == 0)
+		if (ft_strncmp(g_meta->env[i], "PATH=", 5) == 0)
 		{
-			metadata->paths = ft_split(&metadata->env[i][5], ':');
+			g_meta->paths = ft_split(&g_meta->env[i][5], ':');
 			i = 0;
 
-			while (metadata->paths[i])
+			while (g_meta->paths[i])
 			{
-				tmp = ft_strjoin(metadata->paths[i], "/");
-				ft_free_null(metadata->paths[i]);
-				metadata->paths[i] = tmp;
+				tmp = ft_strjoin(g_meta->paths[i], "/");
+				ft_free_null(g_meta->paths[i]);
+				g_meta->paths[i] = tmp;
 				i++;
 			}
 			return ;
@@ -51,24 +51,24 @@ void	throw_error(char *str)
 // Checks if a given cmd exists and is executable, then execute it
 // Execve automatically exit() when used
 // call one time fill_path_tab here, instead of everywhere
-// after execve(); need to free metadata->paths right away, not at the very end
+// after execve(); need to free g_meta->paths right away, not at the very end
 void	exec_with_paths(t_cmd *cmd)
 {
 	char	*cmd_path;
 	int		i;
 
 	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
-		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
+		execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
 
-	if (metadata->env)
+	if (g_meta->env)
 		fill_path_tab();
 
 	i = -1;
-	while (metadata->paths[++i])
+	while (g_meta->paths[++i])
 	{
-		cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
+		cmd_path = ft_strjoin(g_meta->paths[i], cmd->cmd_args[0]);
 		if (!access(cmd_path, F_OK | X_OK))
-			execve(cmd_path, cmd->cmd_args, metadata->env);
+			execve(cmd_path, cmd->cmd_args, g_meta->env);
 		ft_free_null(cmd_path);
 	}
 	throw_error(ERR_CMD);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 11:23:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:40 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	cmd_fork(void)
 	{
 		//TODO : handle error
 		throw_error(ERR_PIPE);
-		ft_free_null(metadata);
+		ft_free_null(g_meta);
 	}
 	if (f_id == 0)
 	{
@@ -56,7 +56,7 @@ void	child_process(t_cmd *cmd)
 		exec_with_paths(cmd);
 		//TODO : handle error
 		close_fds(cmd);
-		exit(127);				//this will set the value in the parent's metadata->exit_status
+		exit(127);				//this will set the value in the parent's g_meta->exit_status
 	}
 }
 
@@ -68,10 +68,10 @@ void	execute_cmd_block(void)
 	t_cmd	*cmd;
 
 	i = -1;
-	metadata->pid = ft_calloc(sizeof(int), metadata->cmd_nb);
-	while (++i < metadata->cmd_nb)
+	g_meta->pid = ft_calloc(sizeof(int), g_meta->cmd_nb);
+	while (++i < g_meta->cmd_nb)
 	{
-		cmd = metadata->cmd_block[i];
+		cmd = g_meta->cmd_block[i];
 		if (cmd->argcount > 0)
 		{
 			if (!built_ins_childable(cmd))	//calls non-childable functions directly
@@ -79,20 +79,20 @@ void	execute_cmd_block(void)
 				close_fds(cmd);
 				execute_builtins(cmd);
 			}
-			else if (cmd->argcount > 1 && ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
-			{								//calls export directly IF its has args
+			else if (cmd->argcount > 1 && ft_strncmp(cmd->cmd_args[0], "export", 6) == 0) //calls export directly IF its has args
+			{
 				close_fds(cmd);
 				execute_builtins(cmd);
 			}
 			else
 			{
-				metadata->pid[i] = cmd_fork();
-				if (metadata->pid[i] < 0)
+				g_meta->pid[i] = cmd_fork();
+				if (g_meta->pid[i] < 0)
 				{
 					throw_error(ERR_PID);
 					//TODO : handle error
 				}
-				if (metadata->pid[i] == 0) //if is child
+				if (g_meta->pid[i] == 0) //if is child
 				{
 					signal(SIGINT, SIG_DFL);
 					dup2(cmd->fdin, STDIN_FILENO);
@@ -104,7 +104,7 @@ void	execute_cmd_block(void)
 			}
 		}
 	}
-	ft_free_null(metadata->pid);
+	ft_free_null(g_meta->pid);
 	init_signals(1);
 }
 
@@ -113,15 +113,15 @@ void	waitchild(void)
 	int	i;
 
 	i = 0;
-	while (i < metadata->cmd_nb)
+	while (i < g_meta->cmd_nb)
 	{
-		waitpid(metadata->pid[i], &metadata->exit_status, 0);
-		if (WIFEXITED(metadata->exit_status) == TRUE)
+		waitpid(g_meta->pid[i], &g_meta->exit_status, 0);
+		if (WIFEXITED(g_meta->exit_status) == TRUE)
 		{
-			metadata->exit_status = WEXITSTATUS(metadata->exit_status);
+			g_meta->exit_status = WEXITSTATUS(g_meta->exit_status);
 		}
-		if (WIFSIGNALED(metadata->exit_status) == TRUE)
-			metadata->exit_status = WTERMSIG(metadata->exit_status) + 128;
+		if (WIFSIGNALED(g_meta->exit_status) == TRUE)
+			g_meta->exit_status = WTERMSIG(g_meta->exit_status) + 128;
 		i++;
 	}
 }

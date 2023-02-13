@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 13:58:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	get_env(void)
 	int	i;
 
 	i = 0;
-	if (metadata->env)
+	if (g_meta->env)
 	{
-		while (metadata->env[i])
+		while (g_meta->env[i])
 		{
-			printf("%s\n", metadata->env[i]);
+			printf("%s\n", g_meta->env[i]);
 			i++;
 		}
 		exit (EXIT_SUCCESS);

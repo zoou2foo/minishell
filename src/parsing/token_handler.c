@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/08 13:18:58 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:42 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ t_token	*empty_token(t_token *node)
 {
 	if (node)
 	{
-		node->prev= NULL;
+		node->prev = NULL;
 		node->next = NULL;
 		if (node->string)
 			ft_free_null(node->string);

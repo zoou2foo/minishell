@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 14:12:22 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:43 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_meta	*metadata;	//our global var
+t_meta	*g_meta;	//our global var
 
 //prints the gien token lists according to internal specifications
 void	print_token_list(t_token *head, bool start_with_newline)
@@ -21,7 +21,6 @@ void	print_token_list(t_token *head, bool start_with_newline)
 	bool	show_newline = false;
 	bool	show_content = true;
 	bool	show_types = false;
-
 	t_token	*node;
 
 	node = head;
@@ -32,7 +31,7 @@ void	print_token_list(t_token *head, bool start_with_newline)
 	while (node)
 	{
 		if (node && show_joined && node->is_joined)
-				printf("__");
+			printf("__");
 		else if (show_newline)
 			printf("\n| ");
 		else
@@ -94,18 +93,19 @@ void	print_cmd(t_cmd *cmd)
 	printf("|\n|  _cmd_args_\n| |\n");
 	i = -1;
 	while (cmd->cmd_args[++i])
-		printf("| | %i : '%s'\n",i, cmd->cmd_args[i]);
+		printf("| | %i : '%s'\n", i, cmd->cmd_args[i]);
 }
 
-//prints metadata->env
+//prints g_meta->env
 void	print_tab_env(void)
 {
 	int	i;
+
 	i = 0;
 	printf("\n");
-	while (metadata->env[i])
+	while (g_meta->env[i])
 	{
-		printf("%s\n", metadata->env[i]);
+		printf("%s\n", g_meta->env[i]);
 		i++;
 	}
 	printf("\n");
@@ -123,26 +123,26 @@ int	is_line_empty(char *line)
 	return (1);
 }
 
-//allocates memory for and fills the global metadata var with default values (for env and path)
+//allocates memory for and fills the global g_meta var with default values (for env and path)
 void	init_meta(void)
 {
 	int	i;
 
-	metadata = ft_calloc(sizeof(t_meta), 1);
+	g_meta = ft_calloc(sizeof(t_meta), 1);
 
 	i = 0;
 	while (environ[i])
 		i++;
-	metadata->env = ft_calloc(sizeof(char *), i + 1);
+	g_meta->env = ft_calloc(sizeof(char *), i + 1);
 	i = 0;
 	while (environ[i])
 	{
-		metadata->env[i] = ft_strdup(environ[i]);
+		g_meta->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
 }
 
-// Main logic loop of minishell. It initialises metadata and signals and every cycle, it:
+// Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
 // - reads the inputed line
 // - checks if said line empty
 // - add it to the history
@@ -158,24 +158,24 @@ void	minishell(void)
 {
 	init_meta();
 	init_signals(1);
-	while (metadata->state >= 0)
+	while (g_meta->state >= 0)
 	{
-		metadata->state = MSTATE_NORMAL;
-		metadata->buf = readline("MNSH > ");
-		if (!metadata->buf)		//to make ctrl+d not segfault (cause it makes the buffer == null)
+		g_meta->state = MSTATE_NORMAL;
+		g_meta->buf = readline("MNSH > ");
+		if (!g_meta->buf) //to make ctrl+d not segfault (cause it makes the buffer == null)
 			break ;
-		if (!is_line_empty(metadata->buf))
+		if (!is_line_empty(g_meta->buf))
 		{
-			add_history(metadata->buf);
-			load_cmd_block(parse_line(metadata->buf));
-			if (metadata->state == MSTATE_NORMAL)
+			add_history(g_meta->buf);
+			load_cmd_block(parse_line(g_meta->buf));
+			if (g_meta->state == MSTATE_NORMAL)
 				execute_cmd_block();
 			//free cmd_block & pipes
 		}
-		ft_free_null(metadata->buf);
+		ft_free_null(g_meta->buf);
 	}
 	clear_history();
-	ft_free_null(metadata);		//FREE ALL SUB PARTS before (free_all()?)
+	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 }
 
 
@@ -235,8 +235,8 @@ int	main(void)
 	if (show_cmds)
 	{
 		i = -1;
-		while(metadata->cmd_block[++i])
-			print_cmd(metadata->cmd_block[i]);
+		while(g_meta->cmd_block[++i])
+			print_cmd(g_meta->cmd_block[i]);
 	}
 
 	printf("\n");
@@ -271,9 +271,9 @@ int	main(void)
 	init_meta();
 	// fill_path_tab();
 	// i = 0;
-	// while (metadata->path[i])
+	// while (g_meta->path[i])
 	// {
-	// 	printf("%s\n", metadata->path[i]);
+	// 	printf("%s\n", g_meta->path[i]);
 	// 	i++;
 	// }
 	cmd = ft_calloc(sizeof(t_cmd), 1);

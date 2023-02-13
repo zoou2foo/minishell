@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 10:48:17 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ void	sort_env(void)
 	int		j_min;
 
 	i = 0;
-	while (metadata->env[i])
+	while (g_meta->env[i])
 	{
 		j = i + 1;
 		j_min = i;
-		while (metadata->env[j])
+		while (g_meta->env[j])
 		{
-			if (ft_strcmp(metadata->env[j], metadata->env[j_min]) < 0)
+			if (ft_strcmp(g_meta->env[j], g_meta->env[j_min]) < 0)
 				j_min = j;
 			j++;
 		}
 		if (j_min != i)
 		{
-			tmp = metadata->env[i];
-			metadata->env[i] = metadata->env[j_min];
-			metadata->env[j_min] = tmp;
+			tmp = g_meta->env[i];
+			g_meta->env[i] = g_meta->env[j_min];
+			g_meta->env[j_min] = tmp;
 		}
 		i++;
 	}
@@ -46,14 +46,14 @@ void	refill_path_tab(char *str)
 	int		i;
 	char	*tmp;
 
-	metadata->paths = ft_split(&str[5], ':');
+	g_meta->paths = ft_split(&str[5], ':');
 	i = 0;
 
-	while (metadata->paths[i])
+	while (g_meta->paths[i])
 	{
-		tmp = ft_strjoin(metadata->paths[i], "/");		//adds final / so we don't have to during excecution
-		ft_free_null(metadata->paths[i]);
-		metadata->paths[i] = tmp;
+		tmp = ft_strjoin(g_meta->paths[i], "/");		//adds final / so we don't have to during excecution
+		ft_free_null(g_meta->paths[i]);
+		g_meta->paths[i] = tmp;
 		i++;
 	}
 	return ;
@@ -65,15 +65,15 @@ int	env_length(void)
 	int	i;
 
 	i = 0;
-	while (metadata->env[i])
+	while (g_meta->env[i])
 		i++;
 	return (i);
 }
 
 void	reassign_var(int j, t_cmd *cmd)
 {
-	ft_free_null(metadata->env[j]);
-	metadata->env[j] = ft_strdup(cmd->cmd_args[1]);
+	ft_free_null(g_meta->env[j]);
+	g_meta->env[j] = ft_strdup(cmd->cmd_args[1]);
 }
 
 //if not found, return -1
@@ -87,9 +87,9 @@ int	find_var(t_cmd *cmd)
 	while (cmd->cmd_args[1][len] && cmd->cmd_args[1][len] != '=')
 		len++;
 	i = 0;
-	while (metadata->env[i])
+	while (g_meta->env[i])
 	{
-		if (ft_strncmp(cmd->cmd_args[1], metadata->env[i], len) == 0)
+		if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i], len) == 0)
 			return (i);
 		i++;
 	}
@@ -98,7 +98,7 @@ int	find_var(t_cmd *cmd)
 
 //function to shortent do_export. It takes t_cmd and index to add a variable
 //to env
-// add var at the end of metadata->env with the arg
+// add var at the end of g_meta->env with the arg
 //set exit_status directly because non-childable when has args
 // **void	add_var_to_env(t_cmd *cmd, int i)**
 // {
@@ -106,7 +106,7 @@ int	find_var(t_cmd *cmd)
 // }
 
 // Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
-// env. Else if arg -> add the var at metadata->env (see ft above)l;
+// env. Else if arg -> add the var at g_meta->env (see ft above)l;
 //set exit_status indirectly because childable when no args
 void	do_export(t_cmd *cmd)
 {
@@ -117,10 +117,10 @@ void	do_export(t_cmd *cmd)
 	if (cmd->cmd_args[1] == NULL)
 	{
 		sort_env();
-		while (metadata->env[i] != NULL)
+		while (g_meta->env[i] != NULL)
 		{
 			printf("declare -x ");
-			printf("%s\n", metadata->env[i]);
+			printf("%s\n", g_meta->env[i]);
 			i++;
 		}
 		exit(EXIT_SUCCESS);
@@ -134,12 +134,12 @@ void	do_export(t_cmd *cmd)
 		}
 		else
 		{
-			metadata->env = ft_recalloc(metadata->env, env_length() + 2,
+			g_meta->env = ft_recalloc(g_meta->env, env_length() + 2,
 				env_length() + 1, sizeof(char *)); //NEED to DEBUG here... maybe a prob of calloc
-			while (metadata->env[i] != NULL)
+			while (g_meta->env[i] != NULL)
 				i++;
-			metadata->env[i] = ft_strdup(cmd->cmd_args[1]);
+			g_meta->env[i] = ft_strdup(cmd->cmd_args[1]);
 		}
-		metadata->exit_status = EXIT_SUCCESS;
+		g_meta->exit_status = EXIT_SUCCESS;
 	}
 }

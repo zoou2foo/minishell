@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/09 13:45:54 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:24:42 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_token	**parse_line(char *line)
 	head = remove_empty_list(head);
 	//print_token_list(head, false);		//DEBUG
 
-	i = 1;		//at least 1 cmd to execute
+	i = 1; //always at least 1 cmd to execute
 	node = head;
 	while (node)
 	{

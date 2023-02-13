@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/10 08:53:20 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 11:23:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,9 @@ void	execute_cmd_block(void)
 	init_signals(1);
 }
 
-
-void waitchild()
+void	waitchild(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < metadata->cmd_nb)

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 10:48:25 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 11:10:36 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	init_signals(int flag);
 
 /*		PRE_EXECUTION	*/
 void	execute_cmd_block(void);
-void	waitchild();
+void	waitchild(void);
 
 /*		UTILS_TO_EXEC	*/
 int		is_built_in(char *cmd_arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:35:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 16:05:53 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,6 @@ void	sort_env(void)
 	}
 }
 
-void	refill_path_tab(char *str)
-{
-	int		i;
-	char	*tmp;
-
-	g_meta->paths = ft_split(&str[5], ':');
-	i = 0;
-
-	while (g_meta->paths[i])
-	{
-		tmp = ft_strjoin(g_meta->paths[i], "/"); //adds final / so we don't have to during excecution
-		ft_free_null(g_meta->paths[i]);
-		g_meta->paths[i] = tmp;
-		i++;
-	}
-	return ;
-}
-
 // Return the length of env. Take nothing as we use global var
 int	env_length(void)
 {
@@ -68,12 +50,6 @@ int	env_length(void)
 	while (g_meta->env[i])
 		i++;
 	return (i);
-}
-
-void	reassign_var(int j, t_cmd *cmd)
-{
-	ft_free_null(g_meta->env[j]);
-	g_meta->env[j] = ft_strdup(cmd->cmd_args[1]);
 }
 
 //if not found, return -1
@@ -100,10 +76,22 @@ int	find_var(t_cmd *cmd)
 //to env
 // add var at the end of g_meta->env with the arg
 //set exit_status directly because non-childable when has args
-// **void	add_var_to_env(t_cmd *cmd, int i)**
-// {
-// 	int	j;
-// }
+void	add_var_to_env(t_cmd *cmd, int j, int i)
+{
+	if (j >= 0)
+	{
+		reassign_var(j, cmd);
+	}
+	else
+	{
+		g_meta->env = ft_recalloc(g_meta->env, env_length() + 2,
+				env_length() + 1, sizeof(char *));
+		while (g_meta->env[i] != NULL)
+			i++;
+		g_meta->env[i] = ft_strdup(cmd->cmd_args[1]);
+	}
+	g_meta->exit_status = EXIT_SUCCESS;
+}
 
 // Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
 // env. Else if arg -> add the var at g_meta->env (see ft above)l;
@@ -128,19 +116,6 @@ void	do_export(t_cmd *cmd)
 	else
 	{
 		j = find_var(cmd);
-		if (j >= 0)
-		{
-			reassign_var(j, cmd);
-		}
-		else
-		{
-			j = env_length() + 1;
-			//used j to make the line more compact
-			g_meta->env = ft_recalloc(g_meta->env, j + 1, j, sizeof(char *));
-			while (g_meta->env[i] != NULL)
-				i++;
-			g_meta->env[i] = ft_strdup(cmd->cmd_args[1]);
-		}
-		g_meta->exit_status = EXIT_SUCCESS;
+		add_var_to_env(cmd, j, i);
 	}
 }

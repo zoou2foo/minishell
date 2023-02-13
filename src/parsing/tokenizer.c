@@ -6,24 +6,16 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:41 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:38:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//checks if the given char is "space-like"
-bool	is_space(char c)					//MOVE ME TO LIBFT
-{
-	if ((9 <= c && c <= 13) || c == ' ')
-		return (true);
-	return (false);
-}
-
 //checks if the given char is still inside an expansion
 bool	is_in_expansion(char c)
 {
-	if (c && !is_space(c) && c != '$')
+	if (ft_isalnum(c) || c == '_')
 		return (true);
 	return (false);
 }
@@ -48,7 +40,7 @@ t_token	*create_token_list(char *line)
 	while (line[++i])
 	{
 		len = 0;
-		while (is_space(line[i]))
+		while (ft_isspace(line[i]))
 			++i;
 
 		//deals with pipes
@@ -120,14 +112,14 @@ t_token	*create_token_list(char *line)
 		//deals with normal cmds/args input
 		else
 		{
-			while (line[i + len] && !is_space(line[i + len]) && !ft_strchr("|><\'\"$", line[i + len]))
+			while (line[i + len] && !ft_isspace(line[i + len]) && !ft_strchr("|><\'\"$", line[i + len]))
 				len++;
 			len -= 1;
 			add_token(new_token(&line[i], len, TTYPE_NORMAL), &head);
 		}
 
 		//notes down if the token is potentially "tied" to the previous
-		if (head && (i == 0 || is_space(line[i - 1])))
+		if (head && (i == 0 || ft_isspace(line[i - 1])))
 			find_tail(head)->is_joined = false;
 		else
 			find_tail(head)->is_joined = true;

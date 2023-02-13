@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:43 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:40:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	is_line_empty(char *line)
 
 	i = -1;
 	while (line[++i])
-		if (!is_space(line[i]))
+		if (!ft_isspace(line[i]))
 			return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:44 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:38:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ t_token	**parse_line(char *line);
 void	load_cmd_block(t_token **head);
 
 //from tokenizer
-bool	is_space(char c);					//à mettre dans libft
 bool	is_in_expansion(char c);
 t_token	*create_token_list(char *line);
 void	expand_token_list(t_token *head);

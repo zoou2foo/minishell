@@ -6,27 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:32:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//obsolete -- Can delete?
-void	empty_path_tab(void)
-{
-	int	i;
-
-	i = 0;
-	while (g_meta->paths[i])
-	{
-		ft_free_null(g_meta->paths[i]);
-		i++;
-	}
-	ft_free_null(g_meta->paths);
-}
-
-// returns 1 if the env variable exists
+//returns 1 if the env variable exists
 bool	is_var_in_env(char *var)
 {
 	int	i;
@@ -36,7 +22,7 @@ bool	is_var_in_env(char *var)
 	{
 		while (g_meta->env[i] != NULL)
 		{
-			if (ft_strncmp(var, g_meta->env[i], ft_strlen(var)) == 0)
+			if (is_same(g_meta->env[i], var))
 				return (true);
 			i++;
 		}
@@ -48,8 +34,7 @@ bool	is_var_in_env(char *var)
 //without the one sent in arg
 // void	shorten_unset_arg(t_cmd *cmd, char **new_env, int i, int j)
 // {
-// 	if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i],
-// 			ft_strlen(cmd->cmd_args[1])) == 0) //besoin de mettre à 1
+// 	if (is_same(cmd->cmd_args[1], g_meta->env[i]))
 // 	{
 // 		ft_free_null(g_meta->env[i]);
 // 		i++;
@@ -107,8 +92,7 @@ void	do_unset(t_cmd *cmd)
 		i = 0;
 		while (g_meta->env[i])
 		{
-			if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i],
-				ft_strlen(cmd->cmd_args[1])) == 0) //besoin de mettre à 1
+			if (is_same(cmd->cmd_args[1], g_meta->env[i]))
 			{
 				ft_free_null(g_meta->env[i]);
 				i++;

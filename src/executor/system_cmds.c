@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:28:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	fill_path_tab(void)
 
 	while (g_meta->env[i])
 	{
-		if (ft_strncmp(g_meta->env[i], "PATH=", 5) == 0)
+		if (is_same(g_meta->env[i], "PATH="))
 		{
 			g_meta->paths = ft_split(&g_meta->env[i][5], ':');
 			i = 0;

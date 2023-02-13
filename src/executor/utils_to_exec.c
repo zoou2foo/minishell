@@ -3,61 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   utils_to_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 10:22:05 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:30:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// CHecks if the given cmd_arg is a built-in (1 = true, 0 = false)
-int	is_built_in(char *cmd_arg)
+//simplifies cmd name comparisons (compares only up to len(str) chars)
+bool	is_same(char *arg, char *str)
 {
-	if ((ft_strncmp(cmd_arg, "cd", 2) == 0)
-		|| (ft_strncmp(cmd_arg, "echo", 4) == 0)
-		|| (ft_strncmp(cmd_arg, "env", 3) == 0)
-		|| (ft_strncmp(cmd_arg, "exit", 4) == 0)
-		|| (ft_strncmp(cmd_arg, "export", 6) == 0)
-		|| (ft_strncmp(cmd_arg, "pwd", 3) == 0)
-		|| (ft_strncmp(cmd_arg, "unset", 5) == 0))
-		return (1);
+	if (ft_strncmp(arg, str, ft_strlen(str)) == 0)
+		return (true);
+	return (false);
+}
+
+// Checks if the given cmd_arg is a built-in
+bool	is_built_in(char *cmd_arg)
+{
+	if (is_same(cmd_arg, "cd")
+		|| is_same(cmd_arg, "echo")
+		|| is_same(cmd_arg, "env")
+		|| is_same(cmd_arg, "exit")
+		|| is_same(cmd_arg, "export")
+		|| is_same(cmd_arg, "pwd")
+		|| is_same(cmd_arg, "unset"))
+		return (true);
 	else
-		return (0);
+		return (false);
 }
 
 // Executes the built-in called via the first cmd_arg
 void	execute_builtins(t_cmd *cmd)
 {
-	if (ft_strncmp(cmd->cmd_args[0], "cd", 2) == 0)
-		change_dir(cmd);
-	else if (ft_strncmp(cmd->cmd_args[0], "echo", 4) == 0)
-		do_echo(cmd);
-	else if (ft_strncmp(cmd->cmd_args[0], "env", 3) == 0)
-		get_env();
-	else if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)
-		do_exit(cmd);
-	else if (ft_strncmp(cmd->cmd_args[0], "export", 6) == 0)
-		do_export(cmd);
-	else if (ft_strncmp(cmd->cmd_args[0], "pwd", 3) == 0)
-		get_pwd();
-	else if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
-		do_unset(cmd);
+	char	*arg;
 
-	//write(STDERR_FILENO, "Command Error : Builtin failure\n", 33);
+	arg = cmd->cmd_args[0];
+	if (is_same(arg, "cd"))
+		change_dir(cmd);
+	else if (is_same(arg, "echo"))
+		do_echo(cmd);
+	else if (is_same(arg, "env"))
+		get_env();
+	else if (is_same(arg, "exit"))
+		do_exit(cmd);
+	else if (is_same(arg, "export"))
+		do_export(cmd);
+	else if (is_same(arg, "pwd"))
+		get_pwd();
+	else if (is_same(arg, "unset"))
+		do_unset(cmd);
 }
 
 // Checks if the built-in should be executed in a child process via the
 // first cmd_arg
-int	built_ins_childable(t_cmd *cmd)
+bool	built_ins_childable(t_cmd *cmd)
 {
-	if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)
-		return (0);
-	if (ft_strncmp(cmd->cmd_args[0], "unset", 5) == 0)
-		return (0);
-	if (ft_strncmp(cmd->cmd_args[0], "cd", 2) == 0)
-		return (0);
+	char	*arg;
+
+	arg = cmd->cmd_args[0];
+	if (is_same(arg, "cd")
+		|| is_same(arg, "exit")
+		|| is_same(arg, "unset"))
+		return (false);
 	else
-		return (1);
+		return (true);
 }

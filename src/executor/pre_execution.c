@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:05:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:24:44 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	execute_cmd_block(void)
 				close_fds(cmd);
 				execute_builtins(cmd);
 			}
-			else if (cmd->argcount > 1 && ft_strncmp(cmd->cmd_args[0], "export", 6) == 0) //calls export directly IF its has args
+			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export")) //calls export directly IF its has args
 			{
 				close_fds(cmd);
 				execute_builtins(cmd);

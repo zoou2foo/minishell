@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:35 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:35:03 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	refill_path_tab(char *str)
 
 	while (g_meta->paths[i])
 	{
-		tmp = ft_strjoin(g_meta->paths[i], "/");		//adds final / so we don't have to during excecution
+		tmp = ft_strjoin(g_meta->paths[i], "/"); //adds final / so we don't have to during excecution
 		ft_free_null(g_meta->paths[i]);
 		g_meta->paths[i] = tmp;
 		i++;
@@ -89,7 +89,7 @@ int	find_var(t_cmd *cmd)
 	i = 0;
 	while (g_meta->env[i])
 	{
-		if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i], len) == 0)
+		if (is_same(cmd->cmd_args[1], g_meta->env[i]))
 			return (i);
 		i++;
 	}
@@ -134,8 +134,9 @@ void	do_export(t_cmd *cmd)
 		}
 		else
 		{
-			g_meta->env = ft_recalloc(g_meta->env, env_length() + 2,
-				env_length() + 1, sizeof(char *)); //NEED to DEBUG here... maybe a prob of calloc
+			j = env_length() + 1;
+			//used j to make the line more compact
+			g_meta->env = ft_recalloc(g_meta->env, j + 1, j, sizeof(char *));
 			while (g_meta->env[i] != NULL)
 				i++;
 			g_meta->env[i] = ft_strdup(cmd->cmd_args[1]);

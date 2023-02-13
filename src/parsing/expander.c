@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:32 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:27:56 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*expand(char *str1)
 		while (g_meta->env[++i])
 		{
 			j = 0;
-			if (ft_strncmp(str1, g_meta->env[i], ft_strlen(str1)) == 0)
+			if (is_same(g_meta->env[i], str1))
 			{
 				j += ft_strlen(str1);
 				if (g_meta->env[i][j] != '=')

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 14:47:54 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:23:03 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,10 @@ void	execute_cmd_block(void);
 void	waitchild(void);
 
 /*		UTILS_TO_EXEC	*/
-int		is_built_in(char *cmd_arg);
+bool	is_same(char *arg, char *str);
+bool	is_built_in(char *cmd_arg);
 void	execute_builtins(t_cmd *cmd);
-int		built_ins_childable(t_cmd *cmd);
+bool	built_ins_childable(t_cmd *cmd);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llord <llord@student.42.fr>                +#+  +:+       +#+         #
+#    By: vjean <vjean@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 08:45:10 by vjean             #+#    #+#              #
-#    Updated: 2023/01/19 12:24:13 by llord            ###   ########.fr        #
+#    Updated: 2023/02/13 09:17:06 by vjean            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalnum.c ft_isalpha.c ft_isascii.c\
 	ft_lstdelone.c ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c\
 	ft_lstsize.c get_next_line.c get_next_line_utils.c ft_atol.c ft_free_tab.c\
 	ft_strjoin_free.c ft_strtrim_free.c ft_count_char.c ft_free_null.c\
+	ft_strcmp.c \
 
 CC = gcc
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_to_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 13:51:33 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 10:22:05 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	execute_builtins(t_cmd *cmd)
 	//write(STDERR_FILENO, "Command Error : Builtin failure\n", 33);
 }
 
-// Checks if the built-in should be executed in a child process via the first cmd_arg
+// Checks if the built-in should be executed in a child process via the
+// first cmd_arg
 int	built_ins_childable(t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->cmd_args[0], "exit", 4) == 0)

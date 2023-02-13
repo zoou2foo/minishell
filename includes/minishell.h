@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 13:46:42 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 11:10:36 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <curses.h>
 # include <signal.h>
+# include <termios.h>
 
 extern	char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
 
@@ -154,13 +155,16 @@ void	exec_with_paths(t_cmd *cmd);
 
 /*		HERE_DOCUMENT	*/
 int		execute_hd(char *string);
+void	sig_heredoc(void);
+void	hd_handler(int signum);
+void	sig_ignore(void);
 
 /*		SIGNALS			*/
 void	init_signals(int flag);
 
 /*		PRE_EXECUTION	*/
 void	execute_cmd_block(void);
-void	waitchild();
+void	waitchild(void);
 
 /*		UTILS_TO_EXEC	*/
 int		is_built_in(char *cmd_arg);

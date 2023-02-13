@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 14:02:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 10:48:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// We could put this one in libft ⬇️
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return (s1[i] - s2[i]);
-}
 
 // Take nothing; return nothing. Use global var to sort env in alpha order.
 void	sort_env(void)
@@ -52,17 +41,6 @@ void	sort_env(void)
 	}
 }
 
-// Return the length of env. Take nothing as we use global var
-int	env_length(void)
-{
-	int	i;
-
-	i = 0;
-	while (metadata->env[i])
-		i++;
-	return (i);
-}
-
 void	refill_path_tab(char *str)
 {
 	int		i;
@@ -81,7 +59,25 @@ void	refill_path_tab(char *str)
 	return ;
 }
 
-//
+// Return the length of env. Take nothing as we use global var
+int	env_length(void)
+{
+	int	i;
+
+	i = 0;
+	while (metadata->env[i])
+		i++;
+	return (i);
+}
+
+void	reassign_var(int j, t_cmd *cmd)
+{
+	ft_free_null(metadata->env[j]);
+	metadata->env[j] = ft_strdup(cmd->cmd_args[1]);
+}
+
+//if not found, return -1
+//to check if var exist already
 int	find_var(t_cmd *cmd)
 {
 	int	len;
@@ -100,14 +96,18 @@ int	find_var(t_cmd *cmd)
 	return (-1);
 }
 
-void	reassign_var(int j, t_cmd *cmd)
-{
-	ft_free_null(metadata->env[j]);
-	metadata->env[j] = ft_strdup(cmd->cmd_args[1]);
-}
+//function to shortent do_export. It takes t_cmd and index to add a variable
+//to env
+// add var at the end of metadata->env with the arg
+//set exit_status directly because non-childable when has args
+// **void	add_var_to_env(t_cmd *cmd, int i)**
+// {
+// 	int	j;
+// }
 
 // Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
-// env. Else if arg -> add the var at metadata->env
+// env. Else if arg -> add the var at metadata->env (see ft above)l;
+//set exit_status indirectly because childable when no args
 void	do_export(t_cmd *cmd)
 {
 	int		i;
@@ -123,25 +123,23 @@ void	do_export(t_cmd *cmd)
 			printf("%s\n", metadata->env[i]);
 			i++;
 		}
-		exit(EXIT_SUCCESS);		//set exit_status indirectly because childable when no args
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		// ajoute la variable à la fin de metadata->env avec l'arg.
-		j = find_var(cmd);	//if not found, retunr -1
+		j = find_var(cmd);
 		if (j >= 0)
 		{
 			reassign_var(j, cmd);
 		}
 		else
 		{
-			metadata->env = ft_recalloc(metadata->env, env_length() + 2, env_length() + 1, sizeof(char *)); //NEED to DEBUG here... maybe a prob of calloc
+			metadata->env = ft_recalloc(metadata->env, env_length() + 2,
+				env_length() + 1, sizeof(char *)); //NEED to DEBUG here... maybe a prob of calloc
 			while (metadata->env[i] != NULL)
 				i++;
 			metadata->env[i] = ft_strdup(cmd->cmd_args[1]);
 		}
-		metadata->exit_status = EXIT_SUCCESS;	//set exit_status directly because non-childable when has args
+		metadata->exit_status = EXIT_SUCCESS;
 	}
 }
-
-

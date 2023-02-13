@@ -6,25 +6,11 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 10:44:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:55:59 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//obsolete -- Can delete?
-void	empty_path_tab(void)
-{
-	int	i;
-
-	i = 0;
-	while (metadata->paths[i])
-	{
-		ft_free_null(metadata->paths[i]);
-		i++;
-	}
-	ft_free_null(metadata->paths);
-}
 
 // returns 1 if the env variable exists
 bool	is_var_in_env(char *var)

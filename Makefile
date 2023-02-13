@@ -129,13 +129,14 @@ $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c
 clear: clean
 clean:
 	$(HIDE) $(RM) $(OBJS)
-	$(HIDE) cd libft && make clean && cd ..
+	$(HIDE) $(RM) $(NAME).dSYM
 	@echo "$(MAGENTA)Object files cleaned$(DEF_COLOR)"
 
 # Removes object dir and executable
 fclear: fclean
 fclean: clean
 	$(HIDE) $(RM) $(OBJDIR)
+	$(HIDE) cd libft && make fclean && cd ..
 	@echo "$(MAGENTA)Object directory cleaned$(DEF_COLOR)"
 	$(HIDE) $(RM) $(NAME)
 	@echo "$(RED)Executable cleaned$(DEF_COLOR)"

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:33 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 13:07:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,28 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	//finds redirection nodes and uses them
 	while (node)
 	{
-		if (TTYPE_EXPAND < node->type)
+		if (TTYPE_EXPAND < node->type)			//PROTECT THE OPEN()s WITH ACCESS
 		{
 			if (node->type == TTYPE_S_RDR_OUT)			// >
 			{
-				ft_free_null(cmd->output);
-				cmd->output = ft_strdup(node->string);
-				cmd->append_output = false;
+				if (cmd->fdout != 1)
+					close(cmd->fdout);
+				cmd->fdout = open(node->string, O_CREAT | O_RDWR | O_TRUNC, 0666);
 			}
-			else if (node->type == TTYPE_D_RDR_OUT)		// >>
+			else if (node->type == TTYPE_D_RDR_OUT)		// >> (append mode)
 			{
-				ft_free_null(cmd->output);
-				cmd->output = ft_strdup(node->string);
-				cmd->append_output = true;
+				if (cmd->fdout != 1)
+					close(cmd->fdout);
+				cmd->fdout = open(node->string, O_CREAT | O_RDWR | O_APPEND, 0666);
 			}
 			else if (node->type == TTYPE_REDIR_IN)		// <
 			{
-				ft_free_null(cmd->input);
-				cmd->input = ft_strdup(node->string);
 				if (cmd->fdin != 0)
 					close(cmd->fdin);
-				cmd->fdin = 0;
+				cmd->fdin = open(node->string, O_RDONLY);
 			}
 			else if (node->type == TTYPE_HEREDOC)		// <<
 			{
-				ft_free_null(cmd->input);
 				if (cmd->fdin != 0)
 					close(cmd->fdin);
 				cmd->fdin = execute_hd(node->string);
@@ -83,28 +80,18 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			break ;
 	}
 
+	//uses the pieps if no fdin/fdout set
+	if (cmd->fdout == 1 && id < g_meta->cmd_nb - 1)
+		cmd->fdout = g_meta->pipes[id][1];
+	if (cmd->fdin == 0 && 0 < id)
+		cmd->fdin = g_meta->pipes[id - 1][0];
+
+
 	//reset head in case cut_token() destroys it
 	*head = find_head(node);
 	node = *head;
 
 	//print_token_list(*head, false);					//DEBUG
-
-	//open input and output file if they exist		(PROTECT ME WITH ACCESS)
-	if (cmd->input)									//opens the input file if it exists
-		cmd->fdin = open(cmd->input, O_RDONLY);
-	else if (cmd->fdin == 0 && 0 < id)				//else, uses the pipe if it can AND has no heredoc pipe set already
-		cmd->fdin = g_meta->pipes[id - 1][0];
-
-	if (cmd->output)								//opens the output file if it exists
-	{
-		if (cmd->append_output)
-			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0666);	//effectively 0644 because of umask);
-		else
-			cmd->fdout = open(cmd->output, O_CREAT | O_RDWR | O_TRUNC, 0666);	//effectively 0644 because of umask);
-	}
-	else if (id < g_meta->cmd_nb - 1)				//else, uses the pipe if it can
-		cmd->fdout = g_meta->pipes[id][1];
-
 
 	cmd->cmd_args = ft_calloc(find_length(node) + 1, sizeof(char *));
 

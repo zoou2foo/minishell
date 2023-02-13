@@ -1,7 +1,8 @@
-/*
+
 0========( PROBS TO SOLVE )========0
 1. checks for behaviour with empty redir / piping (warning for pipe, error for redir?)
 2. if wc or cat has no args (and no good redir) abort (?)
+
 
 
 0============(   VALERIE   )============0
@@ -20,10 +21,9 @@ fd 4 or 3 or both, still opens when we do system cmds: need to check
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-1. "$VAR'" thinks ' is included in the var name
-2. "<[bad file path] cmd" hangs (send a warning of invalid file instead)
-3. ls <test: It should say the file does not exist.
-4. ls > test > test1 > test2 > test3 : il faut creer tous les fichiers, pas juste le dernier
+1. "ls < [bad file path]": It should say the file does not exist.
+2. "<[bad file path] cmd": hangs (send a warning of invalid file instead)
+
 
 
 0====( TEST CASES )====0
@@ -47,5 +47,3 @@ cmd1 | cmd2
 
 cmd1 <<out1 | cmd2
 cmd1 | <<in1 cmd2
-
-*/

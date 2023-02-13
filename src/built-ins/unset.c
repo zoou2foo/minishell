@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 14:56:38 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:39:56 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,54 +30,36 @@ bool	is_var_in_env(char *var)
 	return (false);
 }
 
-//look at the arg sent; to free the line in env. Then, create a new env
-//without the one sent in arg
-// void	shorten_unset_arg(t_cmd *cmd, char **new_env, int i, int j)
-// {
-// 	if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i],
-// 			ft_strlen(cmd->cmd_args[1])) == 0) //besoin de mettre à 1
-// 	{
-// 		ft_free_null(g_meta->env[i]);
-// 		i++;
-// 	}
-// 	else
-// 	{
-// 		new_env[j] = g_meta->env[i];
-// 		j++;
-// 		i++;
-// 	}
-// }
-
-//setup a new_env to take out the var sent in arg
-//Return nothing. Take t_cmd to have access to the arg
-// void	unset_arg(t_cmd *cmd)
-// {
-// 	char	**new_env;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (g_meta->env[i])
-// 		i++;
-// 	new_env = ft_calloc(i, sizeof(char *));
-// 	i = 0;
-// 	while (g_meta->env[i])
-// 	{
-// 		shorten_unset_arg(cmd, new_env, i, j);
-// 	}
-// 	ft_free_null(g_meta->env);
-// 	g_meta->env = new_env;
-// }
-
-//return nothing. Take t_cmd to check what needs to be unset/free.
-//final else, if the var does not exist
-void	do_unset(t_cmd *cmd)
+//ft to shorten do_unset(). Unset the arg sent and create a new env
+void	unset_arg(t_cmd *cmd)
 {
 	char	**new_env;
 	int		i;
 	int		j;
 
+	i = 0;
+	j = 0;
+	while (g_meta->env[i])
+		i++;
+	new_env = ft_calloc(i, sizeof(char *));
+	i = 0;
+	while (g_meta->env[i])
+	{
+		if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i],
+				ft_strlen(cmd->cmd_args[1])) == 0)
+			ft_free_null(g_meta->env[i++]);
+		else
+			new_env[j++] = g_meta->env[i++];
+	}
+	ft_free_null(g_meta->env);
+	g_meta->env = new_env;
+}
+
+
+//return nothing. Take t_cmd to check what needs to be unset/free.
+//final else, if the var does not exist
+void	do_unset(t_cmd *cmd)
+{
 	if (!cmd->cmd_args[1])
 	{
 		throw_error(ERR_ARG);
@@ -85,31 +67,9 @@ void	do_unset(t_cmd *cmd)
 	}
 	else if (is_var_in_env(cmd->cmd_args[1]))
 	{
-		i = 0;
-		j = 0;
-		while (g_meta->env[i])
-			i++;
-		new_env = ft_calloc(i, sizeof(char *));
-		i = 0;
-		while (g_meta->env[i])
-		{
-			if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i],
-				ft_strlen(cmd->cmd_args[1])) == 0) //besoin de mettre à 1
-			{
-				ft_free_null(g_meta->env[i]);
-				i++;
-			}
-			else
-			{
-				new_env[j] = g_meta->env[i];
-				j++;
-				i++;
-			}
-		}
-		ft_free_null(g_meta->env);
-		g_meta->env = new_env;
+		unset_arg(cmd);
 	}
-	else // si variable n'existe pas
+	else
 	{
 		throw_error(ERR_ENV);
 		g_meta->exit_status = EXIT_FAILURE;

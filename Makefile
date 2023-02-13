@@ -77,6 +77,7 @@ FILES	=	main \
 			built-ins/env \
 			built-ins/exit \
 			built-ins/export \
+			built-ins/export_utils \
 			built-ins/pwd \
 			built-ins/unset \
 			built-ins/echo \

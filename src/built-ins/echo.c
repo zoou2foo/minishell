@@ -6,13 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/11 10:07:04 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 09:13:21 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//print arg
+//print arg; ft to shortent do_echo()
 void	echo_print(t_cmd *cmd, int i, int newline)
 {
 	while (cmd->cmd_args[i])

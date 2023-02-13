@@ -55,6 +55,26 @@ void	handler_sig(int sig) //at the very end of execute_cmd_block; out of all the
 	}
 }
 
+//Initialize the signals for the minishell.
+// Received an int as a flag to know where it is in the process; parent or child
+// Define the signals struct to know which signal was received.
+// Depending on the flag, each process has it's handler for signals.
+void	init_signals(int flag)		//in child, I end up doing: signal(SIGINT, SIG_DFL); now maybe handler_child_sig is superfluous
+{
+	struct sigaction	sa;
+	sa.sa_mask = SIGINFO; //pour savoir quel signal tu as reçu
+	sa.sa_flags = SA_RESTART; //flag pour etre sur qu'il ne soit pas undefine state when interrupted
+	if (flag == 1)
+		sa.sa_handler = &handler_sig;
+	else if (flag == 2)
+		sa.sa_handler = &handler_parent_sig;
+	else if (flag == 3)
+		sa.sa_handler = &handler_child_sig;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+/*
 //besoin de me faire expliquer la partie ci-dessous ⬇️ (VJ)
 void	sig_ignore(void)
 {
@@ -106,21 +126,5 @@ void	hd_handler(int signum) //function to handle signals in here_doc case
 // partie à revoir ⬆️
 
 
-//Initialize the signals for the minishell.
-// Received an int as a flag to know where it is in the process; parent or child
-// Define the signals struct to know which signal was received.
-// Depending on the flag, each process has it's handler for signals.
-void	init_signals(int flag)		//in child, I end up doing: signal(SIGINT, SIG_DFL); now maybe handler_child_sig is superfluous
-{
-	struct sigaction	sa;
-	sa.sa_mask = SIGINFO; //pour savoir quel signal tu as reçu
-	sa.sa_flags = SA_RESTART; //flag pour etre sur qu'il ne soit pas undefine state when interrupted
-	if (flag == 1)
-		sa.sa_handler = &handler_sig;
-	else if (flag == 2)
-		sa.sa_handler = &handler_parent_sig;
-	else if (flag == 3)
-		sa.sa_handler = &handler_child_sig;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-}
+*/
+

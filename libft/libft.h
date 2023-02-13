@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:21:21 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/26 14:55:23 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 09:16:39 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(void const *s1, void const *s2, size_t n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	*ft_calloc(size_t count, size_t size);
-void	*ft_recalloc(void *ptr, size_t new_count, size_t count, size_t size);	//SPLIT ME OFF
+void	*ft_recalloc(void *ptr, size_t new_count, size_t count, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
@@ -57,6 +57,7 @@ long	ft_atol(const char *str);
 void	ft_free_tab(void **tab);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_strtrim_free(char *s1, char const *set);
+int		ft_strcmp(char *s1, char *s2);
 
 //added by loïc
 void	ft_free_null(void *ptr);

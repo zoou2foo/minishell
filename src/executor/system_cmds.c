@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/09 14:40:28 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/13 10:21:21 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Looks for "path" in env. Splits at ":". Then, join s"/" after each section
+// Looks for "path" in env. Splits at ":". Then, join "/" after each section;
+//no need to add it during execution
 void	fill_path_tab(void)
 {
 	int		i;
@@ -29,7 +30,7 @@ void	fill_path_tab(void)
 
 			while (metadata->paths[i])
 			{
-				tmp = ft_strjoin(metadata->paths[i], "/");		//adds final / so we don't have to during excecution
+				tmp = ft_strjoin(metadata->paths[i], "/");
 				ft_free_null(metadata->paths[i]);
 				metadata->paths[i] = tmp;
 				i++;
@@ -49,6 +50,8 @@ void	throw_error(char *str)
 
 // Checks if a given cmd exists and is executable, then execute it
 // Execve automatically exit() when used
+// call one time fill_path_tab here, instead of everywhere
+// after execve(); need to free metadata->paths right away, not at the very end
 void	exec_with_paths(t_cmd *cmd)
 {
 	char	*cmd_path;
@@ -58,7 +61,7 @@ void	exec_with_paths(t_cmd *cmd)
 		execve(cmd->cmd_args[0], cmd->cmd_args, metadata->env);
 
 	if (metadata->env)
-		fill_path_tab();	//call une seule fois fill_path_tab ici au lieu de le mettre partout
+		fill_path_tab();
 
 	i = -1;
 	while (metadata->paths[++i])
@@ -66,8 +69,7 @@ void	exec_with_paths(t_cmd *cmd)
 		cmd_path = ft_strjoin(metadata->paths[i], cmd->cmd_args[0]);
 		if (!access(cmd_path, F_OK | X_OK))
 			execve(cmd_path, cmd->cmd_args, metadata->env);
-		ft_free_null(cmd_path); //free metadata->paths
+		ft_free_null(cmd_path);
 	}
 	throw_error(ERR_CMD);
-	//ft_free_array(metadata->paths)							//IMPLEMENT ME (add fct to libft)
 }

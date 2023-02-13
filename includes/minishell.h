@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/10 15:21:05 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/13 09:22:20 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 void	do_export(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
+int		env_length(void);
+void	reassign_var(int j, t_cmd *cmd);
+void	refill_path_tab(char *str);
 
 //from expander
 char	*expand(char *str1);

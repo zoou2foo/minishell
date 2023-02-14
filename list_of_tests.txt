@@ -1,0 +1,112 @@
+/*     NEED TO BE FIXED    */
+echo bonjour ; | => MNSH: bonjour ;     BASH: syntax error near unexpected token |
+echo -n -n -nnnn -nnnnm => MNSH:   -n -nnnn -nnnnmMNSH :)      BASH: -nnnnmbash-3.2$ 
+cat /dev/random | head -n 1 | cat -e => MNSH:  hang; apres ctrl-C: �|M-^]�GM-^J/��=���+^K�4�M-^V��}C��M-^\�^YgM-^R�Bf=]�a�!M-^]e^D+uX.����^Qs?�M-^Rvb�M-^F^?m��3�Mh�Qߡ�^FM-^S^ZG����^Q[DN��]y4SAp��ԫM-^SPX\��^G�^F�^M�M-^O^LM-^]l^DP�l��Y~M-^K��^Vn+�8�M-^I�_�V^T^C�P^UE���M-^J��)�v�u�B8���_c��M-^RE^_!y{����x^F�0�M-^G^]�M-^Tmhm�M-^KM-^\�M-^Dc�F��M-^U�M-^E���^Z1^PrM-^@Fk�?:�^]M-^W���D]�;h^G9�aky�����+M-^Tf�)n���X�CM-^N�|M-^M��^^kM-^H�<�M-^L���KqK^-X^M{4|^]p�^QM-^I�^Q^F�ĲM-^IZ�M-^J����6lS�0U^R��M-^T^?�^E�&�M-^M���ys�'^P^WQM-^_n�LP���K�^����|M-^Xy�N^]T�u�~�^N�)=ּ^K^O�M-^\�)�^Y^V�faM-^ZM-^V�M-^TM-^K�^]^T8�        �W�s%�Z�M-^O���^F^YM-^CluP^A�7c_�"M-^Z�^M�^YM-^Qq�6^?���^SM-^H+��r�M-^WM-^X^@M-^V�TM-^D^Y5^\�z^ZM-^OM-^J4'^^L5�^D�M-^Y^W^TDM-^FM-^UH�^T�^A�^D�~M-^P^��M-^\v�^�(����d'�M-^]��i^@����M-^BM-^K�.vt�M-^Iz�M-^]�+^Nx�=^G-M-^Jݴ�~^H�+�M-^S���<�I�^^��f��:���m��M-^XPM-^M�M-^X�M-^FM-^Lk�Sc}��M-^Z^Y^U^G^Z[M-^@~&C�$           BASH: ^H��M-^GM-^B*^\M-^\�+�R%�x|�.P�M-^U�^X�^_+bM-^H�M-^ZM-^G]�,�uh^ZM-^I$
+echo bonjour ; ls => MNSH: bonjour ; ls            BASH: bonjour et fais ls (; disparu)
+export "" et unset "" => MNSH: export"" ->print env + declare -x / unset "": error  BASH: error not a valid identifier / unset "" error not a valid identifier
+not_cmd bonjour > salut => MNSH: command not found                          BASH: command not found but salut is created
+cat Makefile | grep pr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given. echo $? does not work anymore     BASH: 258; syntax error near unexpected token ()
+cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file                   BASH: 258 same error as previous
+ cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found                          BASH: 258, same error as previous
+export var ="cat Makefile | grep >" => MNSH:  var cree sans rien d'autre                  BASH: ="cat Makefile | grep >" not a valid identifier
+echo bonjour >>> test => MNSH: invalid filename and exit minishell?? maybe error in echo...              BASH: syntax error near unexpected token >
+echo bonjour > > out => MNSH: invalid filename and exit minishell??         BASH: syntax error near unexpected token >
+export var; export var=test => MNSH:  cree la variable var et ajuste la variable var=test                BASH: export var n'est pas cree. Seulement lorsqu'il y a un =
+echo bonjour > $test # with test not defined => MNSH: invalid filename and exit minishell                BASH: ambiguous redirect
+echo "bip | bip ; coyotte > < " " => MNSH:  non terminated quotes                         BASH:  newline and >; need to do ctrl-C to end it
+cat | cat | cat | ls # check outputs order => MNSH:     hang    apres ctrl-C, imprime ls                  BASH: ecrit ls dans le terminal, puis hang
+cat diufosgid # check exit code => MNSH:       echo $? does not work        BASH: 1
+exit # should return the last exit code value => MNSH:  echo $? does not work             BASH: oui
+exit -10 => MNSH: echo $? does not work                          BASH: 246
+exit +10 => MNSH: echo $? does not work                          BASH: 10
+exit 0 | exit 1 => MNSH:   quit minishell and 0 is the exit status                          BASH: after, echo $? = 1; stay in bash
+exit 1 | exit 0 => MNSH:    make: *** [run] Error 1                        BASH: 0 and stay in bash
+ echo ;; => MNSH: print 2 ;                          BASH: syntax error near unexpected token ;;
+ export LOL=lala ROR=rara => MNSH:  only created LOL                         BASH: create both LOL and ROR
+ unset LOL ROR => MNSH:   unset LOL only                        BASH: unset both
+ export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier
+ echo $? => MNSH:    does not work                       BASH: 127
+ echo | => MNSH:    new line                       BASH: new prompt > 
+ | echo => MNSH:    newline                       BASH: syntax error near unexpected token |
+ sort | ls # check output order => MNSH:    hang and after ctrl-C print                       BASH: ls first then hang
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/* NOT SURE or MAYBE BONUS */
+echo bonjour | | => MNSH: fais rien    BASH: syntax error near unexpected token |
+echo "\s" & echo "\s" => MNSH:  \s & echo \s       BASH: [1] 13271
+\s **BONUS??
+| => MNSH: fais rien                   BASH: syntax error near unexpected token |
+ ctrl-C . 130 sur bin(ex : sleep 10)&line vide => MNSH:                           BASH: ??
+ ctrl-\ .131 sur bin => MNSH:                           BASH:  ??
+ sleep 5 | exit => MNSH:  quit/exit minishell                BASH: new prompt
+echo "\" => MNSH:   imprime \                        BASH: new prompt >; **maybe part of the bonus??
+ cd ~ => MNSH:  invalid path given                 BASH: bring you back to valeriejean   ***not sure if we have to deal with it
+cd => MNSH:  invalid path given; no need to deal w/        BASH: bring you back to valeriejean **double check to make sure
+echo "\n \n \\n" => MNSH:   \n \n \\n                BASH: \n \n \n  **bonus or not??
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/*  SIMILAR BEHAVIOR NOT SAME ERR_MESS */
+echo bonjour |; => MNSH: error cmd not found       BASH: syntax error near unexpected token ;
+echo > => MNSH:  error: invalid file name          BASH: syntax error near unexpected token newline
+minishell # binary not in path without "./" before => MNSH:  fait rien      BASH: command not found
+; => MNSH:  command not found                         BASH: syntax error near unexpected token ;
+echo coucou | ; => MNSH: command not found            BASH: syntax error near unexpected token ;
+# write something the press ctrl+c => MNSH:   new prompt; but one extra            BASH: same but not the extra one
+echo hudifg d | | hugdfihd => MNSH:  fait rien              BASH: syntax error near unexpected token |
+cat < > => MNSH:    invalid file name                       BASH: syntax error near unexpected token >
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ /*      ALL GOOD! :)      */
+echo bonjour > test\ 1 => fichier cree et bonjour dedans       BASH: fichier cree et bonjour dedans
+cd $HOME/Documents => MNSH:  se deplace bien a la bonne place  BASH: se deplace dans le bon fichier
+unset var1 # with undefined var1 => MNSH:  works               BASH: works the same as mnsh
+echo 2 >> out1 > out2 => MNSH:  cree les 2 fichiers, ecrit rien dans out1 et ecrit 2 dans out2           BASH: same as mnsh
+echo 2 > out1 >> out2 => MNSH:  cree les 2 fichiers, ecrit rien dans out1 et ecrit 2 dans out 2          BASH: same as mnsh
+$ => MNSH:    command not found                     BASH: command not found
+echo test > file test1 => MNSH: cree le fichier file et ecrit test test1            BASH: cree le fichier file et ecrit test test1 
+echo => MNSH:  newline                         BASH: same as mnsh
+echo simple => MNSH:   simple                        BASH: same
+echo -n simple => MNSH:     simpleMNSH :)            BASH: same
+echo '' => MNSH:    newline                          BASH: same
+echo "" => MNSH:   newline                           BASH: same
+echo > a Hello World! => MNSH:  cree fichier a et ecrit Hello World                         BASH: same
+> a echo Hello World! => MNSH:  cree fichier a et ecrit Hello World                         BASH: same
+cat < < => MNSH:    invalid file name and exit minishell                       BASH: same
+cat > > => MNSH:    invalid file name and exit minishell                       BASH: same 
+file_name_in_current_dir => MNSH: command not found                          BASH: command not found
+cd ../../../../../.. ; pwd => MNSH:      /                     BASH: /
+export "test=ici"=coucou => MNSH:       cree test=ici=coucou                    BASH: same as mnsh
+c$var Makefile # with var=at => MNSH:  display at                         BASH: display at
+$bla # with bla not defined => MNSH:   rien                        BASH: rien 
+$LESS$VAR => MNSH:    command not found                       BASH: command not found
+/bin/echo bonjour => MNSH:  bonjour dans le terminal                         BASH: same
+not_cmd => MNSH:     command not found                      BASH: command not found 
+echo bonjour > $test w/ t => MNSH:    test=2; cree le fichier 2 et ecrit bonjour          BASH: same as mnsh 
+cat < test # with non-existent test  => MNSH: invalid filename and exit minishell                        BASH: test: no such file or directory 
+"exit retour a la ligne" => MNSH:    quitte minishell                       BASH: ecrit exit et quitte bash 
+> a ls > b < Makefile => MNSH:  cree fichier a et b. a est vide et b contient le resultat de ls   BASH: same 
+echo "$HOME" => MNSH:  same as bash                         BASH: /Users/valeriejean
+echo '$HOME' => MNSH:  same as bash                         BASH: $HOME
+export ; env # display is different for both commands => MNSH:  same as bash   env       BASH: export only is env + declare -x 
+echo hi";" hihi => MNSH:  hi; hihi                  BASH: same
+echo hi " ; " hihi => MNSH:     hi  ;  hihi         BASH: same 
+cd no_file => MNSH:      invalid path given         BASH: no such file or directory
+cd a b c d => MNSH:  invalid path given             BASH: no such file or directory
+pwd a => MNSH:     /                      BASH: /
+pwd a b c d => MNSH:         /                  BASH: /
+cd / => MNSH:         /                  BASH: same
+cd . => MNSH:  stay there                         BASH: same
+echo "\n \n \n" => MNSH:   print 3 \n                BASH: same
+# write something then press ctrl+d => MNSH:   nothing                        BASH: same
+# write something then press ctrl+\ => MNSH:   nothing                        BASH: same
+echo $HOME => MNSH:  /Users/valeriejean                     BASH: same
+> log echo coucou => MNSH:  same as bash                    BASH: cree le fichier log et ecrit coucou
+export "HI= hi" => MNSH:    create HI= hi                       BASH: same
+/bin/ls => MNSH: print ls on terminal                          BASH: same
+l^Ds => MNSH:    command not found                       BASH: command not found
+cat < Makefile | grep gcc > output => MNSH:   cree output et ecrit CC = gcc                        BASH: same as mnsh
+env puis export puis env # vars aren't sorted => MNSH:     same as bash                      BASH: 
+ 

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/13 16:01:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/14 10:37:24 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //checks if the given char is still inside an expansion
 bool	is_in_expansion(char c)
 {
-	if (ft_isalnum(c) || c == '_')
+	if (ft_isalnum(c) || c == '_' || c == '?' || c == '!')
 		return (true);
 	return (false);
 }

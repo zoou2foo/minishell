@@ -1,7 +1,5 @@
-
+/*
 0========( PROBS TO SOLVE )========0
-1. checks for behaviour with empty redir / piping (warning for pipe, error for redir?)
-
 
 
 0============(   VALERIE   )============0
@@ -22,7 +20,8 @@ Garder une liste des tests faits (pour les essayer à nouveau)
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-
+1. deal with lone pipes		"|echo lol ||"	ignore but warn
+2. deal with empty redir	"echo < >"		ignore but warn
 
 
 0====( TEST CASES )====0
@@ -46,3 +45,4 @@ cmd1 | cmd2
 
 cmd1 <<out1 | cmd2
 cmd1 | <<in1 cmd2
+*/

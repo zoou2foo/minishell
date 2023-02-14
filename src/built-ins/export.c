@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 16:05:53 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 10:39:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,12 @@ void	do_export(t_cmd *cmd)
 	int		j;
 
 	i = 0;
-	if (cmd->cmd_args[1] == NULL)
+	if (cmd->cmd_args[1] == NULL) //export ""
+	{
+		throw_error(ERR_IDE);
+		g_meta->exit_status = EXIT_FAILURE;
+	}
+	else if(!cmd->cmd_args[1]) //export by itself
 	{
 		sort_env();
 		while (g_meta->env[i] != NULL)

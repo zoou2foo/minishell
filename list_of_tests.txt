@@ -8,8 +8,7 @@ cat diufosgid # check exit code => MNSH:       echo $? does not work        BASH
 exit # should return the last exit code value => MNSH:  echo $? does not work             BASH: oui
 exit -10 => MNSH: echo $? does not work                          BASH: 246
 exit +10 => MNSH: echo $? does not work                          BASH: 10
-exit 0 | exit 1 => MNSH:   quit minishell and 0 is the exit status                          BASH: after, echo $? = 1; stay in bash    ***prob AVEC exit et redirection??
-exit 1 | exit 0 => MNSH:    make: *** [run] Error 1                        BASH: 0 and stay in bash     ***prob AVEC exit et redirection??
+
 
 
 PROB AVEC BUILT-INS
@@ -110,3 +109,5 @@ echo hudifg d | | hugdfihd => MNSH:  fait rien              BASH: syntax error n
 cat < > => MNSH:    invalid file name                       BASH: syntax error near unexpected token >
 cat /dev/random | head -n 1 | cat -e => MNSH:  hang; apres ctrl-C: �|M-^]�GM-^J/��=���+^K�4�M-^V��}C   BASH: ^H��M-^GM-^B*^\M-^\�+�R%�x|�.P�M-^U�^X�^_+bM-^H�M-^ZM-^G]�,�uh^ZM-^I$ **/dev/random est un fucking intense test. Sérieux, tu le fais avec un fichier normal, zéro prob
 sleep 5 | exit => MNSH:  quit/exit minishell                BASH: new prompt **need to check this one     **Exit est un built-in de NOTRE minishell que tu appelles et il fait le bon comportement demandé.
+exit 0 | exit 1 => MNSH:   quit minishell and 0 is the exit status                          BASH: after, echo $? = 1; stay in bash    ***prob AVEC exit et redirection??
+exit 1 | exit 0 => MNSH:    make: *** [run] Error 1                        BASH: 0 and stay in bash     ***prob AVEC exit et redirection??

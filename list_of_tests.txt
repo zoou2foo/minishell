@@ -1,8 +1,8 @@
 /*     NEED TO BE FIXED    */
+
 cat Makefile | grep pr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given				     	BASH: 258; syntax error near unexpected token ()
 cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file     BASH: 258 same error as previous
 cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found                   				BASH: 258, same error as previous
-
 
 PROB AVEC SIGNAUX
 cat kdjfk => check exit code. Not the same from bash

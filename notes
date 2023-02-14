@@ -1,6 +1,6 @@
 /*
 0========( PROBS TO SOLVE )========0
-
+make sure error codes either fit with bash, or have a meaningful reason to diverge (implementation)
 
 0============(   VALERIE   )============0
 https://github.com/LucasKuhn/minishell_tester

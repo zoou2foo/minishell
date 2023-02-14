@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 10:57:14 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 17:08:35 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,16 @@ void	do_exit(t_cmd *cmd)
 				&& cmd->cmd_args[1][i] <= '9'))
 				exit (255);
 		}
-
 		arg = ft_atoi(cmd->cmd_args[1]); //+10 ou -10?? exit +10; exit -10;
-		if (arg > 255 || arg < 0)
+		if (arg > 255 || arg < 0) //maybe a do else if (arg < 0) and do a modulo thing??
 			arg = 255;
 	}
 	else
 		arg = 0;
 	exit (arg);
 }
+
+/*
+exit -10 => MNSH: 2                       BASH: 246
+exit +10 => MNSH: 2                         BASH: 10
+*/

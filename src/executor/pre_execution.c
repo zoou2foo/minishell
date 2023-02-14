@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 11:09:18 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/14 15:27:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,19 +114,28 @@ void	execute_cmd_block(void)
 	init_signals(1);
 }
 
+void	setup_exit_code(int sig)
+{
+	g_meta->exit_status = sig;
+}
+
 void	waitchild(void)
 {
 	int	i;
-	//int	s; //add to avoid constantly rewriting on g_meta->exit_status
+	int	status_tmp; //add to avoid constantly rewriting on g_meta->exit_status
 
 	i = 0;
+	status_tmp = 0;
 	while (i < g_meta->cmd_nb)
 	{
-		waitpid(g_meta->pid[i], &g_meta->exit_status, 0);
-		if (WIFEXITED(g_meta->exit_status) == TRUE)
-			g_meta->exit_status = WEXITSTATUS(g_meta->exit_status);
-		if (WIFSIGNALED(g_meta->exit_status) == TRUE)
-			g_meta->exit_status = WTERMSIG(g_meta->exit_status) + 128;	//adds 128 when not needed (ex: cat sdglhskjgkjs)
+		waitpid(g_meta->pid[i], &status_tmp, 0);
+		if (WIFEXITED(status_tmp) == TRUE) //if process exited normally
+			setup_exit_code(WEXITSTATUS(status_tmp));
+		else if (WIFSIGNALED(status_tmp) == TRUE) //child exited on signal
+			setup_exit_code(WTERMSIG(status_tmp) + 128);	//adds 128 when not needed (ex: cat sdglhskjgkjs)
+		else
+			setup_exit_code(128 + WSTOPSIG(status_tmp));
 		i++;
 	}
+	
 }

@@ -1,22 +1,26 @@
-/*     NEED TO BE FIXED    */
-cat Makefile | grep pr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given. echo $? does not work anymore     BASH: 258; syntax error near unexpected token ()
-cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file                   BASH: 258 same error as previous
-cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found      echo $?                     BASH: 258, same error as previous
+A good tester: https://github.com/thallard/minishell_tester
 
+/*     NEED TO BE FIXED    */
 
 PROB AVEC SIGNAUX
-cat kdjfklasjflkdj => check exit code. Not the same from bash
+
 
 PROB AVEC BUILT-INS
-export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier
-exit -10 => MNSH: echo $? does not work                          BASH: 246
-exit +10 => MNSH: echo $? does not work                          BASH: 10
+export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
+exit -10 => MNSH: 2                       BASH: 246
+exit +10 => MNSH: 2                         BASH: 10
+
 
 PROB AVEC REDIRECTION ET EXIT(?)
 echo bonjour > $test # with test not defined => MNSH: invalid filename and exit minishell                BASH: ambiguous redirect  **prob avec redirection; il y aurait un exit à une mauvaise place??
 echo bonjour > > out => MNSH: invalid filename and exit minishell??         BASH: syntax error near unexpected token >     **prob avec redirection; il y aurait un exit à une mauvaise place??
 echo bonjour >>> test => MNSH: invalid filename and exit minishell?? maybe error in echo...              BASH: syntax error near unexpected token > **prob avec redirection; il y aurait un exit à une mauvaise place??
 
+
+⬇️ Pour avoir le bon exit code, ça serait à setup lors des redirections; mais jusqu'à quel point on veut pousser là.
+cat Makefile | grep capr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given. 1    BASH: 258; syntax error near unexpected token ()
+cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file   1          BASH: 258 same error as previous
+cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found       0                 BASH: 258, same error as previous
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -75,6 +79,8 @@ not_cmd bonjour > salut => MNSH: command not found                          BASH
 exit # should return the last exit code value => MNSH:  echo $? does not work             BASH: oui
 export var ="cat Makefile | grep >" => MNSH:  var cree sans rien d'autre     GOOD             BASH: ="cat Makefile | grep >" not a valid identifier
 export var; export var=test => MNSH:  cree la variable var et ajuste la variable var=test     GOOD       BASH: export var n'est pas cree. Seulement lorsqu'il y a un =
+cat kdjfklasjflkdj => check exit code. Not the same from bash
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

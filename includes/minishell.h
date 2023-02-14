@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 16:05:18 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 11:46:36 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ enum e_mstate
 {
 	MSTATE_ERROR	= -1,
 	MSTATE_NORMAL	= 0,
-	MSTATE_O_BRACK	= 1,
-	MSTATE_CLOSING	= 2
+	MSTATE_O_BRACK	= 1,	//unended quotes
+	MSTATE_O_PIPE	= 2,	//pipe token in invalid position
+	MSTATE_O_REDIR	= 3,	//redir token in invalid position
+	MSTATE_BAD_FD	= 4,	//invalid FD (bad file name)
+	MSTATE_CLOSING	= 5
 };
 
 /*	ERROR MESSAGE	*/
@@ -58,6 +61,7 @@ enum e_mstate
 # define ERR_CMD	"Input Error : Command not found\n"
 # define ERR_ARG	"Input Error : No argument given\n"
 # define ERR_FILE	"Input Error : Invalid file name\n"
+# define ERR_TOKEN	"Input Error : Invalid token combination\n"
 
 # define ERR_AC		"Input Warning : Minishell executable does not take arguments\n"
 # define ERR_PATH	"Path Warning : Path variable not in environment\n"

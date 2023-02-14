@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 16:02:10 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/14 11:55:50 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,24 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	node = *head;
 	while (node->next) //merge tokens (ex > type + string = string w/ type >)
 	{
+		if (node->next->type > TTYPE_EXPAND && node->type > TTYPE_EXPAND)
+		{
+			if (g_meta->state == MSTATE_NORMAL)
+				throw_error(ERR_TOKEN);
+			g_meta->state = MSTATE_O_REDIR;
+		}
 		if (node->next->type <= TTYPE_EXPAND && TTYPE_EXPAND < node->type)
 			node = merge_tokens(node, node->next);
 		if (node->next)
 			node = node->next;
 		else
 			break ;
+	}
+	if (node->type > TTYPE_EXPAND)
+	{
+		if (g_meta->state == MSTATE_NORMAL)
+			throw_error(ERR_TOKEN);
+		g_meta->state = MSTATE_O_REDIR;
 	}
 
 	//reset head in case cut_token() destroys it
@@ -68,13 +80,17 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			{
 				if (cmd->fdin != 0)
 					close(cmd->fdin);
-				cmd->fdin = execute_hd(node->string);
+				if (g_meta->state == MSTATE_NORMAL)			//prevent calling when error
+					cmd->fdin = execute_hd(node->string);
+				else
+					cmd->fdin = 0;
 			}
 			//checks for open() errors (fd = -1)
 			if (cmd->fdin < 0 || cmd->fdout < 0)
 			{
-				throw_error(ERR_FILE);
-				g_meta->state = MSTATE_ERROR;
+				if (g_meta->state == MSTATE_NORMAL)
+					throw_error(ERR_FILE);
+				g_meta->state = MSTATE_BAD_FD;
 				break ;
 			}
 			//removes node once processed

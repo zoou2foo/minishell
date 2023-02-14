@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:57:37 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/14 11:44:01 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void	minishell(void)
 {
 	init_meta();
 	init_signals(1);
-	while (g_meta->state >= 0)
+	while (g_meta->state >= MSTATE_NORMAL)
 	{
 		g_meta->state = MSTATE_NORMAL;
 		g_meta->buf = readline("MNSH :) ");

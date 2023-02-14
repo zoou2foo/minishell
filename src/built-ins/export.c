@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 10:39:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 11:54:46 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,20 @@ int	find_var(t_cmd *cmd)
 	return (-1);
 }
 
+bool	is_equal(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->cmd_args[1][i])
+	{
+		if (cmd->cmd_args[1][i] == '=')
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
 //function to shortent do_export. It takes t_cmd and index to add a variable
 //to env
 // add var at the end of g_meta->env with the arg
@@ -82,13 +96,21 @@ void	add_var_to_env(t_cmd *cmd, int j, int i)
 	{
 		reassign_var(j, cmd);
 	}
-	else
+	else //besoin de vérifier s'il y a un espace devant =, car si oui, il faut pas le créer; s'il n'y a pas =; var pas créer. vérifier s'il y a un arg2 pour ajouter la dite var
 	{
-		g_meta->env = ft_recalloc(g_meta->env, env_length() + 2,
-				env_length() + 1, sizeof(char *));
-		while (g_meta->env[i] != NULL)
-			i++;
-		g_meta->env[i] = ft_strdup(cmd->cmd_args[1]);
+		if (is_equal(cmd))
+		{
+			g_meta->env = ft_recalloc(g_meta->env, env_length() + 2,
+					env_length() + 1, sizeof(char *));
+			while (g_meta->env[i] != NULL)
+				i++;
+			g_meta->env[i] = ft_strdup(cmd->cmd_args[1]);
+		}
+		else
+		{
+			throw_error(ERR_ARG);
+			g_meta->exit_status = EXIT_FAILURE;
+		}
 	}
 	g_meta->exit_status = EXIT_SUCCESS;
 }
@@ -102,12 +124,7 @@ void	do_export(t_cmd *cmd)
 	int		j;
 
 	i = 0;
-	if (cmd->cmd_args[1] == NULL) //export ""
-	{
-		throw_error(ERR_IDE);
-		g_meta->exit_status = EXIT_FAILURE;
-	}
-	else if(!cmd->cmd_args[1]) //export by itself
+	if (cmd->cmd_args[1] == NULL)
 	{
 		sort_env();
 		while (g_meta->env[i] != NULL)
@@ -124,3 +141,8 @@ void	do_export(t_cmd *cmd)
 		add_var_to_env(cmd, j, i);
 	}
 }
+
+/*
+
+export LOL=lala ROR=rara => MNSH:  only created LOL                         BASH: create both LOL and ROR
+*/

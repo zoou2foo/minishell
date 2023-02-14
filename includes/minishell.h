@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 10:39:05 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 10:52:50 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ enum e_mstate
 # define ERR_PATH	"Path Warning : Path variable not in environment\n"
 # define ERR_ENV	"Environment Warning : Variable not found\n"
 # define ERR_DIR	"Directory Warning : Directory not found\n"
-# define ERR_IDE	"Not a valid identifier"
 
 typedef struct s_token
 {

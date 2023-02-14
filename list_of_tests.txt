@@ -8,9 +8,6 @@ PROB AVEC SIGNAUX
 cat kdjfklasjflkdj => check exit code. Not the same from bash
 
 PROB AVEC BUILT-INS
-
-export LOL=lala ROR=rara => MNSH:  only created LOL                         BASH: create both LOL and ROR
-unset LOL ROR => MNSH:   unset LOL only                        BASH: unset both
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier
 exit -10 => MNSH: echo $? does not work                          BASH: 246
 exit +10 => MNSH: echo $? does not work                          BASH: 10
@@ -30,9 +27,9 @@ cd $HOME/Documents => MNSH:  se deplace bien a la bonne place  BASH: se deplace 
 unset var1 # with undefined var1 => MNSH:  works               BASH: works the same as mnsh
 echo 2 >> out1 > out2 => MNSH:  cree les 2 fichiers, ecrit rien dans out1 et ecrit 2 dans out2           BASH: same as mnsh
 echo 2 > out1 >> out2 => MNSH:  cree les 2 fichiers, ecrit rien dans out1 et ecrit 2 dans out 2          BASH: same as mnsh
-$ => MNSH:    command not found                     BASH: command not found
+$ => MNSH:    command not found                      BASH: command not found
 echo test > file test1 => MNSH: cree le fichier file et ecrit test test1            BASH: cree le fichier file et ecrit test test1
-echo => MNSH:  newline                         BASH: same as mnsh
+echo => MNSH:  newline                         		 BASH: same as mnsh
 echo simple => MNSH:   simple                        BASH: same
 echo -n simple => MNSH:     simpleMNSH :)            BASH: same
 echo '' => MNSH:    newline                          BASH: same

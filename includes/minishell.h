@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 10:52:50 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 13:22:49 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,30 @@ enum e_mstate
 {
 	MSTATE_ERROR	= -1,
 	MSTATE_NORMAL	= 0,
-	MSTATE_O_BRACK	= 1,
-	MSTATE_CLOSING	= 2
+	MSTATE_O_BRACK	= 1,	//unended quotes
+	MSTATE_O_PIPE	= 2,	//pipe token in invalid position
+	MSTATE_O_REDIR	= 3,	//redir token in invalid position
+	MSTATE_BAD_FD	= 4,	//invalid FD (bad file name)
+	MSTATE_CLOSING	= 5
 };
 
 /*	ERROR MESSAGE	*/
 # define ERR_EXIT	"Process Error : Child did not exit properly\n"
-# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
+# define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"
 # define ERR_PID	"Process Error : Couldn't fork() properly\n"
-# define ERR_PIPE	"Pipe Error : Invalid file descriptor\n"
-# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
+# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
+
 # define ERR_CD		"Input Error : Invalid path given\n"
 # define ERR_CMD	"Input Error : Command not found\n"
 # define ERR_ARG	"Input Error : No argument given\n"
-# define ERR_FILE	"Input Error : Invalid file name\n"
+# define ERR_ARG2	"Input Error : Invalid argument given\n"
+# define ERR_TOKEN	"Input Error : Invalid token combination\n"
+# define ERR_FILE	"Input Error : Invalid file name given\n"
+# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
 
 # define ERR_AC		"Input Warning : Minishell executable does not take arguments\n"
 # define ERR_PATH	"Path Warning : Path variable not in environment\n"
-# define ERR_ENV	"Environment Warning : Variable not found\n"
+# define ERR_ENV	"Environment Warning : Variables not found\n"
 # define ERR_DIR	"Directory Warning : Directory not found\n"
 
 typedef struct s_token
@@ -114,8 +120,8 @@ void	do_unset(t_cmd *cmd);
 int		check_arg_4_unset(t_cmd *cmd);
 void	do_export(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
-void	reassign_var(int j, t_cmd *cmd);
 void	refill_path_tab(char *str);
+void	reassign_var(int j, char *str);
 
 //from expander
 char	*expand(char *str1);
@@ -135,14 +141,16 @@ t_token	*merge_token_list(t_token *head);
 t_token	*remove_empty_list(t_token *head);
 
 //from token_handler
-void	free_token(t_token *node);
-t_token	*new_token(char *str, int len, int type);
-void	add_token(t_token *token, t_token **head);
 int		find_length(t_token *head);
 t_token	*find_head(t_token *tail);
 t_token	*find_tail(t_token *head);
+
+t_token	*new_token(char *str, int len, int type);
 t_token	*merge_tokens(t_token *prev, t_token *next);
 t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
+void	add_token(t_token *token, t_token **head);
+
+void	free_token(t_token *node);
 t_token	*replace_token(t_token *new, t_token *old);
 t_token	*cut_token(t_token *node);
 t_token	*empty_token(t_token *node);

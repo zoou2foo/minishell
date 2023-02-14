@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:24:44 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/14 11:09:18 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	child_process(t_cmd *cmd)
 		exec_with_paths(cmd);
 		//TODO : handle error
 		close_fds(cmd);
-		exit(127);				//this will set the value in the parent's g_meta->exit_status
+		exit(g_meta->exit_status);	//this will set the value in the parent's g_meta->exit_status
 	}
 	//safety exit (FOR DEBUGGING)
 	throw_error(ERR_EXIT);
@@ -117,17 +117,16 @@ void	execute_cmd_block(void)
 void	waitchild(void)
 {
 	int	i;
+	//int	s; //add to avoid constantly rewriting on g_meta->exit_status
 
 	i = 0;
 	while (i < g_meta->cmd_nb)
 	{
 		waitpid(g_meta->pid[i], &g_meta->exit_status, 0);
 		if (WIFEXITED(g_meta->exit_status) == TRUE)
-		{
 			g_meta->exit_status = WEXITSTATUS(g_meta->exit_status);
-		}
 		if (WIFSIGNALED(g_meta->exit_status) == TRUE)
-			g_meta->exit_status = WTERMSIG(g_meta->exit_status) + 128;
+			g_meta->exit_status = WTERMSIG(g_meta->exit_status) + 128;	//adds 128 when not needed (ex: cat sdglhskjgkjs)
 		i++;
 	}
 }

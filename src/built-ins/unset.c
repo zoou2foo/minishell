@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 16:06:19 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 13:19:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ bool	is_var_in_env(char *var)
 	return (false);
 }
 
+
 //ft to shorten do_unset(). Unset the arg sent and create a new env
-void	unset_arg(t_cmd *cmd)
+void	unset_arg(char *str)
 {
 	char	**new_env;
 	int		i;
@@ -45,8 +46,8 @@ void	unset_arg(t_cmd *cmd)
 	i = 0;
 	while (g_meta->env[i])
 	{
-		if (ft_strncmp(cmd->cmd_args[1], g_meta->env[i],
-				ft_strlen(cmd->cmd_args[1])) == 0)
+		if (ft_strncmp(str, g_meta->env[i],
+				ft_strlen(str)) == 0)
 			ft_free_null(g_meta->env[i++]);
 		else
 			new_env[j++] = g_meta->env[i++];
@@ -55,24 +56,28 @@ void	unset_arg(t_cmd *cmd)
 	g_meta->env = new_env;
 }
 
-
 //return nothing. Take t_cmd to check what needs to be unset/free.
 //final else, if the var does not exist
 void	do_unset(t_cmd *cmd)
 {
+	int	i;
+
+	i = 1;
 	if (!cmd->cmd_args[1])
 	{
 		throw_error(ERR_ARG);
 		g_meta->exit_status = EXIT_FAILURE;
 	}
-	else if (is_var_in_env(cmd->cmd_args[1]))
+	while (cmd->cmd_args[i])
 	{
-		unset_arg(cmd);
-	}
-	else
-	{
-		throw_error(ERR_ENV);
-		g_meta->exit_status = EXIT_FAILURE;
+		if (is_var_in_env(cmd->cmd_args[i]))
+			unset_arg(cmd->cmd_args[i]);
+		else
+		{
+			throw_error(ERR_ENV);
+			g_meta->exit_status = EXIT_FAILURE;
+		}
+		i++;
 	}
 	g_meta->exit_status = EXIT_SUCCESS;
 }

@@ -8,9 +8,6 @@ PROB AVEC SIGNAUX
 cat kdjfklasjflkdj => check exit code. Not the same from bash
 
 PROB AVEC BUILT-INS
-
-export LOL=lala ROR=rara => MNSH:  only created LOL                         BASH: create both LOL and ROR
-unset LOL ROR => MNSH:   unset LOL only                        BASH: unset both
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier
 exit -10 => MNSH: echo $? does not work                          BASH: 246
 exit +10 => MNSH: echo $? does not work                          BASH: 10

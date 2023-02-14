@@ -1,6 +1,4 @@
 /*     NEED TO BE FIXED    */
-PROB AVEC ECHO $?
-echo $? => MNSH:    does not work                       BASH: 127
 cat Makefile | grep pr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given. echo $? does not work anymore     BASH: 258; syntax error near unexpected token ()
 cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file                   BASH: 258 same error as previous
 cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found      echo $?                     BASH: 258, same error as previous
@@ -8,8 +6,6 @@ cat diufosgid # check exit code => MNSH:       echo $? does not work        BASH
 exit # should return the last exit code value => MNSH:  echo $? does not work             BASH: oui
 exit -10 => MNSH: echo $? does not work                          BASH: 246
 exit +10 => MNSH: echo $? does not work                          BASH: 10
-exit 0 | exit 1 => MNSH:   quit minishell and 0 is the exit status                          BASH: after, echo $? = 1; stay in bash    ***prob AVEC exit et redirection??
-exit 1 | exit 0 => MNSH:    make: *** [run] Error 1                        BASH: 0 and stay in bash     ***prob AVEC exit et redirection??
 
 
 PROB AVEC BUILT-INS
@@ -31,6 +27,7 @@ cat | cat | cat | ls # check outputs order => MNSH:     hang    apres ctrl-C, im
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
  /*      ALL GOOD! :)      */
+echo $? => MNSH: displays last error code			 BASH: same
 echo bonjour > test\ 1 => fichier cree et bonjour dedans       BASH: fichier cree et bonjour dedans
 cd $HOME/Documents => MNSH:  se deplace bien a la bonne place  BASH: se deplace dans le bon fichier
 unset var1 # with undefined var1 => MNSH:  works               BASH: works the same as mnsh

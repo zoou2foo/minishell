@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 09:18:24 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:18:13 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/14 13:03:22 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	refill_path_tab(char *str)
 	return ;
 }
 
-void	reassign_var(int j, t_cmd *cmd)
+void	reassign_var(int j, char *str)
 {
 	ft_free_null(g_meta->env[j]);
-	g_meta->env[j] = ft_strdup(cmd->cmd_args[1]);
+	g_meta->env[j] = ft_strdup(str);
 }

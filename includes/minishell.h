@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 11:46:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/14 12:02:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,21 @@ enum e_mstate
 
 /*	ERROR MESSAGE	*/
 # define ERR_EXIT	"Process Error : Child did not exit properly\n"
-# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
+# define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"
 # define ERR_PID	"Process Error : Couldn't fork() properly\n"
-# define ERR_PIPE	"Pipe Error : Invalid file descriptor\n"
-# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
+# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
+
 # define ERR_CD		"Input Error : Invalid path given\n"
 # define ERR_CMD	"Input Error : Command not found\n"
 # define ERR_ARG	"Input Error : No argument given\n"
-# define ERR_FILE	"Input Error : Invalid file name\n"
+# define ERR_ARG2	"Input Error : Invalid argument given\n"
 # define ERR_TOKEN	"Input Error : Invalid token combination\n"
+# define ERR_FILE	"Input Error : Invalid file name given\n"
+# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
 
 # define ERR_AC		"Input Warning : Minishell executable does not take arguments\n"
 # define ERR_PATH	"Path Warning : Path variable not in environment\n"
-# define ERR_ENV	"Environment Warning : Variable not found\n"
+# define ERR_ENV	"Environment Warning : Variables not found\n"
 # define ERR_DIR	"Directory Warning : Directory not found\n"
 
 typedef struct s_token

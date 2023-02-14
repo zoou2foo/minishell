@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 12:02:49 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/14 13:02:03 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,14 +141,16 @@ t_token	*merge_token_list(t_token *head);
 t_token	*remove_empty_list(t_token *head);
 
 //from token_handler
-void	free_token(t_token *node);
-t_token	*new_token(char *str, int len, int type);
-void	add_token(t_token *token, t_token **head);
 int		find_length(t_token *head);
 t_token	*find_head(t_token *tail);
 t_token	*find_tail(t_token *head);
+
+t_token	*new_token(char *str, int len, int type);
 t_token	*merge_tokens(t_token *prev, t_token *next);
 t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
+void	add_token(t_token *token, t_token **head);
+
+void	free_token(t_token *node);
 t_token	*replace_token(t_token *new, t_token *old);
 t_token	*cut_token(t_token *node);
 t_token	*empty_token(t_token *node);

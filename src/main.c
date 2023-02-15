@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 12:16:46 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:38:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void	free_cmd_block(void)
 {
 	int		i;
 
+	ft_free_null(g_meta->pid);
 	if (g_meta->pipes)
 	{
 		i = -1;
@@ -212,8 +213,10 @@ void	minishell(void)
 			add_history(g_meta->buf);
 			load_cmd_block(parse_line(g_meta->buf));
 			if (g_meta->state == MSTATE_NORMAL)
+			{
 				execute_cmd_block();
-			free_cmd_block();
+				free_cmd_block();
+			}
 		}
 		ft_free_null(g_meta->buf);
 	}

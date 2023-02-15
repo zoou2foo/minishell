@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 11:55:50 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 10:52:42 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 		if (node->next->type > TTYPE_EXPAND && node->type > TTYPE_EXPAND)
 		{
 			if (g_meta->state == MSTATE_NORMAL)
+			{
 				throw_error(ERR_TOKEN);
-			g_meta->state = MSTATE_O_REDIR;
+				g_meta->state = MSTATE_O_REDIR;
+			}
 		}
 		if (node->next->type <= TTYPE_EXPAND && TTYPE_EXPAND < node->type)
 			node = merge_tokens(node, node->next);
@@ -35,11 +37,13 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 		else
 			break ;
 	}
-	if (node->type > TTYPE_EXPAND)
+	if (node->type > TTYPE_EXPAND && !node->string[0])
 	{
 		if (g_meta->state == MSTATE_NORMAL)
+		{
 			throw_error(ERR_TOKEN);
-		g_meta->state = MSTATE_O_REDIR;
+			g_meta->state = MSTATE_O_REDIR;
+		}
 	}
 
 	//reset head in case cut_token() destroys it
@@ -119,7 +123,8 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	cmd->cmd_args = ft_calloc(find_length(node) + 1, sizeof(char *));
 
 	i = 0;
-	while (node)		//convert remaining tokens into cmd_args
+	//convert remaining tokens into cmd_args
+	while (node)
 	{
 		if (node->type != TTYPE_EMPTY)
 		{
@@ -146,7 +151,7 @@ void	load_cmd_block(t_token **head)
 	i = 0;
 	while (head[i])
 		i++;
-	g_meta->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));	//FREE ME AT END OF CYCLE
+	g_meta->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));
 	g_meta->pipes = ft_calloc(i, sizeof(int *));
 	g_meta->cmd_nb = i;
 
@@ -154,7 +159,7 @@ void	load_cmd_block(t_token **head)
 	while (++i < g_meta->cmd_nb - 1)	//creates potentially needed pipes
 	{
 		g_meta->pipes[i] = ft_calloc(2, sizeof(int));
-		pipe(g_meta->pipes[i]);								//FREE ME AT END OF CYCLE
+		pipe(g_meta->pipes[i]);
 	}
 
 	//actual token conversion loop conversion

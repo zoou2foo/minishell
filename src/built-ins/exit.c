@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 12:35:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:57:10 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	do_exit(t_cmd *cmd)
 	unsigned char	arg;
 	int				i;
 
+	arg = 255;
 	if (cmd->argcount < 3)
 	{
-		arg = 255;
 		if (cmd->cmd_args[1])
 		{
 			i = 0;
@@ -46,5 +46,6 @@ void	do_exit(t_cmd *cmd)
 		exit (arg);
 	}
 	throw_error(ERR_ARG3);
-	g_meta->exit_status = EXIT_FAILURE;
+	exit (arg);
+
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 12:38:35 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 13:13:45 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,18 +185,18 @@ void	free_cmd_block(void)
 	}
 }
 
-// Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
-// |- reads the inputed line
-// |- checks if said line empty
-// |- add it to the history
-// |- converts it into a cmd_block
-// |- checks if the global state is still valid
-// |- execute said cmd_block
-// |- frees the line buffer
-// 0- repeats
-// Once the loop is over, it;
-// |- clears the history
-// |- frees all the leftover data
+/* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
+|- reads the inputed line
+|- checks if said line empty
+|- add it to the history
+|- converts it into a cmd_block
+|- checks if the global state is still valid
+|- execute said cmd_block
+|- frees the line buffer
+0- repeats
+Once the loop is over, it;
+|- clears the history
+|- frees all the leftover data */
 
 void	minishell(void)
 {
@@ -261,7 +261,6 @@ int	main(int argc, char **argv)
 	return (0);
 }
 */
-
 /*
 int	main(void)
 {

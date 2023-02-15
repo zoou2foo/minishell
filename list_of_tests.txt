@@ -10,11 +10,6 @@ PROB AVEC BUILT-INS
 
 PROB AVEC REDIRECTION ET EXIT(?)
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> VJ
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
  /*      ALL GOOD! :)      */
@@ -79,12 +74,6 @@ cat kdjfklasjflkdj => check exit code. Not the same from bash
 exit -10 => MNSH: 2                       BASH: 246
 exit +10 => MNSH: 2                         BASH: 10
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
-<<<<<<< HEAD
-=======
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------
->>>>>>> VJ
 
 /*   YUP, DIFFERENT BUT LEGIT   */
 echo -n -n -nnnn -nnnnm => MNSH:  -n -nnnn -nnnnmMNSH :)       BASH: -nnnnmbash-3.2$ **Le sujet demande de gérer echo avec -n SEULEMENT. Puis, le projet ne demande pas de faire une copie de bash
@@ -121,8 +110,4 @@ unset "": dans notre minishell, on envoie un message d'erreur; car string vide e
 ⬇️ Pour avoir le bon exit code, ça serait à setup lors des redirections; mais jusqu'à quel point on veut pousser là.
 cat Makefile | grep capr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given. 1    BASH: 258; syntax error near unexpected token ()
 cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file   1          BASH: 258 same error as previous
-<<<<<<< HEAD
 cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found       0                 BASH: 258, same error as previous
-=======
-cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found       0                 BASH: 258, same error as previous
->>>>>>> VJ

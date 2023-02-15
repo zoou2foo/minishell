@@ -6,11 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/02/15 09:19:02 by llord            ###   ########.fr       */
-=======
-/*   Updated: 2023/02/15 10:08:35 by llord            ###   ########.fr       */
->>>>>>> VJ
+/*   Updated: 2023/02/15 10:22:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,27 +100,11 @@ void	add_var_to_env(char *str, int i)
 	}
 	else //creates new var
 	{
-<<<<<<< HEAD
-		if (is_equal(str))
-		{
-			g_meta->env = ft_recalloc(g_meta->env, env_length() + 2,
-					env_length() + 1, sizeof(char *));
-			while (g_meta->env[i] != NULL)
-				i++;
-			g_meta->env[i] = ft_strdup(str);
-		}
-		else
-		{
-			throw_error(ERR_ARG2); //ajuster le message d'erreur pour plus specifique
-			g_meta->exit_status = EXIT_FAILURE;
-		}
-=======
 		j = 1 + env_length();
 		g_meta->env = ft_recalloc(g_meta->env, j + 1, j, sizeof(char *));
 		while (g_meta->env[i] != NULL)
 			i++;
 		g_meta->env[i] = ft_strdup(str);
->>>>>>> VJ
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 11:44:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:16:46 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ void	free_cmd_block(void)
 // Once the loop is over, it;
 // |- clears the history
 // |- frees all the leftover data
+
 void	minishell(void)
 {
 	init_meta();
@@ -223,12 +224,40 @@ void	minishell(void)
 int	main(int ac, char **av)
 {
 	(void)av;
-	if (ac != 1)				//superfluous
+	if (ac != 1)				//superfluous ?
 		throw_error(ERR_AC);
 	minishell();
 
 	return (0);
 }
+
+/*
+void	minishell()
+{
+	if (!is_line_empty(g_meta->buf))
+	{
+		load_cmd_block(parse_line(g_meta->buf));
+		if (g_meta->state == MSTATE_NORMAL)
+			execute_cmd_block();
+		free_cmd_block();
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	init_meta();
+	init_signals(1);
+	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+	{
+		g_meta->buf = argv[2];
+    	minishell();
+		exit(g_meta->exit_status);
+	}
+
+	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+	return (0);
+}
+*/
 
 /*
 int	main(void)

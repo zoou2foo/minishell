@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 10:22:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 11:52:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	is_valid_name(char *str)
 	i = 0;
 	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
-	if (str[i] == '=')
+	if (i > 0 && str[i] == '=')
 		return (TRUE);
 	return (FALSE);
 }

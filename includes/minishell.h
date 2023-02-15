@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 10:01:03 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:15:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ enum e_mstate
 # define ERR_CMD	"Input Error : Command not found\n"
 # define ERR_ARG	"Input Error : No argument given\n"
 # define ERR_ARG2	"Input Error : Invalid argument given\n"
+# define ERR_ARG3	"Input Error : Too many arguments given\n"
 # define ERR_TOKEN	"Input Error : Invalid token combination\n"
 # define ERR_FILE	"Input Error : Invalid file name given\n"
 # define ERR_QUOTE	"Input Error : Non terminated quotes\n"

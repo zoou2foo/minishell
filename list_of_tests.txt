@@ -8,17 +8,8 @@ PROB AVEC SIGNAUX
 PROB AVEC BUILT-INS
 
 
-PROB avec MAKE Run
-# Runs the program NEED TO BE FIXED: quand exit avec pas zero, make *** [run] Error 1
-rerun: re run
-run: all
-	$(HIDE) $(CMD) 
-
-
 PROB AVEC REDIRECTION ET EXIT(?)
-echo bonjour > $test # with test not defined => MNSH: invalid filename and exit minishell                BASH: ambiguous redirect  **prob avec redirection; il y aurait un exit à une mauvaise place??
-echo bonjour > > out => MNSH: invalid filename and exit minishell??         BASH: syntax error near unexpected token >     **prob avec redirection; il y aurait un exit à une mauvaise place??
-echo bonjour >>> test => MNSH: invalid filename and exit minishell?? maybe error in echo...              BASH: syntax error near unexpected token > **prob avec redirection; il y aurait un exit à une mauvaise place??
+
 
 
 ⬇️ Pour avoir le bon exit code, ça serait à setup lors des redirections; mais jusqu'à quel point on veut pousser là.

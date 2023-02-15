@@ -153,7 +153,7 @@ pewpew:
 # Runs the program NEED TO BE FIXED
 rerun: re run
 run: all
-	$(HIDE) $(CMD) 
+	$(HIDE) $(CMD)
 
 # Runs the program with valgrind
 leaks: all

@@ -8,19 +8,7 @@ PROB AVEC SIGNAUX
 PROB AVEC BUILT-INS
 
 
-PROB avec MAKE Run
-# Runs the program NEED TO BE FIXED: quand exit avec pas zero, make *** [run] Error 1
-rerun: re run
-run: all
-	$(HIDE) $(CMD)
-
-
 PROB AVEC REDIRECTION ET EXIT(?)
-
-⬇️ Pour avoir le bon exit code, ça serait à setup lors des redirections; mais jusqu'à quel point on veut pousser là.
-cat Makefile | grep capr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given. 1    BASH: 258; syntax error near unexpected token ()
-cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file   1          BASH: 258 same error as previous
-cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found       0                 BASH: 258, same error as previous
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -79,23 +67,13 @@ not_cmd bonjour > salut => MNSH: command not found                          BASH
 exit # should return the last exit code value => MNSH:  echo $? does not work             BASH: oui
 export var ="cat Makefile | grep >" => MNSH:  var cree sans rien d'autre     GOOD             BASH: ="cat Makefile | grep >" not a valid identifier
 export var; export var=test => MNSH:  cree la variable var et ajuste la variable var=test     GOOD       BASH: export var n'est pas cree. Seulement lorsqu'il y a un =
-<<<<<<< HEAD
 echo bonjour > $test # with test not defined => MNSH: invalid filename  BASH: ambiguous redirect  					**prob avec redirection; il y aurait un exit à une mauvaise place??
 echo bonjour > > out => MNSH: invalid filename        					BASH: syntax error near unexpected token >  **prob avec redirection; il y aurait un exit à une mauvaise place??
 echo bonjour >>> test => MNSH: invalid filename   						BASH: syntax error near unexpected token > 	**prob avec redirection; il y aurait un exit à une mauvaise place??
-
-=======
 cat kdjfklasjflkdj => check exit code. Not the same from bash
-<<<<<<< HEAD
->>>>>>> VJ
-
-=======
 exit -10 => MNSH: 2                       BASH: 246
 exit +10 => MNSH: 2                         BASH: 10
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
->>>>>>> VJ
-
-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*   YUP, DIFFERENT BUT LEGIT   */
 echo -n -n -nnnn -nnnnm => MNSH:  -n -nnnn -nnnnmMNSH :)       BASH: -nnnnmbash-3.2$ **Le sujet demande de gérer echo avec -n SEULEMENT. Puis, le projet ne demande pas de faire une copie de bash
@@ -129,5 +107,7 @@ exit 1 | exit 0 => MNSH:    make: *** [run] Error 1                        BASH:
 cat | cat | cat | ls # check outputs order => MNSH:     hang    apres ctrl-C, imprime ls                  BASH: ecrit ls dans le terminal, puis hang
 export "" et unset "" => export "" est une string comme si export envoyer seul. Dans notre minishell, string vide, on enlève.
 unset "": dans notre minishell, on envoie un message d'erreur; car string vide et il faut une string pour unset
-exit -10 => MNSH: echo $? does not work                          BASH: 246
-exit +10 => MNSH: echo $? does not work                          BASH: 10
+⬇️ Pour avoir le bon exit code, ça serait à setup lors des redirections; mais jusqu'à quel point on veut pousser là.
+cat Makefile | grep capr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given. 1    BASH: 258; syntax error near unexpected token ()
+cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file   1          BASH: 258 same error as previous
+cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found       0                 BASH: 258, same error as previous

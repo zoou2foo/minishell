@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:19:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:25:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void	free_cmd_block(void)
 Once the loop is over, it;
 |- clears the history
 |- frees all the leftover data */
-
+/*
 void	minishell(void)
 {
 	init_meta();
@@ -234,8 +234,8 @@ int	main(int ac, char **av)
 
 	return (EXIT_FAILURE);
 }
+*/
 
-/*
 void	minishell()
 {
 	if (!is_line_empty(g_meta->buf))
@@ -261,7 +261,7 @@ int	main(int argc, char **argv)
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 	return (0);
 }
-*/
+
 /*
 int	main(void)
 {

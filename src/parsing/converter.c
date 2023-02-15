@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:21:38 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:34:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			if (cmd->fdin < 0 || cmd->fdout < 0)
 			{
 				if (g_meta->state == MSTATE_NORMAL)
+				{
 					throw_error(ERR_FILE);
-				g_meta->state = MSTATE_BAD_FD;
-				g_meta->exit_status = EXIT_FAILURE;
+					g_meta->state = MSTATE_BAD_FD;
+					g_meta->exit_status = EXIT_FAILURE;
+				}
 				break ;
 			}
 			//removes node once processed

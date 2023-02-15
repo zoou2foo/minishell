@@ -150,10 +150,10 @@ re: fclean all
 pewpew:
 	$(HIDE) bash pew_pew2.sh
 
-# Runs the program
+# Runs the program NEED TO BE FIXED
 rerun: re run
 run: all
-	$(HIDE) $(CMD)
+	$(HIDE) $(CMD) 
 
 # Runs the program with valgrind
 leaks: all

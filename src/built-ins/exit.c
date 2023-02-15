@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 17:08:35 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 08:28:19 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,24 @@
 // correct exit status.
 void	do_exit(t_cmd *cmd)
 {
-	int	arg;
-	int	i;
+	unsigned char	arg;
+	int				i;
 
 	if (cmd->cmd_args[1])
 	{
 		i = 0;
 		while (cmd->cmd_args[1][i])
 		{
-			if (cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9')
+			if ((cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9') || (cmd->cmd_args[1][0] == '-' && i == 0))
 				i++;
 			else if (!(cmd->cmd_args[1][i] >= '0'
 				&& cmd->cmd_args[1][i] <= '9'))
 				exit (255);
 		}
 		arg = ft_atoi(cmd->cmd_args[1]); //+10 ou -10?? exit +10; exit -10;
-		if (arg > 255 || arg < 0) //maybe a do else if (arg < 0) and do a modulo thing??
-			arg = 255;
 	}
 	else
-		arg = 0;
+		arg = g_meta->exit_status;
 	exit (arg);
 }
 

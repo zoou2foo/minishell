@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 13:28:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:24:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	cmd_fork(void)
 	f_id = fork();
 	if (f_id == -1)
 	{
-		throw_error(ERR_PIPE);
-		ft_free_null(g_meta);
+		throw_error(ERR_FORK);
+		g_meta->state = MSTATE_ERROR;
+		g_meta->exit_status = EXIT_FAILURE;
+		return (-1);
 	}
 	if (f_id == 0)
 	{
@@ -62,7 +64,7 @@ void	child_process(t_cmd *cmd)
 		//TODO : handle error
 	}
 	throw_error(ERR_EXIT);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need
@@ -100,9 +102,11 @@ void	execute_cmd_block(void)
 				init_signals(3);
 				if (g_meta->pid[i] < 0) //if fork error
 				{
-					throw_error(ERR_PID);
+					throw_error(ERR_FORK);
 					g_meta->state = MSTATE_ERROR;
-					//TODO : handle error
+					g_meta->exit_status = EXIT_FAILURE;
+					close_fds(cmd);
+					break ;
 				}
 				if (g_meta->pid[i] == 0)
 				{

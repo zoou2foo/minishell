@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/15 13:25:02 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:19:37 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_token	*create_token_list(char *line)
 			{
 				throw_error(ERR_QUOTE);
 				g_meta->state = MSTATE_O_BRACK;
+				g_meta->exit_status = 2;
 			}
 			add_token(new_token(&line[i + 1], len - 2, TTYPE_S_QUOTE), &head);
 		}
@@ -95,6 +96,7 @@ t_token	*create_token_list(char *line)
 			{
 				throw_error(ERR_QUOTE);
 				g_meta->state = MSTATE_O_BRACK;
+				g_meta->exit_status = 2;
 			}
 			add_token(new_token(&line[i + 1], len - 2, TTYPE_D_QUOTE), &head);
 		}

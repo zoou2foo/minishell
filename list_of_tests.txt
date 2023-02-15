@@ -2,14 +2,8 @@
 A good minishell tester: https://github.com/thallard/minishell_tester
 
 /*     NEED TO BE FIXED    */
-cat Makefile | grep pr | head -n 5 | cd test (mybin) # check status code => MNSH:   invalid path given				     	BASH: 258; syntax error near unexpected token ()
-cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code => MNSH: test: no such file; (bin) no such file     BASH: 258 same error as previous
-cat Makefile | grep pr | head -n 5 | hello (NA) # check status code => MNSH: cmd not found                   				BASH: 258, same error as previous
-
-/*     NEED TO BE FIXED    */
 
 PROB AVEC SIGNAUX
-
 
 PROB AVEC BUILT-INS
 
@@ -18,7 +12,7 @@ PROB avec MAKE Run
 # Runs the program NEED TO BE FIXED: quand exit avec pas zero, make *** [run] Error 1
 rerun: re run
 run: all
-	$(HIDE) $(CMD) 
+	$(HIDE) $(CMD)
 
 
 PROB AVEC REDIRECTION ET EXIT(?)

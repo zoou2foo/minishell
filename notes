@@ -1,6 +1,9 @@
 /*
 0========( PROBS TO SOLVE )========0
-
+make sure error codes either fit with bash, or have a meaningful reason to diverge (implementation)
+make sure internal errors send an error code at exit()
+if pipe()/fork() error, exit shell
+ctrl-C when in process doubles the prompt
 
 0============(   VALERIE   )============0
 https://github.com/LucasKuhn/minishell_tester
@@ -20,8 +23,7 @@ Garder une liste des tests faits (pour les essayer à nouveau)
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-1. deal with lone pipes		"|echo lol ||"	ignore but warn
-2. deal with empty redir	"echo < >"		ignore but warn
+
 
 
 0====( TEST CASES )====0

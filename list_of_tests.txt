@@ -5,13 +5,10 @@ A good minishell tester: https://github.com/thallard/minishell_tester
 
 PROB AVEC SIGNAUX
 
-
 PROB AVEC BUILT-INS
 
 
 PROB AVEC REDIRECTION ET EXIT(?)
-
-
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -70,7 +67,6 @@ not_cmd bonjour > salut => MNSH: command not found                          BASH
 exit # should return the last exit code value => MNSH:  echo $? does not work             BASH: oui
 export var ="cat Makefile | grep >" => MNSH:  var cree sans rien d'autre     GOOD             BASH: ="cat Makefile | grep >" not a valid identifier
 export var; export var=test => MNSH:  cree la variable var et ajuste la variable var=test     GOOD       BASH: export var n'est pas cree. Seulement lorsqu'il y a un =
-<<<<<<< HEAD
 echo bonjour > $test # with test not defined => MNSH: invalid filename  BASH: ambiguous redirect  					**prob avec redirection; il y aurait un exit à une mauvaise place??
 echo bonjour > > out => MNSH: invalid filename        					BASH: syntax error near unexpected token >  **prob avec redirection; il y aurait un exit à une mauvaise place??
 echo bonjour >>> test => MNSH: invalid filename   						BASH: syntax error near unexpected token > 	**prob avec redirection; il y aurait un exit à une mauvaise place??
@@ -78,9 +74,6 @@ cat kdjfklasjflkdj => check exit code. Not the same from bash
 exit -10 => MNSH: 2                       BASH: 246
 exit +10 => MNSH: 2                         BASH: 10
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*   YUP, DIFFERENT BUT LEGIT   */
 echo -n -n -nnnn -nnnnm => MNSH:  -n -nnnn -nnnnmMNSH :)       BASH: -nnnnmbash-3.2$ **Le sujet demande de gérer echo avec -n SEULEMENT. Puis, le projet ne demande pas de faire une copie de bash

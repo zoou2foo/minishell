@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 13:19:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 10:09:31 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ bool	is_var_in_env(char *var)
 	}
 	return (false);
 }
-
 
 //ft to shorten do_unset(). Unset the arg sent and create a new env
 void	unset_arg(char *str)
@@ -79,5 +78,4 @@ void	do_unset(t_cmd *cmd)
 		}
 		i++;
 	}
-	g_meta->exit_status = EXIT_SUCCESS;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 09:18:31 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 10:08:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	env_length(void)
 	return (i);
 }
 
-//if not found, return -1
 //to check if var exist already
+//if not found, return -1
 int	find_var(char *str)
 {
 	int	len;
@@ -65,54 +65,47 @@ int	find_var(char *str)
 	i = 0;
 	while (g_meta->env[i])
 	{
-		if (is_same(str, g_meta->env[i]))
+		if (ft_strncmp(g_meta->env[i], str, len) == 0)
 			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-bool	is_equal(char *str)
+bool	is_valid_name(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (ft_isalnum(str[i]) || str[i] == '_')
-	{
-		if (str[i] == '=')
-			return (TRUE);
 		i++;
-	}
+	if (str[i] == '=')
+		return (TRUE);
 	return (FALSE);
 }
 
 //function to shortent do_export. It takes t_cmd and index to add a variable
 //to env
-// add var at the end of g_meta->env with the arg
+//add var at the end of g_meta->env with the arg
 //set exit_status directly because non-childable when has args
-void	add_var_to_env(char *str, int j, int i)
+void	add_var_to_env(char *str, int i)
 {
-	if (j >= 0)
+	int	j;
+
+	j = find_var(str);
+	if (j >= 0) //reassing old var
 	{
-		reassign_var(j, str);
+		ft_free_null(g_meta->env[j]);
+		g_meta->env[j] = ft_strdup(str);
 	}
-	else //besoin de vérifier s'il y a un espace devant =, car si oui, il faut pas le créer; s'il n'y a pas =; var pas créer. vérifier s'il y a un arg2 pour ajouter la dite var
+	else //creates new var
 	{
-		if (is_equal(str))
-		{
-			g_meta->env = ft_recalloc(g_meta->env, env_length() + 2,
-					env_length() + 1, sizeof(char *));
-			while (g_meta->env[i] != NULL)
-				i++;
-			g_meta->env[i] = ft_strdup(str);
-		}
-		else
-		{
-			throw_error(ERR_ARG2); //ajuster le message d'erreur pour plus specifique
-			g_meta->exit_status = EXIT_FAILURE;
-		}
+		j = 1 + env_length();
+		g_meta->env = ft_recalloc(g_meta->env, j + 1, j, sizeof(char *));
+		while (g_meta->env[i] != NULL)
+			i++;
+		g_meta->env[i] = ft_strdup(str);
 	}
-	g_meta->exit_status = EXIT_SUCCESS;
 }
 
 // Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
@@ -121,7 +114,6 @@ void	add_var_to_env(char *str, int j, int i)
 void	do_export(t_cmd *cmd)
 {
 	int		i;
-	int		j;
 	int		k;
 
 	i = 0;
@@ -141,8 +133,14 @@ void	do_export(t_cmd *cmd)
 		k = 1;
 		while (cmd->cmd_args[k])
 		{
-			j = find_var(cmd->cmd_args[k]);
-			add_var_to_env(cmd->cmd_args[k], j, i);
+			if (is_valid_name(cmd->cmd_args[k]))
+				add_var_to_env(cmd->cmd_args[k], i);
+			else
+			{
+				throw_error(ERR_ARG2);
+				g_meta->exit_status = EXIT_FAILURE;
+				break ;
+			}
 			k++;
 		}
 	}

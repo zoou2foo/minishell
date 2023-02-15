@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/15 10:23:06 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 13:25:02 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,31 @@ void	expand_token_list(t_token *head)
 	}
 }
 
+//removes the empty tokens from a given token list
+t_token	*remove_empty_list(t_token *head)
+{
+	t_token	*node;
+
+	node = head;
+	while (node)
+	{
+		if (node->type == TTYPE_EMPTY)
+		{
+			if (node->next)				//prevent false joins
+				if (!node->is_joined || !node->next->is_joined)
+					node->next->is_joined = false;
+			node = cut_token(node);
+		}
+		if (node->next)
+			node = node->next;
+		else
+			break ;
+	}
+	head = find_head(node);
+
+	return (head);
+}
+
 //merges the mergeable tokens in a given token list
 t_token	*merge_token_list(t_token *head)
 {
@@ -177,31 +202,4 @@ t_token	*merge_token_list(t_token *head)
 		node = node->next;
 	}
 	return (find_head(node));
-}
-
-//removes the empty tokens from a given token list
-t_token	*remove_empty_list(t_token *head)
-{
-	t_token	*node;
-
-	node = head;
-	while (node)
-	{
-		if (node->type == TTYPE_EMPTY)
-		{
-			node = cut_token(node);
-			/*
-			if (node->next)				//prevent false joins
-				if (!node->is_joined || !node->next->is_joined)
-					node->next->is_joined = false;
-			*/
-		}
-		if (node->next)
-			node = node->next;
-		else
-			break ;
-	}
-	head = find_head(node);
-
-	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 10:52:42 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:41:54 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,24 +148,25 @@ void	load_cmd_block(t_token **head)
 {
 	int	i;
 
-	i = 0;
-	while (head[i])
-		i++;
-	g_meta->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));
-	g_meta->pipes = ft_calloc(i, sizeof(int *));
-	g_meta->cmd_nb = i;
-
-	i = -1;
-	while (++i < g_meta->cmd_nb - 1)	//creates potentially needed pipes
+	if (g_meta->state == MSTATE_NORMAL)
 	{
-		g_meta->pipes[i] = ft_calloc(2, sizeof(int));
-		pipe(g_meta->pipes[i]);
-	}
+		i = 0;
+		while (head[i])
+			i++;
+		g_meta->cmd_block = ft_calloc(i + 1, sizeof(t_cmd *));
+		g_meta->pipes = ft_calloc(i, sizeof(int *));
+		g_meta->cmd_nb = i;
 
-	//actual token conversion loop conversion
-	i = -1;
-	while (head[++i])
-	{
-		g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i);
+		i = -1;
+		while (++i < g_meta->cmd_nb - 1)	//creates potentially needed pipes
+		{
+			g_meta->pipes[i] = ft_calloc(2, sizeof(int));
+			pipe(g_meta->pipes[i]);
+		}
+
+		//actual token conversion loop
+		i = -1;
+		while (head[++i])
+			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i);
 	}
 }

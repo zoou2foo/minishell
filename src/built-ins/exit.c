@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 09:38:44 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 13:27:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	do_exit(t_cmd *cmd)
 	unsigned char	arg;
 	int				i;
 
-	if (cmd->cmd_args[1])
+	arg = 255;
+	if (cmd->argcount < 3)
 	{
-		i = 0;
-		while (cmd->cmd_args[1][i])
+		if (cmd->cmd_args[1])
 		{
 			if ((cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9')
 				|| (cmd->cmd_args[1][0] == '-' && i == 0))
@@ -33,7 +33,6 @@ void	do_exit(t_cmd *cmd)
 		}
 		arg = ft_atoi(cmd->cmd_args[1]);
 	}
-	else
-		arg = g_meta->exit_status;
+	throw_error(ERR_ARG3);
 	exit (arg);
 }

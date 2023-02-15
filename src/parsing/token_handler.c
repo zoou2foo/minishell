@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/13 16:00:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:27:22 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ void	free_token(t_token *node)
 		if (node->string)
 			ft_free_null(node->string);
 		ft_free_null(node);
+	}
+}
+
+void	free_token_list(t_token *head)
+{
+	t_token	*next;
+
+	while (head)
+	{
+		next = head->next;
+		free_token(head);
+		head = next;
 	}
 }
 

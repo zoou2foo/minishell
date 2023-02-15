@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 09:37:41 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 13:27:58 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void	free_cmd_block(void)
 {
 	int		i;
 
+	ft_free_null(g_meta->pid);
 	if (g_meta->pipes)
 	{
 		i = -1;
@@ -184,18 +185,19 @@ void	free_cmd_block(void)
 	}
 }
 
-// Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
-// |- reads the inputed line
-// |- checks if said line empty
-// |- add it to the history
-// |- converts it into a cmd_block
-// |- checks if the global state is still valid
-// |- execute said cmd_block
-// |- frees the line buffer
-// 0- repeats
-// Once the loop is over, it;
-// |- clears the history
-// |- frees all the leftover data
+/* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
+|- reads the inputed line
+|- checks if said line empty
+|- add it to the history
+|- converts it into a cmd_block
+|- checks if the global state is still valid
+|- execute said cmd_block
+|- frees the line buffer
+0- repeats
+Once the loop is over, it;
+|- clears the history
+|- frees all the leftover data */
+
 void	minishell(void)
 {
 	init_meta();
@@ -211,8 +213,10 @@ void	minishell(void)
 			add_history(g_meta->buf);
 			load_cmd_block(parse_line(g_meta->buf));
 			if (g_meta->state == MSTATE_NORMAL)
+			{
 				execute_cmd_block();
-			free_cmd_block();
+				free_cmd_block();
+			}
 		}
 		ft_free_null(g_meta->buf);
 	}
@@ -220,34 +224,43 @@ void	minishell(void)
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 }
 
-
-// // argv[2] will contains the content of the line for example "echo something ; ls -la" 
-// int main(int argc, char **argv)
-// {
-//   // Your code...
-//   if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-//   {
-//     int exit_status = ft_launch_minishell(argv[2]);
-//     exit(exit_status);
-//   }
-//     // Above this is the function that normally launch your minishell, instead 
-//     // of reading line with a get_next_line or a read() on fd 0, you just have to get
-//     // the argv[2] (which contains the content) and execute it.
-//     // Your function should return the good exit status otherwise the tests may be considered as false.
-//   // Your code ...
-// }
-
-
 int	main(int ac, char **av)
 {
 	(void)av;
-	if (ac != 1)				//superfluous
+	if (ac != 1)				//superfluous ?
 		throw_error(ERR_AC);
 	minishell();
 
 	return (0);
 }
 
+/*
+void	minishell()
+{
+	if (!is_line_empty(g_meta->buf))
+	{
+		load_cmd_block(parse_line(g_meta->buf));
+		if (g_meta->state == MSTATE_NORMAL)
+			execute_cmd_block();
+		free_cmd_block();
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	init_meta();
+	init_signals(1);
+	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+	{
+		g_meta->buf = argv[2];
+    	minishell();
+		exit(g_meta->exit_status);
+	}
+
+	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+	return (0);
+}
+*/
 /*
 int	main(void)
 {

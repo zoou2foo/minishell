@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/15 10:47:46 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 13:19:13 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,19 @@ t_token	**parse_line(char *line)
 	head = create_token_list(line);
 	//print_token_list(head, true);			//DEBUG
 
+	if (g_meta->state != MSTATE_NORMAL)
+	{
+		free_token_list(head);
+		return (NULL);
+	}
+
 	expand_token_list(head);
 	//print_token_list(head, false);		//DEBUG
 
-	head = merge_token_list(head);
+	head = remove_empty_list(head);
 	//print_token_list(head, false);		//DEBUG
 
-	head = remove_empty_list(head);
+	head = merge_token_list(head);
 	//print_token_list(head, false);		//DEBUG
 
 	i = 1; //always at least 1 cmd to execute
@@ -44,6 +50,8 @@ t_token	**parse_line(char *line)
 				{
 					throw_error(ERR_TOKEN);
 					g_meta->state = MSTATE_O_PIPE;
+					free_token_list(head);
+					return (NULL);
 				}
 			}
 			i++;

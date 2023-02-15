@@ -1,14 +1,11 @@
 
 A good minishell tester: https://github.com/thallard/minishell_tester
 
+/* to test */
+
+
 /*     NEED TO BE FIXED    */
 
-PROB AVEC SIGNAUX
-
-PROB AVEC BUILT-INS
-
-
-PROB AVEC REDIRECTION ET EXIT(?)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

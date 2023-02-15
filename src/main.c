@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 11:44:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 09:37:41 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,24 @@ void	minishell(void)
 	clear_history();
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 }
+
+
+// // argv[2] will contains the content of the line for example "echo something ; ls -la" 
+// int main(int argc, char **argv)
+// {
+//   // Your code...
+//   if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+//   {
+//     int exit_status = ft_launch_minishell(argv[2]);
+//     exit(exit_status);
+//   }
+//     // Above this is the function that normally launch your minishell, instead 
+//     // of reading line with a get_next_line or a read() on fd 0, you just have to get
+//     // the argv[2] (which contains the content) and execute it.
+//     // Your function should return the good exit status otherwise the tests may be considered as false.
+//   // Your code ...
+// }
+
 
 int	main(int ac, char **av)
 {

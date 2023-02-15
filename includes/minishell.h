@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 13:22:49 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 09:55:46 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ bool	is_same(char *arg, char *str);
 bool	is_built_in(char *cmd_arg);
 void	execute_builtins(t_cmd *cmd);
 bool	built_ins_childable(t_cmd *cmd);
+void	setup_exit_code(int sig);
 
 /* section five - trying stuff */
 void	print_tab_env(void); //à enlever

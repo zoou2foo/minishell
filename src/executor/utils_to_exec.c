@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_to_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:30:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 09:54:52 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,9 @@ bool	built_ins_childable(t_cmd *cmd)
 		return (false);
 	else
 		return (true);
+}
+
+void	setup_exit_code(int sig)
+{
+	g_meta->exit_status = sig;
 }

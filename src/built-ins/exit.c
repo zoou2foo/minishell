@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 08:57:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 09:38:44 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,16 @@ void	do_exit(t_cmd *cmd)
 		i = 0;
 		while (cmd->cmd_args[1][i])
 		{
-			if ((cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9') || (cmd->cmd_args[1][0] == '-' && i == 0))
+			if ((cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9')
+				|| (cmd->cmd_args[1][0] == '-' && i == 0))
 				i++;
 			else if (!(cmd->cmd_args[1][i] >= '0'
 				&& cmd->cmd_args[1][i] <= '9'))
 				exit (255);
 		}
-		arg = ft_atoi(cmd->cmd_args[1]); //+10 ou -10?? exit +10; exit -10;
+		arg = ft_atoi(cmd->cmd_args[1]);
 	}
 	else
 		arg = g_meta->exit_status;
 	exit (arg);
 }
-
-

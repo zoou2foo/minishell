@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 10:08:56 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,4 @@ void	change_dir(t_cmd *cmd)
 		throw_error(ERR_CD);
 		g_meta->exit_status = EXIT_FAILURE;
 	}
-	else
-		g_meta->exit_status = EXIT_SUCCESS;
 }

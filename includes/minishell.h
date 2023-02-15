@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 13:22:49 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 10:01:03 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,8 @@ void	change_dir(t_cmd *cmd);
 void	get_env(void);
 void	get_pwd(void);
 void	do_unset(t_cmd *cmd);
-int		check_arg_4_unset(t_cmd *cmd);
 void	do_export(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
-void	refill_path_tab(char *str);
-void	reassign_var(int j, char *str);
 
 //from expander
 char	*expand(char *str1);

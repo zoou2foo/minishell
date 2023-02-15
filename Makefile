@@ -80,7 +80,6 @@ FILES	=	main \
 			built-ins/pwd \
 			built-ins/unset \
 			built-ins/echo \
-			built-ins/export_utils \
 			parsing/tokenizer \
 			parsing/token_handler \
 			parsing/expander \

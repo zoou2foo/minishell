@@ -80,7 +80,6 @@ FILES	=	main \
 			built-ins/pwd \
 			built-ins/unset \
 			built-ins/echo \
-			built-ins/export_utils \
 			parsing/tokenizer \
 			parsing/token_handler \
 			parsing/expander \
@@ -153,7 +152,7 @@ pewpew:
 # Runs the program NEED TO BE FIXED
 rerun: re run
 run: all
-	$(HIDE) $(CMD) 
+	$(HIDE) $(CMD)
 
 # Runs the program with valgrind
 leaks: all

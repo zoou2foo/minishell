@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 09:56:06 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 10:38:51 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,17 @@ void	child_process(t_cmd *cmd)
 {
 	if (cmd->is_built_in)
 	{
-		execute_builtins(cmd);
+		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		close_fds(cmd);
+		//built_ins should have exited themselves
+		//TODO : handle error
 	}
 	else
 	{
 		exec_with_paths(cmd);
 		close_fds(cmd);
-		exit(g_meta->exit_status);
+		exit(g_meta->exit_status);	//this will set the value in the parent's g_meta->exit_status
+		//TODO : handle error
 	}
 	throw_error(ERR_EXIT);
 	exit(1);
@@ -74,13 +77,14 @@ void	execute_cmd_block(void)
 	t_cmd	*cmd;
 
 	i = -1;
+	g_meta->exit_status = EXIT_SUCCESS; //sets success as default case
 	g_meta->pid = ft_calloc(sizeof(int), g_meta->cmd_nb);
 	while (++i < g_meta->cmd_nb)
 	{
 		cmd = g_meta->cmd_block[i];
 		if (cmd->argcount > 0)
 		{
-			if (!built_ins_childable(cmd))
+			if (!built_ins_childable(cmd)) //calls non-childable functions directly
 			{
 				close_fds(cmd);
 				execute_builtins(cmd);
@@ -93,13 +97,14 @@ void	execute_cmd_block(void)
 			else
 			{
 				g_meta->pid[i] = cmd_fork();
-				if (g_meta->pid[i] < 0)
+				if (g_meta->pid[i] < 0) //if fork error
 				{
 					throw_error(ERR_PID);
+					g_meta->state = MSTATE_ERROR;
+					//TODO : handle error
 				}
 				if (g_meta->pid[i] == 0)
 				{
-					signal(SIGINT, SIG_DFL);
 					dup2(cmd->fdin, STDIN_FILENO);
 					dup2(cmd->fdout, STDOUT_FILENO);
 					child_process(cmd);

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 12:43:21 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 13:19:56 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ void	load_cmd_block(t_token **head);
 bool	is_in_expansion(char c);
 t_token	*create_token_list(char *line);
 void	expand_token_list(t_token *head);
-t_token	*merge_token_list(t_token *head);
 t_token	*remove_empty_list(t_token *head);
+t_token	*merge_token_list(t_token *head);
 
 //from token_handler
 int		find_length(t_token *head);

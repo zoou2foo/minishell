@@ -1,9 +1,7 @@
 /*
-
 https://github.com/LucasKuhn/minishell_tester
 
 0========( PROBS TO SOLVE )========0
-make sure internal errors send an error code at exit()
 if pipe()/fork() error, exit shell
 
 0============(   VALERIE   )============0
@@ -22,12 +20,11 @@ Garder une liste des tests faits (pour les essayer à nouveau)
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-cmd not found : exit code should be 127
-input error : exit code should be 2
-/Users = $USER ?????
-$INVALID destroys INVALID instead of printing it
-make sure tokens link properly even when empties are cut
+make sure internal errors send an error code at exit()
+	cmd not found : exit code should be 127
+	input error : exit code should be 2
 
+$INVALID destroys INVALID instead of printing it
 
 0====( TEST CASES )====0
 

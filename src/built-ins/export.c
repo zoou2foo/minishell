@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 08:37:31 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 09:18:31 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ bool	is_equal(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != ' ')
+	while (ft_isalnum(str[i]) || str[i] == '_')
 	{
 		if (str[i] == '=')
 			return (TRUE);
@@ -108,7 +108,7 @@ void	add_var_to_env(char *str, int j, int i)
 		}
 		else
 		{
-			throw_error(ERR_ARG); //ajuster le message d'erreur pour plus specifique
+			throw_error(ERR_ARG2); //ajuster le message d'erreur pour plus specifique
 			g_meta->exit_status = EXIT_FAILURE;
 		}
 	}

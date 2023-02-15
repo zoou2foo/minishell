@@ -6,9 +6,13 @@ PROB AVEC SIGNAUX
 
 
 PROB AVEC BUILT-INS
-export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
-exit -10 => MNSH: 2                       BASH: 246
-exit +10 => MNSH: 2                         BASH: 10
+
+
+PROB avec MAKE Run
+# Runs the program NEED TO BE FIXED: quand exit avec pas zero, make *** [run] Error 1
+rerun: re run
+run: all
+	$(HIDE) $(CMD) 
 
 
 PROB AVEC REDIRECTION ET EXIT(?)
@@ -80,7 +84,9 @@ exit # should return the last exit code value => MNSH:  echo $? does not work   
 export var ="cat Makefile | grep >" => MNSH:  var cree sans rien d'autre     GOOD             BASH: ="cat Makefile | grep >" not a valid identifier
 export var; export var=test => MNSH:  cree la variable var et ajuste la variable var=test     GOOD       BASH: export var n'est pas cree. Seulement lorsqu'il y a un =
 cat kdjfklasjflkdj => check exit code. Not the same from bash
-
+exit -10 => MNSH: 2                       BASH: 246
+exit +10 => MNSH: 2                         BASH: 10
+export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

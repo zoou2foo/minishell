@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:50:45 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 11:16:29 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ void	handler_sig(int sig)
 	}
 }
 
+void	handler_hd_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n");
+	}
+	if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		sigignore(SIGQUIT);
+	}
+}
+
 //Initialize the signals for the minishell.
 // Received an int as a flag to know where it is in the process; parent or child
 // Define the signals struct to know which signal was received.
@@ -59,6 +75,8 @@ void	init_signals(int flag)
 		sa.sa_handler = &handler_sig;
 	else if (flag == 2)
 		sa.sa_handler = &handler_parent_sig;
+	else if (flag == 3)
+		sa.sa_handler = &handler_hd_sig;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 10:38:51 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 11:18:02 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	execute_cmd_block(void)
 			else
 			{
 				g_meta->pid[i] = cmd_fork();
+				init_signals(3);
 				if (g_meta->pid[i] < 0) //if fork error
 				{
 					throw_error(ERR_PID);

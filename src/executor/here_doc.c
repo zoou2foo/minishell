@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 16:06:26 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 11:10:49 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	execute_hd(char *string)
 		exit (1);
 	}
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);
-	init_signals(1);
+	init_signals(3);
 	gnl_return = NULL;
 	pid_hd = fork();
 	if (pid_hd == 0)

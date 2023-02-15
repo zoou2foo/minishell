@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 12:41:54 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:21:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 			{
 				throw_error(ERR_TOKEN);
 				g_meta->state = MSTATE_O_REDIR;
+				g_meta->exit_status = 2;
 			}
 		}
 		if (node->next->type <= TTYPE_EXPAND && TTYPE_EXPAND < node->type)
@@ -43,6 +44,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 		{
 			throw_error(ERR_TOKEN);
 			g_meta->state = MSTATE_O_REDIR;
+			g_meta->exit_status = 2;
 		}
 	}
 
@@ -95,6 +97,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 				if (g_meta->state == MSTATE_NORMAL)
 					throw_error(ERR_FILE);
 				g_meta->state = MSTATE_BAD_FD;
+				g_meta->exit_status = EXIT_FAILURE;
 				break ;
 			}
 			//removes node once processed

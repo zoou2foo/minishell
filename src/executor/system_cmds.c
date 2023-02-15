@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/14 11:00:32 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:22:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	fill_path_tab(void)
 		i++;
 	}
 	throw_error(ERR_PATH);
+	g_meta->exit_status = EXIT_FAILURE;
 }
 
 //throws out a specified error message
@@ -72,4 +73,5 @@ void	exec_with_paths(t_cmd *cmd)
 		ft_free_null(cmd_path);
 	}
 	throw_error(ERR_CMD);
+	g_meta->exit_status = 127;
 }

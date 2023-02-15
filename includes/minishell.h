@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 13:27:13 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:15:01 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ enum e_mstate
 /*	ERROR MESSAGE	*/
 # define ERR_EXIT	"Process Error : Child did not exit properly\n"
 # define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"
-# define ERR_PID	"Process Error : Couldn't fork() properly\n"
+# define ERR_FORK	"Process Error : Couldn't fork() properly\n"
 # define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
 
 # define ERR_CD		"Input Error : Invalid path given\n"

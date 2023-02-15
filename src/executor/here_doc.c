@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 11:10:49 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:24:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,26 @@ int	execute_hd(char *string)
 	char	*gnl_return;
 	int		pid_hd;
 
-	if (pipe(pipe_hd) == -1)
+	if (pipe(pipe_hd) < 0)
 	{
 		throw_error(ERR_PIPE);
 		ft_free_null(string);
-		exit (1);
+		g_meta->state = MSTATE_ERROR;
+		g_meta->exit_status = EXIT_FAILURE;
+		return (-1);
 	}
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);
 	init_signals(3);
 	gnl_return = NULL;
 	pid_hd = fork();
+	if (pid_hd < 0)
+	{
+		throw_error(ERR_FORK);
+		ft_free_null(string);
+		g_meta->state = MSTATE_ERROR;
+		g_meta->exit_status = EXIT_FAILURE;
+		return (-1);
+	}
 	if (pid_hd == 0)
 		child_in_hd(string, gnl_return, pipe_hd);
 	close(pipe_hd[1]);

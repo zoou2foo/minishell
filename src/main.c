@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 13:27:58 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:19:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,9 +229,10 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac != 1)				//superfluous ?
 		throw_error(ERR_AC);
+
 	minishell();
 
-	return (0);
+	return (EXIT_FAILURE);
 }
 
 /*

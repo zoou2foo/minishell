@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/15 13:19:13 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 14:19:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_token	**parse_line(char *line)
 				{
 					throw_error(ERR_TOKEN);
 					g_meta->state = MSTATE_O_PIPE;
+					g_meta->exit_status = 2;
 					free_token_list(head);
 					return (NULL);
 				}

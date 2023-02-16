@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 13:21:06 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 13:24:20 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ int	main(int ac, char **av)
 }
 
 /*
+//main() and minishell() for the tester
 void	minishell()
 {
 	if (!is_line_empty(g_meta->buf))
@@ -246,7 +247,6 @@ void	minishell()
 		free_cmd_block();
 	}
 }
-
 int	main(int argc, char **argv)
 {
 	init_meta();

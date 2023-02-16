@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:15:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 19:39:16 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	get_pwd(void);
 void	do_unset(t_cmd *cmd);
 void	do_export(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
+void	close_fds(t_cmd *cmd);
 
 //from expander
 char	*expand(char *str1);

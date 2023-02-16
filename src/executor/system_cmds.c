@@ -6,11 +6,17 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:22:11 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 13:45:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//throws out a specified error message
+void	throw_error(char *str)
+{
+	write(2, str, ft_strlen(str));
+}
 
 // Looks for "path" in env. Splits at ":". Then, join "/" after each section;
 //no need to add it during execution
@@ -41,12 +47,6 @@ void	fill_path_tab(void)
 	}
 	throw_error(ERR_PATH);
 	g_meta->exit_status = EXIT_FAILURE;
-}
-
-//throws out a specified error message
-void	throw_error(char *str)
-{
-	write(2, str, ft_strlen(str));
 }
 
 // Checks if a given cmd exists and is executable, then execute it

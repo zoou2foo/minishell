@@ -73,22 +73,26 @@ TSTDIR	=	tests/
 
 # File names (including their subdirectory if needed)
 FILES	=	main \
+			debugger \
+			freeer \
 			built-ins/cd \
+			built-ins/echo \
 			built-ins/env \
 			built-ins/exit \
 			built-ins/export \
 			built-ins/pwd \
 			built-ins/unset \
-			built-ins/echo \
-			parsing/tokenizer \
-			parsing/token_handler \
-			parsing/expander \
-			parsing/parser \
-			parsing/converter \
-			executor/system_cmds \
 			executor/here_doc \
 			executor/pre_execution \
+			executor/system_cmds \
 			executor/utils_to_exec \
+			parsing/converter \
+			parsing/expander \
+			parsing/token_finder \
+			parsing/token_maker \
+			parsing/token_remover \
+			parsing/parser \
+			parsing/tokenizer \
 			signals/signals
 
 # Libraries (.a files) to include for compilation

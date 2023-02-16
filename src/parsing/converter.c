@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:34:57 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 13:32:43 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,29 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	{
 		if (TTYPE_EXPAND < node->type)
 		{
-			if (node->type == TTYPE_S_RDR_OUT)			// >
+			if (node->type == TTYPE_S_RDR_OUT) //		>
 			{
 				if (cmd->fdout != 1)
 					close(cmd->fdout);
 				cmd->fdout = open(node->string, O_CREAT | O_RDWR | O_TRUNC, 0666);
 			}
-			else if (node->type == TTYPE_D_RDR_OUT)		// >>
+			else if (node->type == TTYPE_D_RDR_OUT) //	>>
 			{
 				if (cmd->fdout != 1)
 					close(cmd->fdout);
 				cmd->fdout = open(node->string, O_CREAT | O_RDWR | O_APPEND, 0666);
 			}
-			else if (node->type == TTYPE_REDIR_IN)		// <
+			else if (node->type == TTYPE_REDIR_IN) //	<
 			{
 				if (cmd->fdin != 0)
 					close(cmd->fdin);
 				cmd->fdin = open(node->string, O_RDONLY);
 			}
-			else if (node->type == TTYPE_HEREDOC)		// <<
+			else if (node->type == TTYPE_HEREDOC) //	<<
 			{
 				if (cmd->fdin != 0)
 					close(cmd->fdin);
-				if (g_meta->state == MSTATE_NORMAL)			//prevent calling when error
+				if (g_meta->state == MSTATE_NORMAL) //prevent calling hd when error has occured
 					cmd->fdin = execute_hd(node->string);
 				else
 					cmd->fdin = 0;
@@ -123,7 +123,7 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)				// SPLIT ME UP SMH
 	*head = find_head(node);
 	node = *head;
 
-	//print_token_list(*head, false);					//DEBUG
+	//print_token_list(*head, false);										//DEBUG
 
 	cmd->cmd_args = ft_calloc(find_length(node) + 1, sizeof(char *));
 

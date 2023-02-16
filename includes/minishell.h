@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 19:39:16 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/02/16 13:54:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,29 +107,65 @@ typedef struct s_meta
 
 extern t_meta	*g_meta;
 
-/* 		MAIN			*/
-void	print_cmd(t_cmd *cmd);
-void	print_token_list(t_token *head, bool start_with_newline);
-
-/* 		BUILT-INS		*/
-void	do_exit(t_cmd *cmd); //Need to change back to void.
+// ===== FROM BUILT-INS =====
 void	change_dir(t_cmd *cmd);
+void	do_echo(t_cmd *cmd);
 void	get_env(void);
+void	do_exit(t_cmd *cmd);
+void	do_export(t_cmd *cmd);
 void	get_pwd(void);
 void	do_unset(t_cmd *cmd);
-void	do_export(t_cmd *cmd);
-void	do_echo(t_cmd *cmd);
-void	close_fds(t_cmd *cmd);
+
+// ===== FROM EXECUTOR =====
+
+//from here_doc
+int		execute_hd(char *string);
+
+//from pre_execution
+void	close_fds(t_cmd *cmd);				//general?
+void	execute_cmd_block(void);
+
+//from system_cmds
+void	throw_error(char *str);				//general
+void	fill_path_tab(void);
+void	exec_with_paths(t_cmd *cmd);
+
+//from utiles_to_exec
+bool	is_same(char *arg, char *str);		//general
+bool	is_built_in(char *cmd_arg);			//general
+void	execute_builtins(t_cmd *cmd);
+bool	built_ins_childable(t_cmd *cmd);
+
+// ===== FROM PARSING =====
 
 //from expander
 char	*expand(char *str1);
 char	*expand_quote(char *str1);
 
+//from converter
+void	load_cmd_block(t_token **head);
+
 //from parser
 t_token	**parse_line(char *line);
 
-//from converter
-void	load_cmd_block(t_token **head);
+//from token_finder
+int		find_length(t_token *head);
+t_token	*find_head(t_token *tail);
+t_token	*find_tail(t_token *head);
+
+//from token_maker
+t_token	*new_token(char *str, int len, int type);
+t_token	*merge_tokens(t_token *prev, t_token *next);
+t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
+t_token	*replace_token(t_token *new, t_token *old);
+void	add_token(t_token *token, t_token **head);
+
+//from token_remover
+void	free_token(t_token *node);
+void	free_token_list(t_token *head);
+void	destroy_token(t_token *node);
+t_token	*cut_token(t_token *node);
+t_token	*empty_token(t_token *node);
 
 //from tokenizer
 bool	is_in_expansion(char c);
@@ -138,46 +174,15 @@ void	expand_token_list(t_token *head);
 t_token	*remove_empty_list(t_token *head);
 t_token	*merge_token_list(t_token *head);
 
-//from token_handler
-int		find_length(t_token *head);
-t_token	*find_head(t_token *tail);
-t_token	*find_tail(t_token *head);
-
-t_token	*new_token(char *str, int len, int type);
-t_token	*merge_tokens(t_token *prev, t_token *next);
-t_token	*insert_token(t_token *node, t_token *prev, t_token *next);
-t_token	*replace_token(t_token *new, t_token *old);
-void	add_token(t_token *token, t_token **head);
-
-void	free_token(t_token *node);
-void	free_token_list(t_token *head);
-t_token	*cut_token(t_token *node);
-t_token	*empty_token(t_token *node);
-void	destroy_token(t_token *node);
-
-/*		SYSTEM_CMDS		*/
-void	fill_path_tab(void);
-void	throw_error(char *str);
-void	exec_with_paths(t_cmd *cmd);
-
-/*		HERE_DOCUMENT	*/
-int		execute_hd(char *string);
-void	sig_heredoc(void);
-void	hd_handler(int signum);
-void	sig_ignore(void);
-
-/*		SIGNALS			*/
+// ===== FROM SIGNALS =====
 void	init_signals(int flag);
 
-/*		PRE_EXECUTION	*/
-void	execute_cmd_block(void);
-void	waitchild(void);
+// ===== FROM DEBBUGER =====
+void	print_cmd(t_cmd *cmd);
+void	print_token_list(t_token *head, bool start_with_newline);
 
-/*		UTILS_TO_EXEC	*/
-bool	is_same(char *arg, char *str);
-bool	is_built_in(char *cmd_arg);
-void	execute_builtins(t_cmd *cmd);
-bool	built_ins_childable(t_cmd *cmd);
-void	setup_exit_code(int sig);
+// ===== FROM FREEER =====
+void	free_cmd(t_cmd *cmd);
+void	free_cmd_block(void);
 
 #endif

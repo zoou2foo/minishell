@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:24:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 13:55:48 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,31 @@ void	close_fds(t_cmd *cmd)
 		close(cmd->fdout);
 	cmd->fdout = 1;
 }
+
+//status_tmp: add to avoid constantly rewriting on g_meta->exit_status
+//if WIFEXITED: if process exited normally
+//if WIFSIGNALED: child exited on signal
+//WTERMSIG: adds 128 when not needed (ex: cat kdjflkj)
+void	waitchild(void)
+{
+	int	i;
+	int	status_tmp;
+
+	i = 0;
+	status_tmp = 0;
+	while (i < g_meta->cmd_nb)
+	{
+		waitpid(g_meta->pid[i], &status_tmp, 0);
+		if (WIFEXITED(status_tmp) == TRUE)
+			g_meta->exit_status = WEXITSTATUS(status_tmp);
+		else if (WIFSIGNALED(status_tmp) == TRUE)
+			g_meta->exit_status = 128 + WTERMSIG(status_tmp);
+		else
+			g_meta->exit_status = 128 + WSTOPSIG(status_tmp);
+		i++;
+	}
+}
+
 
 // Choses whether to execute a given cmd as a built_in or a sys_cmd
 // Exits with an error if the execution failed
@@ -120,28 +145,4 @@ void	execute_cmd_block(void)
 		}
 	}
 	init_signals(1);
-}
-
-//status_tmp: add to avoid constantly rewriting on g_meta->exit_status
-//if WIFEXITED: if process exited normally
-//if WIFSIGNALED: child exited on signal
-//WTERMSIG: adds 128 when not needed (ex: cat kdjflkj)
-void	waitchild(void)
-{
-	int	i;
-	int	status_tmp;
-
-	i = 0;
-	status_tmp = 0;
-	while (i < g_meta->cmd_nb)
-	{
-		waitpid(g_meta->pid[i], &status_tmp, 0);
-		if (WIFEXITED(status_tmp) == TRUE)
-			setup_exit_code(WEXITSTATUS(status_tmp));
-		else if (WIFSIGNALED(status_tmp) == TRUE)
-			setup_exit_code(WTERMSIG(status_tmp) + 128);
-		else
-			setup_exit_code(128 + WSTOPSIG(status_tmp));
-		i++;
-	}
 }

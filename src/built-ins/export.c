@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 11:52:25 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 13:58:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,6 @@ void	sort_env(void)
 		}
 		i++;
 	}
-}
-
-// Return the length of env. Take nothing as we use global var
-int	env_length(void)
-{
-	int	i;
-
-	i = 0;
-	while (g_meta->env[i])
-		i++;
-	return (i);
 }
 
 //to check if var exist already
@@ -100,8 +89,10 @@ void	add_var_to_env(char *str, int i)
 	}
 	else //creates new var
 	{
-		j = 1 + env_length();
-		g_meta->env = ft_recalloc(g_meta->env, j + 1, j, sizeof(char *));
+		j = 0;
+		while (g_meta->env[j])
+		j++;
+		g_meta->env = ft_recalloc(g_meta->env, j + 2, j + 1, sizeof(char *));
 		while (g_meta->env[i] != NULL)
 			i++;
 		g_meta->env[i] = ft_strdup(str);

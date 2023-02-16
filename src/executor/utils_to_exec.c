@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_to_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 09:54:52 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/16 13:54:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ bool	is_same(char *arg, char *str)
 	return (false);
 }
 
-// Checks if the given cmd_arg is a built-in
-bool	is_built_in(char *cmd_arg)
+// Checks if the given arg is a built-in
+bool	is_built_in(char *arg)
 {
-	if (is_same(cmd_arg, "cd")
-		|| is_same(cmd_arg, "echo")
-		|| is_same(cmd_arg, "env")
-		|| is_same(cmd_arg, "exit")
-		|| is_same(cmd_arg, "export")
-		|| is_same(cmd_arg, "pwd")
-		|| is_same(cmd_arg, "unset"))
+	if (is_same(arg, "cd")
+		|| is_same(arg, "echo")
+		|| is_same(arg, "env")
+		|| is_same(arg, "exit")
+		|| is_same(arg, "export")
+		|| is_same(arg, "pwd")
+		|| is_same(arg, "unset"))
 		return (true);
 	else
 		return (false);
@@ -70,9 +70,4 @@ bool	built_ins_childable(t_cmd *cmd)
 		return (false);
 	else
 		return (true);
-}
-
-void	setup_exit_code(int sig)
-{
-	g_meta->exit_status = sig;
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 13:45:17 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 15:23:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,34 @@ void	fill_path_tab(void)
 	int		i;
 	char	*tmp;
 
-	i = 0;
-
-	while (g_meta->env[i])
+	i = -1;
+	while (g_meta->env[++i])
 	{
 		if (is_same(g_meta->env[i], "PATH="))
 		{
 			g_meta->paths = ft_split(&g_meta->env[i][5], ':');
-			i = 0;
-
-			while (g_meta->paths[i])
+			i = -1;
+			while (g_meta->paths[++i])
 			{
 				tmp = ft_strjoin(g_meta->paths[i], "/");
 				ft_free_null(g_meta->paths[i]);
 				g_meta->paths[i] = tmp;
-				i++;
 			}
 			return ;
 		}
-		i++;
 	}
 	throw_error(ERR_PATH);
 	g_meta->exit_status = EXIT_FAILURE;
+}
+
+void	free_path_tab(void)
+{
+	int		i;
+
+	i = -1;
+	while (g_meta->paths[++i])
+		ft_free_null(g_meta->paths[i]);
+	ft_free_null(g_meta->paths);
 }
 
 // Checks if a given cmd exists and is executable, then execute it
@@ -58,20 +64,27 @@ void	exec_with_paths(t_cmd *cmd)
 	char	*cmd_path;
 	int		i;
 
-	if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
-		execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
-
 	if (g_meta->env)
-		fill_path_tab();
-
-	i = -1;
-	while (g_meta->paths[++i])
 	{
-		cmd_path = ft_strjoin(g_meta->paths[i], cmd->cmd_args[0]);
-		if (!access(cmd_path, F_OK | X_OK))
-			g_meta->exit_status = execve(cmd_path, cmd->cmd_args, g_meta->env);
-		ft_free_null(cmd_path);
+		if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
+			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
+		fill_path_tab();
+		if (g_meta->paths[0])
+		{
+			i = -1;
+			while (g_meta->paths[++i])
+			{
+				cmd_path = ft_strjoin(g_meta->paths[i], cmd->cmd_args[0]);
+				if (!access(cmd_path, F_OK | X_OK))
+					g_meta->exit_status = execve(cmd_path, cmd->cmd_args, g_meta->env);
+				ft_free_null(cmd_path);
+			}
+			throw_error(ERR_CMD);
+			g_meta->exit_status = 127;
+			free_path_tab();
+		}
+		return ;
 	}
-	throw_error(ERR_CMD);
+	throw_error(ERR_ENV);
 	g_meta->exit_status = 127;
 }

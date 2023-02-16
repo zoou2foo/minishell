@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 13:55:48 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 14:48:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	child_process(t_cmd *cmd)
 {
 	if (cmd->is_built_in)
 	{
-		execute_builtins(cmd);	//if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
+		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		close_fds(cmd);
 		//built_ins should have exited themselves
 		//TODO : handle error
@@ -85,7 +85,7 @@ void	child_process(t_cmd *cmd)
 	{
 		exec_with_paths(cmd);
 		close_fds(cmd);
-		exit(g_meta->exit_status);	//this will set the value in the parent's g_meta->exit_status
+		exit(g_meta->exit_status); //this will set the value in the parent's g_meta->exit_status
 		//TODO : handle error
 	}
 	throw_error(ERR_EXIT);

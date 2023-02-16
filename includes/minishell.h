@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 13:54:51 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/16 15:29:12 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,53 +23,52 @@
 # include <signal.h>
 # include <termios.h>
 
-extern	char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
+extern char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
 
 enum e_ttype
 {
 	TTYPE_ERROR		= -1,
 	TTYPE_EMPTY		= 0,
 	TTYPE_NORMAL	= 1,	// _	(cmds/args)
-	TTYPE_S_QUOTE	= 2,	//'_'	(string without expansion)
-	TTYPE_D_QUOTE	= 3,	//"_"	(string with expansion)
-	TTYPE_EXPAND	= 4,	//$_	(expansion)
+	TTYPE_S_QUOTE	= 2,	// '_'	(string without expansion)
+	TTYPE_D_QUOTE	= 3,	// "_"	(string with expansion)
+	TTYPE_EXPAND	= 4,	// $_	(expansion)
 	TTYPE_REDIR_IN	= 5,	// <	(input path)
-	TTYPE_HEREDOC	= 6,	//<<	(heredoc EOF word)
+	TTYPE_HEREDOC	= 6,	// <<	(heredoc EOF word)
 	TTYPE_S_RDR_OUT	= 7,	// >	(output path (replace))
-	TTYPE_D_RDR_OUT	= 8,	//>>	(output path (append))
+	TTYPE_D_RDR_OUT	= 8,	// >>	(output path (append))
 	TTYPE_PIPE		= 9		// |	(pipe)
 };
 
 enum e_mstate
 {
-	MSTATE_ERROR	= -1,
+	MSTATE_ERROR	= -1,	//closes minishell entirely
 	MSTATE_NORMAL	= 0,
 	MSTATE_O_BRACK	= 1,	//unended quotes
 	MSTATE_O_PIPE	= 2,	//pipe token in invalid position
 	MSTATE_O_REDIR	= 3,	//redir token in invalid position
-	MSTATE_BAD_FD	= 4,	//invalid FD (bad file name)
-	MSTATE_CLOSING	= 5
+	MSTATE_BAD_FD	= 4		//invalid FD (bad file name)
 };
 
 /*	ERROR MESSAGE	*/
-# define ERR_EXIT	"Process Error : Child did not exit properly\n"
-# define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"
-# define ERR_FORK	"Process Error : Couldn't fork() properly\n"
-# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
+# define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"		//unencounterable under normal circumstances
+# define ERR_FORK	"Process Error : Couldn't fork() properly\n"		//unencounterable under normal circumstances
+# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"		//unencounterable under normal circumstances
+# define ERR_PATH	"Process Error : PATH variable not found\n"			//only appears if PATH is unset beforehand
+# define ERR_ENV	"Process Error : Environment does not exist\n"		//for debugging, shouldn't pop up
+# define ERR_EXIT	"Process Warning : Child did not exit properly\n"	//for debugging, shouldn't pop up
 
-# define ERR_CD		"Input Error : Invalid path given\n"
-# define ERR_CMD	"Input Error : Command not found\n"
 # define ERR_ARG	"Input Error : No argument given\n"
 # define ERR_ARG2	"Input Error : Invalid argument given\n"
 # define ERR_ARG3	"Input Error : Too many arguments given\n"
+# define ERR_CD		"Input Error : Invalid path given\n"
+# define ERR_CMD	"Input Error : Invalid command given\n"
+# define ERR_FILE	"Input Error : Invalid filename given\n"
+# define ERR_VAR	"Input Error : Invalid variable given\n"
+# define ERR_QUOTE	"Input Error : Invalid quotation (unclosed)\n"
 # define ERR_TOKEN	"Input Error : Invalid token combination\n"
-# define ERR_FILE	"Input Error : Invalid file name given\n"
-# define ERR_QUOTE	"Input Error : Non terminated quotes\n"
+# define ERR_AC		"Input Warning : Minishell does not accept arguments\n"
 
-# define ERR_AC		"Input Warning : Minishell executable does not take arguments\n"
-# define ERR_PATH	"Path Warning : Path variable not in environment\n"
-# define ERR_ENV	"Environment Warning : Variables not found\n"
-# define ERR_DIR	"Directory Warning : Directory not found\n"
 
 typedef struct s_token
 {
@@ -82,13 +81,12 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char	**cmd_args;	//cmd name and its following arguments
-	int		argcount;		//number of function arguments (0 == no args, <0 == no cmd)
+	char	**cmd_args;		//cmd name and its following arguments
+	int		argcount;		//number of function arguments (0 == no cmd, 1 == no args)
 	int		id;				//id of this cmd (in relation to others in this cycle)
 	int		fdin;			//the input's fd
 	int		fdout;			//the output's fd
 	bool	is_built_in;	//whether the command is a built-in
-	bool	has_cmd;					//implement me!!!
 }			t_cmd;
 
 typedef struct s_meta
@@ -184,5 +182,9 @@ void	print_token_list(t_token *head, bool start_with_newline);
 // ===== FROM FREEER =====
 void	free_cmd(t_cmd *cmd);
 void	free_cmd_block(void);
+
+// ===== FROM MAIN =====
+int		is_line_empty(char *line);
+void	init_meta(void);
 
 #endif

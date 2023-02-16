@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 10:37:35 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/16 15:00:58 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,23 @@ void	do_unset(t_cmd *cmd)
 	int	i;
 
 	i = 1;
-	if (!cmd->cmd_args[1])
+	if (cmd->argcount < 2)
 	{
 		throw_error(ERR_ARG);
 		g_meta->exit_status = EXIT_FAILURE;
 	}
-	while (cmd->cmd_args[i])
+	else
 	{
-		if (is_var_in_env(cmd->cmd_args[i]))
-			unset_arg(cmd->cmd_args[i]);
-		else
+		while (cmd->cmd_args[i])
 		{
-			throw_error(ERR_ENV);
-			g_meta->exit_status = EXIT_FAILURE;
+			if (is_var_in_env(cmd->cmd_args[i]))
+				unset_arg(cmd->cmd_args[i]);
+			else if (g_meta->exit_status == MSTATE_NORMAL)
+			{
+				throw_error(ERR_VAR);
+				g_meta->exit_status = EXIT_FAILURE;
+			}
+			i++;
 		}
-		i++;
 	}
 }

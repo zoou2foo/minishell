@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:37 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/15 19:58:55 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	do_echo(t_cmd *cmd)
 	echo_print(cmd, i, newline);
 	if (newline)
 		printf("\n");
+	close_fds(cmd); //maybe need to close fds in 
 	exit(EXIT_SUCCESS);
 }

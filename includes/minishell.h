@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:10:22 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:19:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	do_unset(t_cmd *cmd);
 int		execute_hd(char *string);
 
 //from pre_execution
+void	child_process(t_cmd *cmd);
 void	close_fds(t_cmd *cmd);				//general?
 void	execute_cmd_block(void);
 

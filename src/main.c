@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:28:20 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:00:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_meta	*g_meta; //our global var
+//our global var
+t_meta	*g_meta;
 
 //checks if a given line contains either nothing or only space-like characters
 int	is_line_empty(char *line)
@@ -26,7 +27,8 @@ int	is_line_empty(char *line)
 	return (1);
 }
 
-//allocates memory for and fills the global g_meta var with default values (for env and path)
+//allocates memory for and fills the global g_meta var with default values
+//(for env and path)
 void	init_meta(void)
 {
 	int	i;
@@ -44,7 +46,8 @@ void	init_meta(void)
 		i++;
 	}
 }
-/* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
+/* Main logic loop of minishell. It initialises g_meta and signals and every 
+cycle, it:
 |- reads the inputed line
 |- checks if said line empty
 |- add it to the history
@@ -56,7 +59,8 @@ void	init_meta(void)
 Once the loop is over, it;
 |- clears the history
 |- frees all the leftover data */
-/*
+
+//if(!g_meta->buf) //to make ctrl-D not segfault(if buffer == NULL)
 void	minishell(void)
 {
 	init_meta();
@@ -65,7 +69,7 @@ void	minishell(void)
 	{
 		g_meta->state = MSTATE_NORMAL;
 		g_meta->buf = readline("MNSH :) ");
-		if (!g_meta->buf) //to make ctrl-D not segfault (if buffer == null)
+		if (!g_meta->buf)
 			break ;
 		if (!is_line_empty(g_meta->buf))
 		{
@@ -92,4 +96,3 @@ int	main(int ac, char **av)
 
 	return (EXIT_FAILURE);
 }
-*/

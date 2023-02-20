@@ -3,17 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:00:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 08:53:17 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//to check the args following exit; to shorten exit.
+void	check_args_4_exit(t_cmd *cmd, int i)
+{
+	while (cmd->cmd_args[1][i])
+	{
+		if ((cmd->cmd_args[1][i] >= '0'
+			&& cmd->cmd_args[1][i] <= '9')
+			|| (cmd->cmd_args[1][0] == '-' && i == 0)
+			|| (cmd->cmd_args[1][0] == '+' && i == 0))
+			i++;
+		else if (!(cmd->cmd_args[1][i] >= '0'
+			&& cmd->cmd_args[1][i] <= '9'))
+			exit (255);
+	}
+}
+
 // Return nothing. Take t_cmd. To look at the following argument to give the
 // correct exit status.
+//change for comparison with max string (?) 9223372036854775808; third if.
 void	do_exit(t_cmd *cmd)
 {
 	unsigned char	arg;
@@ -25,17 +42,9 @@ void	do_exit(t_cmd *cmd)
 		if (cmd->cmd_args[1])
 		{
 			i = 0;
-			if (ft_strlen(cmd->cmd_args[1]) <= 10) //change for comparison with max string (?) 9223372036854775808
+			if (ft_strlen(cmd->cmd_args[1]) <= 10)
 			{
-				while (cmd->cmd_args[1][i])
-				{
-					if ((cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9')
-						|| (cmd->cmd_args[1][0] == '-' && i == 0)
-						|| (cmd->cmd_args[1][0] == '+' && i == 0))
-						i++;
-					else if (!(cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9'))
-						exit (255);
-				}
+				check_args_4_exit(cmd, i);
 				arg = ft_atoi(cmd->cmd_args[1]);
 			}
 			else
@@ -46,6 +55,6 @@ void	do_exit(t_cmd *cmd)
 		exit (arg);
 	}
 	throw_error(ERR_ARG3);
+	close_pipes();
 	exit (arg);
-
 }

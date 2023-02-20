@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:24:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 09:29:54 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*gnl_minihell(void)
 	return (ft_strdup(buffer));
 }
 
+//needed to pass hd in a child for signal.
+//need to take the string, gnl_return and pipe_hd
 void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 {
 	char	*tmp;
@@ -46,6 +48,26 @@ void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 	exit(0);
 }
 
+//ft to shortent execute hd; dealing with pipe error
+int	pipe_error(char *string)
+{
+	throw_error(ERR_PIPE);
+	ft_free_null(string);
+	g_meta->state = MSTATE_ERROR;
+	g_meta->exit_status = EXIT_FAILURE;
+	return (-1);
+}
+
+//ft to shortent execute hd; dealing with fork error
+int	error_fork(char *string)
+{
+	throw_error(ERR_FORK);
+	ft_free_null(string);
+	g_meta->state = MSTATE_ERROR;
+	g_meta->exit_status = EXIT_FAILURE;
+	return (-1);
+}
+
 // Return int of the fd[0] (to read); pipe first. Then, infinite loop to start
 // reading what's in char *string (received) from the readline(prompt).
 // then it has to be written in the pipe. And we return fd[0] so it can be read
@@ -56,25 +78,13 @@ int	execute_hd(char *string)
 	int		pid_hd;
 
 	if (pipe(pipe_hd) < 0)
-	{
-		throw_error(ERR_PIPE);
-		ft_free_null(string);
-		g_meta->state = MSTATE_ERROR;
-		g_meta->exit_status = EXIT_FAILURE;
-		return (-1);
-	}
+		pipe_error(string);
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);
 	init_signals(3);
 	gnl_return = NULL;
 	pid_hd = fork();
 	if (pid_hd < 0)
-	{
-		throw_error(ERR_FORK);
-		ft_free_null(string);
-		g_meta->state = MSTATE_ERROR;
-		g_meta->exit_status = EXIT_FAILURE;
-		return (-1);
-	}
+		error_fork(string);
 	if (pid_hd == 0)
 		child_in_hd(string, gnl_return, pipe_hd);
 	close(pipe_hd[1]);

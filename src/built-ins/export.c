@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 13:58:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 09:01:44 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,53 +41,20 @@ void	sort_env(void)
 	}
 }
 
-//to check if var exist already
-//if not found, return -1
-int	find_var(char *str)
-{
-	int	len;
-	int	i;
-
-	len = 0;
-	while (str[len] && str[len] != '=')
-		len++;
-	i = 0;
-	while (g_meta->env[i])
-	{
-		if (ft_strncmp(g_meta->env[i], str, len) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-bool	is_valid_name(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (ft_isalnum(str[i]) || str[i] == '_')
-		i++;
-	if (i > 0 && str[i] == '=')
-		return (TRUE);
-	return (FALSE);
-}
-
-//function to shortent do_export. It takes t_cmd and index to add a variable
-//to env
-//add var at the end of g_meta->env with the arg
-//set exit_status directly because non-childable when has args
+//function to shortent export. It takes a string and an index. Return nothing
+//first if is to reassess the old var
+//else, creates a new var
 void	add_var_to_env(char *str, int i)
 {
 	int	j;
 
 	j = find_var(str);
-	if (j >= 0) //reassing old var
+	if (j >= 0)
 	{
 		ft_free_null(g_meta->env[j]);
 		g_meta->env[j] = ft_strdup(str);
 	}
-	else //creates new var
+	else
 	{
 		j = 0;
 		while (g_meta->env[j])
@@ -99,13 +66,34 @@ void	add_var_to_env(char *str, int i)
 	}
 }
 
+//function to shorten export
+//before adding var need the name of var to make sure it is valid.
+//takes t_cmd *cmd to look at the arg and an index from do_export()
+void	before_add_var(t_cmd *cmd, int i)
+{
+	int	k;
+
+	k = 1;
+	while (cmd->cmd_args[k])
+	{
+		if (is_valid_name(cmd->cmd_args[k]))
+			add_var_to_env(cmd->cmd_args[k], i);
+		else
+		{
+			throw_error(ERR_ARG2);
+			g_meta->exit_status = EXIT_FAILURE;
+			break ;
+		}
+		k++;
+	}
+}
+
 // Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
 // env. Else if arg -> add the var at g_meta->env (see ft above)l;
 //set exit_status indirectly because childable when no args
 void	do_export(t_cmd *cmd)
 {
 	int		i;
-	int		k;
 
 	i = 0;
 	if (cmd->cmd_args[1] == NULL)
@@ -121,18 +109,6 @@ void	do_export(t_cmd *cmd)
 	}
 	else
 	{
-		k = 1;
-		while (cmd->cmd_args[k])
-		{
-			if (is_valid_name(cmd->cmd_args[k]))
-				add_var_to_env(cmd->cmd_args[k], i);
-			else
-			{
-				throw_error(ERR_ARG2);
-				g_meta->exit_status = EXIT_FAILURE;
-				break ;
-			}
-			k++;
-		}
+		before_add_var(cmd, i);
 	}
 }

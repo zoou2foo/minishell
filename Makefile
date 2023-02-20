@@ -83,17 +83,19 @@ FILES	=	main \
 			built-ins/pwd \
 			built-ins/unset \
 			built-ins/utils_export \
+			executor/execute_cmd \
 			executor/here_doc \
 			executor/pre_execution \
 			executor/system_cmds \
 			executor/utils_to_exec \
-			executor/execute_cmd \
+			parsing/converter_utils \
 			parsing/converter \
 			parsing/expander \
 			parsing/token_finder \
 			parsing/token_maker \
 			parsing/token_remover \
 			parsing/parser \
+			parsing/tokenizer_utils \
 			parsing/tokenizer \
 			signals/signals
 

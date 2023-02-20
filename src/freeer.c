@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/16 13:31:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:54:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_cmd(t_cmd *cmd)
 //frees a cmd_block, all its cmds, and all the leftover FDs
 void	free_cmd_block(void)
 {
-	int		i;
+	int	i;
 
 	ft_free_null(g_meta->pid);
 	if (g_meta->pipes)

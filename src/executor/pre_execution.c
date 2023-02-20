@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 13:57:01 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:57:00 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	cmd_fork(void)
 	f_id = fork();
 	if (f_id == -1)
 	{
-		throw_error(ERR_FORK);
-		g_meta->state = MSTATE_ERROR;
-		g_meta->exit_status = EXIT_FAILURE;
+		fatal_error(MSTATE_F_ERR);
 		return (-1);
 	}
 	if (f_id == 0)
@@ -121,9 +119,7 @@ void	execute_cmd_block(void)
 				init_signals(3);
 				if (g_meta->pid[i] < 0) //if fork error
 				{
-					throw_error(ERR_FORK);
-					g_meta->state = MSTATE_ERROR;
-					g_meta->exit_status = EXIT_FAILURE;
+					fatal_error(MSTATE_F_ERR);
 					close_fds(cmd);
 					break ;
 				}

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 15:30:36 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:57:56 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ extern char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de
 
 enum e_ttype
 {
-	TTYPE_ERROR		= -1,
+	TTYPE_ERROR		= -1,	//generic failureerror
 	TTYPE_EMPTY		= 0,
 	TTYPE_NORMAL	= 1,	// _	(cmds/args)
 	TTYPE_S_QUOTE	= 2,	// '_'	(string without expansion)
@@ -42,6 +42,8 @@ enum e_ttype
 
 enum e_mstate
 {
+	MSTATE_F_ERR	= -3,	//fork() failure error
+	MSTATE_P_ERR	= -2,	//pipe() failure error
 	MSTATE_ERROR	= -1,	//closes minishell entirely
 	MSTATE_NORMAL	= 0,
 	MSTATE_O_BRACK	= 1,	//unended quotes
@@ -51,6 +53,7 @@ enum e_mstate
 };
 
 /*	ERROR MESSAGE	*/
+# define ERR_ERR	"Process Error : Error code not found\n"			//unencounterable under normal circumstances
 # define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"		//unencounterable under normal circumstances
 # define ERR_FORK	"Process Error : Couldn't fork() properly\n"		//unencounterable under normal circumstances
 # define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"		//unencounterable under normal circumstances
@@ -68,7 +71,6 @@ enum e_mstate
 # define ERR_QUOTE	"Input Error : Invalid quotation (unclosed)\n"
 # define ERR_TOKEN	"Input Error : Invalid token combination\n"
 # define ERR_AC		"Input Warning : Minishell does not accept arguments\n"
-
 
 typedef struct s_token
 {
@@ -119,6 +121,11 @@ void	do_unset(t_cmd *cmd);
 
 // ===== FROM EXECUTOR =====
 
+//from execute_cmd
+void	execute_fork(t_cmd *cmd, int i);
+void	close_n_execute(t_cmd *cmd);
+void	fork_error(t_cmd *cmd);
+
 //from here_doc
 int		execute_hd(char *string);
 
@@ -150,6 +157,12 @@ void	child_process(t_cmd *cmd);
 char	*expand(char *str1);
 char	*expand_quote(char *str1);
 
+//from converter_utils
+void	check_merge_error(t_token *node);
+void	get_redirs_in(t_token *node, t_cmd *cmd);
+void	get_redirs_out(t_token *node, t_cmd *cmd);
+bool	has_fd_error(t_cmd *cmd);
+
 //from converter
 void	load_cmd_block(t_token **head);
 
@@ -175,9 +188,15 @@ void	destroy_token(t_token *node);
 t_token	*cut_token(t_token *node);
 t_token	*empty_token(t_token *node);
 
-//from tokenizer
+//from tokenizer_utils
 bool	is_in_expansion(char c);
-t_token	*create_token_list(char *line);
+int		find_redir_out(char *line, int i, t_token **head);
+int		find_redir_in(char *line, int i, t_token **head);
+int		find_quote(char *line, int i, t_token **head, char c);
+int		find_leftover(char *line, int i, t_token **head);
+
+//from tokenizer
+void	create_token_list(char *line, t_token **head);
 void	expand_token_list(t_token *head);
 t_token	*remove_empty_list(t_token *head);
 t_token	*merge_token_list(t_token *head);
@@ -194,6 +213,7 @@ void	free_cmd(t_cmd *cmd);
 void	free_cmd_block(void);
 
 // ===== FROM MAIN =====
+void	fatal_error(int err_id);
 int		is_line_empty(char *line);
 void	init_meta(void);
 

@@ -6,19 +6,11 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/15 14:19:37 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 13:27:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//checks if the given char is still inside an expansion
-bool	is_in_expansion(char c)
-{
-	if (ft_isalnum(c) || c == '_' || c == '?' || c == '!')
-		return (true);
-	return (false);
-}
 
 //checks if a given token type is mergable
 bool	is_mergeable(int type)
@@ -29,106 +21,33 @@ bool	is_mergeable(int type)
 }
 
 //converts the given input line in a raw token list
-t_token	*create_token_list(char *line)
+void	create_token_list(char *line, t_token **head)
 {
-	t_token	*head;
 	int		len;
 	int		i;
 
-	head = NULL;
 	i = -1;
 	while (line[++i])
 	{
 		len = 0;
 		while (ft_isspace(line[i]))
 			++i;
-
-		//deals with pipes
-		if (line[i] == '|')
-			add_token(new_token(NULL, -1, TTYPE_PIPE), &head);
-
-		//deals with output redirection
+		if (line[i] == '|') //deals with pipes
+			add_token(new_token(NULL, -1, TTYPE_PIPE), head);
 		else if (line[i] == '>')
-		{
-			if (line[i + 1] != '>')
-				add_token(new_token(NULL, -1, TTYPE_S_RDR_OUT), &head);
-			else
-			{
-				len++;
-				add_token(new_token(NULL, -1, TTYPE_D_RDR_OUT), &head);
-			}
-		}
-
-		//deals with input redirection
+			len += find_redir_out(line, i, head);
 		else if (line[i] == '<')
-		{
-			if (line[i + 1] != '<')
-				add_token(new_token(NULL, -1, TTYPE_REDIR_IN), &head);
-			else
-			{
-				len++;
-				add_token(new_token(NULL, -1, TTYPE_HEREDOC), &head);
-			}
-		}
-
-		//deals with single quotes
+			len += find_redir_in(line, i, head);
 		else if (line[i] == '\'')
-		{
-			len++;
-			while (line[i + len] && line[i + len] != '\'')
-				len++;
-			if (!line[i + len]) //makes us ignore the cmd line when unterminated quotes
-			{
-				throw_error(ERR_QUOTE);
-				g_meta->state = MSTATE_O_BRACK;
-				g_meta->exit_status = 2;
-			}
-			add_token(new_token(&line[i + 1], len - 2, TTYPE_S_QUOTE), &head);
-		}
-
-		//deals with double quotes
+			len += find_quote(line, i, head, '\'');
 		else if (line[i] == '\"')
-		{
-			len++;
-			while (line[i + len] && line[i + len] != '\"')
-				len++;
-			if (!line[i + len]) //makes us ignore the cmd line when unterminated quotes
-			{
-				throw_error(ERR_QUOTE);
-				g_meta->state = MSTATE_O_BRACK;
-				g_meta->exit_status = 2;
-			}
-			add_token(new_token(&line[i + 1], len - 2, TTYPE_D_QUOTE), &head);
-		}
-
-		//deals with expansions outside of ""
-		else if (line[i] == '$')
-		{
-			len++;
-			while (is_in_expansion(line[i + len]))
-				len++;
-			len--;
-			add_token(new_token(&line[i + 1], len - 1, TTYPE_EXPAND), &head);
-		}
-
-		//deals with normal cmds/args input
+			len += find_quote(line, i, head, '\"');
 		else
-		{
-			while (line[i + len] && !ft_isspace(line[i + len]) && !ft_strchr("|><\'\"$", line[i + len]))
-				len++;
-			len -= 1;
-			add_token(new_token(&line[i], len, TTYPE_NORMAL), &head);
-		}
-
-		//notes down if the token is potentially "tied" to the previous
-		if (head && (i == 0 || ft_isspace(line[i - 1])))
-			find_tail(head)->is_joined = false;
-		else
-			find_tail(head)->is_joined = true;
-
+			len += find_leftover(line, i, head);
+		if (*head && i > 0 && !ft_isspace(line[i - 1])) //notes if the current and previous tokens are joined
+			find_tail(*head)->is_joined = true;
 		i += len;
 	}
-	return (head);
 }
 
 //expands the expandable tokens in a given token list
@@ -169,8 +88,8 @@ t_token	*remove_empty_list(t_token *head)
 	{
 		if (node->type == TTYPE_EMPTY)
 		{
-			if (node->next)				//prevent false joins
-				if (!node->is_joined || !node->next->is_joined)
+			if (node->next)
+				if (!node->is_joined || !node->next->is_joined) //prevent false joins
 					node->next->is_joined = false;
 			node = cut_token(node);
 		}
@@ -196,7 +115,7 @@ t_token	*merge_token_list(t_token *head)
 		{
 			if (is_mergeable(node->type) && is_mergeable(node->next->type))
 			{
-				//printf(" - %s + %s\n", node->string, node->next->string); //DEBUG
+				//printf(" - %s + %s\n", node->string, node->next->string); 	//DEBUG
 				node = merge_tokens(node, node->next);
 				continue ;
 			}

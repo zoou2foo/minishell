@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 15:19:40 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:23:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 //our global var
 t_meta	*g_meta;
+
+void	fatal_error(int err_id)
+{
+	g_meta->state = err_id;
+	g_meta->exit_status = EXIT_FAILURE;
+	if (err_id == MSTATE_F_ERR)
+		throw_error(ERR_FORK);
+	else if (err_id == MSTATE_P_ERR)
+		throw_error(ERR_PIPE);
+	else
+		throw_error(ERR_ERR);
+}
 
 //checks if a given line contains either nothing or only space-like characters
 int	is_line_empty(char *line)

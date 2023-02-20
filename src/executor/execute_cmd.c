@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 08:35:00 by vjean            ###   ########.fr       */
+/*   Created: 2023/02/20 09:22:25 by vjean             #+#    #+#             */
+/*   Updated: 2023/02/20 09:41:32 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "minishell.h"
 
-// Take t_cmd to execute the cmd. Return nothing. EXECUTE: cd through chdir()
-void	change_dir(t_cmd *cmd)
+void	execute_fork(t_cmd *cmd, int i)
 {
-	if (cmd->argcount < 2)
+	if (g_meta->pid[i] == 0)
 	{
-		throw_error(ERR_ARG);
-		g_meta->exit_status = EXIT_FAILURE;
+		dup2(cmd->fdin, STDIN_FILENO);
+		dup2(cmd->fdout, STDOUT_FILENO);
+		child_process(cmd);
 	}
-	else if (cmd->argcount > 2)
-	{
-		throw_error(ERR_ARG3);
-		g_meta->exit_status = EXIT_FAILURE;
-	}
-	else if (chdir(cmd->cmd_args[1]) != 0)
-	{
-		throw_error(ERR_CD);
-		g_meta->exit_status = EXIT_FAILURE;
-	}
+}
+
+void	close_n_execute(t_cmd *cmd)
+{
+	close_fds(cmd);
+	execute_builtins(cmd);
+}
+
+void	fork_error(t_cmd *cmd)
+{
+	throw_error(ERR_FORK);
+	g_meta->state = MSTATE_ERROR;
+	g_meta->exit_status = EXIT_FAILURE;
+	close_fds(cmd);
 }

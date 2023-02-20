@@ -5,32 +5,11 @@ A good minishell tester: https://github.com/thallard/minishell_tester
 
 
 /*     NEED TO BE FIXED    */
-echo 2 >> out1 > out2: open fd 3=> out2 **besoin d'etre ferme.
-echo 2 > out1 >> out2: open fd 3=> out2 **besoin d'etre ferme.
-echo test > file test1: Open file descriptor 3: file
-echo > a Hello World!: Open file descriptor 3: a
-> a echo Hello World!: Open file descriptor 3: a
-echo bonjour > $test: Open file descriptor 3: ici=coucou
-echo coucou | ; => pipe ouvert. fd 3 et 4
-sleep 5 | exit => pipe ouvert. fd 3 et 4.
-> a ls > b < Makefile: Open file descriptor 4: /Users/vjean/Desktop/minishell/Makefile
-==5897==    <inherited from parent>
-==5897== 
-==5897== Open file descriptor 3: /Users/vjean/Desktop/minishell/b
-==5897==    <inherited from parent>
-cat < Makefile | grep gcc > output: Open fd 3 and 4.
-echo bonjour |; => ==7647== Open file descriptor 4:
-==7647==    at 0x100660A1A: pipe (in /usr/lib/system/libsystem_kernel.dylib)
-==7647==    by 0x100005780: load_cmd_block (converter.c:169)
-==7647==    by 0x100002FFE: minishell (main.c:214)
-==7647==    by 0x100003090: main (main.c:233)
-==7647== 
-==7647== Open file descriptor 3:
-==7647==    at 0x100660A1A: pipe (in /usr/lib/system/libsystem_kernel.dylib)
-==7647==    by 0x100005780: load_cmd_block (converter.c:169)
-==7647==    by 0x100002FFE: minishell (main.c:214)
-==7647==    by 0x100003090: main (main.c:233)
-bizarre: not_cmd bonjour > salut =>pas de open fd???
+sleep 5 | exit => open fd 3 et 4
+> a ls > b < Makefile: Open file descriptor 4 et 3
+cat < Makefile | grep gcc > output: Open fd 3, 4, 5 and 6
+
+
 
 echo "bip | bip ; coyotte > < " ": invalid read of size 1. (see below)
 ==6623==    at 0x100003D9B: create_token_list (tokenizer.c:40)
@@ -45,15 +24,6 @@ echo "bip | bip ; coyotte > < " ": invalid read of size 1. (see below)
 ==6623==    by 0x100002F93: minishell (main.c:208)
 ==6623==    by 0x100003090: main (main.c:233)
 
-WTF?? No idea... for cd by itself
-==6623== Syscall param chdir(path) points to unaddressable byte(s)
-==6623==    at 0x10065D30E: chdir (in /usr/lib/system/libsystem_kernel.dylib)
-==6623==    by 0x1000030BB: change_dir (cd.c:18)
-==6623==    by 0x10000636F: execute_builtins (utils_to_exec.c:45)
-==6623==    by 0x100005FB5: execute_cmd_block (pre_execution.c:92)
-==6623==    by 0x100003017: minishell (main.c:217)
-==6623==    by 0x100003090: main (main.c:233)
-==6623==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

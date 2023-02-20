@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 19:58:55 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/02/20 08:46:47 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,20 @@ void	echo_print(t_cmd *cmd, int i, int newline)
 	}
 }
 
+void	close_pipes(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_meta->pipes[i])
+	{
+		close(*g_meta->pipes[i]);
+		i++;
+	}
+}
+
 // Return NOTHING. Take t_cmd; the arguments following "echo" to be printed.
+// important to close fds and pipes at the very end
 void	do_echo(t_cmd *cmd)
 {
 	int	newline;
@@ -47,6 +60,7 @@ void	do_echo(t_cmd *cmd)
 	echo_print(cmd, i, newline);
 	if (newline)
 		printf("\n");
-	close_fds(cmd); //maybe need to close fds in 
+	close_fds(cmd);
+	close_pipes();
 	exit(EXIT_SUCCESS);
 }

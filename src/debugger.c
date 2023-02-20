@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugger.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/16 15:28:31 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 08:05:31 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,30 +108,30 @@ void	print_tab_env(void)
 
 
 //main() and minishell() for the tester
-void	minishell()
-{
-	if (!is_line_empty(g_meta->buf))
-	{
-		load_cmd_block(parse_line(g_meta->buf));
-		if (g_meta->state == MSTATE_NORMAL)
-			execute_cmd_block();
-		free_cmd_block();
-	}
-}
-int	main(int argc, char **argv)
-{
-	init_meta();
-	init_signals(1);
-	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-	{
-		g_meta->buf = argv[2];
-    	minishell();
-		exit(g_meta->exit_status);
-	}
+// void	minishell()
+// {
+// 	if (!is_line_empty(g_meta->buf))
+// 	{
+// 		load_cmd_block(parse_line(g_meta->buf));
+// 		if (g_meta->state == MSTATE_NORMAL)
+// 			execute_cmd_block();
+// 		free_cmd_block();
+// 	}
+// }
+// int	main(int argc, char **argv)
+// {
+// 	init_meta();
+// 	init_signals(1);
+// 	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+// 	{
+// 		g_meta->buf = argv[2];
+//     	minishell();
+// 		exit(g_meta->exit_status);
+// 	}
 
-	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
-	return (0);
-}
+// 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+// 	return (0);
+// }
 
 
 /*

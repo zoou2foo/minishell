@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:35:27 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:16:13 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ void	change_dir(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
 void	get_env(void);
 void	do_exit(t_cmd *cmd);
+void	close_pipes(void);
 void	do_export(t_cmd *cmd);
+int		find_var(char *str);
+bool	is_valid_name(char *str);
 void	get_pwd(void);
 void	do_unset(t_cmd *cmd);
 
@@ -135,6 +138,11 @@ bool	is_same(char *arg, char *str);		//general
 bool	is_built_in(char *cmd_arg);			//general
 void	execute_builtins(t_cmd *cmd);
 bool	built_ins_childable(t_cmd *cmd);
+
+//from execute_cmd
+void	execute_fork(t_cmd *cmd, int i);
+void	close_n_execute(t_cmd *cmd);
+void	fork_error(t_cmd *cmd);
 
 // ===== FROM PARSING =====
 

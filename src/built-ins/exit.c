@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:00:35 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:24:19 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	loop_on_args(char **args)
 
 // Return nothing. Take t_cmd. To look at the following argument to give the
 // correct exit status.
+//change for comparison with max string (?) 9223372036854775808; third if.
 void	do_exit(t_cmd *cmd)
 {
 	unsigned char	arg;
@@ -50,6 +51,6 @@ void	do_exit(t_cmd *cmd)
 		exit (arg);
 	}
 	throw_error(ERR_ARG3);
+	close_pipes();
 	exit (arg);
-
 }

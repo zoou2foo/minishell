@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:29:12 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:33:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ extern char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de
 
 enum e_ttype
 {
-	TTYPE_ERROR		= -1,
+	TTYPE_ERROR		= -1,	//generic failureerror
 	TTYPE_EMPTY		= 0,
 	TTYPE_NORMAL	= 1,	// _	(cmds/args)
 	TTYPE_S_QUOTE	= 2,	// '_'	(string without expansion)
@@ -42,6 +42,8 @@ enum e_ttype
 
 enum e_mstate
 {
+	MSTATE_F_ERR	= -3,	//fork() failure error
+	MSTATE_P_ERR	= -2,	//pipe() failure error
 	MSTATE_ERROR	= -1,	//closes minishell entirely
 	MSTATE_NORMAL	= 0,
 	MSTATE_O_BRACK	= 1,	//unended quotes
@@ -51,6 +53,7 @@ enum e_mstate
 };
 
 /*	ERROR MESSAGE	*/
+# define ERR_ERR	"Process Error : Error code not found\n"			//unencounterable under normal circumstances
 # define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"		//unencounterable under normal circumstances
 # define ERR_FORK	"Process Error : Couldn't fork() properly\n"		//unencounterable under normal circumstances
 # define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"		//unencounterable under normal circumstances
@@ -68,7 +71,6 @@ enum e_mstate
 # define ERR_QUOTE	"Input Error : Invalid quotation (unclosed)\n"
 # define ERR_TOKEN	"Input Error : Invalid token combination\n"
 # define ERR_AC		"Input Warning : Minishell does not accept arguments\n"
-
 
 typedef struct s_token
 {

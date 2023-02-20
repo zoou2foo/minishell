@@ -6,13 +6,25 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:28:20 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:33:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_meta	*g_meta; //our global var
+
+void	fatal_error(int err_id)
+{
+	g_meta->state = err_id;
+	g_meta->exit_status = EXIT_FAILURE;
+	if (err_id == MSTATE_F_ERR)
+		throw_error(ERR_FORK);
+	else if (err_id == MSTATE_P_ERR)
+		throw_error(ERR_PIPE);
+	else
+		throw_error(ERR_ERR);
+}
 
 //checks if a given line contains either nothing or only space-like characters
 int	is_line_empty(char *line)

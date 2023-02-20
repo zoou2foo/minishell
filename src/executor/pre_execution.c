@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 14:48:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:15:45 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	waitchild(void)
 		i++;
 	}
 }
-
 
 // Choses whether to execute a given cmd as a built_in or a sys_cmd
 // Exits with an error if the execution failed

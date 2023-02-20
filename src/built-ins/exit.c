@@ -6,38 +6,42 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:00:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:00:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	loop_on_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[1][i])
+	{
+		if ((args[1][i] >= '0' && args[1][i] <= '9')
+			|| (args[1][0] == '-' && i == 0)
+			|| (args[1][0] == '+' && i == 0))
+			i++;
+		else if (!(args[1][i] >= '0' && args[1][i] <= '9'))
+			exit (255);
+	}
+	return (ft_atoi(args[1]));
+}
 
 // Return nothing. Take t_cmd. To look at the following argument to give the
 // correct exit status.
 void	do_exit(t_cmd *cmd)
 {
 	unsigned char	arg;
-	int				i;
 
 	arg = 255;
 	if (cmd->argcount < 3)
 	{
 		if (cmd->cmd_args[1])
 		{
-			i = 0;
 			if (ft_strlen(cmd->cmd_args[1]) <= 10) //change for comparison with max string (?) 9223372036854775808
-			{
-				while (cmd->cmd_args[1][i])
-				{
-					if ((cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9')
-						|| (cmd->cmd_args[1][0] == '-' && i == 0)
-						|| (cmd->cmd_args[1][0] == '+' && i == 0))
-						i++;
-					else if (!(cmd->cmd_args[1][i] >= '0' && cmd->cmd_args[1][i] <= '9'))
-						exit (255);
-				}
-				arg = ft_atoi(cmd->cmd_args[1]);
-			}
+				arg = loop_on_args(cmd->cmd_args);
 			else
 				throw_error(ERR_ARG2);
 		}

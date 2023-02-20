@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:22:56 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:00:07 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	init_meta(void)
 		i++;
 	}
 }
-/* Main logic loop of minishell. It initialises g_meta and signals and every 
+/* Main logic loop of minishell. It initialises g_meta and signals and every
 cycle, it:
 |- reads the inputed line
 |- checks if said line empty

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:16:13 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:03:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,16 @@ void	do_unset(t_cmd *cmd);
 
 // ===== FROM EXECUTOR =====
 
+//from execute_cmd
+void	execute_fork(t_cmd *cmd, int i);
+void	close_n_execute(t_cmd *cmd);
+void	fork_error(t_cmd *cmd);
+
 //from here_doc
 int		execute_hd(char *string);
 
 //from pre_execution
+void	child_process(t_cmd *cmd);
 void	close_fds(t_cmd *cmd);				//general?
 void	execute_cmd_block(void);
 
@@ -139,16 +145,17 @@ bool	is_built_in(char *cmd_arg);			//general
 void	execute_builtins(t_cmd *cmd);
 bool	built_ins_childable(t_cmd *cmd);
 
-//from execute_cmd
-void	execute_fork(t_cmd *cmd, int i);
-void	close_n_execute(t_cmd *cmd);
-void	fork_error(t_cmd *cmd);
-
 // ===== FROM PARSING =====
 
 //from expander
 char	*expand(char *str1);
 char	*expand_quote(char *str1);
+
+//from converter_utils
+void	check_merge_error(t_token *node);
+void	get_redirs_in(t_token *node, t_cmd *cmd);
+void	get_redirs_out(t_token *node, t_cmd *cmd);
+bool	has_fd_error(t_cmd *cmd);
 
 //from converter
 void	load_cmd_block(t_token **head);
@@ -175,9 +182,15 @@ void	destroy_token(t_token *node);
 t_token	*cut_token(t_token *node);
 t_token	*empty_token(t_token *node);
 
-//from tokenizer
+//from tokenizer_utils
 bool	is_in_expansion(char c);
-t_token	*create_token_list(char *line);
+int		find_redir_out(char *line, int i, t_token **head);
+int		find_redir_in(char *line, int i, t_token **head);
+int		find_quote(char *line, int i, t_token **head, char c);
+int		find_leftover(char *line, int i, t_token **head);
+
+//from tokenizer
+void	create_token_list(char *line, t_token **head);
 void	expand_token_list(t_token *head);
 t_token	*remove_empty_list(t_token *head);
 t_token	*merge_token_list(t_token *head);

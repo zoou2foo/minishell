@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:10:22 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:33:35 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ bool	built_ins_childable(t_cmd *cmd);
 void	execute_fork(t_cmd *cmd, int i);
 void	close_n_execute(t_cmd *cmd);
 void	fork_error(t_cmd *cmd);
+void	child_process(t_cmd *cmd);
 
 // ===== FROM PARSING =====
 

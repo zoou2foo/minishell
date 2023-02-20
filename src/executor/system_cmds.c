@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:48:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 14:09:38 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	exec_with_paths(t_cmd *cmd)
 	{
 		if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
+		//close_fds(cmd);
 		fill_path_tab();
 		if (g_meta->paths[0])
 		{
@@ -92,4 +93,5 @@ void	exec_with_paths(t_cmd *cmd)
 	}
 	throw_error(ERR_ENV);
 	g_meta->exit_status = 127;
+	//close_fds(cmd);
 }

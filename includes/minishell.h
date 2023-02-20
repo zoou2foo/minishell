@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 09:42:30 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:10:22 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,12 @@ void	change_dir(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
 void	get_env(void);
 void	do_exit(t_cmd *cmd);
-void	do_export(t_cmd *cmd);
-void	get_pwd(void);
-void	do_unset(t_cmd *cmd);
 void	close_pipes(void);
+void	do_export(t_cmd *cmd);
 int		find_var(char *str);
 bool	is_valid_name(char *str);
+void	get_pwd(void);
+void	do_unset(t_cmd *cmd);
 
 // ===== FROM EXECUTOR =====
 
@@ -125,8 +125,6 @@ int		execute_hd(char *string);
 //from pre_execution
 void	close_fds(t_cmd *cmd);				//general?
 void	execute_cmd_block(void);
-int		cmd_fork(void);
-void	child_process(t_cmd *cmd);
 
 //from system_cmds
 void	throw_error(char *str);				//general

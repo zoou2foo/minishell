@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:27:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:39:45 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,11 @@ void	load_cmd_block(t_token **head)
 		g_meta->cmd_nb = i;
 
 		i = -1;
-		while (++i < g_meta->cmd_nb - 1)	//creates potentially needed pipes
+		while (++i < g_meta->cmd_nb - 1) //creates potentially needed pipes
 		{
 			g_meta->pipes[i] = ft_calloc(2, sizeof(int));
 			pipe(g_meta->pipes[i]);
+			//check for pipe errors here
 		}
 
 		//actual token conversion loop

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 14:24:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:43:57 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ int	execute_hd(char *string)
 
 	if (pipe(pipe_hd) < 0)
 	{
-		throw_error(ERR_PIPE);
+		fatal_error(MSTATE_P_ERR);
 		ft_free_null(string);
-		g_meta->state = MSTATE_ERROR;
-		g_meta->exit_status = EXIT_FAILURE;
 		return (-1);
 	}
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);
@@ -69,10 +67,8 @@ int	execute_hd(char *string)
 	pid_hd = fork();
 	if (pid_hd < 0)
 	{
-		throw_error(ERR_FORK);
+		fatal_error(MSTATE_F_ERR);
 		ft_free_null(string);
-		g_meta->state = MSTATE_ERROR;
-		g_meta->exit_status = EXIT_FAILURE;
 		return (-1);
 	}
 	if (pid_hd == 0)

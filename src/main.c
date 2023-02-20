@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:33:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:51:53 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init_meta(void)
 		i++;
 	}
 }
+
 /* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
 |- reads the inputed line
 |- checks if said line empty
@@ -68,7 +69,6 @@ void	init_meta(void)
 Once the loop is over, it;
 |- clears the history
 |- frees all the leftover data */
-/*
 void	minishell(void)
 {
 	init_meta();
@@ -104,4 +104,3 @@ int	main(int ac, char **av)
 
 	return (EXIT_FAILURE);
 }
-*/

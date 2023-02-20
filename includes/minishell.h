@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:33:09 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 10:35:27 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void	free_cmd(t_cmd *cmd);
 void	free_cmd_block(void);
 
 // ===== FROM MAIN =====
+void	fatal_error(int err_id);
 int		is_line_empty(char *line);
 void	init_meta(void);
 

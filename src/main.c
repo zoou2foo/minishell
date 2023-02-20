@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 15:00:07 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:05:50 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ cycle, it:
 Once the loop is over, it;
 |- clears the history
 |- frees all the leftover data */
-
+/*
 //if(!g_meta->buf) //to make ctrl-D not segfault(if buffer == NULL)
 void	minishell(void)
 {
@@ -108,3 +108,4 @@ int	main(int ac, char **av)
 
 	return (EXIT_FAILURE);
 }
+*/

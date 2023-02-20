@@ -93,6 +93,7 @@ FILES	=	main \
 			parsing/token_maker \
 			parsing/token_remover \
 			parsing/parser \
+			parsing/tokenizer_utils \
 			parsing/tokenizer \
 			signals/signals
 

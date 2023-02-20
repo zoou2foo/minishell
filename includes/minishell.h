@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:46:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 13:27:50 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,9 +173,15 @@ void	destroy_token(t_token *node);
 t_token	*cut_token(t_token *node);
 t_token	*empty_token(t_token *node);
 
-//from tokenizer
+//from tokenizer_utils
 bool	is_in_expansion(char c);
-t_token	*create_token_list(char *line);
+int		find_redir_out(char *line, int i, t_token **head);
+int		find_redir_in(char *line, int i, t_token **head);
+int		find_quote(char *line, int i, t_token **head, char c);
+int		find_leftover(char *line, int i, t_token **head);
+
+//from tokenizer_utils
+void	create_token_list(char *line, t_token **head);
 void	expand_token_list(t_token *head);
 t_token	*remove_empty_list(t_token *head);
 t_token	*merge_token_list(t_token *head);

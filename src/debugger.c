@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/20 10:45:39 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:47:21 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	print_tab_env(void)
 	}
 	printf("\n");
 }
-/*
+
 //main() and minishell() for the tester
 void	minishell(void)
 {
@@ -132,7 +132,7 @@ int	main(int argc, char **argv)
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 	return (0);
 }
-*/
+
 /*
 int	main(void)
 {

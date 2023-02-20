@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:35:27 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/20 11:46:08 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,12 @@ bool	built_ins_childable(t_cmd *cmd);
 //from expander
 char	*expand(char *str1);
 char	*expand_quote(char *str1);
+
+//from converter_utils
+void	check_merge_error(t_token *node);
+void	get_redirs_in(t_token *node, t_cmd *cmd);
+void	get_redirs_out(t_token *node, t_cmd *cmd);
+bool	has_fd_error(t_cmd *cmd);
 
 //from converter
 void	load_cmd_block(t_token **head);

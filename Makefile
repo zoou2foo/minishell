@@ -86,6 +86,7 @@ FILES	=	main \
 			executor/pre_execution \
 			executor/system_cmds \
 			executor/utils_to_exec \
+			parsing/converter_utils \
 			parsing/converter \
 			parsing/expander \
 			parsing/token_finder \

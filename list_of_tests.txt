@@ -9,7 +9,9 @@ sleep 5 | exit => open fd 3 et 4
 > a ls > b < Makefile: Open file descriptor 4 et 3
 cat < Makefile | grep gcc > output: Open fd 3, 4, 5 and 6
 
-
+a verifier ce qui est en-dessous
+cat << eof | cat << eof | cat << eof: leaks
+cat << eof << eof << eof: leaks
 
 echo "bip | bip ; coyotte > < " ": invalid read of size 1. (see below)
 ==6623==    at 0x100003D9B: create_token_list (tokenizer.c:40)

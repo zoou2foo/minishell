@@ -6,13 +6,14 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:47:41 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:09:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_meta	*g_meta; //our global var
+//our global var
+t_meta	*g_meta;
 
 void	fatal_error(int err_id)
 {
@@ -38,7 +39,8 @@ int	is_line_empty(char *line)
 	return (1);
 }
 
-//allocates memory for and fills the global g_meta var with default values (for env and path)
+//allocates memory for and fills the global g_meta var with default values
+//(for env and path)
 void	init_meta(void)
 {
 	int	i;
@@ -77,7 +79,7 @@ void	minishell(void)
 	{
 		g_meta->state = MSTATE_NORMAL;
 		g_meta->buf = readline("MNSH :) ");
-		if (!g_meta->buf) //to make ctrl-D not segfault (if buffer == null)
+		if (!g_meta->buf)
 			break ;
 		if (!is_line_empty(g_meta->buf))
 		{

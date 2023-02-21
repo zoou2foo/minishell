@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 13:54:49 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 12:41:40 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	execute_builtins(t_cmd *cmd)
 {
 	char	*arg;
 
+	close_fds(cmd);
 	arg = cmd->cmd_args[0];
 	if (is_same(arg, "cd"))
 		change_dir(cmd);

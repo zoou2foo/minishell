@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:23:35 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 11:53:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,22 @@ void	free_path_tab(void)
 	ft_free_null(g_meta->paths);
 }
 
+void	check_cmd_path(int i, t_cmd *cmd)
+{
+	char	*cmd_path;
+
+	cmd_path = ft_strjoin(g_meta->paths[i], cmd->cmd_args[0]);
+	if (!access(cmd_path, F_OK | X_OK))
+		g_meta->exit_status = execve(cmd_path, cmd->cmd_args, g_meta->env);
+	ft_free_null(cmd_path);
+}
+
 // Checks if a given cmd exists and is executable, then execute it
 // Execve automatically exit() when used
 // call one time fill_path_tab here, instead of everywhere
 // after execve(); need to free g_meta->paths right away, not at the very end
 void	exec_with_paths(t_cmd *cmd)
 {
-	char	*cmd_path;
 	int		i;
 
 	if (g_meta->env)
@@ -73,12 +82,7 @@ void	exec_with_paths(t_cmd *cmd)
 		{
 			i = -1;
 			while (g_meta->paths[++i])
-			{
-				cmd_path = ft_strjoin(g_meta->paths[i], cmd->cmd_args[0]);
-				if (!access(cmd_path, F_OK | X_OK))
-					g_meta->exit_status = execve(cmd_path, cmd->cmd_args, g_meta->env);
-				ft_free_null(cmd_path);
-			}
+				check_cmd_path(i, cmd);
 			throw_error(ERR_CMD);
 			g_meta->exit_status = 127;
 			free_path_tab();

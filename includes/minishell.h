@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 13:27:50 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:05:43 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,22 @@ void	change_dir(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
 void	get_env(void);
 void	do_exit(t_cmd *cmd);
+void	close_pipes(void);
 void	do_export(t_cmd *cmd);
+int		find_var(char *str);
+bool	is_valid_name(char *str);
 void	get_pwd(void);
 void	do_unset(t_cmd *cmd);
 
 // ===== FROM EXECUTOR =====
 
+//from execute_cmd
+
 //from here_doc
 int		execute_hd(char *string);
 
 //from pre_execution
+void	child_process(t_cmd *cmd);
 void	close_fds(t_cmd *cmd);				//general?
 void	execute_cmd_block(void);
 

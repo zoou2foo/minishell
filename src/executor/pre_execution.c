@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:44:16 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:05:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,18 @@ void	waitchild(void)
 // else: this will set the value in the parent's g_meta->exit_status
 void	child_process(t_cmd *cmd)
 {
+	dup2(cmd->fdin, STDIN_FILENO);
+	dup2(cmd->fdout, STDOUT_FILENO);
 	if (cmd->is_built_in)
 	{
 		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		close_fds(cmd);
-		//built_ins should have exited themselves
-		//TODO : handle error
 	}
 	else
 	{
 		exec_with_paths(cmd);
 		close_fds(cmd);
 		exit(g_meta->exit_status); //this will set the value in the parent's g_meta->exit_status
-		//TODO : handle error
 	}
 	throw_error(ERR_EXIT);
 	exit(EXIT_FAILURE);
@@ -91,6 +90,7 @@ void	child_process(t_cmd *cmd)
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need
 //to fork()
+//g_meta->exit_status at beginning set to EXIT_SUCCESS as default
 // Then either execute the cmd or passes it to a child process
 //if => //calls non-childable functions directly
 //else if => calls export directly IF its has args
@@ -101,7 +101,7 @@ void	execute_cmd_block(void)
 	t_cmd	*cmd;
 
 	i = -1;
-	g_meta->exit_status = EXIT_SUCCESS; //sets success as default case
+	g_meta->exit_status = EXIT_SUCCESS;
 	g_meta->pid = ft_calloc(sizeof(int), g_meta->cmd_nb);
 	while (++i < g_meta->cmd_nb)
 	{
@@ -109,15 +109,9 @@ void	execute_cmd_block(void)
 		if (cmd->argcount > 0)
 		{
 			if (!built_ins_childable(cmd)) //calls non-childable functions directly
-			{
-				close_fds(cmd);
 				execute_builtins(cmd);
-			}
 			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))
-			{
-				close_fds(cmd);
 				execute_builtins(cmd);
-			}
 			else
 			{
 				g_meta->pid[i] = cmd_fork();
@@ -125,19 +119,15 @@ void	execute_cmd_block(void)
 				if (g_meta->pid[i] < 0) //if fork error
 				{
 					fatal_error(MSTATE_F_ERR);
-					close_fds(cmd);
 					break ;
 				}
 				if (g_meta->pid[i] == 0)
-				{
-					dup2(cmd->fdin, STDIN_FILENO);
-					dup2(cmd->fdout, STDOUT_FILENO);
 					child_process(cmd);
-				}
 				close_fds(cmd);
 				waitchild();
 			}
 		}
 	}
+	close_fds(cmd);
 	init_signals(1);
 }

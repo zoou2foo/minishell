@@ -82,6 +82,8 @@ FILES	=	main \
 			built-ins/export \
 			built-ins/pwd \
 			built-ins/unset \
+			built-ins/utils_export \
+			executor/execute_cmd \
 			executor/here_doc \
 			executor/pre_execution \
 			executor/system_cmds \

@@ -5,9 +5,9 @@ A good minishell tester: https://github.com/thallard/minishell_tester
 
 
 /*     NEED TO BE FIXED    */
-sleep 5 | exit => open fd 3 et 4
-> a ls > b < Makefile: Open file descriptor 4 et 3
-cat < Makefile | grep gcc > output: Open fd 3, 4, 5 and 6
+sleep 5 | exit => open fd 3 et 4. FIXED. Need to double check at school
+> a ls > b < Makefile: Open file descriptor 4 et 3 FIXED. Need to double check at school.
+cat < Makefile | grep gcc > output: Open fd 3, 4, 5 and 6 FIXED. Need to double check at school
 
 a verifier ce qui est en-dessous
 cat << eof | cat << eof | cat << eof: leaks

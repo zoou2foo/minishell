@@ -1,0 +1,201 @@
+Notes:
+
+------------------------------------------------------------------------------
+
+/*      TO FIX or CHECK     */
+
+exit 42 42 -> exit our minishell; error 255. Bash= 1
+exit --000 ->our minishell 255. Bash: 0 
+exit 0 0 ->our minishell: 255. Bash: 1
+exit 42 42 42 42 42 ->our minishell 255. Bash: 1
+
+CD:
+cd // ->ramène à root, mais bash: //??? Même place quand je fais ls...
+cd '//' ->même résultat que sans single quote
+cd '/////' 2>/dev/null  ->ou minishell error; too many agrs. BASH: retourne a root
+
+ECHO:
+echo $USER $123456789USER $USER123456789 ->our minishell: valeriejean. BASH: valeriejean 23456789USER
+echo $USER $9999USER $8888USER $7777USER ->our minishell: valeriejean. BASH: valeriejean 999USER 888USER 777USER
+echo "$9USER" "'$USER=12$SOMETHING'" ->our minishell:  'valeriejean=12' BASH: USER 'valeriejean=12'
+
+EXPORT:
+export 1TEST= ->NOT same. Our minishell: creates the var. BASH: 1TEST= not a valid identifier
+
+
+export export
+export echo
+export pwd
+export cd
+export export
+export unset
+export sudo
+export TES^T=123
+export TES!T=123
+export TES\~T=123
+export TEST+=100
+
+
+'
+-----------------------------------------------------------------------------
+/*      CHECKED and ALL GOOD        */
+env | grep "_=" ->pas la même info, mais c'est bien un truc avec _=.'
+exit 42 -> exit well with 42.
+exit 259 -> exit 3 same as bash
+exit --1239312 -> same behavior as bash
+exit +0 ->same behavior as bash
+exit -----0 ->same behavior as bash
+exit kewkwqke ->same as bash
+exit z  -> same as bash
+exit "2" -> same
+exit "1230" ->same
+exit "1"23  ->same
+exit "'42'" ->same
+exit +'42'"42"42 ->same
+exit 9223372036854775807 ->same exit code
+exit -4 ->same
+exit wrong_command ->same
+exit 1 ->same
+exit 42 ->same
+exit ++++3193912939 ->same
+exit "something" ->same
+exit help ->same
+exit echo ->same
+exit exit ->same
+
+CD:
+cd -> ON NE GÈRE PAS!
+cd .. ->same
+cd . ->same
+cd /Users ->same
+cd //////  ->same
+cd ./././ ->same
+cd / ->same
+cd '/etc' ->same
+cd '/var' ->same
+cd "$PWD/file_tests" ->same
+cd "doesntexist" ->same
+cd "doesntexist" 2>/dev/null ->same
+cd ../../.. ->same
+cd "wtf" 2>/dev/null ->same
+cd .. ->same
+cd ? ->same
+cd + ->
+cd _ ->same
+cd woof ->same
+cd bark bark ->same
+cd '/' ->same
+cd $PWD/file_tests ->same
+cd $OLDPWD/something ->same
+echo ->same
+echo echo ->same
+eCho ->same
+eChO ->same
+eCHO ->same
+ECHO ->same
+echo rhobebou ->same
+echo stop barking ->same
+echo "bonjour" ->same
+echo bonjour ->same
+echo 'bonjour' ->same
+echo -n bonjour ->same
+echo -nn bonjour ->same
+echo -n -n -n bonjour ->different but we can defend it
+echo -n -n -n bonjour ->different but we can defend it
+echo "-n" bonjour ->same
+echo -n"-n" bonjour ->same
+echo "-nnnn" bonjour ->same
+echo "-n -n -n"-n bonjour ->same
+echo "-n '-n'" bonjour ->same
+echo ~ ->PAS BESOIN DE GÉRER!!!
+echo "~" ->same
+echo '~' ->same
+echo ~123 ->same
+echo 123~ ->same
+echo ~/123 -> DIFFERENT BUT NO NEED TO DEAL WITH IT. NOT ASKED
+echo ~/123/456 -> DIFFERENT BUT NO NEED TO DEAL WITH IT. NOT ASKED
+echo $USER ->same
+echo "$USER" ->same
+echo "'$USER'" ->same
+echo " '$USER' " ->same
+echo text"$USER" ->same
+echo text"'$USER'" ' $USER ' ->same
+echo "text"   "$USER"    "$USER" ->same
+echo '              $USER          ' ->same
+echo               text "$USER"            "$USER"text ->same
+echo ''''''''''$USER'''''''''' ->same
+echo """"""""$USER"""""""" ->same
+echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' ->same
+echo $USER '' $USER $USER '' $USER '' $USER -n $USER
+echo ' \' ' \'
+echo '\" ' " \"\"" ->NOT SAME BUT NOT ASKED TO DEAL WITH BACKSLASH
+echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' ->NOT SAME BUT NOT ASKED TO DEAL WITH BACK SLASH
+echo "$USER""$USER""$USER" ->same
+echo text"$USER"test ->same
+echo '$USER' "$USER" "text \' text" ->same
+echo '$USER' ->same
+echo $USER " " ->same
+echo "$USER""Users/$USER/file""'$USER'"'$USER' ->same
+echo "$USER$USER$USER" ->same
+echo '$USER'"$USER"'$USER' ->same
+echo '"$USER"''$USER'"""$USER" ->same
+echo " $USER  "'$PWD' ->same
+echo " $USER  \$ "'$PWD' ->DIFFERENT because of BACKSLASH
+echo $USER=4 ->same
+echo $USER=thallard ->same
+echo $USER ->same
+echo $? ->same
+echo $USER213 ->same
+echo $USER$12USER$USER=4$USER12 ->same
+echo $USER $USER9999 $USER8888 $USER7777 ->same
+echo $USER $USER9999 $USER8888 $USER7777 "$USER" ->same
+echo "$USER=12$USER" ->same
+echo $PWD/file ->same
+echo "$PWD/file" ->same
+echo "text" "text$USER" ... "$USER" ->same
+echo $PWD ->same
+'
+EXPORT:
+export | grep "SHLVL" ->same
+export | grep "OLDPWD" ->same
+export | grep "PWD" ->same
+export $? ->same
+export TEST ->same
+export TEST= ->same
+export TEST=123 ->same
+export ___TEST=123 ->same
+export --TEST=123 ->same
+export ""="" ->same
+export ''='' ->same
+export "="="=" ->same
+export '='='=' ->same
+export TE\\\ST=100 ->same
+export TE-ST=100 ->same
+export -TEST=100 ->same
+export TEST-=100 ->same
+export _TEST=100 ->same
+export TES=T="" ->same
+export TE+S=T="" ->same
+export TES\\\\T=123 ->same
+export TES.T=123 ->same
+export TES\\\$T=123 ->same
+export TES\\\\T ->same
+export TES.T=123 ->same
+export TES+T=123 ->same
+export TES=T=123 ->same
+export TES}T=123 ->same
+export TES{T=123 ->same
+export TES-T=123 ->same
+export -TEST=123 ->same
+export ========== ->same
+export _TEST=123 ->same
+export TES_T=123 ->same
+export TEST_=123 ->same
+export TE*ST=123 ->same
+export TES#T=123 ->same
+export TES@T=123 ->same
+export TES!T=123 ->same
+export TES$?T=123 ->same
+export =============123 ->same
+export +++++++=123 ->same
+export ________=123 ->same

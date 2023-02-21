@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 16:30:42 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 07:58:43 by valeriejean      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	check_cmd_path(int i, t_cmd *cmd)
 	cmd_path = ft_strjoin(g_meta->paths[i], cmd->cmd_args[0]);
 	if (!access(cmd_path, F_OK | X_OK))
 	{
-		if (cmd->fdin > 0)
-				close(cmd->fdin);
-			if (cmd->fdout > 0)
-				close(cmd->fdout);
+		// if (cmd->fdin > 0) //need to do a check up here too
+		// 	close(cmd->fdin);
+		// if (cmd->fdout > 0)
+		// 	close(cmd->fdout);
 		g_meta->exit_status = execve(cmd_path, cmd->cmd_args,
 				g_meta->env);
 	}
@@ -84,15 +84,12 @@ void	exec_with_paths(t_cmd *cmd)
 	{
 		if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 		{
-			if (cmd->fdin > 0)
+			if (cmd->fdin > 0) //need to do a check on fd
 				close(cmd->fdin);
 			if (cmd->fdout > 0)
 				close(cmd->fdout);
 			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
 		}
-		// if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
-		// 	execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
-		//close_fds(cmd);
 		fill_path_tab();
 		if (g_meta->paths[0])
 		{

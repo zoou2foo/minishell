@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/21 13:13:49 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:29:15 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,12 @@ void	print_tab_env(void)
 	printf("\n");
 }
 
-//main() and minishell() for the tester
-void	minishell(void)
+int	minitest(char **av)
 {
+	init_meta();
+	init_signals(1);
+
+	g_meta->buf = av[2];
 	if (!is_line_empty(g_meta->buf))
 	{
 		load_cmd_block(parse_line(g_meta->buf));
@@ -116,21 +119,10 @@ void	minishell(void)
 			execute_cmd_block();
 		free_cmd_block();
 	}
-}
+	exit(g_meta->exit_status);
 
-int	main(int argc, char **argv)
-{
-	init_meta();
-	init_signals(1);
-	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-	{
-		g_meta->buf = argv[2];
-		minishell();
-		exit(g_meta->exit_status);
-	}
-
-	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
-	return (0);
+	ft_free_null(g_meta);
+	return (EXIT_FAILURE);
 }
 
 /*

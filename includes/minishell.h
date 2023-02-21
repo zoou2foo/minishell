@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 15:19:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 12:36:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void	do_unset(t_cmd *cmd);
 
 // ===== FROM EXECUTOR =====
 
+//from execute_cmd
+
 //from here_doc
 int		execute_hd(char *string);
 
@@ -137,11 +139,6 @@ bool	is_same(char *arg, char *str);		//general
 bool	is_built_in(char *cmd_arg);			//general
 void	execute_builtins(t_cmd *cmd);
 bool	built_ins_childable(t_cmd *cmd);
-
-//from execute_cmd
-void	execute_fork(t_cmd *cmd, int i);
-void	close_n_execute(t_cmd *cmd);
-void	fork_error(t_cmd *cmd);
 
 // ===== FROM PARSING =====
 

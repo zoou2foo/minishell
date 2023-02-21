@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 08:53:17 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 12:49:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //to check the args following exit; to shorten exit.
-void	check_args_4_exit(t_cmd *cmd, int i)
+void	check_args_4_exit(t_cmd *cmd)
 {
-	while (cmd->cmd_args[1][i])
+	int	i;
+
+	i = 0;
+	while (cmd->cmd_args[1][++i])
 	{
-		if ((cmd->cmd_args[1][i] >= '0'
-			&& cmd->cmd_args[1][i] <= '9')
-			|| (cmd->cmd_args[1][0] == '-' && i == 0)
-			|| (cmd->cmd_args[1][0] == '+' && i == 0))
-			i++;
-		else if (!(cmd->cmd_args[1][i] >= '0'
-			&& cmd->cmd_args[1][i] <= '9'))
-			exit (255);
+		if ((i > 10 || (cmd->cmd_args[1][i] >= '0'
+				&& cmd->cmd_args[1][i] <= '9')))
+		{
+			if (i != 0 || ((cmd->cmd_args[1][i] != '-')
+				&& (cmd->cmd_args[1][i] != '+')))
+			{
+				throw_error(ERR_ARG2);
+				exit (255);
+			}
+		}
 	}
 }
 
@@ -34,27 +39,19 @@ void	check_args_4_exit(t_cmd *cmd, int i)
 void	do_exit(t_cmd *cmd)
 {
 	unsigned char	arg;
-	int				i;
 
-	arg = 255;
+	close_pipes();
 	if (cmd->argcount < 3)
 	{
 		if (cmd->cmd_args[1])
 		{
-			i = 0;
-			if (ft_strlen(cmd->cmd_args[1]) <= 10)
-			{
-				check_args_4_exit(cmd, i);
-				arg = ft_atoi(cmd->cmd_args[1]);
-			}
-			else
-				throw_error(ERR_ARG2);
+			check_args_4_exit(cmd);
+			arg = ft_atoi(cmd->cmd_args[1]);
 		}
 		else
 			arg = g_meta->exit_status;
 		exit (arg);
 	}
 	throw_error(ERR_ARG3);
-	close_pipes();
-	exit (arg);
+	exit (255);
 }

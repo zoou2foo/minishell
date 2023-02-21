@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:48:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 11:53:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	check_cmd_path(int i, t_cmd *cmd)
 
 	cmd_path = ft_strjoin(g_meta->paths[i], cmd->cmd_args[0]);
 	if (!access(cmd_path, F_OK | X_OK))
-		g_meta->exit_status = execve(cmd_path, cmd->cmd_args,
-				g_meta->env);
+		g_meta->exit_status = execve(cmd_path, cmd->cmd_args, g_meta->env);
 	ft_free_null(cmd_path);
 }
 

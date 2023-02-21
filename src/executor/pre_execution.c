@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 10:56:00 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 12:49:22 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,18 @@ void	waitchild(void)
 // else: this will set the value in the parent's g_meta->exit_status
 void	child_process(t_cmd *cmd)
 {
+	dup2(cmd->fdin, STDIN_FILENO);
+	dup2(cmd->fdout, STDOUT_FILENO);
 	if (cmd->is_built_in)
 	{
 		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 		close_fds(cmd);
-		//built_ins should have exited themselves
-		//TODO : handle error
 	}
 	else
 	{
 		exec_with_paths(cmd);
 		close_fds(cmd);
 		exit(g_meta->exit_status); //this will set the value in the parent's g_meta->exit_status
-		//TODO : handle error
 	}
 	throw_error(ERR_EXIT);
 	exit(EXIT_FAILURE);
@@ -112,9 +111,9 @@ void	execute_cmd_block(void)
 		if (cmd->argcount > 0)
 		{
 			if (!built_ins_childable(cmd)) //calls non-childable functions directly
-				close_n_execute(cmd);
+				execute_builtins(cmd);
 			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))
-				close_n_execute(cmd);
+				execute_builtins(cmd);
 			else
 			{
 				g_meta->pid[i] = cmd_fork();
@@ -124,15 +123,15 @@ void	execute_cmd_block(void)
 					throw_error(ERR_FORK);
 					g_meta->state = MSTATE_ERROR;
 					g_meta->exit_status = EXIT_FAILURE;
-					close_fds(cmd);
 					break ;
 				}
 				if (g_meta->pid[i] == 0)
-					execute_fork(cmd, i);
+					child_process(cmd);
+				close_fds(cmd);
+				waitchild();
 			}
-			close_fds(cmd);
-			waitchild();
 		}
 	}
+	close_fds(cmd);
 	init_signals(1);
 }

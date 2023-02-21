@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:29:37 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:52:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	execute_cmd_block(void)
 			else if (try_fork(cmd, i))
 				break ;
 		}
+		close_fds(cmd);
 	}
 	init_signals(1);
 }

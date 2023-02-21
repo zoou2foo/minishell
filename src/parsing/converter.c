@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 14:48:06 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:04:40 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	*head = merge_mergeables(*head);
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
-	cmd->fdin = 0;		//set default fd to use later
-	cmd->fdout = 1;		//set default fd to use later
-	cmd->id = id;		//sets the id of the
+	cmd->fdin = 0;
+	cmd->fdout = 1;
+	cmd->id = id;
 
 	*head = get_redirs(*head, cmd);
 
@@ -127,6 +127,6 @@ void	load_cmd_block(t_token **head)
 		//actual token conversion loop
 		i = -1;
 		while (head[++i])
-			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i);
+			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i); //assign to a temp to avoid hd issues with fds?
 	}
 }

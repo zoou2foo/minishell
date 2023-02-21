@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:30:23 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:08:52 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	check_exit_args(char **args)
 				&& (args[1][i] != '+')))
 			{
 				throw_error(ERR_ARG2);
+				free_cmd_block();
 				exit (255);
 			}
 		}
@@ -38,7 +39,7 @@ void	do_exit(t_cmd *cmd)
 {
 	unsigned char	arg;
 
-	close_pipes();
+	close_all();
 	if (cmd->argcount < 3)
 	{
 		if (cmd->cmd_args[1])
@@ -48,8 +49,10 @@ void	do_exit(t_cmd *cmd)
 		}
 		else
 			arg = g_meta->exit_status;
+		free_cmd_block();
 		exit (arg);
 	}
 	throw_error(ERR_ARG3);
+	free_cmd_block();
 	exit (255);
 }

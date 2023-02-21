@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:43:56 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 14:42:48 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,27 +121,27 @@ void	do_unset(t_cmd *cmd);
 
 // ===== FROM EXECUTOR =====
 
-//from execute_cmd
+//from builtins_cmds
+bool	is_built_in(char *cmd_arg);
+void	execute_builtins(t_cmd *cmd);
+bool	built_ins_childable(t_cmd *cmd);
+
+//from execution_utils
+void	close_fds(t_cmd *cmd);
+void	close_all(void);
+void	throw_error(char *str);
+bool	is_same(char *arg, char *str);
+
+//from execution
+void	child_process(t_cmd *cmd);
+void	execute_cmd_block(void);
 
 //from here_doc
 int		execute_hd(char *string);
 
-//from pre_execution
-void	child_process(t_cmd *cmd);
-void	close_fds(t_cmd *cmd);				//general?
-void	execute_cmd_block(void);
-
-//from system_cmds
-void	throw_error(char *str);				//general
+//from path_cmds
 void	fill_path_tab(void);
 void	exec_with_paths(t_cmd *cmd);
-
-//from utiles_to_exec
-bool	is_same(char *arg, char *str);		//general
-bool	is_built_in(char *cmd_arg);			//general
-void	execute_builtins(t_cmd *cmd);
-bool	built_ins_childable(t_cmd *cmd);
-void	check_fds(t_cmd *cmd);
 
 // ===== FROM PARSING =====
 

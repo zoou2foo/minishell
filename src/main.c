@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:43:50 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:29:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,8 @@ void	minishell(void)
 			add_history(g_meta->buf);
 			load_cmd_block(parse_line(g_meta->buf));
 			if (g_meta->state == MSTATE_NORMAL)
-			{
 				execute_cmd_block();
-				free_cmd_block();
-			}
+			free_cmd_block();
 		}
 		ft_free_null(g_meta->buf);
 	}

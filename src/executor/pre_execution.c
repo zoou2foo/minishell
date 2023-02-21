@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 12:59:20 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:20:26 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,7 @@ void	execute_cmd_block(void)
 				init_signals(3);
 				if (g_meta->pid[i] < 0) //if fork error
 				{
-					throw_error(ERR_FORK);
-					g_meta->state = MSTATE_ERROR;
-					g_meta->exit_status = EXIT_FAILURE;
+					fatal_error(MSTATE_F_ERR);
 					break ;
 				}
 				if (g_meta->pid[i] == 0)

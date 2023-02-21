@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:09:31 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:19:52 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	init_meta(void)
 		i++;
 	}
 }
-/* Main logic loop of minishell. It initialises g_meta and signals and every
-cycle, it:
+
+/* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
 |- reads the inputed line
 |- checks if said line empty
 |- add it to the history
@@ -71,33 +71,32 @@ cycle, it:
 Once the loop is over, it;
 |- clears the history
 |- frees all the leftover data */
-
-//if(!g_meta->buf) //to make ctrl-D not segfault(if buffer == NULL)
-// void	minishell(void)
-// {
-// 	init_meta();
-// 	init_signals(1);
-// 	while (g_meta->state >= MSTATE_NORMAL)
-// 	{
-// 		g_meta->state = MSTATE_NORMAL;
-// 		g_meta->buf = readline("MNSH :) ");
-// 		if (!g_meta->buf)
-// 			break ;
-// 		if (!is_line_empty(g_meta->buf))
-// 		{
-// 			add_history(g_meta->buf);
-// 			load_cmd_block(parse_line(g_meta->buf));
-// 			if (g_meta->state == MSTATE_NORMAL)
-// 			{
-// 				execute_cmd_block();
-// 				free_cmd_block();
-// 			}
-// 		}
-// 		ft_free_null(g_meta->buf);
-// 	}
-// 	clear_history();
-// 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
-// }
+/*
+void	minishell(void)
+{
+	init_meta();
+	init_signals(1);
+	while (g_meta->state >= MSTATE_NORMAL)
+	{
+		g_meta->state = MSTATE_NORMAL;
+		g_meta->buf = readline("MNSH :) ");
+		if (!g_meta->buf)
+			break ;
+		if (!is_line_empty(g_meta->buf))
+		{
+			add_history(g_meta->buf);
+			load_cmd_block(parse_line(g_meta->buf));
+			if (g_meta->state == MSTATE_NORMAL)
+			{
+				execute_cmd_block();
+				free_cmd_block();
+			}
+		}
+		ft_free_null(g_meta->buf);
+	}
+	clear_history();
+	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+}
 
 // int	main(int ac, char **av)
 // {
@@ -109,3 +108,4 @@ Once the loop is over, it;
 // 	return (EXIT_FAILURE);
 // }
 
+*/

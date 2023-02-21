@@ -10,8 +10,8 @@ sleep 5 | exit => open fd 3 et 4. FIXED. Need to double check at school
 cat < Makefile | grep gcc > output: Open fd 3, 4, 5 and 6 FIXED. Need to double check at school
 
 a verifier ce qui est en-dessous
-cat << eof | cat << eof | cat << eof: leaks
-cat << eof << eof << eof: leaks
+cat << eof | cat << eof | cat << eof: leaks. HERE_DOC ->besoin de fermer des pipes et fds
+cat << eof << eof << eof: leaks ->besoin de fermer des pipes et fds
 
 echo "bip | bip ; coyotte > < " ": invalid read of size 1. (see below)
 ==6623==    at 0x100003D9B: create_token_list (tokenizer.c:40)

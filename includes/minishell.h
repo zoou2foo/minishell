@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 15:57:56 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 12:58:26 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,12 @@ void	do_unset(t_cmd *cmd);
 // ===== FROM EXECUTOR =====
 
 //from execute_cmd
+<<<<<<< HEAD
 void	execute_fork(t_cmd *cmd, int i);
 void	close_n_execute(t_cmd *cmd);
 void	fork_error(t_cmd *cmd);
+=======
+>>>>>>> VJ2
 
 //from here_doc
 int		execute_hd(char *string);
@@ -145,12 +148,15 @@ bool	is_built_in(char *cmd_arg);			//general
 void	execute_builtins(t_cmd *cmd);
 bool	built_ins_childable(t_cmd *cmd);
 
+<<<<<<< HEAD
 //from execute_cmd
 void	execute_fork(t_cmd *cmd, int i);
 void	close_n_execute(t_cmd *cmd);
 void	fork_error(t_cmd *cmd);
 void	child_process(t_cmd *cmd);
 
+=======
+>>>>>>> VJ2
 // ===== FROM PARSING =====
 
 //from expander

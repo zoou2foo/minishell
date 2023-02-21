@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:41:20 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:43:56 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ t_token	*merge_token_list(t_token *head);
 void	init_signals(int flag);
 
 // ===== FROM DEBBUGER =====
+int		minitest(char **av);
 void	print_cmd(t_cmd *cmd);
 void	print_token_list(t_token *head, bool start_with_newline);
 

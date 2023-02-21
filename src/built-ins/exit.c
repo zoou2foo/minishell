@@ -6,14 +6,14 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 12:58:55 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:09:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //to check the args following exit; to shorten exit.
-void	check_args_4_exit(t_cmd *cmd)
+int	check_args_4_exit(t_cmd *cmd)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ void	check_args_4_exit(t_cmd *cmd)
 			}
 		}
 	}
-	return (ft_atoi(args[1]));
+	return (ft_atoi(cmd->cmd_args[1]));
 }
 
 // Return nothing. Take t_cmd. To look at the following argument to give the

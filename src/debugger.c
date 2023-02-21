@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/21 12:58:34 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:01:02 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,49 +106,6 @@ void	print_tab_env(void)
 	printf("\n");
 }
 
-<<<<<<< HEAD
-// void	minishell(void)
-// {
-// 	init_meta();
-// 	init_signals(1);
-// 	while (g_meta->state >= MSTATE_NORMAL)
-// 	{
-// 		g_meta->state = MSTATE_NORMAL;
-// 		g_meta->buf = readline("MNSH :) ");
-// 		if (!g_meta->buf)
-// 			break ;
-// 		if (!is_line_empty(g_meta->buf))
-// 		{
-// 			add_history(g_meta->buf);
-// 			load_cmd_block(parse_line(g_meta->buf));
-// 			if (g_meta->state == MSTATE_NORMAL)
-// 			{
-// 				execute_cmd_block();
-// 				free_cmd_block();
-// 			}
-// 		}
-// 		ft_free_null(g_meta->buf);
-// 	}
-// 	clear_history();
-// 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
-// }
-
-// //main() and minishell() for the tester
-// int	main(int argc, char **argv)
-// {
-// 	init_meta();
-// 	init_signals(1);
-// 	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-// 	{
-// 		g_meta->buf = argv[2];
-//     	minishell();
-// 		exit(g_meta->exit_status);
-// 	}
-
-// 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
-// 	return (0);
-// }
-=======
 //main() and minishell() for the tester
 void	minishell(void)
 {
@@ -175,7 +132,6 @@ int	main(int argc, char **argv)
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 	return (0);
 }
->>>>>>> VJ2
 
 /*
 int	main(void)

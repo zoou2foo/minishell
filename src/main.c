@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valeriejean <valeriejean@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 07:54:54 by valeriejean      ###   ########.fr       */
+/*   Updated: 2023/02/21 13:09:31 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,39 +73,39 @@ Once the loop is over, it;
 |- frees all the leftover data */
 
 //if(!g_meta->buf) //to make ctrl-D not segfault(if buffer == NULL)
-void	minishell(void)
-{
-	init_meta();
-	init_signals(1);
-	while (g_meta->state >= MSTATE_NORMAL)
-	{
-		g_meta->state = MSTATE_NORMAL;
-		g_meta->buf = readline("MNSH :) ");
-		if (!g_meta->buf)
-			break ;
-		if (!is_line_empty(g_meta->buf))
-		{
-			add_history(g_meta->buf);
-			load_cmd_block(parse_line(g_meta->buf));
-			if (g_meta->state == MSTATE_NORMAL)
-			{
-				execute_cmd_block();
-				free_cmd_block();
-			}
-		}
-		ft_free_null(g_meta->buf);
-	}
-	clear_history();
-	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
-}
+// void	minishell(void)
+// {
+// 	init_meta();
+// 	init_signals(1);
+// 	while (g_meta->state >= MSTATE_NORMAL)
+// 	{
+// 		g_meta->state = MSTATE_NORMAL;
+// 		g_meta->buf = readline("MNSH :) ");
+// 		if (!g_meta->buf)
+// 			break ;
+// 		if (!is_line_empty(g_meta->buf))
+// 		{
+// 			add_history(g_meta->buf);
+// 			load_cmd_block(parse_line(g_meta->buf));
+// 			if (g_meta->state == MSTATE_NORMAL)
+// 			{
+// 				execute_cmd_block();
+// 				free_cmd_block();
+// 			}
+// 		}
+// 		ft_free_null(g_meta->buf);
+// 	}
+// 	clear_history();
+// 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+// }
 
-int	main(int ac, char **av)
-{
-	(void)av;
-	if (ac > 1)
-		throw_error(ERR_AC);
-	minishell();
+// int	main(int ac, char **av)
+// {
+// 	(void)av;
+// 	if (ac > 1)
+// 		throw_error(ERR_AC);
+// 	minishell();
 
-	return (EXIT_FAILURE);
-}
+// 	return (EXIT_FAILURE);
+// }
 

@@ -75,19 +75,19 @@ TSTDIR	=	tests/
 FILES	=	main \
 			debugger \
 			freeer \
-			built-ins/cd \
-			built-ins/echo \
-			built-ins/env \
-			built-ins/exit \
-			built-ins/export \
-			built-ins/pwd \
-			built-ins/unset \
-			built-ins/utils_export \
-			executor/execute_cmd \
-			executor/here_doc \
-			executor/pre_execution \
-			executor/system_cmds \
-			executor/utils_to_exec \
+			builtins/cd \
+			builtins/echo \
+			builtins/env \
+			builtins/exit \
+			builtins/export \
+			builtins/pwd \
+			builtins/unset \
+			builtins/utils_export \
+			execution/builtins_cmds \
+			execution/execution \
+			execution/execution_utils \
+			execution/here_doc \
+			execution/path_cmds \
 			parsing/converter_utils \
 			parsing/converter \
 			parsing/expander \
@@ -118,9 +118,9 @@ all: ldirs $(NAME)
 # Creates the object directories and subdirectories
 ldirs:
 	$(HIDE) $(MD) $(OBJDIR)
-	$(HIDE) $(MD) $(OBJDIR)/built-ins
+	$(HIDE) $(MD) $(OBJDIR)/builtins
 	$(HIDE) $(MD) $(OBJDIR)/parsing
-	$(HIDE) $(MD) $(OBJDIR)/executor
+	$(HIDE) $(MD) $(OBJDIR)/execution
 	$(HIDE) $(MD) $(OBJDIR)/signals
 
 $(NAME): $(OBJS)

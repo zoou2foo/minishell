@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/20 10:54:17 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:36:31 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ void	free_cmd(t_cmd *cmd)
 			while (cmd->cmd_args[++i])
 				ft_free_null(cmd->cmd_args[i]);
 		}
-		if (cmd->fdin > 0)
-			close(cmd->fdin);
-		if (cmd->fdout > 1)
-			close(cmd->fdout);
+		close_fds(cmd);
 	}
 }
 
@@ -36,19 +33,9 @@ void	free_cmd_block(void)
 {
 	int	i;
 
-	ft_free_null(g_meta->pid);
+	close_all();
 	if (g_meta->pipes)
-	{
-		i = -1;
-		while (g_meta->pipes[++i])
-		{
-			if (g_meta->pipes[i][0] > 0)
-				close(g_meta->pipes[i][0]);
-			if (g_meta->pipes[i][1] > 0)
-				close(g_meta->pipes[i][1]);
-		}
 		ft_free_null(g_meta->pipes);
-	}
 	if (g_meta->cmd_block)
 	{
 		i = -1;
@@ -56,4 +43,18 @@ void	free_cmd_block(void)
 			free_cmd(g_meta->cmd_block[i]);
 		ft_free_null(g_meta->cmd_block);
 	}
+}
+
+//closes and frees everything from the g_meta
+void	free_all(void)
+{
+	free_cmd_block();
+	if (g_meta->buf)
+		ft_free_null(g_meta->buf);
+	if (g_meta->pid)
+		ft_free_null(g_meta->pid);
+	if (g_meta->env)
+		ft_free_tab((void**)g_meta->env);
+	if (g_meta->paths)
+		ft_free_tab((void**)g_meta->paths);
 }

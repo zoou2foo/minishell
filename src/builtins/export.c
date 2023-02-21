@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:34:53 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:39:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,9 @@ void	do_export(t_cmd *cmd)
 			printf("%s\n", g_meta->env[i]);
 			i++;
 		}
+		free_cmd_block();
 		exit(EXIT_SUCCESS);
 	}
 	else
-	{
 		before_add_var(cmd, i);
-	}
 }

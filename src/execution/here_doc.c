@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:36:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 14:52:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 		ft_free_null(tmp);
 		ft_free_null(gnl_return);
 	}
+	close(pipe_hd[1]);
+	close(pipe_hd[0]);
+	free_cmd_block();
 	exit(0);
 }
 

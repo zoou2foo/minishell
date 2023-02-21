@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pre_execution.c                                    :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:20:26 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:29:37 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,6 @@ int	cmd_fork(void)
 		signal(SIGQUIT, SIG_DFL);
 	}
 	return (f_id);
-}
-
-// Closes the fdin and fdout of a given cmd
-void	close_fds(t_cmd *cmd)
-{
-	if (cmd->fdin != 0)
-		close(cmd->fdin);
-	cmd->fdin = 0;
-	if (cmd->fdout != 1)
-		close(cmd->fdout);
-	cmd->fdout = 1;
 }
 
 //status_tmp: add to avoid constantly rewriting on g_meta->exit_status
@@ -73,19 +62,34 @@ void	child_process(t_cmd *cmd)
 {
 	dup2(cmd->fdin, STDIN_FILENO);
 	dup2(cmd->fdout, STDOUT_FILENO);
+	close_all();
 	if (cmd->is_built_in)
-	{
 		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
-		close_fds(cmd);
-	}
 	else
 	{
 		exec_with_paths(cmd);
-		close_fds(cmd);
+		free_cmd_block();
 		exit(g_meta->exit_status); //this will set the value in the parent's g_meta->exit_status
 	}
 	throw_error(ERR_EXIT);
+	free_cmd_block();
 	exit(EXIT_FAILURE);
+}
+
+int	try_fork(t_cmd *cmd, int i)
+{
+	g_meta->pid[i] = cmd_fork();
+	init_signals(3);
+	if (g_meta->pid[i] < 0) //if fork error
+	{
+		fatal_error(MSTATE_F_ERR);
+		return (EXIT_FAILURE);
+	}
+	if (g_meta->pid[i] == 0)
+		child_process(cmd);
+	close_fds(cmd);
+	waitchild();
+	return (EXIT_SUCCESS);
 }
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need
@@ -112,22 +116,9 @@ void	execute_cmd_block(void)
 				execute_builtins(cmd);
 			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))
 				execute_builtins(cmd);
-			else
-			{
-				g_meta->pid[i] = cmd_fork();
-				init_signals(3);
-				if (g_meta->pid[i] < 0) //if fork error
-				{
-					fatal_error(MSTATE_F_ERR);
-					break ;
-				}
-				if (g_meta->pid[i] == 0)
-					child_process(cmd);
-				close_fds(cmd);
-				waitchild();
-			}
+			else if (try_fork(cmd, i))
+				break ;
 		}
 	}
-	close_fds(cmd);
 	init_signals(1);
 }

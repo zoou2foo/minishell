@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:28:50 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:07:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,7 @@ void	echo_print(t_cmd *cmd, int i, int newline)
 	}
 }
 
-//close pipes at the very end. In a case, we had a leaks of pipe
-void	close_pipes(void)
-{
-	int	i;
-
-	i = 0;
-	while (g_meta->pipes[i])
-	{
-		close(*g_meta->pipes[i]);
-		i++;
-	}
-}
-
 // Return NOTHING. Take t_cmd; the arguments following "echo" to be printed.
-// important to close fds and pipes at the very end
 void	do_echo(t_cmd *cmd)
 {
 	int	newline;
@@ -61,7 +47,6 @@ void	do_echo(t_cmd *cmd)
 	echo_print(cmd, i, newline);
 	if (newline)
 		printf("\n");
-	close_fds(cmd);
-	close_pipes();
+	free_cmd_block();
 	exit(EXIT_SUCCESS);
 }

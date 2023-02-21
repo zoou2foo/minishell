@@ -3,9 +3,9 @@ https://github.com/LucasKuhn/minishell_tester
 https://github.com/thallard/minishell_tester
 
 0========( PROBS TO SOLVE )========0
-FILE pre_execution: dans child_process(), est-ce qu'on a besoin de revoir la façon de gérer les erreurs?? voir //TODO handle error...
+export TEST=123 | cat -e | cat -e			hangs in tester (pipes test)
+unset TEST | cat -e							hangs in tester (pipes test)
 
-BROKE: 25 nouveau test failed avec le tester. problem d'execution des built-in??????
 
 
 0============(   VALERIE   )============0

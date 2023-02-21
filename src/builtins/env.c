@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 12:24:38 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:08:22 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	get_env(void)
 	int	i;
 
 	i = 0;
+	free_cmd_block();
 	if (g_meta->env)
 	{
 		while (g_meta->env[i])

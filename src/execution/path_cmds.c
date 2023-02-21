@@ -1,22 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   system_cmds.c                                      :+:      :+:    :+:   */
+/*   path_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:40:52 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 15:03:13 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//throws out a specified error message
-void	throw_error(char *str)
-{
-	write(2, str, ft_strlen(str));
-}
 
 // Looks for "path" in env. Splits at ":". Then, join "/" after each section;
 //no need to add it during execution
@@ -50,9 +44,12 @@ void	free_path_tab(void)
 	int		i;
 
 	i = -1;
-	while (g_meta->paths[++i])
-		ft_free_null(g_meta->paths[i]);
-	ft_free_null(g_meta->paths);
+	if (g_meta->paths)
+	{
+		while (g_meta->paths[++i])
+			ft_free_null(g_meta->paths[i]);
+		ft_free_null(g_meta->paths);
+	}
 }
 
 void	check_cmd_path(int i, t_cmd *cmd)
@@ -74,10 +71,7 @@ void	exec_with_paths(t_cmd *cmd)
 	if (g_meta->env)
 	{
 		if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
-		{
-			check_fds(cmd);
 			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
-		}
 		fill_path_tab();
 		if (g_meta->paths[0])
 		{

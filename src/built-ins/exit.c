@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 12:49:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 12:59:31 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	check_args_4_exit(t_cmd *cmd)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	while (cmd->cmd_args[1][++i])
 	{
-		if ((i > 10 || (cmd->cmd_args[1][i] >= '0'
+		if ((i > 10 || !(cmd->cmd_args[1][i] >= '0'
 				&& cmd->cmd_args[1][i] <= '9')))
 		{
 			if (i != 0 || ((cmd->cmd_args[1][i] != '-')

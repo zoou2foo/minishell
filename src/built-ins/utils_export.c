@@ -6,14 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 08:54:08 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 08:54:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:36:03 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //to check if var exist already
-//if not found, return -1
 int	find_var(char *str)
 {
 	int	len;
@@ -29,7 +28,7 @@ int	find_var(char *str)
 			return (i);
 		i++;
 	}
-	return (-1);
+	return (-1); //if not found, return -1
 }
 
 bool	is_valid_name(char *str)

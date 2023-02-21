@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:20:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:30:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	check_exit_args(char **args)
 
 // Return nothing. Take t_cmd. To look at the following argument to give the
 // correct exit status.
-//change for comparison with max string (?) 9223372036854775808; third if.
 void	do_exit(t_cmd *cmd)
 {
 	unsigned char	arg;

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 09:01:44 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:34:53 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,17 @@ void	sort_env(void)
 }
 
 //function to shortent export. It takes a string and an index. Return nothing
-//first if is to reassess the old var
-//else, creates a new var
 void	add_var_to_env(char *str, int i)
 {
 	int	j;
 
 	j = find_var(str);
-	if (j >= 0)
+	if (j >= 0) //reassess the old var
 	{
 		ft_free_null(g_meta->env[j]);
 		g_meta->env[j] = ft_strdup(str);
 	}
-	else
+	else // creates a new var
 	{
 		j = 0;
 		while (g_meta->env[j])

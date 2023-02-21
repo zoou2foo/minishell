@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 12:59:36 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:40:52 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	check_cmd_path(int i, t_cmd *cmd)
 
 // Checks if a given cmd exists and is executable, then execute it
 // Execve automatically exit() when used
-// call one time fill_path_tab here, instead of everywhere
-// after execve(); need to free g_meta->paths right away, not at the very end
 void	exec_with_paths(t_cmd *cmd)
 {
 	int		i;
@@ -77,10 +75,7 @@ void	exec_with_paths(t_cmd *cmd)
 	{
 		if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 		{
-			if (cmd->fdin > 0) //need to do a check on fd
-				close(cmd->fdin);
-			if (cmd->fdout > 0)
-				close(cmd->fdout);
+			check_fds(cmd);
 			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
 		}
 		fill_path_tab();
@@ -97,5 +92,4 @@ void	exec_with_paths(t_cmd *cmd)
 	}
 	throw_error(ERR_ENV);
 	g_meta->exit_status = 127;
-	//close_fds(cmd);
 }

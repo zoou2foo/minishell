@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 08:46:47 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:28:50 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	echo_print(t_cmd *cmd, int i, int newline)
 	}
 }
 
+//close pipes at the very end. In a case, we had a leaks of pipe
 void	close_pipes(void)
 {
 	int	i;

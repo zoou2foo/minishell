@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:13:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:36:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ int	error_fork(char *string)
 	return (-1);
 }
 
-// Return int of the fd[0] (to read); pipe first. Then, infinite loop to start
-// reading what's in char *string (received) from the readline(prompt).
-// then it has to be written in the pipe. And we return fd[0] so it can be read
+// Return int of the fd[0] (to read); pipe first.
+// And we return fd[0] so it can be read
 int	execute_hd(char *string)
 {
 	int		pipe_hd[2];

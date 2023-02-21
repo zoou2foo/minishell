@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 11:24:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:13:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,16 @@ void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 //ft to shortent execute hd; dealing with pipe error
 int	pipe_error(char *string)
 {
-	throw_error(ERR_PIPE);
+	fatal_error(MSTATE_P_ERR);
 	ft_free_null(string);
-	g_meta->state = MSTATE_ERROR;
-	g_meta->exit_status = EXIT_FAILURE;
 	return (-1);
 }
 
 //ft to shortent execute hd; dealing with fork error
 int	error_fork(char *string)
 {
-	throw_error(ERR_FORK);
+	fatal_error(MSTATE_F_ERR);
 	ft_free_null(string);
-	g_meta->state = MSTATE_ERROR;
-	g_meta->exit_status = EXIT_FAILURE;
 	return (-1);
 }
 
@@ -78,13 +74,13 @@ int	execute_hd(char *string)
 	int		pid_hd;
 
 	if (pipe(pipe_hd) < 0)
-		pipe_error(string);
+		return (pipe_error(string));
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);
 	init_signals(3);
 	gnl_return = NULL;
 	pid_hd = fork();
 	if (pid_hd < 0)
-		error_fork(string);
+		return (error_fork(string));
 	if (pid_hd == 0)
 		child_in_hd(string, gnl_return, pipe_hd);
 	close(pipe_hd[1]);

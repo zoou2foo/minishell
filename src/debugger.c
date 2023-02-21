@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/20 15:23:31 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:13:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	main(int argc, char **argv)
 	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 	{
 		g_meta->buf = argv[2];
-    	minishell();
+		minishell();
 		exit(g_meta->exit_status);
 	}
 

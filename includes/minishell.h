@@ -6,7 +6,11 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/20 15:23:03 by llord            ###   ########.fr       */
+=======
+/*   Updated: 2023/02/21 13:05:43 by llord            ###   ########.fr       */
+>>>>>>> LL
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +126,12 @@ void	do_unset(t_cmd *cmd);
 // ===== FROM EXECUTOR =====
 
 //from execute_cmd
+<<<<<<< HEAD
 void	execute_fork(t_cmd *cmd, int i);
 void	close_n_execute(t_cmd *cmd);
 void	fork_error(t_cmd *cmd);
+=======
+>>>>>>> LL
 
 //from here_doc
 int		execute_hd(char *string);

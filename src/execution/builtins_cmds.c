@@ -6,19 +6,11 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 12:41:40 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:44:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//simplifies cmd name comparisons (compares only up to len(str) chars)
-bool	is_same(char *arg, char *str)
-{
-	if (ft_strncmp(arg, str, ft_strlen(str)) == 0)
-		return (true);
-	return (false);
-}
 
 // Checks if the given arg is a built-in
 bool	is_built_in(char *arg)

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 13:14:20 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:43:16 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,6 @@ int	cmd_fork(void)
 		signal(SIGQUIT, SIG_DFL);
 	}
 	return (f_id);
-}
-
-// Closes the fdin and fdout of a given cmd
-void	close_fds(t_cmd *cmd)
-{
-	if (cmd->fdin != 0)
-		close(cmd->fdin);
-	cmd->fdin = 0;
-	if (cmd->fdout != 1)
-		close(cmd->fdout);
-	cmd->fdout = 1;
 }
 
 //status_tmp: add to avoid constantly rewriting on g_meta->exit_status
@@ -88,6 +77,22 @@ void	child_process(t_cmd *cmd)
 	exit(EXIT_FAILURE);
 }
 
+int	try_fork(t_cmd *cmd, int i)
+{
+	g_meta->pid[i] = cmd_fork();
+	init_signals(3);
+	if (g_meta->pid[i] < 0) //if fork error
+	{
+		fatal_error(MSTATE_F_ERR);
+		return (EXIT_FAILURE);
+	}
+	if (g_meta->pid[i] == 0)
+		child_process(cmd);
+	close_fds(cmd);
+	waitchild();
+	return (EXIT_SUCCESS);
+}
+
 // Goes through the cmd_block and checks if the cmd is a built and if we need
 //to fork()
 //g_meta->exit_status at beginning set to EXIT_SUCCESS as default
@@ -112,20 +117,8 @@ void	execute_cmd_block(void)
 				execute_builtins(cmd);
 			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))
 				execute_builtins(cmd);
-			else
-			{
-				g_meta->pid[i] = cmd_fork();
-				init_signals(3);
-				if (g_meta->pid[i] < 0) //if fork error
-				{
-					fatal_error(MSTATE_F_ERR);
-					break ;
-				}
-				if (g_meta->pid[i] == 0)
-					child_process(cmd);
-				close_fds(cmd);
-				waitchild();
-			}
+			else if (try_fork(cmd, i))
+				break ;
 		}
 	}
 	close_fds(cmd);

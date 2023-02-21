@@ -6,17 +6,11 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 11:53:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/21 13:43:32 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//throws out a specified error message
-void	throw_error(char *str)
-{
-	write(2, str, ft_strlen(str));
-}
 
 // Looks for "path" in env. Splits at ":". Then, join "/" after each section;
 //no need to add it during execution

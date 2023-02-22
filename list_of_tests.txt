@@ -19,6 +19,11 @@ echo "bip | bip ; coyotte > < " " ->invalid read of size 1. (see below)
 unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths.
 Mais quand je fais unset PATH et env, zero probleme...
 
+echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour
+
+unset TEST va unset TEST3 (exemple): il faut strncmp des var d'env et non pas a partir de l'arg
+echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile 
+Autre exemple de hang : ls -l > newfile | grep vjean | wc -l > test =>HANG (devrait output 0 dans test et le ls -l dans newfile)
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
  /*      ALL GOOD! :)      */

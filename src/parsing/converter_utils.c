@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/20 16:23:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/21 16:04:44 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	get_redirs_out(t_token *node, t_cmd *cmd)
 		if (cmd->fdin != 0)
 			close(cmd->fdin);
 		if (g_meta->state == MSTATE_NORMAL) //prevent calling hd when error has occured
-			cmd->fdin = execute_hd(node->string);
+			cmd->fdin = execute_hd(node->string); //working fixing open fd and pipes 
 		else
 			cmd->fdin = 0;
 	}

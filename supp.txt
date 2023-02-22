@@ -34,3 +34,9 @@
 	...
 	fun:start
 }
+{
+	leak NXMapRemove
+	Memcheck:Leak
+	...
+	fun:NXMapRemove
+}

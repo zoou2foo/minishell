@@ -1,19 +1,9 @@
 
 A good minishell tester: https://github.com/thallard/minishell_tester
 
-/* to test */
-
-
 /*     NEED TO BE FIXED    */
-sleep 5 | exit => open fd 3 et 4. FIXED. Need to double check at school
-> a ls > b < Makefile: Open file descriptor 4 et 3 FIXED. Need to double check at school.
-cat < Makefile | grep gcc > output: Open fd 3, 4, 5 and 6 FIXED. Need to double check at school
-
-a verifier ce qui est en-dessous
-cat << eof | cat << eof | cat << eof: leaks
-cat << eof << eof << eof: leaks
-
-echo "bip | bip ; coyotte > < " ": invalid read of size 1. (see below)
+echo "bob | machin ; yo " " ->invalid read of 8:free_cmd_block and load_cmd_block
+echo "bip | bip ; coyotte > < " " ->invalid read of size 1. (see below)
 ==6623==    at 0x100003D9B: create_token_list (tokenizer.c:40)
 ==6623==    by 0x100004FA4: parse_line (parser.c:23)
 ==6623==    by 0x100002FF6: minishell (main.c:214)
@@ -26,7 +16,13 @@ echo "bip | bip ; coyotte > < " ": invalid read of size 1. (see below)
 ==6623==    by 0x100002F93: minishell (main.c:208)
 ==6623==    by 0x100003090: main (main.c:233)
 
+unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths.
+Mais quand je fais unset PATH et env, zero probleme... invalid read of size 8=> main, minishell, execute_cmd_block, try_fork, child_process, execute_builtins, get_env
 
+
+echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour
+echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile 
+Autre exemple de hang : ls -l > newfile | grep vjean | wc -l > test =>HANG (devrait output 0 dans test et le ls -l dans newfile)
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
  /*      ALL GOOD! :)      */
@@ -91,6 +87,8 @@ cat kdjfklasjflkdj => check exit code. Not the same from bash
 exit -10 => MNSH: 2                       BASH: 246
 exit +10 => MNSH: 2                         BASH: 10
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
+Variable d'environnement ne peut pas commencer par un chiffre (lettre ou _ seulement): EXPORT
+unset TEST va unset TEST3 (exemple): il faut strncmp des var d'env et non pas a partir de l'arg
 
 /*   YUP, DIFFERENT BUT LEGIT   */
 echo -n -n -nnnn -nnnnm => MNSH:  -n -nnnn -nnnnmMNSH :)       BASH: -nnnnmbash-3.2$ **Le sujet demande de gérer echo avec -n SEULEMENT. Puis, le projet ne demande pas de faire une copie de bash

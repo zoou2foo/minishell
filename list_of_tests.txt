@@ -17,7 +17,7 @@ echo "bip | bip ; coyotte > < " " ->invalid read of size 1. (see below)
 ==6623==    by 0x100003090: main (main.c:233)
 
 unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths.
-Mais quand je fais unset PATH et env, zero probleme...
+Mais quand je fais unset PATH et env, zero probleme... invalid read of size 8=> main, minishell, execute_cmd_block, try_fork, child_process, execute_builtins, get_env
 
 echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour
 echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile 

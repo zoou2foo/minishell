@@ -21,7 +21,7 @@ Mais quand je fais unset PATH et env, zero probleme... invalid read of size 8=> 
 
 
 echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour
-echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile 
+echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile
 Autre exemple de hang : ls -l > newfile | grep vjean | wc -l > test =>HANG (devrait output 0 dans test et le ls -l dans newfile)
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

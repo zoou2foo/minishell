@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 13:23:53 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/22 14:53:52 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ bool	is_var_in_env(char *var)
 		while (g_meta->env[i] != NULL)
 		{
 			if (is_same(g_meta->env[i], var))
-				return (true);
+			{
+				if (g_meta->env[i][ft_strlen(var)] == '=')
+					return (true);
+			}
 			i++;
 		}
 	}
@@ -46,7 +49,7 @@ void	unset_arg(char *str)
 	while (g_meta->env[i])
 	{
 		if (ft_strncmp(str, g_meta->env[i],
-				ft_strlen(g_meta->env[i])) == 0) //au lieu de strlen de str; j'ai mis de la var d'env, fix prob, mais segfault
+				ft_strlen(str)) == 0) //au lieu de strlen de str; j'ai mis de la var d'env, fix prob, mais segfault. Une fois sur deux, ish. Unset does not work
 			ft_free_null(g_meta->env[i++]);
 		else
 			new_env[j++] = g_meta->env[i++];

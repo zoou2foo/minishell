@@ -19,7 +19,7 @@ echo "bip | bip ; coyotte > < " " ->invalid read of size 1. (see below)
 unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths.
 Mais quand je fais unset PATH et env, zero probleme... invalid read of size 8=> main, minishell, execute_cmd_block, try_fork, child_process, execute_builtins, get_env
 
-unset TEST va unset TEST3 (exemple): il faut strncmp des var d'env et non pas a partir de l'arg
+
 echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour
 echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile 
 Autre exemple de hang : ls -l > newfile | grep vjean | wc -l > test =>HANG (devrait output 0 dans test et le ls -l dans newfile)
@@ -88,7 +88,7 @@ exit -10 => MNSH: 2                       BASH: 246
 exit +10 => MNSH: 2                         BASH: 10
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
 Variable d'environnement ne peut pas commencer par un chiffre (lettre ou _ seulement): EXPORT
-
+unset TEST va unset TEST3 (exemple): il faut strncmp des var d'env et non pas a partir de l'arg
 
 /*   YUP, DIFFERENT BUT LEGIT   */
 echo -n -n -nnnn -nnnnm => MNSH:  -n -nnnn -nnnnmMNSH :)       BASH: -nnnnmbash-3.2$ **Le sujet demande de gérer echo avec -n SEULEMENT. Puis, le projet ne demande pas de faire une copie de bash

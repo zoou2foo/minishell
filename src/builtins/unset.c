@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/16 15:00:58 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/22 12:39:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	unset_arg(char *str)
 	while (g_meta->env[i])
 	{
 		if (ft_strncmp(str, g_meta->env[i],
-				ft_strlen(str)) == 0)
+				ft_strlen(g_meta->env[i])) == 0)
 			ft_free_null(g_meta->env[i++]);
 		else
 			new_env[j++] = g_meta->env[i++];

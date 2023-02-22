@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 14:42:48 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/22 15:37:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,22 @@ typedef struct s_meta
 
 extern t_meta	*g_meta;
 
+// ===== FROM DEBBUGER =====
+void	minitest(char **av);
+void	print_cmd(t_cmd *cmd);
+void	print_token_list(t_token *head, bool start_with_newline);
+void	debug(void);
+
+// ===== FROM FREEER =====
+void	free_cmd(t_cmd *cmd);
+void	free_cmd_block(void);
+void	free_all(void);
+
+// ===== FROM MAIN =====
+void	fatal_error(int err_id);
+int		is_line_empty(char *line);
+void	init_meta(void);
+
 // ===== FROM BUILT-INS =====
 void	change_dir(t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
@@ -195,19 +211,5 @@ t_token	*merge_token_list(t_token *head);
 
 // ===== FROM SIGNALS =====
 void	init_signals(int flag);
-
-// ===== FROM DEBBUGER =====
-int		minitest(char **av);
-void	print_cmd(t_cmd *cmd);
-void	print_token_list(t_token *head, bool start_with_newline);
-
-// ===== FROM FREEER =====
-void	free_cmd(t_cmd *cmd);
-void	free_cmd_block(void);
-
-// ===== FROM MAIN =====
-void	fatal_error(int err_id);
-int		is_line_empty(char *line);
-void	init_meta(void);
 
 #endif

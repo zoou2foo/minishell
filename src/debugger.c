@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/21 13:54:36 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/22 15:42:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	print_tab_env(void)
 	printf("\n");
 }
 
-int	minitest(char **av)
+/*
+void	minitest_old(char **av)
 {
 	init_meta();
 	init_signals(1);
@@ -117,12 +118,36 @@ int	minitest(char **av)
 		load_cmd_block(parse_line(g_meta->buf));
 		if (g_meta->state == MSTATE_NORMAL)
 			execute_cmd_block();
-		free_cmd_block();
 	}
+	//free_all(); //wtf
 	exit(g_meta->exit_status);
+}
+*/
 
-	ft_free_null(g_meta);
-	return (EXIT_FAILURE);
+void	minitest(char **av)
+{
+	init_meta();
+	init_signals(1);
+
+	g_meta->state = MSTATE_NORMAL;
+	g_meta->buf = ft_strdup(av[2]);
+	if (!is_line_empty(g_meta->buf))
+	{
+		add_history(g_meta->buf);
+		load_cmd_block(parse_line(g_meta->buf));
+		if (g_meta->state == MSTATE_NORMAL)
+			execute_cmd_block();
+	}
+	ft_free_null(g_meta->buf);
+
+	clear_history();
+	free_all();
+	exit(g_meta->exit_status);
+}
+
+void	debug(void)
+{
+	write(2, "got here!\n", 10);
 }
 
 /*

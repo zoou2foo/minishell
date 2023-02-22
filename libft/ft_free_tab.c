@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 08:51:11 by vjean             #+#    #+#             */
-/*   Updated: 2023/01/16 12:20:43 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/22 15:31:47 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,11 @@ void	ft_free_tab(void **tab)
 {
 	int	i;
 
-	if (*tab && tab)
+	if (tab)
 	{
-		i = 0;
-		while (tab[i])
-		{
-			if (tab[i])
-				free (tab[i]);
-			i++;
-		}
-		free (tab);
+		i = -1;
+		while (tab[++i])
+			ft_free_null(tab[i]);
+		ft_free_null(tab);
 	}
 }

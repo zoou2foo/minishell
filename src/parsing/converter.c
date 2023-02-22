@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:04:40 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/22 15:27:38 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,20 @@ void	load_cmd_block(t_token **head)
 	{
 		g_meta->cmd_block = ft_calloc(g_meta->cmd_nb + 1, sizeof(t_cmd *));
 		g_meta->pipes = ft_calloc(g_meta->cmd_nb, sizeof(int *));
-
 		i = -1;
 		while (++i < g_meta->cmd_nb - 1) //creates potentially needed pipes
 		{
 			g_meta->pipes[i] = ft_calloc(2, sizeof(int));
 			pipe(g_meta->pipes[i]);
-			//check for pipe errors here
+			if (g_meta->pipes[i][0] < 0 || g_meta->pipes[i][1] < 0)
+				fatal_error(MSTATE_P_ERR);
 		}
-
-		//actual token conversion loop
-		i = -1;
-		while (head[++i])
-			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i); //assign to a temp to avoid hd issues with fds?
 	}
+	i = -1;
+	if (g_meta->state != MSTATE_NORMAL)
+		while (head && head[++i])
+			free_token_list(head[i]);
+	else
+		while (g_meta->state == MSTATE_NORMAL && head && head[++i])
+			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i); //assign to a temp to avoid hd issues with fds?
 }

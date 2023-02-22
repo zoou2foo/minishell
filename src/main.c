@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:29:32 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/22 15:50:41 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,14 @@ void	minishell(void)
 		{
 			add_history(g_meta->buf);
 			load_cmd_block(parse_line(g_meta->buf));
+			printf(":%s:", g_meta->buf);
 			if (g_meta->state == MSTATE_NORMAL)
 				execute_cmd_block();
-			free_cmd_block();
 		}
 		ft_free_null(g_meta->buf);
 	}
 	clear_history();
+	free_all();
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
 }
 

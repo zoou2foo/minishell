@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 15:19:27 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/22 18:13:08 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	waitchild(void)
 	status_tmp = 0;
 	while (i < g_meta->cmd_nb)
 	{
-		waitpid(g_meta->pid[i], &status_tmp, 0);
+		waitpid(g_meta->pid[i], &status_tmp, WNOHANG);
 		if (WIFEXITED(status_tmp) == TRUE)
 			g_meta->exit_status = WEXITSTATUS(status_tmp);
 		else if (WIFSIGNALED(status_tmp) == TRUE)

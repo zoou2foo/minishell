@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 18:13:08 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/23 11:31:33 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	waitchild(void)
 	status_tmp = 0;
 	while (i < g_meta->cmd_nb)
 	{
-		waitpid(g_meta->pid[i], &status_tmp, WNOHANG);
+		waitpid(g_meta->pid[i], &status_tmp, 0); //WNOHANG; does not work when doing a sys_cmd ou built-ins tout seul (pas export; pas cd; pas unset; pas exit)
 		if (WIFEXITED(status_tmp) == TRUE)
 			g_meta->exit_status = WEXITSTATUS(status_tmp);
 		else if (WIFSIGNALED(status_tmp) == TRUE)
@@ -88,7 +88,6 @@ int	try_fork(t_cmd *cmd, int i)
 	if (g_meta->pid[i] == 0)
 		child_process(cmd);
 	close_fds(cmd);
-	waitchild();
 	return (EXIT_SUCCESS);
 }
 
@@ -121,6 +120,8 @@ void	execute_cmd_block(void)
 		}
 		close_fds(cmd);
 	}
+	close_pipes();
+	waitchild();
 	init_signals(1);
 	close_all();
 	free_cmd_block();

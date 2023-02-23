@@ -2,27 +2,23 @@
 A good minishell tester: https://github.com/thallard/minishell_tester
 
 /*     NEED TO BE FIXED    */
-echo "bob | machin ; yo " " ->invalid read of 8:free_cmd_block and load_cmd_block
-echo "bip | bip ; coyotte > < " " ->invalid read of size 1. (see below)
-==6623==    at 0x100003D9B: create_token_list (tokenizer.c:40)
-==6623==    by 0x100004FA4: parse_line (parser.c:23)
-==6623==    by 0x100002FF6: minishell (main.c:214)
-==6623==    by 0x100003090: main (main.c:233)
-==6623==  Address 0x10091caa2 is 0 bytes after a block of size 34 alloc'd
-==6623==    at 0x100178545: malloc (in /Users/vjean/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6623==    by 0x100031968: xmalloc (xmalloc.c:59)
-==6623==    by 0x100006D6A: readline_internal_teardown (readline.c:522)
-==6623==    by 0x100006856: readline (readline.c:734)
-==6623==    by 0x100002F93: minishell (main.c:208)
-==6623==    by 0x100003090: main (main.c:233)
-
-unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths.
-Mais quand je fais unset PATH et env, zero probleme... invalid read of size 8=> main, minishell, execute_cmd_block, try_fork, child_process, execute_builtins, get_env
+echo "bob | machin ; yo " " ->invalid read of 1: main, minishell, parse_line, create_token_list
+==10674== Invalid read of size 1
+==10674==    at 0x100006117: create_token_list (tokenizer.c:30)
+==10674==    by 0x100005BB0: parse_line (parser.c:67)
+==10674==    by 0x100002256: minishell (main.c:87)
+==10674==    by 0x10000232F: main (main.c:104)
+==10674==  Address 0x1009176ac is 0 bytes after a block of size 28 alloc'd
+==10674==    at 0x10017C545: malloc (in /Users/vjean/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==10674==    by 0x100031928: xmalloc (xmalloc.c:59)
+==10674==    by 0x100006D2A: readline_internal_teardown (readline.c:522)
+==10674==    by 0x100006816: readline (readline.c:734)
+==10674==    by 0x1000021F3: minishell (main.c:81)
+==10674==    by 0x10000232F: main (main.c:104)
+==10674== 
 
 
-echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour
-echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile
-Autre exemple de hang : ls -l > newfile | grep vjean | wc -l > test =>HANG (devrait output 0 dans test et le ls -l dans newfile)
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
  /*      ALL GOOD! :)      */
@@ -60,6 +56,7 @@ echo '$HOME' => MNSH:  same as bash                         BASH: $HOME
 export ; env # display is different for both commands => MNSH:  same as bash   env       BASH: export only is env + declare -x
 echo hi";" hihi => MNSH:  hi; hihi                  BASH: same
 echo hi " ; " hihi => MNSH:     hi  ;  hihi         BASH: same
+echo "bip | bip ; coyotte > < " "
 cd no_file => MNSH:      invalid path given         BASH: no such file or directory
 cd a b c d => MNSH:  invalid path given             BASH: no such file or directory
 pwd a => MNSH:     /                      BASH: /
@@ -89,6 +86,11 @@ exit +10 => MNSH: 2                         BASH: 10
 export "HI =hi" => MNSH:    create Hi =hi                       BASH: 'HI =hi' not a valid identifier **probablement revoir avec la tokenization
 Variable d'environnement ne peut pas commencer par un chiffre (lettre ou _ seulement): EXPORT
 unset TEST va unset TEST3 (exemple): il faut strncmp des var d'env et non pas a partir de l'arg
+echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour FIXED
+echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile FIXED
+Autre exemple de hang : ls -l > newfile | grep vjean | wc -l > test =>HANG (devrait output 0 dans test et le ls -l dans newfile) FIXED
+unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths. 
+Mais quand je fais unset PATH et env, zero probleme... invalid read of size 8=> main, minishell, execute_cmd_block, try_fork, child_process, execute_builtins, get_env
 
 /*   YUP, DIFFERENT BUT LEGIT   */
 echo -n -n -nnnn -nnnnm => MNSH:  -n -nnnn -nnnnmMNSH :)       BASH: -nnnnmbash-3.2$ **Le sujet demande de gérer echo avec -n SEULEMENT. Puis, le projet ne demande pas de faire une copie de bash

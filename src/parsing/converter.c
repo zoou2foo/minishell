@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 15:27:38 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/23 15:26:39 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 		cmd->fdout = g_meta->pipes[id][1];
 
 	cmd->cmd_args = ft_calloc(find_length(*head) + 1, sizeof(char *));
-
 	return (get_cmd_args(*head, cmd));
 
 }
@@ -119,8 +118,7 @@ void	load_cmd_block(t_token **head)
 		while (++i < g_meta->cmd_nb - 1) //creates potentially needed pipes
 		{
 			g_meta->pipes[i] = ft_calloc(2, sizeof(int));
-			pipe(g_meta->pipes[i]);
-			if (g_meta->pipes[i][0] < 0 || g_meta->pipes[i][1] < 0)
+			if (pipe(g_meta->pipes[i]) != 0)
 				fatal_error(MSTATE_P_ERR);
 		}
 	}

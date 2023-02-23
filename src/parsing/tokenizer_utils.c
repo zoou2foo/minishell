@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/20 13:21:48 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/23 14:31:42 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	find_quote(char *line, int i, t_token **head, char c)
 		throw_error(ERR_QUOTE);
 		g_meta->state = MSTATE_O_BRACK;
 		g_meta->exit_status = 2;
+		return (0);
 	}
 	if (c == '\"')
 		add_token(new_token(&line[i + 1], len - 2, TTYPE_D_QUOTE), head);

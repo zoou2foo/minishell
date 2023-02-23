@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/23 11:31:33 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/23 15:25:08 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,12 @@ int	try_fork(t_cmd *cmd, int i)
 	}
 	if (g_meta->pid[i] == 0)
 		child_process(cmd);
+	if (0 < cmd->id)
+		close(g_meta->pipes[cmd->id - 1][0]);
+	if (cmd->id < g_meta->cmd_nb - 1)
+		close(g_meta->pipes[cmd->id][1]);
 	close_fds(cmd);
+	waitchild();
 	return (EXIT_SUCCESS);
 }
 
@@ -120,8 +125,6 @@ void	execute_cmd_block(void)
 		}
 		close_fds(cmd);
 	}
-	close_pipes();
-	waitchild();
 	init_signals(1);
 	close_all();
 	free_cmd_block();

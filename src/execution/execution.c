@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 08:43:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 09:10:20 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	waitchild(void)
 	status_tmp = 0;
 	while (i < g_meta->cmd_nb)
 	{
-		waitpid(g_meta->pid[i], &status_tmp, 0); //WNOHANG; does not work when doing a sys_cmd ou built-ins tout seul (pas export; pas cd; pas unset; pas exit)
+		waitpid(g_meta->pid[i], &status_tmp, 0);
 		if (WIFEXITED(status_tmp) == TRUE)
 			g_meta->exit_status = WEXITSTATUS(status_tmp);
 		else if (WIFSIGNALED(status_tmp) == TRUE)
@@ -55,32 +55,32 @@ void	waitchild(void)
 	}
 }
 
-// Choses whether to execute a given cmd as a built_in or a sys_cmd
+// Choose whether to execute a given cmd as a built_in or a sys_cmd
 // Exits with an error if the execution failed
-// else: this will set the value in the parent's g_meta->exit_status
 void	child_process(t_cmd *cmd)
 {
 	dup2(cmd->fdin, STDIN_FILENO);
 	dup2(cmd->fdout, STDOUT_FILENO);
 	close_all();
 	if (cmd->is_built_in)
-		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
+		execute_builtins(cmd);
 	else
 	{
 		exec_with_paths(cmd);
 		free_cmd_block();
-		exit(g_meta->exit_status); //this will set the value in the parent's g_meta->exit_status
+		exit(g_meta->exit_status);
 	}
 	throw_error(ERR_EXIT);
 	free_cmd_block();
 	exit(EXIT_FAILURE);
 }
 
+//take the cmd and the index to fork. Return int (exit)
 int	try_fork(t_cmd *cmd, int i)
 {
 	g_meta->pid[i] = cmd_fork();
 	init_signals(3);
-	if (g_meta->pid[i] < 0) //if fork error
+	if (g_meta->pid[i] < 0)
 	{
 		fatal_error(MSTATE_F_ERR);
 		return (EXIT_FAILURE);
@@ -96,12 +96,7 @@ int	try_fork(t_cmd *cmd, int i)
 }
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need
-//to fork()
-//g_meta->exit_status at beginning set to EXIT_SUCCESS as default
-// Then either execute the cmd or passes it to a child process
-//if => //calls non-childable functions directly
-//else if => calls export directly IF its has args
-//pid[i] == 0 => if is child
+//to fork(). Then either execute the cmd or passes it to a child process
 void	execute_cmd_block(void)
 {
 	int		i;
@@ -115,7 +110,7 @@ void	execute_cmd_block(void)
 		cmd = g_meta->cmd_block[i];
 		if (cmd->argcount > 0)
 		{
-			if (!built_ins_childable(cmd)) //calls non-childable functions directly
+			if (!built_ins_childable(cmd))
 				execute_builtins(cmd);
 			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))
 				execute_builtins(cmd);

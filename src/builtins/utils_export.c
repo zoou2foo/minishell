@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 08:54:08 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 12:31:01 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 09:06:23 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	find_var(char *str)
 			return (i);
 		i++;
 	}
-	return (-1); //if not found, return -1
+	return (-1);
 }
 
 bool	is_valid_name(char *str)

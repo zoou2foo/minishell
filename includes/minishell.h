@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 15:37:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 08:50:20 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,43 @@
 # include <signal.h>
 # include <termios.h>
 
-extern char	**environ; //on peut la mettre dans notre main et ainsi pas avoir de globale
+extern char	**environ;
 
 enum e_ttype
 {
-	TTYPE_ERROR		= -1,	//generic failureerror
+	TTYPE_ERROR		= -1,
 	TTYPE_EMPTY		= 0,
-	TTYPE_NORMAL	= 1,	// _	(cmds/args)
-	TTYPE_S_QUOTE	= 2,	// '_'	(string without expansion)
-	TTYPE_D_QUOTE	= 3,	// "_"	(string with expansion)
-	TTYPE_EXPAND	= 4,	// $_	(expansion)
-	TTYPE_REDIR_IN	= 5,	// <	(input path)
-	TTYPE_HEREDOC	= 6,	// <<	(heredoc EOF word)
-	TTYPE_S_RDR_OUT	= 7,	// >	(output path (replace))
-	TTYPE_D_RDR_OUT	= 8,	// >>	(output path (append))
-	TTYPE_PIPE		= 9		// |	(pipe)
+	TTYPE_NORMAL	= 1,
+	TTYPE_S_QUOTE	= 2,
+	TTYPE_D_QUOTE	= 3,
+	TTYPE_EXPAND	= 4,
+	TTYPE_REDIR_IN	= 5,
+	TTYPE_HEREDOC	= 6,
+	TTYPE_S_RDR_OUT	= 7,
+	TTYPE_D_RDR_OUT	= 8,
+	TTYPE_PIPE		= 9
 };
 
 enum e_mstate
 {
-	MSTATE_F_ERR	= -3,	//fork() failure error
-	MSTATE_P_ERR	= -2,	//pipe() failure error
-	MSTATE_ERROR	= -1,	//closes minishell entirely
+	MSTATE_F_ERR	= -3,
+	MSTATE_P_ERR	= -2,
+	MSTATE_ERROR	= -1,
 	MSTATE_NORMAL	= 0,
-	MSTATE_O_BRACK	= 1,	//unended quotes
-	MSTATE_O_PIPE	= 2,	//pipe token in invalid position
-	MSTATE_O_REDIR	= 3,	//redir token in invalid position
-	MSTATE_BAD_FD	= 4		//invalid FD (bad file name)
+	MSTATE_O_BRACK	= 1,
+	MSTATE_O_PIPE	= 2,
+	MSTATE_O_REDIR	= 3,
+	MSTATE_BAD_FD	= 4
 };
 
 /*	ERROR MESSAGE	*/
-# define ERR_ERR	"Process Error : Error code not found\n"			//unencounterable under normal circumstances
-# define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"		//unencounterable under normal circumstances
-# define ERR_FORK	"Process Error : Couldn't fork() properly\n"		//unencounterable under normal circumstances
-# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"		//unencounterable under normal circumstances
-# define ERR_PATH	"Process Error : PATH variable not found\n"			//only appears if PATH is unset beforehand
-# define ERR_ENV	"Process Error : Environment does not exist\n"		//for debugging, shouldn't pop up
-# define ERR_EXIT	"Process Warning : Child did not exit properly\n"	//for debugging, shouldn't pop up
+# define ERR_ERR	"Process Error : Error code not found\n"
+# define ERR_PIPE	"Process Error : Couldn't pipe() properly\n"
+# define ERR_FORK	"Process Error : Couldn't fork() properly\n"
+# define ERR_PWD	"Process Error : Couldn't getcwd() properly\n"
+# define ERR_PATH	"Process Error : PATH variable not found\n"
+# define ERR_ENV	"Process Error : Environment does not exist\n"
+# define ERR_EXIT	"Process Warning : Child did not exit properly\n"
 
 # define ERR_ARG	"Input Error : No argument given\n"
 # define ERR_ARG2	"Input Error : Invalid argument given\n"
@@ -78,30 +78,30 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 	int				type;
-	bool			is_joined;	//whether it touches the previous token (no spaces)
+	bool			is_joined;
 }					t_token;
 
 typedef struct s_cmd
 {
-	char	**cmd_args;		//cmd name and its following arguments
-	int		argcount;		//number of function arguments (0 == no cmd, 1 == no args)
-	int		id;				//id of this cmd (in relation to others in this cycle)
-	int		fdin;			//the input's fd
-	int		fdout;			//the output's fd
-	bool	is_built_in;	//whether the command is a built-in
+	char	**cmd_args;
+	int		argcount;
+	int		id;
+	int		fdin;
+	int		fdout;
+	bool	is_built_in;
 }			t_cmd;
 
 typedef struct s_meta
 {
-	char	**env;		//elle pourrait devenir notre globale
-	char	**paths;    //contient la ligne PATH pour être en mesure de trouver les system cmds
-	char	*buf;			//variable pour garder ce qui est mis dans readline
-	t_cmd	**cmd_block;	//all commands to be called this cycle
-	int		cmd_nb;			//nb of commands to be called this cycle
-	int		**pipes;	//all the pipes fd for the current command line
+	char	**env;
+	char	**paths;
+	char	*buf;
+	t_cmd	**cmd_block;
+	int		cmd_nb;
+	int		**pipes;
 	int		*pid;
 	int		exit_status;
-	int		state;			//what to do on next cmd and/or cycle
+	int		state;
 
 }	t_meta;
 

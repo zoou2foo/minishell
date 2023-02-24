@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:39:17 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 09:05:16 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	add_var_to_env(char *str, int i)
 	int	j;
 
 	j = find_var(str);
-	if (j >= 0) //reassess the old var
+	if (j >= 0)
 	{
 		ft_free_null(g_meta->env[j]);
 		g_meta->env[j] = ft_strdup(str);
 	}
-	else // creates a new var
+	else
 	{
 		j = 0;
 		while (g_meta->env[j])
@@ -64,8 +64,7 @@ void	add_var_to_env(char *str, int i)
 	}
 }
 
-//function to shorten export
-//before adding var need the name of var to make sure it is valid.
+//function to shorten export to make sure the name is valid
 //takes t_cmd *cmd to look at the arg and an index from do_export()
 void	before_add_var(t_cmd *cmd, int i)
 {
@@ -86,8 +85,7 @@ void	before_add_var(t_cmd *cmd, int i)
 	}
 }
 
-// Take t_cmd to check the arg of export. If no arg -> add declare -x and sort
-// env. Else if arg -> add the var at g_meta->env (see ft above)l;
+// Take t_cmd to check the arg of export.
 //set exit_status indirectly because childable when no args
 void	do_export(t_cmd *cmd)
 {

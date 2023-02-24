@@ -2,7 +2,7 @@
 A good minishell tester: https://github.com/thallard/minishell_tester
 
 /*     NEED TO BE FIXED    */
-
+cat /dev/urandom | head -5
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

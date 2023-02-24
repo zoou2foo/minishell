@@ -6,15 +6,13 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 08:16:24 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 10:47:40 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//when in parent; a ft signals have to do
-// SIGINT for ctrl-C
-// SIGQUIT for ctrl-backslash
+//when in parent; tells what to do with signals
 void	handler_parent_sig(int sig)
 {
 	if (sig == SIGINT)
@@ -23,8 +21,7 @@ void	handler_parent_sig(int sig)
 		printf("Quit: 3");
 }
 
-//at the very end of execute_cmd_block; out of all the loops
-//main handler
+//main handler; to tells what to do with signals
 void	handler_sig(int sig)
 {
 	if (sig == SIGINT)
@@ -42,6 +39,7 @@ void	handler_sig(int sig)
 	}
 }
 
+//signals handler in hd
 void	handler_hd_sig(int sig)
 {
 	if (sig == SIGINT)
@@ -58,12 +56,7 @@ void	handler_hd_sig(int sig)
 }
 
 //Initialize the signals for the minishell.
-// Received an int as a flag to know where it is in the process; parent or child
-// Define the signals struct to know which signal was received.
-// Depending on the flag, each process has it's handler for signals.
-//SIGINFO: to know which signal received
-// SA_RESTART: flag to make sure that it does not in an undefine state when
-//interrupted
+//flag send the right hangler depending on the value of flag
 void	init_signals(int flag)
 {
 	struct sigaction	sa;

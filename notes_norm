@@ -1,8 +1,8 @@
 /*
 
 0========( TO-DO )========0
-
-
+expander.c: shorten expand() =>j'ai sorti la boucle while(env[++i]), mais ça brisait des trucs
+expander.c: shorten expand_quote => j'ai essayé, mais je brise l'expand.
 
 
 
@@ -10,8 +10,9 @@
 minishell.h
 builtins
 execution
-
-
-
+parsing: converter_utils; converter; parser; token_finder; token_maker; token_remover; tokenizer_utils; tokenizer
+signals
+freeer.c
+main.c
 
 */

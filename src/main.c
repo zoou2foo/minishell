@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 08:19:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 10:59:45 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	init_meta(void)
 	int	i;
 
 	g_meta = ft_calloc(sizeof(t_meta), 1);
-
 	i = 0;
 	while (environ[i])
 		i++;
@@ -59,18 +58,6 @@ void	init_meta(void)
 	}
 }
 
-/* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
-|- reads the inputed line
-|- checks if said line empty
-|- add it to the history
-|- converts it into a cmd_block
-|- checks if the global state is still valid
-|- execute said cmd_block
-|- frees the line buffer
-0- repeats
-Once the loop is over, it;
-|- clears the history
-|- frees all the leftover data */
 void	minishell(void)
 {
 	init_meta();
@@ -92,15 +79,14 @@ void	minishell(void)
 	}
 	clear_history();
 	free_all();
-	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+	ft_free_null(g_meta);
 	exit (g_meta->exit_status);
 }
 
 int	main(int ac, char **av)
 {
-	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))
-		minitest(av);
-	else if (ac > 1)
+	(void)av;
+	if (ac > 1)
 		throw_error(ERR_AC);
 	minishell();
 	return (EXIT_FAILURE);

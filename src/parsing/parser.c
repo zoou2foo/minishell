@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/20 14:53:43 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 11:01:43 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ bool	check_pipe_error(t_token *node)
 		{
 			if (node->type == TTYPE_PIPE)
 			{
-				if (!node->prev || !node->next || node->next->type == TTYPE_PIPE)
+				if (!node->prev || !node->next
+					|| node->next->type == TTYPE_PIPE)
 					return (true);
-				g_meta->cmd_nb++; //adds 1 cmd slot for every pipe
+				g_meta->cmd_nb++;
 			}
 			node = node->next;
 		}
@@ -57,7 +58,6 @@ t_token	**make_token_array(t_token *node)
 	return (token_array);
 }
 
-//print_token_list(head, true);			//DEBUG
 //converts the given input line into a "true" finalized token list
 t_token	**parse_line(char *line)
 {
@@ -75,7 +75,6 @@ t_token	**parse_line(char *line)
 	head = merge_token_list(head);
 	if (!check_pipe_error(head))
 		return (make_token_array(head));
-
 	throw_error(ERR_TOKEN);
 	g_meta->state = MSTATE_O_PIPE;
 	g_meta->exit_status = 2;

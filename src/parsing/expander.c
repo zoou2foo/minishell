@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/13 15:27:56 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 10:31:09 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ char	*expand_quote(char *str1)
 			str2 = ft_strjoin_free(str2, tmp);
 		i++;
 	}
-	ft_free_null(str1); //frees old string
+	ft_free_null(str1);
 	return (str2);
 }

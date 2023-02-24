@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/23 15:26:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 11:01:02 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*merge_mergeables(t_token *node)
 			break ;
 	}
 	check_merge_error(node);
-	return (find_head(node)); //reset head in case cut_token() destroys it
+	return (find_head(node));
 }
 
 //finds redirection nodes and uses them
@@ -48,7 +48,7 @@ t_token	*get_redirs(t_token *node, t_cmd *cmd)
 			get_redirs_out(node, cmd);
 			if (has_fd_error(cmd))
 				break ;
-			node = cut_token(node); //removes node once processed
+			node = cut_token(node);
 			if (!node->prev)
 				continue ;
 		}
@@ -57,7 +57,7 @@ t_token	*get_redirs(t_token *node, t_cmd *cmd)
 		else
 			break ;
 	}
-	return (find_head(node)); //reset head in case cut_token() destroys it
+	return (find_head(node));
 }
 
 //convert remaining tokens into cmd_args
@@ -86,23 +86,17 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 	t_cmd	*cmd;
 
 	*head = merge_mergeables(*head);
-
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	cmd->fdin = 0;
 	cmd->fdout = 1;
 	cmd->id = id;
-
 	*head = get_redirs(*head, cmd);
-
-	//use pipes fds if fdin/fdout have not been set
 	if (cmd->fdin == 0 && 0 < id)
 		cmd->fdin = g_meta->pipes[id - 1][0];
 	if (cmd->fdout == 1 && id < g_meta->cmd_nb - 1)
 		cmd->fdout = g_meta->pipes[id][1];
-
 	cmd->cmd_args = ft_calloc(find_length(*head) + 1, sizeof(char *));
 	return (get_cmd_args(*head, cmd));
-
 }
 
 //converts every token list into cmds
@@ -115,7 +109,7 @@ void	load_cmd_block(t_token **head)
 		g_meta->cmd_block = ft_calloc(g_meta->cmd_nb + 1, sizeof(t_cmd *));
 		g_meta->pipes = ft_calloc(g_meta->cmd_nb, sizeof(int *));
 		i = -1;
-		while (++i < g_meta->cmd_nb - 1) //creates potentially needed pipes
+		while (++i < g_meta->cmd_nb - 1)
 		{
 			g_meta->pipes[i] = ft_calloc(2, sizeof(int));
 			if (pipe(g_meta->pipes[i]) != 0)
@@ -128,5 +122,5 @@ void	load_cmd_block(t_token **head)
 			free_token_list(head[i]);
 	else
 		while (g_meta->state == MSTATE_NORMAL && head && head[++i])
-			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i); //assign to a temp to avoid hd issues with fds?
+			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i);
 }

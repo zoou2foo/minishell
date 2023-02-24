@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/23 14:31:42 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 10:40:58 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	find_quote(char *line, int i, t_token **head, char c)
 	len = 1;
 	while (line[i + len] && line[i + len] != c)
 		len++;
-	if (!line[i + len]) //makes us ignore the cmd line when unterminated quotes
+	if (!line[i + len])
 	{
 		throw_error(ERR_QUOTE);
 		g_meta->state = MSTATE_O_BRACK;
@@ -80,7 +80,7 @@ int	find_leftover(char *line, int i, t_token **head)
 	int	len;
 
 	len = 0;
-	if (line[i] == '$') //deals with expansions outside of ""
+	if (line[i] == '$')
 	{
 		len++;
 		while (is_in_expansion(line[i + len]))
@@ -88,9 +88,10 @@ int	find_leftover(char *line, int i, t_token **head)
 		len--;
 		add_token(new_token(&line[i + 1], len - 1, TTYPE_EXPAND), head);
 	}
-	else //deals with normal cmds/args input
+	else
 	{
-		while (line[i + len] && !ft_isspace(line[i + len]) && !ft_strchr("|><\'\"$", line[i + len]))
+		while (line[i + len] && !ft_isspace(line[i + len])
+			&& !ft_strchr("|><\'\"$", line[i + len]))
 			len++;
 		len--;
 		add_token(new_token(&line[i], len, TTYPE_NORMAL), head);

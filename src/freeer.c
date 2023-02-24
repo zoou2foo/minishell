@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/22 15:44:09 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 10:57:33 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	free_pipes(void)
 			ft_free_null(g_meta->pipes[i]);
 		ft_free_null(g_meta->pipes);
 	}
-
 }
 
 //frees a cmd_block, all its cmds, and all the leftover FDs
-void	free_cmd_block(void)		//make sure to close beforehand
+void	free_cmd_block(void)
 {
 	int	i;
 

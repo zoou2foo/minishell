@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_maker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/16 13:36:53 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 11:02:35 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,11 @@ t_token	*merge_tokens(t_token *node, t_token *next)
 		str = ft_strdup(next->string);
 	else
 		str = ft_calloc(1, sizeof(char));
-
 	ft_free_null(node->string);
 	node->string = str;
-
 	node->next = next->next;
 	if (node->next)
 		node->next->prev = node;
-
 	free_token(next);
 	return (node);
 }
@@ -107,17 +104,3 @@ t_token	*replace_token(t_token *new, t_token *old)
 	}
 	return (new);
 }
-
-/*
-//checks if the token is useful before adding it to the list
-void	try_add_token(t_token *node, t_token *head)
-{
-	if (node && node->string && node->string[0] && node->type > TTYPE_EMPTY)
-		add_token(node, &head);
-	else
-	{
-		printf("Failed to add token to list\n");		//DEBUG
-		free_token(node);
-	}
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 09:10:20 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 12:48:40 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	child_process(t_cmd *cmd)
 //take the cmd and the index to fork. Return int (exit)
 int	try_fork(t_cmd *cmd, int i)
 {
-	g_meta->pid[i] = cmd_fork();
 	init_signals(3);
+	g_meta->pid[i] = cmd_fork();
 	if (g_meta->pid[i] < 0)
 	{
 		fatal_error(MSTATE_F_ERR);
@@ -119,8 +119,8 @@ void	execute_cmd_block(void)
 		}
 		close_fds(cmd);
 	}
-	init_signals(1);
 	close_all();
 	waitchild();
+	init_signals(1);
 	free_cmd_block();
 }

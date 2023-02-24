@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 08:50:20 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 15:35:40 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,6 @@ typedef struct s_meta
 }	t_meta;
 
 extern t_meta	*g_meta;
-
-// ===== FROM DEBBUGER =====
-void	minitest(char **av);
-void	print_cmd(t_cmd *cmd);
-void	print_token_list(t_token *head, bool start_with_newline);
-void	debug(void);
 
 // ===== FROM FREEER =====
 void	free_cmd(t_cmd *cmd);

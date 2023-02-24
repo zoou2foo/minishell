@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 10:59:45 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 15:36:26 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,33 @@ void	minishell(void)
 	exit (g_meta->exit_status);
 }
 
+void	minitest(char **av)	//REMOVE ME AT THE END ?
+{
+	init_meta();
+	init_signals(1);
+
+	g_meta->state = MSTATE_NORMAL;
+	g_meta->buf = ft_strdup(av[2]);
+	if (!is_line_empty(g_meta->buf))
+	{
+		add_history(g_meta->buf);
+		load_cmd_block(parse_line(g_meta->buf));
+		if (g_meta->state == MSTATE_NORMAL)
+			execute_cmd_block();
+	}
+	ft_free_null(g_meta->buf);
+
+	clear_history();
+	free_all();
+	exit(g_meta->exit_status);
+}
+
 int	main(int ac, char **av)
 {
 	(void)av;
-	if (ac > 1)
+	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))
+		minitest(av);
+	else if (ac > 1)
 		throw_error(ERR_AC);
 	minishell();
 	return (EXIT_FAILURE);

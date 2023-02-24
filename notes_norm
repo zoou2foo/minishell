@@ -15,4 +15,8 @@ signals
 freeer.c
 main.c
 
+----------------------------------------------------------------------------------------------------------------------
+tests after norm/norminette friendly(only missing expander.c)
+
+redisplay à revoir quand on envoie cat ou grep seul
 */

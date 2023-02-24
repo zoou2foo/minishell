@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 08:40:03 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 13:59:46 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	try_fork(t_cmd *cmd, int i)
 	if (cmd->id < g_meta->cmd_nb - 1)
 		close(g_meta->pipes[cmd->id][1]);
 	close_fds(cmd);
-	//waitchild();
+	waitchild(); //if inside loop, has hanging
 	return (EXIT_SUCCESS);
 }
 
@@ -127,6 +127,6 @@ void	execute_cmd_block(void)
 	}
 	init_signals(1);
 	close_all();
-	waitchild(); //has to be outside of the while of cmd_nb
+	//waitchild(); //if outside loop, breaks exit status
 	free_cmd_block();
 }

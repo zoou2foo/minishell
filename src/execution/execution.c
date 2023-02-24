@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 15:19:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 15:47:02 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	try_fork(t_cmd *cmd, int i)
 	if (cmd->id < g_meta->cmd_nb - 1)
 		close(g_meta->pipes[cmd->id][1]);
 	close_fds(cmd);
-	waitchild(); //if inside loop, has hanging
+	waitchild(); //if inside loop, hangings with /dev/urandom
 	return (EXIT_SUCCESS);
 }
 

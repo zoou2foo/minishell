@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 14:34:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 14:35:00 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,27 +92,33 @@ char	*trimstr(char *str1, int len)
 	return (str2);
 }
 
+char	*get_expansion(char *str1, int *i)
+{
+	char	*tmp;
+	int		len;
+
+	*i += 1;
+	len = 0;
+	while (is_in_expansion(str1[(*i) + len]))
+		len++;
+	tmp = expand(trimstr(&str1[*i], len));
+	*i += len - 1;
+	return (tmp);
+}
+
 //expands inside a quote string ("$_") if needed
 char	*expand_quote(char *str1)
 {
 	char	*str2;
 	char	*tmp;
 	int		i;
-	int		len;
 
 	str2 = ft_calloc(1, sizeof(char));
 	i = 0;
 	while (str1[i])
 	{
-		len = 0;
 		if (str1[i] == '$')
-		{
-			i += 1;
-			while (is_in_expansion(str1[i + len]))
-				len++;
-			tmp = expand(trimstr(&str1[i], len));
-			i += len - 1;
-		}
+			tmp = get_expansion(str1, &i);
 		else
 		{
 			tmp = ft_calloc(2, sizeof(char));
@@ -122,6 +128,6 @@ char	*expand_quote(char *str1)
 			str2 = ft_strjoin_free(str2, tmp);
 		i++;
 	}
-	ft_free_null(str1); //frees old string
+	ft_free_null(str1);
 	return (str2);
 }

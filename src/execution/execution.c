@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 13:59:46 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 14:49:27 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,7 @@ void	execute_cmd_block(void)
 	init_signals(1);
 	close_all();
 	//waitchild(); //if outside loop, breaks exit status
+	//USES A SINGLE PID, IMPLEMENT A WAIT LOOP TO WAIT FOR EVERY PROCESS INSTEAD
+	//use last INVALID exit status
 	free_cmd_block();
 }

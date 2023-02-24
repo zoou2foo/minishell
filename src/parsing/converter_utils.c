@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/23 09:09:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 10:12:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	get_redirs_out(t_token *node, t_cmd *cmd)
 	{
 		if (cmd->fdin != 0)
 			close(cmd->fdin);
-		cmd->fdin = open(node->string, O_RDONLY); 
+		cmd->fdin = open(node->string, O_RDONLY);
 	}
 	else if (node->type == TTYPE_HEREDOC)
 	{

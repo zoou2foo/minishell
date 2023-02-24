@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 14:49:27 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 15:19:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	child_process(t_cmd *cmd)
 
 int	try_fork(t_cmd *cmd, int i)
 {
-	g_meta->pid[i] = cmd_fork();
 	init_signals(3);
+	g_meta->pid[i] = cmd_fork();
 	if (g_meta->pid[i] < 0) //if fork error
 	{
 		fatal_error(MSTATE_F_ERR);

@@ -2,21 +2,6 @@
 A good minishell tester: https://github.com/thallard/minishell_tester
 
 /*     NEED TO BE FIXED    */
-echo "bob | machin ; yo " " ->invalid read of 1: main, minishell, parse_line, create_token_list
-==10674== Invalid read of size 1
-==10674==    at 0x100006117: create_token_list (tokenizer.c:30)
-==10674==    by 0x100005BB0: parse_line (parser.c:67)
-==10674==    by 0x100002256: minishell (main.c:87)
-==10674==    by 0x10000232F: main (main.c:104)
-==10674==  Address 0x1009176ac is 0 bytes after a block of size 28 alloc'd
-==10674==    at 0x10017C545: malloc (in /Users/vjean/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==10674==    by 0x100031928: xmalloc (xmalloc.c:59)
-==10674==    by 0x100006D2A: readline_internal_teardown (readline.c:522)
-==10674==    by 0x100006816: readline (readline.c:734)
-==10674==    by 0x1000021F3: minishell (main.c:81)
-==10674==    by 0x10000232F: main (main.c:104)
-==10674== 
-
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -89,8 +74,9 @@ unset TEST va unset TEST3 (exemple): il faut strncmp des var d'env et non pas a 
 echo "bonjour (Manque un guillemet) : segfault. Des fois, segfault, des fois double free et abort. Ex: echo "bonjour (plein de fois) et suivi de ls, puis retour a echo "bonjour FIXED
 echo allo > newfile | ls -l > newfile | grep bonjour =>HANG -- devrait donner ls -l ouput dans newfile FIXED
 Autre exemple de hang : ls -l > newfile | grep vjean | wc -l > test =>HANG (devrait output 0 dans test et le ls -l dans newfile) FIXED
-unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths. 
+unset PATH. Then ls: invalid read of size 8=>main, minishell, execute_cmd_block, try_fork, child_process and exec_with_paths.
 Mais quand je fais unset PATH et env, zero probleme... invalid read of size 8=> main, minishell, execute_cmd_block, try_fork, child_process, execute_builtins, get_env
+echo "bob | machin ; yo " " ->invalid read of 1: main, minishell, parse_line, create_token_list
 
 /*   YUP, DIFFERENT BUT LEGIT   */
 echo -n -n -nnnn -nnnnm => MNSH:  -n -nnnn -nnnnmMNSH :)       BASH: -nnnnmbash-3.2$ **Le sujet demande de gérer echo avec -n SEULEMENT. Puis, le projet ne demande pas de faire une copie de bash

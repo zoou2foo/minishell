@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 17:59:56 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/24 08:19:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	minishell(void)
 	clear_history();
 	free_all();
 	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+	exit (g_meta->exit_status);
 }
 
 int	main(int ac, char **av)

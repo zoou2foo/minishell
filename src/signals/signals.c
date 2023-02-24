@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/15 13:20:54 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/24 08:16:24 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	handler_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_meta->exit_status = 1;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		printf("\n");

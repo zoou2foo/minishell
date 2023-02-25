@@ -24,7 +24,7 @@ char	*gnl_minihell(void)
 }
 
 //needed to pass hd in a child for signal.
-//need to take the string, gnl_return and pipe_hd
+//need to take the string, gnl_return and pipe_hds
 void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 {
 	char	*tmp;

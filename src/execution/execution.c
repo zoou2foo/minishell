@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 14:57:47 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 15:45:20 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	execute_cmd_block(void)
 	if (g_meta->cmd_nb > 1)
 		g_meta->must_fork = true;
 	launch_cmds();
+	init_signals(E_SIG_PRNT);
 	close_all();
 	if (g_meta->must_fork)
 	{

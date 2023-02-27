@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 15:03:38 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 15:42:21 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handler_init_sig(int sig)
 	}
 	if (sig == SIGQUIT)
 	{
-		rl_on_new_line();
+		rl_on_new_line(); //besoin ou non?
 		sigignore(SIGQUIT);
 	}
 }
@@ -33,7 +33,13 @@ void	handler_init_sig(int sig)
 void	handler_child_sig(int sig)
 {
 	(void)sig;
-	signal(SIGINT, SIG_DFL);
+	struct sigaction	sa;
+
+	sa.sa_mask = SIGINFO;
+	sa.sa_flags = SA_RESETHAND;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+
 }
 
 //signals handler in child (including hd)
@@ -65,7 +71,7 @@ void	handler_parent_sig(int sig)
 	}
 	if (sig == SIGQUIT)
 	{
-		rl_on_new_line();
+		//rl_on_new_line();
 		sigignore(SIGQUIT);
 	}
 }

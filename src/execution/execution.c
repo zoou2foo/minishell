@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 11:17:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 12:19:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ int	cmd_fork(void)
 }
 
 //status_tmp: add to avoid constantly rewriting on g_meta->exit_status
-//if WIFEXITED: if process exited normally
-//if WIFSIGNALED: child exited on signal
-//WTERMSIG: adds 128 when not needed (ex: cat kdjflkj)
 void	waitchildren(void)
 {
 	int	status_tmp;
@@ -49,9 +46,7 @@ void	waitchildren(void)
 		g_meta->exit_status = 128 + WSTOPSIG(status_tmp);
 }
 
-// Choses whether to execute a given cmd as a built_in or a sys_cmd
-// Exits with an error if the execution failed
-// else: this will set the value in the parent's g_meta->exit_status
+//choses whether to execute a given cmd as a built_in or a sys_cmd
 void	child_process(t_cmd *cmd)
 {
 	dup2(cmd->fdin, STDIN_FILENO);

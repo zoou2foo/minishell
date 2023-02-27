@@ -12,5 +12,7 @@ un handler pour ignore =>pas sur a 100%, si j'ai besoin ... maybe
 un handler pour reset =>apres les childs. apres l'execution
 
 
+Pwd, echo, env hang quand ils sont lancés seuls. **A des moments donnes...
+
 
 */

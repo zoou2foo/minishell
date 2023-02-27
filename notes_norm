@@ -1,5 +1,5 @@
 /*
-
+err_baseline = 62
 
 
 
@@ -17,7 +17,6 @@ Avant d'enlever commentaires ou continuer nettoyage (norminette); pousser les te
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-env | grep "_=" is weird (problem with tester?)
 
 
 

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/22 15:42:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:10:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	print_tab_env(void)
 void	minitest_old(char **av)
 {
 	init_meta();
-	init_signals(1);
+	init_signals(E_SIG_PRNT);
 
 	g_meta->buf = av[2];
 	if (!is_line_empty(g_meta->buf))
@@ -127,7 +127,7 @@ void	minitest_old(char **av)
 void	minitest(char **av)
 {
 	init_meta();
-	init_signals(1);
+	init_signals(E_SIG_PRNT);
 
 	g_meta->state = MSTATE_NORMAL;
 	g_meta->buf = ft_strdup(av[2]);

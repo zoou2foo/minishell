@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 15:37:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:27:23 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_meta
 	int		cmd_nb;			//nb of commands to be called this cycle
 	int		**pipes;	//all the pipes fd for the current command line
 	int		*pid;
+	bool	must_fork;
 	int		exit_status;
 	int		state;			//what to do on next cmd and/or cycle
 

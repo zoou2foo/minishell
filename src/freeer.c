@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/22 15:44:09 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:21:41 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	free_cmd_block(void)		//make sure to close beforehand
 
 	if (g_meta->cmd_block)
 	{
-		free_pipes();
 		i = -1;
 		while (++i < g_meta->cmd_nb)
 			free_cmd(g_meta->cmd_block[i]);
 		ft_free_null(g_meta->cmd_block);
+		free_pipes();
 	}
 }
 

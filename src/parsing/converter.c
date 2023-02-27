@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/23 15:26:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:27:15 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ t_cmd	*get_cmd_args(t_token *node, t_cmd *cmd)
 	}
 	if (cmd->argcount > 0 && is_built_in(cmd->cmd_args[0]) == 1)
 		cmd->is_built_in = true;
+	else
+		g_meta->must_fork = true;
 	return (cmd);
 }
 

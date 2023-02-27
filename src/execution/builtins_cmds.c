@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:07:28 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:50:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ bool	built_ins_childable(t_cmd *cmd)
 	char	*arg;
 
 	arg = cmd->cmd_args[0];
-	if (is_same(arg, "cd")
-		|| is_same(arg, "exit")
-		|| is_same(arg, "unset"))
-		return (false);
-	else
+	if (is_same(arg, "echo")
+		|| is_same(arg, "env")
+		|| is_same(arg, "export")
+		|| is_same(arg, "pwd"))
 		return (true);
+	else
+		return (false);
 }

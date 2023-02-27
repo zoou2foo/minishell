@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/23 15:26:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 08:44:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	load_cmd_block(t_token **head)
 		g_meta->cmd_block = ft_calloc(g_meta->cmd_nb + 1, sizeof(t_cmd *));
 		g_meta->pipes = ft_calloc(g_meta->cmd_nb, sizeof(int *));
 		i = -1;
-		while (++i < g_meta->cmd_nb - 1) //creates potentially needed pipes
+		while (++i < g_meta->cmd_nb - 1) //creates potentially needed pipes **BOUCLE A ENLEVER.
 		{
 			g_meta->pipes[i] = ft_calloc(2, sizeof(int));
 			if (pipe(g_meta->pipes[i]) != 0)
@@ -130,3 +130,6 @@ void	load_cmd_block(t_token **head)
 		while (g_meta->state == MSTATE_NORMAL && head && head[++i])
 			g_meta->cmd_block[i] = tokens_to_cmd(&head[i], i); //assign to a temp to avoid hd issues with fds?
 }
+
+//une fois que tokens_to_cmd, temps de faire les check
+// Check 1: cmd simple ou non(pipes)? ->Simple. Builtins ou sys_cmd? ->Builtins: execute. Sys_cmd fokr et execute.

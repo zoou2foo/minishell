@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 15:19:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 08:39:08 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	try_fork(t_cmd *cmd, int i)
 	if (cmd->id < g_meta->cmd_nb - 1)
 		close(g_meta->pipes[cmd->id][1]);
 	close_fds(cmd);
-	waitchild(); //if inside loop, has hanging
+	//waitchild(); //if inside loop, has hanging. NE PEUT PAS ETRE LA. a la toute fin de exec_cmd_block
 	return (EXIT_SUCCESS);
 }
 
@@ -127,7 +127,7 @@ void	execute_cmd_block(void)
 	}
 	init_signals(1);
 	close_all();
-	//waitchild(); //if outside loop, breaks exit status
+	waitchild(); //if outside loop, breaks exit status. ***DOIT ETRE ICI***
 	//USES A SINGLE PID, IMPLEMENT A WAIT LOOP TO WAIT FOR EVERY PROCESS INSTEAD
 	//use last INVALID exit status
 	free_cmd_block();

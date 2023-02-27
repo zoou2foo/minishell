@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 13:28:24 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:29:48 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	child_process(t_cmd *cmd)
 
 int	try_fork(t_cmd *cmd)
 {
-	init_signals(3);
-	g_meta->pid = cmd_fork(); //set signaux pour les enfants, puis une fois en dehors reset handler
+	init_signals(E_SIG_CHLD);
+	g_meta->pid = cmd_fork();
 	if (g_meta->pid < 0) //if fork error
 	{
 		fatal_error(MSTATE_F_ERR);
@@ -105,7 +105,7 @@ void	execute_cmd_block(void)
 	if (g_meta->cmd_nb > 1)
 		g_meta->must_fork = true;
 	launch_cmds();
-	init_signals(1);
+	init_signals(E_SIG_PRNT);
 	close_all();
 	if (g_meta->must_fork)
 		waitchildren();

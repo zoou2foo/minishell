@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/23 15:20:25 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:07:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	execute_hd(char *string)
 	if (pipe(pipe_hd) < 0)
 		return (pipe_error(string));
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);
-	init_signals(3);
+	init_signals(E_SIG_CHLD);
 	gnl_return = NULL;
 	pid_hd = fork();
 	if (pid_hd < 0)
@@ -89,6 +89,6 @@ int	execute_hd(char *string)
 	close(pipe_hd[1]);
 	waitpid(pid_hd, NULL, 0);
 	ft_free_null(gnl_return);
-	init_signals(1);
+	init_signals(E_SIG_PRNT);
 	return (pipe_hd[0]);
 }

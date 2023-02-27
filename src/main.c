@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 11:10:35 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:10:17 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ Once the loop is over, it;
 void	minishell(void)
 {
 	init_meta();
-	init_signals(1);
+	init_signals(E_SIG_PRNT);
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
 		g_meta->state = MSTATE_NORMAL;

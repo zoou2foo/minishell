@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 11:10:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:04:15 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ enum e_mstate
 	MSTATE_O_PIPE	= 2,	//pipe token in invalid position
 	MSTATE_O_REDIR	= 3,	//redir token in invalid position
 	MSTATE_BAD_FD	= 4		//invalid FD (bad file name)
+};
+
+enum e_signal
+{
+	E_SIG_PRNT		= 0,
+	E_SIG_CHLD		= 1,
+	E_SIG_HD		= 2,
 };
 
 /*	ERROR MESSAGE	*/

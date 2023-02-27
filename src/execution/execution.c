@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 12:19:17 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:28:24 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	child_process(t_cmd *cmd)
 int	try_fork(t_cmd *cmd)
 {
 	init_signals(3);
-	g_meta->pid = cmd_fork();
+	g_meta->pid = cmd_fork(); //set signaux pour les enfants, puis une fois en dehors reset handler
 	if (g_meta->pid < 0) //if fork error
 	{
 		fatal_error(MSTATE_F_ERR);

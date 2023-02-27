@@ -1,0 +1,4 @@
+Things to fix with signals:
+ctrl-c: re_display when stop a cmd that hang
+ctrl-d: no problem
+ctrl-\: do something weird when I press it with stuff written in it

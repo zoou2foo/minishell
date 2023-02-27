@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:03:13 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:45:00 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	exec_with_paths(t_cmd *cmd)
 	if (g_meta->env)
 	{
 		if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
-			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
+			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env); //si execve ne s'execute pas; besoin de free stuff. Peut-etre besoin de call free_all. Maybe not, car on free_cmd_block dans child_process
 		fill_path_tab();
 		if (g_meta->paths[0])
 		{

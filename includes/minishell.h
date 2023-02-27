@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 15:37:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:53:32 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,9 @@ void	throw_error(char *str);
 bool	is_same(char *arg, char *str);
 
 //from execution
-void	child_process(t_cmd *cmd);
-void	execute_cmd_block(void);
+// void	child_process(t_cmd *cmd);
+// void	execute_cmd_block(void);
+void	pipex(void);
 
 //from here_doc
 int		execute_hd(char *string);

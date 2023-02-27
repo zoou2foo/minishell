@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 08:44:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 08:57:46 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,6 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 
 	*head = get_redirs(*head, cmd);
 
-	//use pipes fds if fdin/fdout have not been set
-	if (cmd->fdin == 0 && 0 < id)
-		cmd->fdin = g_meta->pipes[id - 1][0];
-	if (cmd->fdout == 1 && id < g_meta->cmd_nb - 1)
-		cmd->fdout = g_meta->pipes[id][1];
-
 	cmd->cmd_args = ft_calloc(find_length(*head) + 1, sizeof(char *));
 	return (get_cmd_args(*head, cmd));
 
@@ -110,18 +104,6 @@ void	load_cmd_block(t_token **head)
 {
 	int	i;
 
-	if (g_meta->state == MSTATE_NORMAL)
-	{
-		g_meta->cmd_block = ft_calloc(g_meta->cmd_nb + 1, sizeof(t_cmd *));
-		g_meta->pipes = ft_calloc(g_meta->cmd_nb, sizeof(int *));
-		i = -1;
-		while (++i < g_meta->cmd_nb - 1) //creates potentially needed pipes **BOUCLE A ENLEVER.
-		{
-			g_meta->pipes[i] = ft_calloc(2, sizeof(int));
-			if (pipe(g_meta->pipes[i]) != 0)
-				fatal_error(MSTATE_P_ERR);
-		}
-	}
 	i = -1;
 	if (g_meta->state != MSTATE_NORMAL)
 		while (head && head[++i])
@@ -133,3 +115,4 @@ void	load_cmd_block(t_token **head)
 
 //une fois que tokens_to_cmd, temps de faire les check
 // Check 1: cmd simple ou non(pipes)? ->Simple. Builtins ou sys_cmd? ->Builtins: execute. Sys_cmd fokr et execute.
+// Pipes? ->call pipex_bonus

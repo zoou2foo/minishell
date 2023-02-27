@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 08:39:08 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:48:15 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,43 +58,43 @@ void	waitchild(void)
 // Choses whether to execute a given cmd as a built_in or a sys_cmd
 // Exits with an error if the execution failed
 // else: this will set the value in the parent's g_meta->exit_status
-void	child_process(t_cmd *cmd)
-{
-	dup2(cmd->fdin, STDIN_FILENO);
-	dup2(cmd->fdout, STDOUT_FILENO);
-	close_all();
-	if (cmd->is_built_in)
-		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
-	else
-	{
-		exec_with_paths(cmd);
-		free_cmd_block();
-		exit(g_meta->exit_status); //this will set the value in the parent's g_meta->exit_status
-	}
-	throw_error(ERR_EXIT);
-	free_cmd_block();
-	exit(EXIT_FAILURE);
-}
+// void	child_process(t_cmd *cmd)
+// {
+// 	dup2(cmd->fdin, STDIN_FILENO);
+// 	dup2(cmd->fdout, STDOUT_FILENO);
+// 	close_all();
+// 	if (cmd->is_built_in)
+// 		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
+// 	else
+// 	{
+// 		exec_with_paths(cmd);
+// 		free_cmd_block();
+// 		exit(g_meta->exit_status); //this will set the value in the parent's g_meta->exit_status
+// 	}
+// 	throw_error(ERR_EXIT);
+// 	free_cmd_block();
+// 	exit(EXIT_FAILURE);
+// }
 
-int	try_fork(t_cmd *cmd, int i)
-{
-	init_signals(3);
-	g_meta->pid[i] = cmd_fork();
-	if (g_meta->pid[i] < 0) //if fork error
-	{
-		fatal_error(MSTATE_F_ERR);
-		return (EXIT_FAILURE);
-	}
-	if (g_meta->pid[i] == 0)
-		child_process(cmd);
-	if (0 < cmd->id)
-		close(g_meta->pipes[cmd->id - 1][0]);
-	if (cmd->id < g_meta->cmd_nb - 1)
-		close(g_meta->pipes[cmd->id][1]);
-	close_fds(cmd);
-	//waitchild(); //if inside loop, has hanging. NE PEUT PAS ETRE LA. a la toute fin de exec_cmd_block
-	return (EXIT_SUCCESS);
-}
+// int	try_fork(t_cmd *cmd, int i)
+// {
+// 	init_signals(3);
+// 	g_meta->pid[i] = cmd_fork();
+// 	if (g_meta->pid[i] < 0) //if fork error
+// 	{
+// 		fatal_error(MSTATE_F_ERR);
+// 		return (EXIT_FAILURE);
+// 	}
+// 	if (g_meta->pid[i] == 0)
+// 		child_process(cmd);
+// 	if (0 < cmd->id)
+// 		close(g_meta->pipes[cmd->id - 1][0]);
+// 	if (cmd->id < g_meta->cmd_nb - 1)
+// 		close(g_meta->pipes[cmd->id][1]);
+// 	close_fds(cmd);
+// 	//waitchild(); //if inside loop, has hanging. NE PEUT PAS ETRE LA. a la toute fin de exec_cmd_block
+// 	return (EXIT_SUCCESS);
+// }
 
 // Goes through the cmd_block and checks if the cmd is a built and if we need
 //to fork()
@@ -103,32 +103,32 @@ int	try_fork(t_cmd *cmd, int i)
 //if => //calls non-childable functions directly
 //else if => calls export directly IF its has args
 //pid[i] == 0 => if is child
-void	execute_cmd_block(void)
-{
-	int		i;
-	t_cmd	*cmd;
+// void	execute_cmd_block(void)
+// {
+// 	int		i;
+// 	t_cmd	*cmd;
 
-	i = -1;
-	g_meta->exit_status = EXIT_SUCCESS;
-	g_meta->pid = ft_calloc(sizeof(int), g_meta->cmd_nb);
-	while (++i < g_meta->cmd_nb)
-	{
-		cmd = g_meta->cmd_block[i];
-		if (cmd->argcount > 0)
-		{
-			if (!built_ins_childable(cmd)) //calls non-childable functions directly
-				execute_builtins(cmd);
-			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))
-				execute_builtins(cmd);
-			else if (try_fork(cmd, i))
-				break ;
-		}
-		close_fds(cmd);
-	}
-	init_signals(1);
-	close_all();
-	waitchild(); //if outside loop, breaks exit status. ***DOIT ETRE ICI***
-	//USES A SINGLE PID, IMPLEMENT A WAIT LOOP TO WAIT FOR EVERY PROCESS INSTEAD
-	//use last INVALID exit status
-	free_cmd_block();
-}
+// 	i = -1;
+// 	g_meta->exit_status = EXIT_SUCCESS;
+// 	g_meta->pid = ft_calloc(sizeof(int), g_meta->cmd_nb);
+// 	while (++i < g_meta->cmd_nb)
+// 	{
+// 		cmd = g_meta->cmd_block[i];
+// 		if (cmd->argcount > 0)
+// 		{
+// 			if (!built_ins_childable(cmd)) //calls non-childable functions directly
+// 				execute_builtins(cmd);
+// 			else if (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))
+// 				execute_builtins(cmd);
+// 			else if (try_fork(cmd, i))
+// 				break ;
+// 		}
+// 		close_fds(cmd);
+// 	}
+// 	init_signals(1);
+// 	close_all();
+// 	waitchild(); //if outside loop, breaks exit status. ***DOIT ETRE ICI***
+// 	//USES A SINGLE PID, IMPLEMENT A WAIT LOOP TO WAIT FOR EVERY PROCESS INSTEAD
+// 	//use last INVALID exit status
+// 	free_cmd_block();
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugger.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/22 15:42:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 10:54:37 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,8 @@ void	minitest(char **av)
 		add_history(g_meta->buf);
 		load_cmd_block(parse_line(g_meta->buf));
 		if (g_meta->state == MSTATE_NORMAL)
-			execute_cmd_block();
+			pipex();
+			//execute_cmd_block();
 	}
 	ft_free_null(g_meta->buf);
 

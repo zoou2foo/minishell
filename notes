@@ -1,0 +1,6 @@
+Cmd simple ou non
+	->oui
+		->builtins: execute
+		->sys_cmd: fork et execute
+	->non
+		->Pipes =>principe de pipex

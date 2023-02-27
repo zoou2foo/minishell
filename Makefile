@@ -84,7 +84,7 @@ FILES	=	main \
 			builtins/unset \
 			builtins/utils_export \
 			execution/builtins_cmds \
-			execution/execution \
+			execution/new_exec \
 			execution/execution_utils \
 			execution/here_doc \
 			execution/path_cmds \

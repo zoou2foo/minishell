@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 13:10:17 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 14:46:19 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ Once the loop is over, it;
 void	minishell(void)
 {
 	init_meta();
-	init_signals(E_SIG_PRNT);
+	init_signals(E_SIG_START);
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
 		g_meta->state = MSTATE_NORMAL;

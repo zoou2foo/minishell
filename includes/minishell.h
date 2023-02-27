@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 13:04:15 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 14:46:09 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ enum e_mstate
 
 enum e_signal
 {
-	E_SIG_PRNT		= 0,
-	E_SIG_CHLD		= 1,
-	E_SIG_HD		= 2,
+	E_SIG_START		= 0,
+	E_SIG_PRNT		= 1,
+	E_SIG_CHLD		= 2,
+	E_SIG_HD		= 3,
 };
 
 /*	ERROR MESSAGE	*/

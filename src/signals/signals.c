@@ -6,14 +6,38 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 13:30:00 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/27 15:03:38 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//signals handler in child (including hd)
+//call before readline
+void	handler_init_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_meta->exit_status = 1;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_redisplay();
+	}
+	if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		sigignore(SIGQUIT);
+	}
+}
+
 void	handler_child_sig(int sig)
+{
+	(void)sig;
+	signal(SIGINT, SIG_DFL);
+}
+
+//signals handler in child (including hd)
+void	handler_hd_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -59,12 +83,14 @@ void	init_signals(int flag)
 
 	sa.sa_mask = SIGINFO;
 	sa.sa_flags = SA_RESTART;
-	if (flag == E_SIG_PRNT)
+	if (flag == E_SIG_START)
+		sa.sa_handler = &handler_init_sig;
+	else if (flag == E_SIG_PRNT)
 		sa.sa_handler = &handler_parent_sig;
 	else if (flag == E_SIG_CHLD)
 		sa.sa_handler = &handler_child_sig;
-	//else if (flag == E_SIG_HD)
-		//sa.sa_handler = &handler_hd_sig;
+	else if (flag == E_SIG_HD)
+		sa.sa_handler = &handler_hd_sig;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }

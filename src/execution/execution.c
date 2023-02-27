@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 13:07:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:31:30 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	child_process(t_cmd *cmd)
 	dup2(cmd->fdin, STDIN_FILENO);
 	dup2(cmd->fdout, STDOUT_FILENO);
 	close_all();
+	init_signals(E_SIG_CHLD);
 	if (cmd->is_built_in)
 		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 	else
@@ -67,8 +68,8 @@ void	child_process(t_cmd *cmd)
 
 int	try_fork(t_cmd *cmd)
 {
-	init_signals(E_SIG_CHLD);
 	g_meta->pid = cmd_fork();
+	//init_signals(E_SIG_CHLD);			//obsolete
 	if (g_meta->pid < 0) //if fork error
 	{
 		fatal_error(MSTATE_F_ERR);

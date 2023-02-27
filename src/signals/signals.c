@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 13:14:04 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 13:32:13 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	init_signals(int flag)
 		sa.sa_handler = &handler_parent_sig;
 	else if (flag == E_SIG_CHLD)
 		sa.sa_handler = &handler_child_sig;
-	//else if (flag == E_SIG_HD)
-		//sa.sa_handler = &handler_hd_sig;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }

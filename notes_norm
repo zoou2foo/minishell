@@ -17,8 +17,7 @@ Avant d'enlever commentaires ou continuer nettoyage (norminette); pousser les te
 0============(   LOYC   )============0
 
 0====( DEBUG TO DO )====0
-cd "doesntexist"
-env | grep "_="
+env | grep "_=" is weird (problem with tester?)
 
 
 

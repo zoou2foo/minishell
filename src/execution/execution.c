@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 11:00:54 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 11:17:04 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	waitchildren(void)
 	int	status_tmp;
 
 	status_tmp = 0;
-	waitpid(*g_meta->pid, &status_tmp, 0); //WNOHANG; does not work when doing a sys_cmd ou built-ins tout seul (pas export; pas cd; pas unset; pas exit)
+	waitpid(g_meta->pid, &status_tmp, 0); //WNOHANG; does not work when doing a sys_cmd ou built-ins tout seul (pas export; pas cd; pas unset; pas exit)
 	if (WIFEXITED(status_tmp) == TRUE)
 		g_meta->exit_status = WEXITSTATUS(status_tmp);
 	else if (WIFSIGNALED(status_tmp) == TRUE)
@@ -73,15 +73,14 @@ void	child_process(t_cmd *cmd)
 int	try_fork(t_cmd *cmd)
 {
 	init_signals(3);
-	*g_meta->pid = cmd_fork();
-	if (*g_meta->pid < 0) //if fork error
+	g_meta->pid = cmd_fork();
+	if (g_meta->pid < 0) //if fork error
 	{
 		fatal_error(MSTATE_F_ERR);
 		return (EXIT_FAILURE);
 	}
-	if (*g_meta->pid == 0)
+	if (g_meta->pid == 0)
 		child_process(cmd);
-	close_all();
 	return (EXIT_SUCCESS);
 }
 

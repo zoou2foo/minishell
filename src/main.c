@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 10:23:47 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 11:10:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	init_meta(void)
 	int	i;
 
 	g_meta = ft_calloc(sizeof(t_meta), 1);
-	g_meta->pid = ft_calloc(2, sizeof(int));
 	i = 0;
 	while (environ[i])
 		i++;

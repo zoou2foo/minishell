@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/27 10:21:41 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/27 11:11:14 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	free_all(void)
 {
 	if (g_meta)
 	{
-		if (g_meta->pid)
-			ft_free_null(g_meta->pid);
 		if (g_meta->env)
 			ft_free_tab((void **)g_meta->env);
 		if (g_meta->paths)

@@ -2,11 +2,11 @@
 A good minishell tester: https://github.com/thallard/minishell_tester
 
 /*     NEED TO BE FIXED    */
-cat /dev/urandom | head -5
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
  /*      ALL GOOD! :)      */
+cat /dev/urandom | head -5
 echo $? => MNSH: displays last error code			 BASH: same
 echo bonjour > test\ 1 => fichier cree et bonjour dedans       BASH: fichier cree et bonjour dedans
 cd $HOME/Documents => MNSH:  se deplace bien a la bonne place  BASH: se deplace dans le bon fichier

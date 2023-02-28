@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:07:19 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:14:44 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ bool	is_var_in_env(char *var)
 	{
 		while (g_meta->env[i] != NULL)
 		{
-			if (is_same(g_meta->env[i], var))
-			{
-				if (g_meta->env[i][ft_strlen(var)] == '=')
-					return (true);
-			}
+			if (is_same(g_meta->env[i], var, false)
+				&& g_meta->env[i][ft_strlen(var)] == '=')
+				return (true);
 			i++;
 		}
 	}
@@ -48,7 +46,8 @@ void	unset_arg(char *var)
 	i = 0;
 	while (g_meta->env[i])
 	{
-		if (ft_strncmp(var, g_meta->env[i], ft_strlen(var)) == 0)
+		if (is_same(g_meta->env[i], var, false)
+			&& g_meta->env[i][ft_strlen(var)] == '=')
 			ft_free_null(g_meta->env[i++]);
 		else
 			new_env[j++] = g_meta->env[i++];

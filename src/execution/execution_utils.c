@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 09:22:25 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 17:28:48 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:10:03 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,14 @@ void	throw_error(char *str)
 }
 
 //simplifies cmd name comparisons (compares only up to len(str) chars)
-bool	is_same(char *arg, char *str)
+bool	is_same(char *arg, char *str, bool check_end)
 {
-	if (ft_strncmp(arg, str, ft_strlen(str)) == 0)
+	int	len;
+
+	len = ft_strlen(str);
+	if (check_end)
+		len++;
+	if (ft_strncmp(arg, str, len) == 0)
 		return (true);
 	return (false);
 }

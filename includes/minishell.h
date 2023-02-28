@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:14:12 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:10:18 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ bool	is_childable(t_cmd *cmd);
 void	close_fds(t_cmd *cmd);
 void	close_all(void);
 void	throw_error(char *str);
-bool	is_same(char *arg, char *str);
+bool	is_same(char *arg, char *str, bool check_end);
 
 //from execution
 void	child_process(t_cmd *cmd);

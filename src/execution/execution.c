@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 13:06:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:10:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	launch_cmds(void)
 		if (cmd->argcount > 0)
 		{
 			if (!g_meta->must_fork && is_built_in(cmd->cmd_args[0]) && (!is_childable(cmd)
-					|| (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))))
+					|| (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export", true))))
 				execute_builtins(cmd);
 			else if (try_fork(cmd))
 				return ; //then close all childs ??

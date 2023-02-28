@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 10:03:02 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:28:46 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void	handler_init_sig(int sig)
 	// if (sig == SIGINT)
 	// {
 		g_meta->exit_status = 1;
+		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		printf("\n");
 		rl_redisplay();
-		sigignore(SIGQUIT);
 	// }
 	// if (sig == SIGQUIT)
 	// {
@@ -37,9 +36,6 @@ void	handler_child_sig(int sig)
 	(void)sig;
 
 	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	sigignore(SIGQUIT);
 
 }
 

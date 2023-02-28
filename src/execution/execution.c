@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 09:54:04 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:34:58 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ int	cmd_fork(void)
 		fatal_error(MSTATE_F_ERR);
 		return (-1);
 	}
-	if (f_id == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-	}
-	if (f_id > 0)
-	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-	}
+	// if (f_id == 0)
+	// {
+		
+	// }
+	// if (f_id > 0)
+	// {
+	// 	signal(SIGINT, SIG_IGN);
+	// 	signal(SIGQUIT, SIG_IGN);
+	// }
 	return (f_id);
 }
 
@@ -108,7 +107,11 @@ void	execute_cmd_block(void)
 	g_meta->exit_status = EXIT_SUCCESS;
 	if (g_meta->cmd_nb > 1)
 		g_meta->must_fork = true;
+	signal(SIGINT, handler_child_sig);
+	signal(SIGQUIT, handler_child_sig);
 	launch_cmds();
+	// signal(SIGINT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 	close_all();
 	if (g_meta->must_fork)
 		waitchildren();

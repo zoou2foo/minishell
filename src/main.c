@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 09:45:45 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:36:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,19 @@ Once the loop is over, it;
 |- frees all the leftover data */
 void	minishell(void)
 {
+
+	 //couper signaux from zsh; minishell va les gerer
 	init_meta();
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
+		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, &handler_init_sig);
-		signal(SIGQUIT, &handler_init_sig);
 		g_meta->state = MSTATE_NORMAL;
 		g_meta->buf = readline("MNSH :) ");
 		if (!g_meta->buf)
 			break ;
 		if (!is_line_empty(g_meta->buf))
 		{
-			signal(SIGINT, &handler_child_sig);
-			signal(SIGQUIT, &handler_child_sig);
 			add_history(g_meta->buf);
 			load_cmd_block(parse_line(g_meta->buf));
 			if (g_meta->state == MSTATE_NORMAL)

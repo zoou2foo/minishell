@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 09:59:03 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:23:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Return the line read. Main purpose: READ
+//reads a line from the terminal and returns it
 char	*gnl_minihell(void)
 {
 	char	buffer[10000];
@@ -23,8 +23,7 @@ char	*gnl_minihell(void)
 	return (ft_strdup(buffer));
 }
 
-//needed to pass hd in a child for signal.
-//need to take the string, gnl_return and pipe_hd
+//execute the Heredoc in a child and exits when done
 void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 {
 	char	*tmp;
@@ -52,7 +51,7 @@ void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 	exit(0);
 }
 
-//ft to shortent execute hd; dealing with pipe error
+//fchecks for pipe errors
 int	pipe_error(char *string)
 {
 	fatal_error(MSTATE_P_ERR);
@@ -60,7 +59,7 @@ int	pipe_error(char *string)
 	return (-1);
 }
 
-//ft to shortent execute hd; dealing with fork error
+//checks for fork errors
 int	error_fork(char *string)
 {
 	fatal_error(MSTATE_F_ERR);
@@ -68,8 +67,7 @@ int	error_fork(char *string)
 	return (-1);
 }
 
-// Return int of the fd[0] (to read); pipe first.
-// And we return fd[0] so it can be read
+//execute a Heredoc in the terminal and returns a fd where its content can be read
 int	execute_hd(char *string)
 {
 	int		pipe_hd[2];

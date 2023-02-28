@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:52:54 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:07:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:09:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//print arg; ft to shortent do_echo()
+//prints the cmd->args array
 void	echo_print(t_cmd *cmd, int i, int newline)
 {
 	while (cmd->cmd_args[i])
@@ -24,7 +24,7 @@ void	echo_print(t_cmd *cmd, int i, int newline)
 	}
 }
 
-// Return NOTHING. Take t_cmd; the arguments following "echo" to be printed.
+//verifies how to print cmd->args
 void	do_echo(t_cmd *cmd)
 {
 	int	newline;

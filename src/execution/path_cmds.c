@@ -6,14 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:03:13 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:29:28 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Looks for "path" in env. Splits at ":". Then, join "/" after each section;
-//no need to add it during execution
+//finds the PATH variable from g_meta->env and splits it into usable paths
 void	fill_path_tab(void)
 {
 	int		i;
@@ -39,20 +38,8 @@ void	fill_path_tab(void)
 	g_meta->exit_status = EXIT_FAILURE;
 }
 
-void	free_path_tab(void)
-{
-	int		i;
-
-	i = -1;
-	if (g_meta->paths)
-	{
-		while (g_meta->paths[++i])
-			ft_free_null(g_meta->paths[i]);
-		ft_free_null(g_meta->paths);
-	}
-}
-
-void	check_cmd_path(int i, t_cmd *cmd)
+//tries to execute a cmd using g_meta->paths[i]
+void	try_cmd_path(int i, t_cmd *cmd)
 {
 	char	*cmd_path;
 
@@ -62,8 +49,7 @@ void	check_cmd_path(int i, t_cmd *cmd)
 	ft_free_null(cmd_path);
 }
 
-// Checks if a given cmd exists and is executable, then execute it
-// Execve automatically exit() when used
+//tries to execute a given cmd using g_meta->paths
 void	exec_with_paths(t_cmd *cmd)
 {
 	int		i;
@@ -77,10 +63,10 @@ void	exec_with_paths(t_cmd *cmd)
 		{
 			i = -1;
 			while (g_meta->paths[++i])
-				check_cmd_path(i, cmd);
+				try_cmd_path(i, cmd);
 			throw_error(ERR_CMD);
 			g_meta->exit_status = 127;
-			free_path_tab();
+			ft_free_tab((void **)g_meta->paths);
 		}
 		return ;
 	}

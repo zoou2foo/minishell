@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:39:03 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 10:50:11 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:15:05 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Checks if the given arg is a built-in
+//checks if a given arg is on of the builtins
 bool	is_built_in(char *arg)
 {
 	if (is_same(arg, "cd")
@@ -27,7 +27,7 @@ bool	is_built_in(char *arg)
 		return (false);
 }
 
-// Executes the built-in called via the first cmd_arg
+//executes the builtin in cmd->args[0]
 void	execute_builtins(t_cmd *cmd)
 {
 	char	*arg;
@@ -49,9 +49,8 @@ void	execute_builtins(t_cmd *cmd)
 		do_unset(cmd);
 }
 
-// Checks if the built-in should be executed in a child process via the
-// first cmd_arg
-bool	built_ins_childable(t_cmd *cmd)
+//checks if the cmd->args[0] cmd should be done in a child
+bool	is_childable(t_cmd *cmd)
 {
 	char	*arg;
 

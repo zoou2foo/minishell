@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 11:25:49 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:09:40 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:04:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//Just use global var. Send back the path where the user is.
+//prints the current location (user path)
 void	get_pwd(void)
 {
 	char	cwd[1000];

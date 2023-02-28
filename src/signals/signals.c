@@ -3,34 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 10:28:46 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:42:35 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//call before readline
+//initializes the signals for minishell
 void	handler_init_sig(int sig)
 {
 	(void)sig;
-	// if (sig == SIGINT)
-	// {
-		g_meta->exit_status = 1;
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	// }
-	// if (sig == SIGQUIT)
-	// {
-	// 	rl_on_new_line(); //besoin ou non?
-	// 	sigignore(SIGQUIT);
-	// }
+
+	g_meta->exit_status = 1;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
+//prints a newline when a signal is spotted
 void	handler_child_sig(int sig)
 {
 	(void)sig;
@@ -39,24 +33,17 @@ void	handler_child_sig(int sig)
 
 }
 
-//signals handler in child (including hd)
+//signal handler for child (including hd)
 void	handler_hd_sig(int sig)
 {
 	(void)sig;
-	// if (sig == SIGINT)
-	// {
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		printf("\n");
-	// }
-	// if (sig == SIGQUIT)
-	// {
-	// 	rl_on_new_line();
-	// 	sigignore(SIGQUIT);
-	// }
+
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	printf("\n");
 }
 
-//main handler; to tells what to do with signals
+//signal handler for parent
 void	handler_parent_sig(int sig)
 {
 	if (sig == SIGINT)
@@ -69,7 +56,6 @@ void	handler_parent_sig(int sig)
 	}
 	if (sig == SIGQUIT)
 	{
-		//rl_on_new_line();
 		sigignore(SIGQUIT);
 	}
 }

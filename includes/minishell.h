@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 09:47:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:14:12 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	do_unset(t_cmd *cmd);
 //from builtins_cmds
 bool	is_built_in(char *cmd_arg);
 void	execute_builtins(t_cmd *cmd);
-bool	built_ins_childable(t_cmd *cmd);
+bool	is_childable(t_cmd *cmd);
 
 //from execution_utils
 void	close_fds(t_cmd *cmd);

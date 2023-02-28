@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   debugger.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/28 09:47:16 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:40:07 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//prints the gien token lists according to internal specifications
+//prints a gievn token lists according to internal specifications
 void	print_token_list(t_token *head, bool start_with_newline)
 {
 	bool	show_joined = true;
@@ -91,38 +91,22 @@ void	print_cmd(t_cmd *cmd)
 		printf("| | %i : '%s'\n", i, cmd->cmd_args[i]);
 }
 
-//prints g_meta->env
-void	print_tab_env(void)
+//prints a given string array
+void	print_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
 	printf("\n");
-	while (g_meta->env[i])
+	while (tab[i])
 	{
-		printf("%s\n", g_meta->env[i]);
+		printf("%s\n", tab[i]);
 		i++;
 	}
 	printf("\n");
 }
 
-/*
-void	minitest_old(char **av)
-{
-	init_meta();
-
-	g_meta->buf = av[2];
-	if (!is_line_empty(g_meta->buf))
-	{
-		load_cmd_block(parse_line(g_meta->buf));
-		if (g_meta->state == MSTATE_NORMAL)
-			execute_cmd_block();
-	}
-	//free_all(); //wtf
-	exit(g_meta->exit_status);
-}
-*/
-
+//runs minishell in debug mode (for minishell_tester)
 void	minitest(char **av)
 {
 	init_meta();
@@ -143,12 +127,8 @@ void	minitest(char **av)
 	exit(g_meta->exit_status);
 }
 
-void	debug(void)
-{
-	write(2, "got here!\n", 10);
-}
-
 /*
+//shows the conversions steps according to internal specifications
 int	main(void)
 {
 	bool	show_env = false;

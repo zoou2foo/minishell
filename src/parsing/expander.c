@@ -6,12 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 14:35:00 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:33:15 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//returns the value of a given ENV var string
 char	*get_var(char *str1, char *str2)
 {
 	int	i;
@@ -51,24 +52,6 @@ char	*expand(char *str1)
 			return (ft_itoa(g_meta->exit_status));
 		}
 		str2 = get_var(str1, str2);
-		/*
-		i = -1;
-		while (g_meta->env[++i])
-		{
-			if (is_same(g_meta->env[i], str1))
-			{
-				j = ft_strlen(str1);
-				if (g_meta->env[i][j++] != '=')
-					continue ;
-				ft_free_null(str2);
-				str2 = ft_calloc(ft_strlen(g_meta->env[i]), sizeof(char));
-				k = 0;
-				while (g_meta->env[i][j])
-					str2[k++] = g_meta->env[i][j++];
-				break ;
-			}
-		}
-		*/
 	}
 	else
 		str2[0] = '$';
@@ -92,6 +75,7 @@ char	*trimstr(char *str1, int len)
 	return (str2);
 }
 
+//checks prepares the vars needed to call expand()
 char	*get_expansion(char *str1, int *i)
 {
 	char	*tmp;

@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 10:27:15 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:31:41 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//merge tokens (ex > type + string = string w/ type >)
+//merge tokens in a list(ex > type + string = string w/ type >)
 t_token	*merge_mergeables(t_token *node)
 {
 	while (node->next)
@@ -37,7 +37,7 @@ t_token	*merge_mergeables(t_token *node)
 	return (find_head(node)); //reset head in case cut_token() destroys it
 }
 
-//finds redirection nodes and uses them
+//finds redirection nodes and open/executes them
 t_token	*get_redirs(t_token *node, t_cmd *cmd)
 {
 	while (node)

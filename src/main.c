@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 10:36:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:39:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 //our global var
 t_meta	*g_meta;
 
+//sets things for a fatal error
 void	fatal_error(int err_id)
 {
 	g_meta->state = err_id;
@@ -73,7 +74,7 @@ Once the loop is over, it;
 void	minishell(void)
 {
 
-	 //couper signaux from zsh; minishell va les gerer
+	//couper signaux from zsh; minishell va les gerer
 	init_meta();
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
@@ -98,6 +99,7 @@ void	minishell(void)
 	exit (g_meta->exit_status);
 }
 
+//our main function. calls ministest if given "-c" in av[1]
 int	main(int ac, char **av)
 {
 	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))

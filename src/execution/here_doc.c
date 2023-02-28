@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 08:17:29 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 09:24:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	child_in_hd(char *string, char *gnl_return, int *pipe_hd)
 {
 	char	*tmp;
 
-	signal(SIGINT, SIG_DFL);
+	//signal(SIGINT, SIG_DFL);
 	while (1)
 	{
 		write(1, "> ", 2);

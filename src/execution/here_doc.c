@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 14:56:17 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 08:17:29 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ int	execute_hd(char *string)
 	if (pipe(pipe_hd) < 0)
 		return (pipe_error(string));
 	printf("\nWaiting for heredoc input (<<%s) :\n", string);
-	init_signals(E_SIG_HD); //maybe to change
+	//init_signals(E_SIG_HD); //maybe to change
+	signal(SIGINT, &handler_hd_sig);
+	signal(SIGQUIT, &handler_hd_sig);
 	gnl_return = NULL;
 	pid_hd = fork();
 	if (pid_hd < 0)
@@ -89,6 +91,6 @@ int	execute_hd(char *string)
 	close(pipe_hd[1]);
 	waitpid(pid_hd, NULL, 0);
 	ft_free_null(gnl_return);
-	init_signals(E_SIG_PRNT);
+	//init_signals(E_SIG_PRNT);
 	return (pipe_hd[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 14:46:19 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 08:10:48 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,20 @@ Once the loop is over, it;
 void	minishell(void)
 {
 	init_meta();
-	init_signals(E_SIG_START);
+	//init_signals(E_SIG_START); Tuesday am
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
+		//init_signals(E_SIG_START);
+		signal(SIGINT, &handler_init_sig);
+		signal(SIGQUIT, &handler_init_sig);
 		g_meta->state = MSTATE_NORMAL;
 		g_meta->buf = readline("MNSH :) ");
 		if (!g_meta->buf)
 			break ;
 		if (!is_line_empty(g_meta->buf))
 		{
+			signal(SIGINT, &handler_child_sig);
+			signal(SIGQUIT, &handler_child_sig);
 			add_history(g_meta->buf);
 			load_cmd_block(parse_line(g_meta->buf));
 			if (g_meta->state == MSTATE_NORMAL)

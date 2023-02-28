@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugger.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:27:18 by llord             #+#    #+#             */
-/*   Updated: 2023/02/27 13:10:05 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 08:19:36 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	minitest_old(char **av)
 void	minitest(char **av)
 {
 	init_meta();
-	init_signals(E_SIG_PRNT);
+	//init_signals(E_SIG_PRNT);
 
 	g_meta->state = MSTATE_NORMAL;
 	g_meta->buf = ft_strdup(av[2]);

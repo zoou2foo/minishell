@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 14:46:09 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 08:15:13 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,8 @@ t_token	*merge_token_list(t_token *head);
 
 // ===== FROM SIGNALS =====
 void	init_signals(int flag);
+void	handler_child_sig(int sig);
+void	handler_init_sig(int sig);
+void	handler_hd_sig(int sig);
 
 #endif

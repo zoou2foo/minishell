@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/27 15:45:20 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 07:52:39 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	waitchildren(void)
 //choses whether to execute a given cmd as a built_in or a sys_cmd
 void	child_process(t_cmd *cmd)
 {
-	init_signals(E_SIG_CHLD);
+	//init_signals(E_SIG_CHLD);
 	dup2(cmd->fdin, STDIN_FILENO);
 	dup2(cmd->fdout, STDOUT_FILENO);
 	close_all();
@@ -102,12 +102,12 @@ void	launch_cmds()
 // Goes through the cmd_block and checks if the cmd is a built and if we need to fork()
 void	execute_cmd_block(void)
 {
-	init_signals(E_SIG_PRNT);
+	//init_signals(E_SIG_PRNT);
 	g_meta->exit_status = EXIT_SUCCESS;
 	if (g_meta->cmd_nb > 1)
 		g_meta->must_fork = true;
 	launch_cmds();
-	init_signals(E_SIG_PRNT);
+	//init_signals(E_SIG_PRNT);
 	close_all();
 	if (g_meta->must_fork)
 	{

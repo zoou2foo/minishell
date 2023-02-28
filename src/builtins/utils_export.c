@@ -3,34 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 08:54:08 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 12:31:01 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:11:45 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//to check if var exist already
-int	find_var(char *str)
+//checks if a given var is already present in g_meta->env
+int	find_var(char *var)
 {
 	int	len;
 	int	i;
 
 	len = 0;
-	while (str[len] && str[len] != '=')
+	while (var[len] && var[len] != '=')
 		len++;
 	i = 0;
 	while (g_meta->env[i])
 	{
-		if (ft_strncmp(g_meta->env[i], str, len) == 0)
+		if (ft_strncmp(g_meta->env[i], var, len) == 0)
 			return (i);
 		i++;
 	}
 	return (-1); //if not found, return -1
 }
 
+//checks if a given str could be a valid ENV variable name
 bool	is_valid_name(char *str)
 {
 	int	i;

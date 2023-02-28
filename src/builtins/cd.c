@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 12:49:38 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 12:33:16 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:53:20 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Take t_cmd to execute the cmd. Return nothing. EXECUTE: cd through chdir()
+//change the current directory to the one in cmd->args[1]
 void	change_dir(t_cmd *cmd)
 {
 	if (cmd->argcount < 2)

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 15:37:55 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:14:12 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ enum e_mstate
 	MSTATE_O_PIPE	= 2,	//pipe token in invalid position
 	MSTATE_O_REDIR	= 3,	//redir token in invalid position
 	MSTATE_BAD_FD	= 4		//invalid FD (bad file name)
+};
+
+enum e_signal
+{
+	E_SIG_START		= 0,
+	E_SIG_PRNT		= 1,
+	E_SIG_CHLD		= 2,
+	E_SIG_HD		= 3,
 };
 
 /*	ERROR MESSAGE	*/
@@ -99,7 +107,8 @@ typedef struct s_meta
 	t_cmd	**cmd_block;	//all commands to be called this cycle
 	int		cmd_nb;			//nb of commands to be called this cycle
 	int		**pipes;	//all the pipes fd for the current command line
-	int		*pid;
+	int		pid;
+	bool	must_fork;
 	int		exit_status;
 	int		state;			//what to do on next cmd and/or cycle
 
@@ -140,7 +149,7 @@ void	do_unset(t_cmd *cmd);
 //from builtins_cmds
 bool	is_built_in(char *cmd_arg);
 void	execute_builtins(t_cmd *cmd);
-bool	built_ins_childable(t_cmd *cmd);
+bool	is_childable(t_cmd *cmd);
 
 //from execution_utils
 void	close_fds(t_cmd *cmd);
@@ -210,6 +219,9 @@ t_token	*remove_empty_list(t_token *head);
 t_token	*merge_token_list(t_token *head);
 
 // ===== FROM SIGNALS =====
-void	init_signals(int flag);
+//void	init_signals(int flag);
+void	handler_child_sig(int sig);
+void	handler_init_sig(int sig);
+void	handler_hd_sig(int sig);
 
 #endif

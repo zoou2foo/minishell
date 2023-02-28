@@ -6,12 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/22 15:44:09 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:37:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//frees a given cmd
 void	free_cmd(t_cmd *cmd)
 {
 	int	i;
@@ -28,6 +29,7 @@ void	free_cmd(t_cmd *cmd)
 	}
 }
 
+//frees g_meta->pipes
 void	free_pipes(void)
 {
 	int	i;
@@ -43,27 +45,26 @@ void	free_pipes(void)
 }
 
 //frees a cmd_block, all its cmds, and all the leftover FDs
-void	free_cmd_block(void)		//make sure to close beforehand
+//make sure to close beforehand
+void	free_cmd_block(void)
 {
 	int	i;
 
 	if (g_meta->cmd_block)
 	{
-		free_pipes();
 		i = -1;
 		while (++i < g_meta->cmd_nb)
 			free_cmd(g_meta->cmd_block[i]);
 		ft_free_null(g_meta->cmd_block);
+		free_pipes();
 	}
 }
 
-//closes and frees everything from the g_meta
+//frees everything from the g_meta
 void	free_all(void)
 {
 	if (g_meta)
 	{
-		if (g_meta->pid)
-			ft_free_null(g_meta->pid);
 		if (g_meta->env)
 			ft_free_tab((void **)g_meta->env);
 		if (g_meta->paths)

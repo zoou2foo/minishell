@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/22 14:53:52 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:07:19 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//returns 1 if the env variable exists
+//checks if the specified var is present in g_meta->env
 bool	is_var_in_env(char *var)
 {
 	int	i;
@@ -33,8 +33,8 @@ bool	is_var_in_env(char *var)
 	return (false);
 }
 
-//ft to shorten do_unset(). Unset the arg sent and create a new env
-void	unset_arg(char *str)
+//recreates g_meta->env without the specific var
+void	unset_arg(char *var)
 {
 	char	**new_env;
 	int		i;
@@ -48,8 +48,7 @@ void	unset_arg(char *str)
 	i = 0;
 	while (g_meta->env[i])
 	{
-		if (ft_strncmp(str, g_meta->env[i],
-				ft_strlen(str)) == 0) //au lieu de strlen de str; j'ai mis de la var d'env, fix prob, mais segfault. Une fois sur deux, ish. Unset does not work
+		if (ft_strncmp(var, g_meta->env[i], ft_strlen(var)) == 0)
 			ft_free_null(g_meta->env[i++]);
 		else
 			new_env[j++] = g_meta->env[i++];
@@ -58,8 +57,7 @@ void	unset_arg(char *str)
 	g_meta->env = new_env;
 }
 
-//return nothing. Take t_cmd to check what needs to be unset/free.
-//final else, if the var does not exist
+//removes the given cmd->args from g_meta->env if possible
 void	do_unset(t_cmd *cmd)
 {
 	int	i;

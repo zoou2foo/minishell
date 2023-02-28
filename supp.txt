@@ -1,6 +1,6 @@
 {
 	leak readline
-	Memcheck:Leak 
+	Memcheck:Leak
 	...
 	fun:readline
 }

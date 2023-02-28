@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 08:19:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:39:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 //our global var
 t_meta	*g_meta;
 
+//sets things for a fatal error
 void	fatal_error(int err_id)
 {
 	g_meta->state = err_id;
@@ -46,7 +47,6 @@ void	init_meta(void)
 	int	i;
 
 	g_meta = ft_calloc(sizeof(t_meta), 1);
-
 	i = 0;
 	while (environ[i])
 		i++;
@@ -73,10 +73,13 @@ Once the loop is over, it;
 |- frees all the leftover data */
 void	minishell(void)
 {
+
+	//couper signaux from zsh; minishell va les gerer
 	init_meta();
-	init_signals(1);
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, &handler_init_sig);
 		g_meta->state = MSTATE_NORMAL;
 		g_meta->buf = readline("MNSH :) ");
 		if (!g_meta->buf)
@@ -96,6 +99,7 @@ void	minishell(void)
 	exit (g_meta->exit_status);
 }
 
+//our main function. calls ministest if given "-c" in av[1]
 int	main(int ac, char **av)
 {
 	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))

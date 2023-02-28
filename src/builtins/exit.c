@@ -6,24 +6,25 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:08:52 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:59:22 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_exit_args(char **args)
+//makes sure the given arg is usable
+void	check_exit_args(char *arg)
 {
 	int	i;
 
 	i = -1;
-	while (args[1][++i])
+	while (arg[++i])
 	{
-		if ((i > 10 || !(args[1][i] >= '0'
-				&& args[1][i] <= '9')))
+		if ((i > 10 || !(arg[i] >= '0'
+					&& arg[i] <= '9')))
 		{
-			if (i != 0 || ((args[1][i] != '-')
-				&& (args[1][i] != '+')))
+			if (i != 0 || ((arg[i] != '-')
+					&& (arg[i] != '+')))
 			{
 				throw_error(ERR_ARG2);
 				free_cmd_block();
@@ -33,8 +34,7 @@ void	check_exit_args(char **args)
 	}
 }
 
-// Return nothing. Take t_cmd. To look at the following argument to give the
-// correct exit status.
+//tries to exit based on the given cmd->args[1] arg
 void	do_exit(t_cmd *cmd)
 {
 	unsigned char	arg;
@@ -44,7 +44,7 @@ void	do_exit(t_cmd *cmd)
 	{
 		if (cmd->cmd_args[1])
 		{
-			check_exit_args(cmd->cmd_args);
+			check_exit_args(cmd->cmd_args[1]);
 			arg = ft_atoi(cmd->cmd_args[1]);
 		}
 		else

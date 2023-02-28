@@ -6,13 +6,13 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:10:01 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/21 15:08:22 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:57:15 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Take nothing. Return nothing. Use the global var to print ENV
+//prints ENV from g_meta->env
 void	get_env(void)
 {
 	int	i;

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   converter_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
+/*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/24 10:12:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:43:16 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//checks special token validity
 void	check_merge_error(t_token *node)
 {
 	if (node->type > TTYPE_EXPAND && !node->string[0])
@@ -55,8 +56,8 @@ void	get_redirs_out(t_token *node, t_cmd *cmd)
 	{
 		if (cmd->fdin != 0)
 			close(cmd->fdin);
-		if (g_meta->state == MSTATE_NORMAL) //prevent calling hd when error has occured
-			cmd->fdin = execute_hd(node->string); //working fixing open fd and pipes
+		if (g_meta->state == MSTATE_NORMAL)
+			cmd->fdin = execute_hd(node->string);
 		else
 			cmd->fdin = 0;
 	}

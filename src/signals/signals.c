@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:50:00 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 09:32:01 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:03:02 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	handler_init_sig(int sig)
 		rl_replace_line("", 0);
 		printf("\n");
 		rl_redisplay();
+		sigignore(SIGQUIT);
 	// }
 	// if (sig == SIGQUIT)
 	// {
@@ -35,9 +36,10 @@ void	handler_child_sig(int sig)
 {
 	(void)sig;
 
-	printf("allo\n");
+	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
+	sigignore(SIGQUIT);
 
 }
 
@@ -83,6 +85,8 @@ void	handler_parent_sig(int sig)
 //SIGINFO: to know which signal received
 // SA_RESTART: flag to make sure that it does not in an undefine state when
 //interrupted
+
+/*
 void	init_signals(int flag)
 {
 	struct sigaction	sa;
@@ -100,3 +104,5 @@ void	init_signals(int flag)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }
+
+*/

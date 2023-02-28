@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 09:44:52 by vjean            ###   ########.fr       */
+/*   Updated: 2023/02/28 09:54:04 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,9 @@ void	waitchildren(void)
 //choses whether to execute a given cmd as a built_in or a sys_cmd
 void	child_process(t_cmd *cmd)
 {
-	//init_signals(E_SIG_CHLD);
 	dup2(cmd->fdin, STDIN_FILENO);
 	dup2(cmd->fdout, STDOUT_FILENO);
 	close_all();
-	//init_signals(E_SIG_CHLD);
 	if (cmd->is_built_in)
 		execute_builtins(cmd); //if error use exit(EXIT_SUCCESS) in builtins. Mieux de ne pas les faire dans les enfants???
 	else
@@ -75,7 +73,6 @@ void	child_process(t_cmd *cmd)
 int	try_fork(t_cmd *cmd)
 {
 	g_meta->pid = cmd_fork();
-	//init_signals(E_SIG_CHLD);			//obsolete
 	if (g_meta->pid < 0) //if fork error
 	{
 		fatal_error(MSTATE_F_ERR);
@@ -114,9 +111,6 @@ void	execute_cmd_block(void)
 	launch_cmds();
 	close_all();
 	if (g_meta->must_fork)
-	{
-		sigignore(SIGINT);
 		waitchildren();
-	}
 	free_cmd_block();
 }

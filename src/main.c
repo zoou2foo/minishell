@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:39:34 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:19:12 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	minishell(void)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, &handler_init_sig);
 		g_meta->state = MSTATE_NORMAL;
+		g_meta->must_fork = false;
 		g_meta->buf = readline("MNSH :) ");
 		if (!g_meta->buf)
 			break ;

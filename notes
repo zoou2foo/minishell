@@ -1,18 +1,5 @@
 /*
-Things to fix with signals:
-ctrl-c: re_display when stop a cmd that hang
-ctrl-d: no problem
-ctrl-\: do something weird when I press it with stuff written in it
 
-
-Signaux: 1 pour le prompt au debut, 1 pour en runtime, 1 pour ignore + 1 pour reset les signaux
-un handler au depart =>pour init le tout
-un handler pour le runtime =>pour l'execution avant de fork();
-un handler pour ignore =>pas sur a 100%, si j'ai besoin ... maybe
-un handler pour reset =>apres les childs. apres l'execution
-
-
-Pwd, echo, env hang quand ils sont lancés seuls. **A des moments donnes...
-
+ctrl-d: exit code 139
 
 */

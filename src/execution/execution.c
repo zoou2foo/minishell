@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:21:01 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:06:34 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	launch_cmds(void)
 		cmd = g_meta->cmd_block[i];
 		if (cmd->argcount > 0)
 		{
-			if (!g_meta->must_fork && is_built_in(cmd->cmd_args[0]) && (!is_childable(cmd) || (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))))
+			if (!g_meta->must_fork && is_built_in(cmd->cmd_args[0]) && (!is_childable(cmd)
+					|| (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export"))))
 				execute_builtins(cmd);
 			else if (try_fork(cmd))
 				return ; //then close all childs ??
@@ -88,6 +89,7 @@ void	launch_cmds(void)
 void	execute_cmd_block(void)
 {
 	g_meta->exit_status = EXIT_SUCCESS;
+	g_meta->pid = 0;
 	if (g_meta->cmd_nb > 1)
 		g_meta->must_fork = true;
 	signal(SIGINT, handler_child_sig);
@@ -96,7 +98,7 @@ void	execute_cmd_block(void)
 	// signal(SIGINT, SIG_IGN);
 	// signal(SIGQUIT, SIG_IGN);
 	close_all();
-	if (g_meta->must_fork)
+	if (g_meta->pid != 0)
 		waitchildren();
 	free_cmd_block();
 }

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:31:41 by llord            ###   ########.fr       */
+/*   Updated: 2023/02/28 13:06:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ t_cmd	*get_cmd_args(t_token *node, t_cmd *cmd)
 	}
 	if (cmd->argcount > 0 && is_built_in(cmd->cmd_args[0]) == 1)
 		cmd->is_built_in = true;
-	else
-		g_meta->must_fork = true;
 	return (cmd);
 }
 

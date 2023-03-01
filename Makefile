@@ -73,7 +73,6 @@ TSTDIR	=	tests/
 
 # File names (including their subdirectory if needed)
 FILES	=	main \
-			debugger \
 			freeer \
 			builtins/cd \
 			builtins/echo \

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:15:46 by vjean             #+#    #+#             */
-/*   Updated: 2023/03/01 09:20:20 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:37:12 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ t_cmd	*tokens_to_cmd(t_token **head, int id)
 		cmd->fdout = g_meta->pipes[id][1];
 	cmd->cmd_args = ft_calloc(find_length(*head) + 1, sizeof(char *));
 	return (get_cmd_args(*head, cmd));
-
 }
 
 //converts every token list into cmds

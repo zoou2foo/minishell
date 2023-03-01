@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/03/01 09:22:09 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:36:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ t_token	*remove_empty_list(t_token *head)
 			break ;
 	}
 	head = find_head(node);
-
 	return (head);
 }
 

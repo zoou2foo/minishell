@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/03/01 09:20:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:38:21 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,11 @@ t_token	*merge_tokens(t_token *node, t_token *next)
 		str = ft_strdup(next->string);
 	else
 		str = ft_calloc(1, sizeof(char));
-
 	ft_free_null(node->string);
 	node->string = str;
-
 	node->next = next->next;
 	if (node->next)
 		node->next->prev = node;
-
 	free_token(next);
 	return (node);
 }

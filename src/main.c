@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/03/01 09:23:49 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:40:10 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,8 @@ void	minishell(void)
 //our main function. calls ministest if given "-c" in av[1]
 int	main(int ac, char **av)
 {
-	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))
-		minitest(av);
-	else if (ac > 1)
+	(void)av;
+	if (ac > 1)
 		throw_error(ERR_AC);
 	minishell();
 	return (EXIT_FAILURE);

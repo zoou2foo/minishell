@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 08:11:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:51:23 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:10:06 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	error_fork(char *string)
 	return (-1);
 }
 
-//execute a Heredoc in the terminal and returns a fd where its content can be read
+//execute a Heredoc in the terminal and returns a fd to its content
 int	execute_hd(char *string)
 {
 	int		pipe_hd[2];

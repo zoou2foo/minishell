@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 08:54:08 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:11:45 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:09:44 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	find_var(char *var)
 			return (i);
 		i++;
 	}
-	return (-1); //if not found, return -1
+	return (-1);
 }
 
 //checks if a given str could be a valid ENV variable name

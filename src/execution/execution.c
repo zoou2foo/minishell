@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:30:47 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 13:10:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:11:24 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ void	launch_cmds(void)
 		cmd = g_meta->cmd_block[i];
 		if (cmd->argcount > 0)
 		{
-			if (!g_meta->must_fork && is_built_in(cmd->cmd_args[0]) && (!is_childable(cmd)
-					|| (cmd->argcount > 1 && is_same(cmd->cmd_args[0], "export", true))))
+			if (!g_meta->must_fork && is_built_in(cmd->cmd_args[0])
+				&& (!is_childable(cmd) || (cmd->argcount > 1
+						&& is_same(cmd->cmd_args[0], "export", true))))
 				execute_builtins(cmd);
 			else if (try_fork(cmd))
-				return ; //then close all childs ??
+				return ;
 		}
 	}
 }
@@ -95,8 +96,6 @@ void	execute_cmd_block(void)
 	signal(SIGINT, handler_child_sig);
 	signal(SIGQUIT, handler_child_sig);
 	launch_cmds();
-	// signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
 	close_all();
 	if (g_meta->pid != 0)
 		waitchildren();

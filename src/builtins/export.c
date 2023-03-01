@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:44:44 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 11:10:18 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:09:31 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	add_var_to_env(char *var, int i)
 	int	j;
 
 	j = find_var(var);
-	if (j >= 0) //reassess the old var
+	if (j >= 0)
 	{
 		ft_free_null(g_meta->env[j]);
 		g_meta->env[j] = ft_strdup(var);
 	}
-	else // creates a new var
+	else
 	{
 		j = 0;
 		while (g_meta->env[j])

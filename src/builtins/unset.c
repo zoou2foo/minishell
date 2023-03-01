@@ -6,11 +6,20 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:23:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 13:14:44 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:18:33 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//checks if a given var matches with g_meta->env[var_id]
+bool	does_var_matches(char *var, int var_id)
+{
+	if (is_same(g_meta->env[var_id], var, false))
+		if (g_meta->env[var_id][ft_strlen(var)] == '=')
+			return (true);
+	return (false);
+}
 
 //checks if the specified var is present in g_meta->env
 bool	is_var_in_env(char *var)
@@ -22,8 +31,7 @@ bool	is_var_in_env(char *var)
 	{
 		while (g_meta->env[i] != NULL)
 		{
-			if (is_same(g_meta->env[i], var, false)
-				&& g_meta->env[i][ft_strlen(var)] == '=')
+			if (does_var_matches(var, i))
 				return (true);
 			i++;
 		}
@@ -46,8 +54,7 @@ void	unset_arg(char *var)
 	i = 0;
 	while (g_meta->env[i])
 	{
-		if (is_same(g_meta->env[i], var, false)
-			&& g_meta->env[i][ft_strlen(var)] == '=')
+		if (does_var_matches(var, i))
 			ft_free_null(g_meta->env[i++]);
 		else
 			new_env[j++] = g_meta->env[i++];

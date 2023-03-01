@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/28 11:34:29 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:20:59 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,3 @@ t_token	*replace_token(t_token *new, t_token *old)
 	}
 	return (new);
 }
-
-/*
-//checks if the token is useful before adding it to the list
-void	try_add_token(t_token *node, t_token *head)
-{
-	if (node && node->string && node->string[0] && node->type > TTYPE_EMPTY)
-		add_token(node, &head);
-	else
-	{
-		printf("Failed to add token to list\n");		//DEBUG
-		free_token(node);
-	}
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/28 11:37:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:23:04 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	free_pipes(void)
 }
 
 //frees a cmd_block, all its cmds, and all the leftover FDs
-//make sure to close beforehand
 void	free_cmd_block(void)
 {
 	int	i;

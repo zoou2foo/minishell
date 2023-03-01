@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 13:19:12 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:23:49 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	init_meta(void)
 	}
 }
 
-/* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
+/* initialises g_meta and signals, and every cycle, it:
 |- reads the inputed line
 |- checks if said line empty
 |- add it to the history
@@ -73,8 +73,6 @@ Once the loop is over, it;
 |- frees all the leftover data */
 void	minishell(void)
 {
-
-	//couper signaux from zsh; minishell va les gerer
 	init_meta();
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
@@ -96,7 +94,7 @@ void	minishell(void)
 	}
 	clear_history();
 	free_all();
-	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
+	ft_free_null(g_meta);
 	exit (g_meta->exit_status);
 }
 

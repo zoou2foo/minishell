@@ -47,7 +47,7 @@ else
 endif
 
 # Start screen mode
-export GRAPHIC = FALSE
+export GRAPHIC = TRUE
 ifeq ($(GRAPHIC),TRUE)
 	START = bash pew_pew2.sh
 else

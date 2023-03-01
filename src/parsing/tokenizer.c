@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/20 13:27:57 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:22:09 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	create_token_list(char *line, t_token **head)
 		len = 0;
 		while (ft_isspace(line[i]))
 			++i;
-		if (line[i] == '|') //deals with pipes
+		if (line[i] == '|')
 			add_token(new_token(NULL, -1, TTYPE_PIPE), head);
 		else if (line[i] == '>')
 			len += find_redir_out(line, i, head);
@@ -44,7 +44,7 @@ void	create_token_list(char *line, t_token **head)
 			len += find_quote(line, i, head, '\"');
 		else
 			len += find_leftover(line, i, head);
-		if (*head && i > 0 && !ft_isspace(line[i - 1])) //notes if the current and previous tokens are joined
+		if (*head && i > 0 && !ft_isspace(line[i - 1]))
 			find_tail(*head)->is_joined = true;
 		i += len;
 	}
@@ -58,21 +58,15 @@ void	expand_token_list(t_token *head)
 	node = head;
 	while (node)
 	{
-		//handles standalone expansions
 		if (node->type == TTYPE_EXPAND)
 		{
-			//printf(" - $%s", node->string);				//DEBUG
 			node->string = expand(node->string);
-			//printf(" > %s\n", node->string);				//DEBUG
 			if (!node->string[0])
 				node->type = TTYPE_EMPTY;
 		}
-		//handles expansions inside double quotes
 		else if (node->type == TTYPE_D_QUOTE)
 		{
-			//printf(" - \"%s\"", node->string);			//DEBUG
 			node->string = expand_quote(node->string);
-			//printf(" > \"%s\"\n", node->string);			//DEBUG
 		}
 		node = node->next;
 	}
@@ -88,9 +82,8 @@ t_token	*remove_empty_list(t_token *head)
 	{
 		if (node->type == TTYPE_EMPTY)
 		{
-			if (node->next)
-				if (!node->is_joined || !node->next->is_joined) //prevent false joins
-					node->next->is_joined = false;
+			if (node->next && (!node->is_joined || !node->next->is_joined))
+				node->next->is_joined = false;
 			node = cut_token(node);
 		}
 		if (node->next)
@@ -115,7 +108,6 @@ t_token	*merge_token_list(t_token *head)
 		{
 			if (is_mergeable(node->type) && is_mergeable(node->next->type))
 			{
-				//printf(" - %s + %s\n", node->string, node->next->string); 	//DEBUG
 				node = merge_tokens(node, node->next);
 				continue ;
 			}

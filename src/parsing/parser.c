@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:06:47 by llord             #+#    #+#             */
-/*   Updated: 2023/02/28 11:33:49 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:20:45 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ bool	check_pipe_error(t_token *node)
 		{
 			if (node->type == TTYPE_PIPE)
 			{
-				if (!node->prev || !node->next || node->next->type == TTYPE_PIPE)
+				if (!node->prev || !node->next
+					|| node->next->type == TTYPE_PIPE)
 					return (true);
-				g_meta->cmd_nb++; //adds 1 cmd slot for every pipe
+				g_meta->cmd_nb++;
 			}
 			node = node->next;
 		}

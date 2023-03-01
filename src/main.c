@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 13:19:12 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:53:55 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	is_line_empty(char *line)
 }
 
 //allocates memory for and fills the global g_meta var with default values
-//(for env and path)
 void	init_meta(void)
 {
 	int	i;
@@ -59,7 +58,7 @@ void	init_meta(void)
 	}
 }
 
-/* Main logic loop of minishell. It initialises g_meta and signals and every cycle, it:
+/* initialises g_meta and signals, and every cycle, it:
 |- reads the inputed line
 |- checks if said line empty
 |- add it to the history
@@ -71,10 +70,9 @@ void	init_meta(void)
 Once the loop is over, it;
 |- clears the history
 |- frees all the leftover data */
-void	minishell(void)
+int	minishell(void)
 {
 
-	//couper signaux from zsh; minishell va les gerer
 	init_meta();
 	while (g_meta->state >= MSTATE_NORMAL)
 	{
@@ -96,17 +94,19 @@ void	minishell(void)
 	}
 	clear_history();
 	free_all();
-	ft_free_null(g_meta); //FREE ALL SUB PARTS before (free_all()?)
-	exit (g_meta->exit_status);
+	return (g_meta->exit_status);
 }
 
 //our main function. calls ministest if given "-c" in av[1]
 int	main(int ac, char **av)
 {
+	int	exit_status;
+
 	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))
 		minitest(av);
 	else if (ac > 1)
 		throw_error(ERR_AC);
-	minishell();
-	return (EXIT_FAILURE);
+	exit_status = minishell();
+	ft_free_null(g_meta);
+	return (exit_status);
 }

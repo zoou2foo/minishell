@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:41:02 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 10:59:22 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:46:51 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	check_exit_args(char *arg)
 					&& (arg[i] != '+')))
 			{
 				throw_error(ERR_ARG2);
-				free_cmd_block();
-				exit (255);
+				full_exit(255);
 			}
 		}
 	}
@@ -49,10 +48,7 @@ void	do_exit(t_cmd *cmd)
 		}
 		else
 			arg = g_meta->exit_status;
-		free_cmd_block();
-		exit (arg);
+		full_exit(arg);
 	}
-	throw_error(ERR_ARG3);
-	free_cmd_block();
-	exit (255);
+	full_exit(255);
 }

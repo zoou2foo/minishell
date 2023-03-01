@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:33 by llord             #+#    #+#             */
-/*   Updated: 2023/02/28 11:37:59 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:45:52 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,14 @@ void	free_all(void)
 		if (g_meta->paths)
 			ft_free_tab((void **)g_meta->paths);
 	}
+}
+
+void	full_exit(int exit_status)
+{
+	clear_history();
+	close_all();
+	free_cmd_block();
+	free_all();
+	ft_free_null(g_meta);
+	exit (exit_status);
 }

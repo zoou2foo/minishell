@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/03/01 09:40:10 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 10:02:25 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	is_line_empty(char *line)
 }
 
 //allocates memory for and fills the global g_meta var with default values
-//(for env and path)
 void	init_meta(void)
 {
 	int	i;
@@ -71,7 +70,7 @@ void	init_meta(void)
 Once the loop is over, it;
 |- clears the history
 |- frees all the leftover data */
-void	minishell(void)
+int	minishell(void)
 {
 	init_meta();
 	while (g_meta->state >= MSTATE_NORMAL)
@@ -94,16 +93,39 @@ void	minishell(void)
 	}
 	clear_history();
 	free_all();
-	ft_free_null(g_meta);
-	exit (g_meta->exit_status);
+	return (g_meta->exit_status);
+}
+
+//runs minishell in debug mode (for minishell_tester) REMOVE ME
+void	minitest(char **av)
+{
+	init_meta();
+	g_meta->state = MSTATE_NORMAL;
+	g_meta->buf = ft_strdup(av[2]);
+	if (!is_line_empty(g_meta->buf))
+	{
+		add_history(g_meta->buf);
+		load_cmd_block(parse_line(g_meta->buf));
+		if (g_meta->state == MSTATE_NORMAL)
+			execute_cmd_block();
+	}
+	ft_free_null(g_meta->buf);
+	clear_history();
+	free_all();
+	exit(g_meta->exit_status);
 }
 
 //our main function. calls ministest if given "-c" in av[1]
 int	main(int ac, char **av)
 {
-	(void)av;
-	if (ac > 1)
+	int	exit_status;
+
+	//(void)av;
+	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))
+		minitest(av);
+	else if (ac > 1)
 		throw_error(ERR_AC);
-	minishell();
-	return (EXIT_FAILURE);
+	exit_status = minishell();
+	ft_free_null(g_meta);
+	return (exit_status);
 }

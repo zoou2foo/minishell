@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:10:37 by vjean             #+#    #+#             */
-/*   Updated: 2023/02/28 13:11:14 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 09:56:28 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	exec_with_paths(t_cmd *cmd)
 		if (access(cmd->cmd_args[0], F_OK | X_OK) == 0)
 			execve(cmd->cmd_args[0], cmd->cmd_args, g_meta->env);
 		fill_path_tab();
-		if (g_meta->paths[0])
+		if (g_meta->paths)
 		{
 			i = -1;
 			while (g_meta->paths[++i])

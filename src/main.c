@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:40:48 by vjean             #+#    #+#             */
-/*   Updated: 2023/03/01 10:02:25 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 10:40:12 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,34 +96,12 @@ int	minishell(void)
 	return (g_meta->exit_status);
 }
 
-//runs minishell in debug mode (for minishell_tester) REMOVE ME
-void	minitest(char **av)
-{
-	init_meta();
-	g_meta->state = MSTATE_NORMAL;
-	g_meta->buf = ft_strdup(av[2]);
-	if (!is_line_empty(g_meta->buf))
-	{
-		add_history(g_meta->buf);
-		load_cmd_block(parse_line(g_meta->buf));
-		if (g_meta->state == MSTATE_NORMAL)
-			execute_cmd_block();
-	}
-	ft_free_null(g_meta->buf);
-	clear_history();
-	free_all();
-	exit(g_meta->exit_status);
-}
-
 //our main function. calls ministest if given "-c" in av[1]
 int	main(int ac, char **av)
 {
 	int	exit_status;
 
-	//(void)av;
-	if (ac > 1 && !ft_strncmp(av[1], "-c", 3))
-		minitest(av);
-	else if (ac > 1)
+	if (ac > 1)
 		throw_error(ERR_AC);
 	exit_status = minishell();
 	ft_free_null(g_meta);

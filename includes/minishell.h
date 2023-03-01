@@ -6,7 +6,7 @@
 /*   By: llord <llord@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:27:34 by vjean             #+#    #+#             */
-/*   Updated: 2023/03/01 09:58:26 by llord            ###   ########.fr       */
+/*   Updated: 2023/03/01 10:32:11 by llord            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_meta
 	bool	must_fork;
 }			t_meta;
 
-extern t_meta	*g_meta;
+t_meta		*g_meta;
 
 // ===== FROM FREEER =====
 void	free_cmd(t_cmd *cmd);

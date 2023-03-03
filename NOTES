@@ -1,0 +1,11 @@
+/*
+  Error baseline with tester = 62
+
+  Known issues : "cat | cat | ls" creates two zombie-ish child
+  (can be killed with ctrl-\)
+  
+  exports doesn't check for a subsequent "=" after specified variable, overiding partial matches
+  
+  "../bin/ls" works, as it appends it to the path "/bin/", creating "/bin/../bin/ls", which works
+  (doesn't work when PATH is unset)
+*/
